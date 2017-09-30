@@ -1,0 +1,123 @@
+#include <SFML/Graphics/RenderWindow.hpp>
+
+#include "include/states/state_menu.h"
+#include "include/gameEngine/resource_holder.h"
+#include "include/util/utility.h"
+
+StateMenu::StateMenu(StateStack& stack, Context context)
+        : StateBase(stack, context)
+        , mOptions()
+        , mOptionIndex(0)
+{
+    sf::Font& font = context.fonts->get(Fonts::Main);
+
+    mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
+    centerOrigin(mLogoSprite);
+    mLogoSprite.setPosition(context.window->getSize().x / 2, context.window->getSize().y / 4);
+
+    // Creating menu choices
+    sf::Text playOption;
+    playOption.setFont(font);
+    playOption.setString("Play");
+    centerOrigin(playOption);
+    playOption.setPosition(context.window->getView().getSize() / 2.f);
+    mOptions.push_back(playOption);
+
+    sf::Text settingsOption;
+    settingsOption.setFont(font);
+    settingsOption.setString("Settings");
+    centerOrigin(settingsOption);
+    settingsOption.setPosition(playOption.getPosition() + sf::Vector2f(0.f, 35.f));
+    mOptions.push_back(settingsOption);
+
+    sf::Text aboutOption;
+    aboutOption.setFont(font);
+    aboutOption.setString("About");
+    centerOrigin(aboutOption);
+    aboutOption.setPosition(settingsOption.getPosition() + sf::Vector2f(0.f, 35.f));
+    mOptions.push_back(aboutOption);
+
+    sf::Text exitOption;
+    exitOption.setFont(font);
+    exitOption.setString("Exit");
+    centerOrigin(exitOption);
+    exitOption.setPosition(aboutOption.getPosition() + sf::Vector2f(0.f, 35.f));
+    mOptions.push_back(exitOption);
+
+    updateOptionText();
+}
+
+void StateMenu::draw()
+{
+    sf::RenderWindow& window = *getContext().window;
+
+    window.setView(window.getDefaultView());
+    window.draw(mLogoSprite);
+
+    for (const sf::Text& text : mOptions)
+        window.draw(text);
+}
+
+bool StateMenu::update(sf::Time)
+{
+    return true;
+}
+
+bool StateMenu::handleEvent(const sf::Event& event)
+{
+    if (event.type != sf::Event::KeyPressed)
+        return false;
+
+    if (event.key.code == sf::Keyboard::Return)
+    {
+        if (mOptionIndex == Play)
+        {
+            requestStateChange(States::Game);
+        }
+        else if (mOptionIndex == Settings)
+        {
+            requestStateChange(States::Settings);
+        }
+        else if (mOptionIndex == About)
+        {
+
+        }
+        else if (mOptionIndex == Exit)
+        {
+            requestStackPop();
+        }
+    }
+
+    else if (event.key.code == sf::Keyboard::Up)
+    {
+        if (mOptionIndex > 0)
+            mOptionIndex--;
+        else
+            mOptionIndex = mOptions.size() - 1;
+
+        updateOptionText();
+    }
+
+    else if (event.key.code == sf::Keyboard::Down)
+    {
+        if (mOptionIndex < mOptions.size() - 1)
+            mOptionIndex++;
+        else
+            mOptionIndex = 0;
+
+        updateOptionText();
+    }
+
+    return true;
+}
+
+void StateMenu::updateOptionText()
+{
+    if (mOptions.empty())
+        return;
+
+    for (sf::Text& text : mOptions)
+        text.setFillColor(sf::Color::White);
+
+    mOptions[mOptionIndex].setFillColor(sf::Color::Red);
+}
