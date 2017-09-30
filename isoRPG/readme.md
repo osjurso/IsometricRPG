@@ -1,17 +1,16 @@
 ![Isometric RPG](assets/textures/title-text.png "Logo Title Text 1")
 
 
-##Features
+## Features
 * Isometric view of the game world
 * Dynamic Lighting?
 * D&D style combat
-* Several boss fights ...
-* bla bla bla
+* etc ...
 
 
-##How to compile
+## How to compile
 
-####Windows
+#### Windows
 * [Install JsonCPP](https://docs.google.com/presentation/d/1j8LEDLVJjfNGwIVoKG8jvTNS_pV6ClRKx-tVeHcrEdw/edit?rm=embedded#slide=id.g120670dfdc_0_47)
 * [Install SFML](https://docs.google.com/presentation/d/1Xdg4UL_RvcjkVVTskfg-_Tsfl8aEl-pFQlUTEJNbBrU/edit?rm=embedded#slide=id.g120670dfdc_0_47)
 * Set working directory to project root
@@ -24,20 +23,20 @@
 -LC:/dev/libs/jsoncpp/lib"
 ```
 
-####Linux
+#### Linux
 * sudo apt-get install libsfml-dev libjsoncpp-dev
 * Set working directory to project root
 
-##Used libraries
+## Used libraries
 * **SFML** is used for window handling, rendering and sound
 * **JsonCPP** is used for loading tiled maps
 
 
-##Gameart
+## Gameart
 
-####(Credit artists)
+(Credit artists)
 
 
-##Music and sounds
+## Music and sounds
 
-####(Credit artists)
+(Credit artists)
