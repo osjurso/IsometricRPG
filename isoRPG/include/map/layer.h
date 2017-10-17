@@ -19,7 +19,8 @@ protected:
     int width, height;
 
     // Lazy, but ram is cheap!
-    int tilemap[100][100];
+    int tilemap[150][150];
+
 };
 
 #endif

@@ -21,11 +21,10 @@ set(SOURCE_FILES
         src/map/object.cpp include/map/object.h
         src/map/layer.cpp include/map/layer.h
         src/map/sprite.cpp include/map/sprite.h
-        src/map/isometric_sprite.cpp include/map/isometric_sprite.h
         include/util/maths.h
         )
 
 add_executable(isoRPG ${SOURCE_FILES})
-target_include_directories(isoRPG PUBLIC .)
+target_include_directories(isoRPG PUBLIC . include)
 
 target_link_libraries (isoRPG jsoncpp sfml-graphics sfml-audio sfml-window sfml-system)

@@ -6,8 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "state_base.h"
-#include "include/map/object.h"
-#include "include/map/isometric_sprite.h"
+#include "map/object.h"
 
 class StateGame : public StateBase
 {
@@ -22,7 +21,7 @@ public:
 
 private:
     sf::View playerCam;
-    IsometricSprite mPlayer;
+    sf::Sprite mPlayer;
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
 

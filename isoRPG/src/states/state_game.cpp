@@ -2,10 +2,12 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "include/states/state_game.h"
-#include "include/gameEngine/resource_holder.h"
-#include "include/map/map.h"
-#include "include/util/utility.h"
+#include "states/state_game.h"
+#include "gameEngine/resource_holder.h"
+#include "map/map.h"
+#include "util/utility.h"
+
+
 
 StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
@@ -19,16 +21,14 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     playerCam.setSize(1920, 1080);
     playerCam.zoom(0.3f);
 
-
     // Load map information from JSON into object list
-    if (!Map::load("assets/map/IsoRPG.json", objects))
+    if (!Map::load("assets/map/map.json", objects))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
-
     mPlayer.setTexture(context.textures->get(Textures::Hero));
-    centerOrigin(mPlayer);
-    mPlayer.setWorldPosition(100.f, 100.f);
-    //mPlayer.setPosition(100.f, 100.f);
+    mPlayer.setOrigin(mPlayer.getGlobalBounds().width/2, mPlayer.getGlobalBounds().height*0.8);
+
+    mPlayer.setPosition(0, 0);
 }
 
 void StateGame::draw()
@@ -92,11 +92,13 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         isMovingRight = isPressed;
     else if (key == sf::Keyboard::Escape)
         requestStackPush(States::Pause);
-    else if (key == sf::Keyboard::F5)
+    else if (key == sf::Keyboard::F5 && !isPressed)
     {
         objects.clear();
         std::cout << "Loading map data ..." << std::endl;
-        if (!Map::load("data/IsoRPG.json", objects))
-            std::runtime_error("StateGame::StateGame - Failed to load map data.");
+        if (!Map::load("assets/map/map.json", objects))
+        {
+            std::cout << "Failed to reload map data." << std::endl;
+        }
     }
 }

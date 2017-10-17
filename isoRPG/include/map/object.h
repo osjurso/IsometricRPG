@@ -1,6 +1,9 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <states/state_base.h>
+#include <string>
+
 namespace sf
 {
     class RenderWindow;
@@ -23,6 +26,8 @@ class Object
 
 public:
     Object(TileSize tileSize) : tileSize(tileSize) { }
+
+
     virtual ~Object();
 
     virtual void process(float deltaTime) {}

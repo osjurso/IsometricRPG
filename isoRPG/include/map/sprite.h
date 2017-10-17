@@ -3,7 +3,7 @@
 
 #include <SFML/System/Clock.hpp>
 
-#include "include/map/object.h"
+#include "map/object.h"
 
 class Sprite : public Object
 {

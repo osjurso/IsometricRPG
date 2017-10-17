@@ -12,7 +12,6 @@ namespace Textures
 {
     enum ID
     {
-        Obama,
         Hero,
         TitleLogo,
         TitleText,

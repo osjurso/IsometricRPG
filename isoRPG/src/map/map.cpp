@@ -3,17 +3,19 @@
 
 #include <jsoncpp/json/json.h>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-#include "include/map/map.h"
-#include "include/map/object.h"
-#include "include/map/sprite.h"
-#include "include/map/layer.h"
+#include "map/map.h"
+#include "map/sprite.h"
+#include "map/layer.h"
 
 bool Map::load(std::string filename, std::list<Object*>& objects)
 {
     // Will contain the data we read in
     Json::Value root;
 
+
+    //TODO: Switch to CharReader and CharReaderBuilder
     // Parses the file
     Json::Reader reader;
 
@@ -42,7 +44,7 @@ bool Map::load(std::string filename, std::list<Object*>& objects)
             loadObjects(root, layer, objects, tileSize);
     }
 
-    // Read in tileset (Should be handled by a resource handler)
+    // Read in tileset TODO: Should be handled by a resource handler
     sf::Texture* tileset = new sf::Texture();
     tileset->loadFromFile("assets/map/" + root["tilesets"][0u]["image"].asString());
 
@@ -74,7 +76,6 @@ void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize ti
 void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize)
 {
     // Get all objects from layer
-
     for (Json::Value& object: layer["objects"])
     {
         Sprite* sprite = new Sprite(tileSize);
