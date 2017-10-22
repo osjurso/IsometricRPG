@@ -17,7 +17,6 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     mFire.setTexture(context.textures->get(Textures::MenuFire));
 
     fireSpriteSize = 265;
-
     spriteRect.top = 0;
     spriteRect.left = 0;
     spriteRect.height = fireSpriteSize;
@@ -113,7 +112,7 @@ bool StateMenu::handleEvent(const sf::Event& event)
     {
         if (mOptionIndex == Play)
         {
-            requestStateChange(States::Game);
+            requestStateChange(States::Character);
         }
         else if (mOptionIndex == Settings)
         {

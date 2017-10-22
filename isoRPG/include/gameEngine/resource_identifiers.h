@@ -16,7 +16,11 @@ namespace Textures
         TitleLogo,
         TitleText,
         MenuBackdrop,
-        MenuFire
+        MenuFire,
+        SettingsBackdorp,
+        SettingsSlider,
+        SettingKnob,
+        CharacterBox
     };
 }
 

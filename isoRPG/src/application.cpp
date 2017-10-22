@@ -1,3 +1,4 @@
+#include <include/states/state_character.h>
 #include "include/states/state_menu.h"
 #include "include/states/state_settings.h"
 #include "include/states/state_game.h"
@@ -24,6 +25,11 @@ Application::Application()
     mTextures.load(Textures::TitleText, "assets/textures/title-text.png");
     mTextures.load(Textures::MenuBackdrop, "assets/textures/menuBackdorp.png");
     mTextures.load(Textures::MenuFire, "assets/textures/fireSpriteSheet.png");
+    mTextures.load(Textures::SettingsBackdorp, "assets/textures/settingsBackground.png");
+    mTextures.load(Textures::SettingsSlider, "assets/textures/volumeslider.png");
+    mTextures.load(Textures::SettingKnob, "assets/textures/volumeKnob.png");
+    mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
+
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);
@@ -111,4 +117,5 @@ void Application::registerStates()
     mStateStack.registerState<StateSettings>(States::Settings);
     mStateStack.registerState<StateGame>(States::Game);
     mStateStack.registerState<StatePause>(States::Pause);
+    mStateStack.registerState<StateCharacter>(States::Character);
 }

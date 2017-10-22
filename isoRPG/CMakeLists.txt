@@ -22,7 +22,7 @@ set(SOURCE_FILES
         src/map/layer.cpp include/map/layer.h
         src/map/sprite.cpp include/map/sprite.h
         include/util/maths.h
-        )
+        src/states/state_character.cpp include/states/state_character.h)
 
 add_executable(isoRPG ${SOURCE_FILES})
 target_include_directories(isoRPG PUBLIC . include)
