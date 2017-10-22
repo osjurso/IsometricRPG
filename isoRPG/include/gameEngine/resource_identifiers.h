@@ -15,6 +15,7 @@ namespace Textures
         Hero,
         TitleLogo,
         TitleText,
+        MenuBackdrop
     };
 }
 

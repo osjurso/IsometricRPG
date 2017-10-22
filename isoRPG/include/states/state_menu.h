@@ -29,6 +29,7 @@ private:
 
 private:
     sf::Sprite mLogoSprite;
+    sf::Sprite mBackdrop;
 
     std::vector<sf::Text> mOptions;
     std::size_t mOptionIndex;

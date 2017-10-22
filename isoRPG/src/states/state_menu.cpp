@@ -12,8 +12,10 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     sf::Font& font = context.fonts->get(Fonts::Main);
 
     mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
+    mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
     centerOrigin(mLogoSprite);
     mLogoSprite.setPosition(context.window->getSize().x / 2, context.window->getSize().y / 4);
+    mBackdrop.setPosition(0,0);
 
     // Creating menu choices
     sf::Text playOption;
@@ -53,6 +55,7 @@ void StateMenu::draw()
 
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
+    window.draw(mBackdrop);
 
     for (const sf::Text& text : mOptions)
         window.draw(text);

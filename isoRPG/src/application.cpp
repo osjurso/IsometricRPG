@@ -22,6 +22,7 @@ Application::Application()
     mTextures.load(Textures::Hero, "assets/textures/hero-static-temp.png");
     mTextures.load(Textures::TitleLogo, "assets/textures/title-logo.png");
     mTextures.load(Textures::TitleText, "assets/textures/title-text.png");
+    mTextures.load(Textures::MenuBackdrop, "assets/textures/menuBackdorp.png");
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);
