@@ -23,6 +23,7 @@ Application::Application()
     mTextures.load(Textures::TitleLogo, "assets/textures/title-logo.png");
     mTextures.load(Textures::TitleText, "assets/textures/title-text.png");
     mTextures.load(Textures::MenuBackdrop, "assets/textures/menuBackdorp.png");
+    mTextures.load(Textures::MenuFire, "assets/textures/fireSpriteSheet.png");
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);

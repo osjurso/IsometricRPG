@@ -1,4 +1,5 @@
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <iostream>
 
 #include "include/states/state_menu.h"
 #include "include/gameEngine/resource_holder.h"
@@ -13,9 +14,21 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
     mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
+    mFire.setTexture(context.textures->get(Textures::MenuFire));
+
+    spriteRect.top = 0;
+    spriteRect.left = 0;
+    spriteRect.height = 256;
+    spriteRect.width = 256;
+
+    clock.restart();
+    mFire.setTextureRect(spriteRect);
+
+
     centerOrigin(mLogoSprite);
     mLogoSprite.setPosition(context.window->getSize().x / 2, context.window->getSize().y / 4);
     mBackdrop.setPosition(0,0);
+    mFire.setPosition(0,0);
 
     // Creating menu choices
     sf::Text playOption;
@@ -56,6 +69,7 @@ void StateMenu::draw()
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
     window.draw(mBackdrop);
+    window.draw(mFire);
 
     for (const sf::Text& text : mOptions)
         window.draw(text);
@@ -63,6 +77,22 @@ void StateMenu::draw()
 
 bool StateMenu::update(sf::Time)
 {
+    if(clock.getElapsedTime().asSeconds() > 0.1f)
+    {
+        if(spriteRect.left == 768)
+        {
+            StateMenu::spriteRect.left = 0;
+            StateMenu::spriteRect.top += 256;
+            if(spriteRect.top == 512)
+                spriteRect.top = 0;
+        }
+
+        else
+            StateMenu::spriteRect.left += 256;
+        mFire.setTextureRect(spriteRect);
+        clock.restart();
+    }
+
     return true;
 }
 
