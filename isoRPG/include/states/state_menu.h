@@ -31,8 +31,11 @@ private:
     sf::Sprite mLogoSprite;
     sf::Sprite mBackdrop;
     sf::Sprite mFire;
+    sf::Sprite mFire2;
     sf::IntRect spriteRect;
     sf::Clock clock;
+
+    int fireSpriteSize;
 
     std::vector<sf::Text> mOptions;
     std::size_t mOptionIndex;

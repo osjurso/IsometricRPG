@@ -16,10 +16,12 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
     mFire.setTexture(context.textures->get(Textures::MenuFire));
 
+    fireSpriteSize = 265;
+
     spriteRect.top = 0;
     spriteRect.left = 0;
-    spriteRect.height = 256;
-    spriteRect.width = 256;
+    spriteRect.height = fireSpriteSize;
+    spriteRect.width = fireSpriteSize;
 
     clock.restart();
     mFire.setTextureRect(spriteRect);
@@ -28,7 +30,11 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     centerOrigin(mLogoSprite);
     mLogoSprite.setPosition(context.window->getSize().x / 2, context.window->getSize().y / 4);
     mBackdrop.setPosition(0,0);
-    mFire.setPosition(0,0);
+
+    mFire2 = mFire;
+
+    mFire.setPosition(530,90); //TODO: do dynamacly
+    mFire2.setPosition(1130,90);
 
     // Creating menu choices
     sf::Text playOption;
@@ -36,6 +42,7 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     playOption.setString("Play");
     centerOrigin(playOption);
     playOption.setPosition(context.window->getView().getSize() / 2.f);
+    playOption.move(0,-250);
     mOptions.push_back(playOption);
 
     sf::Text settingsOption;
@@ -70,6 +77,7 @@ void StateMenu::draw()
     window.draw(mLogoSprite);
     window.draw(mBackdrop);
     window.draw(mFire);
+    window.draw(mFire2);
 
     for (const sf::Text& text : mOptions)
         window.draw(text);
@@ -79,17 +87,17 @@ bool StateMenu::update(sf::Time)
 {
     if(clock.getElapsedTime().asSeconds() > 0.1f)
     {
-        if(spriteRect.left == 768)
+        if(spriteRect.left == 3*fireSpriteSize)
         {
             StateMenu::spriteRect.left = 0;
-            StateMenu::spriteRect.top += 256;
-            if(spriteRect.top == 512)
+            StateMenu::spriteRect.top += fireSpriteSize;
+            if(spriteRect.top == 2*fireSpriteSize)
                 spriteRect.top = 0;
-        }
+        }else
+            StateMenu::spriteRect.left += fireSpriteSize;
 
-        else
-            StateMenu::spriteRect.left += 256;
         mFire.setTextureRect(spriteRect);
+        mFire2.setTextureRect(spriteRect);
         clock.restart();
     }
 
