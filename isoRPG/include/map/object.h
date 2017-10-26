@@ -1,9 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <states/state_base.h>
-#include <string>
-
 namespace sf
 {
     class RenderWindow;
@@ -27,7 +24,6 @@ class Object
 public:
     Object(TileSize tileSize) : tileSize(tileSize) { }
 
-
     virtual ~Object();
 
     virtual void process(float deltaTime) {}
@@ -38,8 +34,11 @@ public:
 
     const TileSize tileSize;
 
+    int priority;
+
 protected:
     sf::Texture* texture;
+    sf::Texture* trees;
 };
 
 #endif

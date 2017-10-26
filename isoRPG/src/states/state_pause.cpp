@@ -17,12 +17,14 @@ StatePause::StatePause(StateStack &stack, StateBase::Context context)
 void StatePause::draw()
 {
     sf::RenderWindow& window = *getContext().window;
+    window.clear();
+    window.setView(window.getDefaultView());
 
     window.draw(mPauseText);
 }
 
 bool StatePause::update(sf::Time dt) {
-    return true;
+    return false;
 }
 
 bool StatePause::handleEvent(const sf::Event &event) {
@@ -30,5 +32,5 @@ bool StatePause::handleEvent(const sf::Event &event) {
     if (event.key.code == sf::Keyboard::Escape && event.type == sf::Event::KeyPressed)
         requestStackPop();
 
-    return true;
+    return false;
 }
