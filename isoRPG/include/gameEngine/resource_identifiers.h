@@ -23,6 +23,7 @@ namespace Fonts
     enum ID
     {
         Main,
+        RPG,
     };
 }
 

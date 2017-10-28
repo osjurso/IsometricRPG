@@ -12,9 +12,24 @@ public:
     bool update(sf::Time dt) override;
     bool handleEvent(const sf::Event &event) override;
 
+    void updateOptionText();
+
+private:
+    enum OptionNames
+    {
+        resume,
+        settings,
+        Save,
+        exit,
+    };
+
 
 private:
     sf::Text mPauseText;
+
+    std::vector<sf::Text> mOptions;
+    std::size_t mOptionIndex;
+
 };
 
 
