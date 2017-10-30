@@ -1,4 +1,5 @@
 #include <include/states/state_character.h>
+#include <anax/World.hpp>
 #include "include/states/state_menu.h"
 #include "include/states/state_settings.h"
 #include "include/states/state_game.h"
@@ -12,11 +13,13 @@ Application::Application()
         : mWindow(sf::VideoMode(1920, 1080), "IsoRPG")
         , mTextures()
         , mFonts()
-        , mStateStack(StateBase::Context(mWindow, mTextures, mFonts))
+        , mWorld()
+        , mStateStack(StateBase::Context(mWindow, mTextures, mFonts,mWorld))
         , mStatisticsText()
         , mStatisticsUpdateTime()
         , mStatisticsNumFrames(0)
         , mDebugMode(false)
+
 {
     mFonts.load(Fonts::Main, "assets/fonts/Sansation.ttf");
 
@@ -30,13 +33,14 @@ Application::Application()
     mTextures.load(Textures::SettingKnob, "assets/textures/volumeKnob.png");
     mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
 
-
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);
     mStatisticsText.setCharacterSize(15);
 
+
+
     registerStates();
-    mStateStack.pushState(States::Title);
+    mStateStack.pushState(States::Menu);
 }
 
 void Application::run()

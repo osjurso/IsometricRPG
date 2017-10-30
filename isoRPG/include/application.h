@@ -2,6 +2,7 @@
 #define ISORPG_APPLICATION_H
 
 #include <SFML/Graphics.hpp>
+#include <anax/World.hpp>
 
 #include "include/gameEngine/state_stack.h"
 #include "include/gameEngine/resource_holder.h"
@@ -28,8 +29,10 @@ private:
     static const sf::Time TimePerFrame;
 
     sf::RenderWindow mWindow;
+    anax::World mWorld;
     TextureHolder mTextures;
     FontHolder mFonts;
+
 
     StateStack mStateStack;
 
