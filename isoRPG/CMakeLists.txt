@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5.2)
 project(isoRPG)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -27,4 +27,4 @@ set(SOURCE_FILES
 add_executable(isoRPG ${SOURCE_FILES})
 target_include_directories(isoRPG PUBLIC . include)
 
-target_link_libraries (isoRPG jsoncpp sfml-graphics sfml-audio sfml-window sfml-system)
+target_link_libraries (isoRPG jsoncpp sfml-graphics sfml-audio sfml-window sfml-system anax)
