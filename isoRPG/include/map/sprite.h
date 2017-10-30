@@ -16,6 +16,7 @@ public:
     void process(float time);
     void draw(sf::RenderWindow& window);
 
+
 protected:
     // Id of first tile
     int id;

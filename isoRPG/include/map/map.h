@@ -3,10 +3,6 @@
 
 #include <string>
 #include <list>
-#include <include/states/state_base.h>
-
-#include "include/gameEngine/resource_holder.h"
-#include "include/gameEngine/resource_identifiers.h"
 
 #include "object.h"
 

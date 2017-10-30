@@ -37,13 +37,26 @@ void StateGame::draw()
 
     window.setView(playerCam);
 
+    //Sorting objects based on priority (y coordinate), from low to high.
+    objects.sort([](Object *f, const Object *s) { return f->priority < s->priority; });
+
+    sf::CircleShape origin;
+    origin.setRadius(1);
+    origin.setFillColor(sf::Color::Green);
+    origin.setPosition(mPlayer.getPosition());
+
+    bool drawn = false;
     for (Object* object : objects)
     {
         object->process(1.f/60.f);
         object->draw(window);
+        if (object->priority < mPlayer.getPosition().y)
+        {
+            window.draw(mPlayer);
+            drawn = true;
+        }
     }
-
-    window.draw(mPlayer);
+    window.draw(origin);
 }
 
 bool StateGame::update(sf::Time dt)
@@ -90,9 +103,9 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         isMovingLeft = isPressed;
     else if (key == sf::Keyboard::D)
         isMovingRight = isPressed;
-    else if (key == sf::Keyboard::Escape)
+    else if (key == sf::Keyboard::Escape && isPressed)
         requestStackPush(States::Pause);
-    else if (key == sf::Keyboard::F5 && !isPressed)
+    else if (key == sf::Keyboard::F5 && isPressed)
     {
         objects.clear();
         std::cout << "Loading map data ..." << std::endl;

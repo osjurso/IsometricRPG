@@ -48,9 +48,13 @@ bool Map::load(std::string filename, std::list<Object*>& objects)
     sf::Texture* tileset = new sf::Texture();
     tileset->loadFromFile("assets/map/" + root["tilesets"][0u]["image"].asString());
 
+
     // Assign tileset to every object
     for (Object* object: objects)
+    {
         object->texture = tileset;
+
+    }
 
     return true;
 }
@@ -62,6 +66,7 @@ void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize ti
     // Store info on layer
     tmp->width = layer["width"].asInt();
     tmp->height = layer["height"].asInt();
+    tmp->priority = layer["priority"]["Priority"].asInt();
 
     // Clear tilemap
     memset(tmp->tilemap, 0, sizeof(tmp->tilemap));
@@ -84,6 +89,7 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>&
         sprite->x = object["x"].asInt();
         sprite->y = object["y"].asInt() - sprite->tileSize.y;
         sprite->id = object["gid"].asInt();
+        sprite->priority = object["y"].asInt();
 
         // Load animation data
         Json::Value& tileInfo = root["tilesets"][0u]["tiles"][std::to_string(sprite->id - 1)];
