@@ -29,6 +29,8 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     mPlayer.setOrigin(mPlayer.getGlobalBounds().width/2, mPlayer.getGlobalBounds().height*0.8);
 
     mPlayer.setPosition(0, 0);
+
+    context.music->play(Music::Test);
 }
 
 void StateGame::draw()
