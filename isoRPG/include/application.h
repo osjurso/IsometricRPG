@@ -32,7 +32,8 @@ private:
     anax::World mWorld;
     TextureHolder mTextures;
     FontHolder mFonts;
-
+    MusicPlayer mMusic;
+    SoundPlayer mSounds;
 
     StateStack mStateStack;
 
