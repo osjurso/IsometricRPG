@@ -25,6 +25,7 @@ private:
 
     // Handles object layers
     static void loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize);
+
 };
 
 

@@ -1,6 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <include/gameEngine/resource_identifiers.h>
+
 namespace sf
 {
     class RenderWindow;
@@ -38,7 +40,6 @@ public:
 
 protected:
     sf::Texture* texture;
-    sf::Texture* trees;
 };
 
 #endif

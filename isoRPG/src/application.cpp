@@ -43,7 +43,7 @@ Application::Application()
 
 
     registerStates();
-    mStateStack.pushState(States::Menu);
+    mStateStack.pushState(States::Title);
 }
 
 void Application::run()

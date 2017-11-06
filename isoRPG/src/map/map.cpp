@@ -48,19 +48,17 @@ bool Map::load(std::string filename, std::list<Object*>& objects)
     sf::Texture* tileset = new sf::Texture();
     tileset->loadFromFile("assets/map/" + root["tilesets"][0u]["image"].asString());
 
-
     // Assign tileset to every object
     for (Object* object: objects)
-    {
         object->texture = tileset;
 
-    }
 
     return true;
 }
 
 void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize tileSize)
 {
+
     Layer* tmp = new Layer(tileSize);
 
     // Store info on layer
@@ -83,7 +81,30 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>&
     // Get all objects from layer
     for (Json::Value& object: layer["objects"])
     {
+        Json::Value properties = root["tilesets"][0u]["tileproperties"];
+        int gid = object["gid"].asInt() - 1;
+
+        // Resetting tile height
+        tileSize.y = 64;
+
+        if (properties[std::to_string(gid)].isMember("Height"))
+        {
+            if (properties[std::to_string(gid)]["Height"].asInt() == 0)
+            {
+                std::cout << "Gid: " << gid <<" has height 0, skipping" << std::endl;
+                continue;
+            }
+            else
+            {
+                std::cout << "Gid: " << gid << " has height " << properties[std::to_string(gid)]["Height"].asInt() << ". Changing tile height" << std::endl;
+                tileSize.y *= properties[std::to_string(gid)]["Height"].asInt();
+                std::cout << "New height = " << tileSize.y << std::endl;
+            }
+        }
+
         Sprite* sprite = new Sprite(tileSize);
+
+        //tileSize.y = 64;
 
         // Load basic object info
         sprite->x = object["x"].asInt();
