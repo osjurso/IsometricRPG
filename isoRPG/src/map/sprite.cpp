@@ -19,19 +19,38 @@ void Sprite::draw(sf::RenderWindow& window)
     int tilex, tiley;
     getTileCoords(id, tilex, tiley);
 
-    // Using vertex arrays or permanent sprites would be faster
+    // TODO: Using vertex arrays or permanent sprites would be faster
     sf::Sprite sprite(*texture, sf::IntRect(tilex + frame * (tileSize.x + tileSize.s), tiley, tileSize.x, tileSize.y));
 
-    //sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height);
+    sprite.setOrigin(0, sprite.getGlobalBounds().height);
 
-    tilex = x - 32;
-    tiley = y + 32;
+    //TODO: Braindead solution. Fix offset calculation
+    if (tileSize.y == 64)
+    {
+        tilex = x + (16 * -1);
+        tiley = y + (16 * 5);
+    }
+    else if (tileSize.y == 128)
+    {
+        tilex = x + (16 * 3);
+        tiley = y + (16 * 13);
+    }
+    else if (tileSize.y == 192)
+    {
+        tilex = x + (16 * 7);
+        tiley = y + (16 * 21);
+    }
+    else //tilesize.y == 256
+    {
+        tilex = x + (16 * 11);
+        tiley = y + (16 * 29);
+    }
 
-    // Converts screen position to world position
-    sf::Vector2f v((tilex - tiley), (tilex + tiley)/2);
+    sf::Vector2f v(tilex, tiley);
+    CartesianToIsometric(v);
     sprite.setPosition(v);
 
-    priority = (int)(v.y + sprite.getGlobalBounds().height);
+    priority = (int)(v.y);
 
     window.draw(sprite);
 }

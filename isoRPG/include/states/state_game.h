@@ -25,7 +25,6 @@ private:
 
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
-
 protected:
     std::list<Object*> objects;
 };

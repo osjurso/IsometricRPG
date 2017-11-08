@@ -90,21 +90,12 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>&
         if (properties[std::to_string(gid)].isMember("Height"))
         {
             if (properties[std::to_string(gid)]["Height"].asInt() == 0)
-            {
-                std::cout << "Gid: " << gid <<" has height 0, skipping" << std::endl;
                 continue;
-            }
             else
-            {
-                std::cout << "Gid: " << gid << " has height " << properties[std::to_string(gid)]["Height"].asInt() << ". Changing tile height" << std::endl;
                 tileSize.y *= properties[std::to_string(gid)]["Height"].asInt();
-                std::cout << "New height = " << tileSize.y << std::endl;
-            }
         }
 
         Sprite* sprite = new Sprite(tileSize);
-
-        //tileSize.y = 64;
 
         // Load basic object info
         sprite->x = object["x"].asInt();

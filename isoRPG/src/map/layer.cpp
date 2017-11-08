@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "map/layer.h"
-#include "util/maths.h"
 
 void Layer::draw(sf::RenderWindow& window)
 {
@@ -13,7 +12,7 @@ void Layer::draw(sf::RenderWindow& window)
     //Dividing by tilesize to get tile at this poistion
     midTile = sf::Vector2i(midTile.x / (tileSize.x/2), midTile.y / (tileSize.y/2));
     //Calculating the Cartesian coordinates
-    midTile = IsometricToCartesian(midTile);
+    IsometricToCartesian(midTile);
 
     //TODO: ViewSize is in the wrong coordinate system
     int xMax = (int) (midTile.x + ((viewSize.x / 2) / (tileSize.x / 3))); //Bottom right tile
@@ -46,8 +45,7 @@ void Layer::draw(sf::RenderWindow& window)
             //TODO: Using vertex arrays or permanent sprites would be faster
             sf::Sprite sprite(*texture, sf::IntRect(tilex, tiley, tileSize.x, tileSize.y));
 
-            //TODO: Decide whether or not to change origin. Might mean less code, but could be disadvantages.
-            //sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height/2);
+            sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height/2);
 
             tilex = x * tileSize.x/2;
             tiley = y * tileSize.y/2;

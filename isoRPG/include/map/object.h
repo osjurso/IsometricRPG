@@ -34,6 +34,11 @@ public:
     // Calculate x and y position of given tile in the texture
     void getTileCoords(int tile, int& x, int& y);
 
+    void IsometricToCartesian(sf::Vector2f& v);
+    void IsometricToCartesian(sf::Vector2i& v);
+    void CartesianToIsometric(sf::Vector2f& v);
+    void CartesianToIsometric(sf::Vector2i& v);
+
     const TileSize tileSize;
 
     int priority;

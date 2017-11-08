@@ -42,23 +42,13 @@ void StateGame::draw()
     //Sorting objects based on priority (y coordinate), from low to high.
     objects.sort([](Object *f, const Object *s) { return f->priority < s->priority; });
 
-    sf::CircleShape origin;
-    origin.setRadius(1);
-    origin.setFillColor(sf::Color::Green);
-    origin.setPosition(mPlayer.getPosition());
-
-    bool drawn = false;
     for (Object* object : objects)
     {
         object->process(1.f/60.f);
         object->draw(window);
         if (object->priority < mPlayer.getPosition().y)
-        {
             window.draw(mPlayer);
-            drawn = true;
-        }
     }
-    window.draw(origin);
 }
 
 bool StateGame::update(sf::Time dt)

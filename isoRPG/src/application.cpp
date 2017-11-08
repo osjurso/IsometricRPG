@@ -40,8 +40,6 @@ Application::Application()
     mStatisticsText.setPosition(5.f, 5.f);
     mStatisticsText.setCharacterSize(15);
 
-
-
     registerStates();
     mStateStack.pushState(States::Title);
 }
