@@ -66,6 +66,8 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     mOptions.push_back(exitOption);
 
     updateOptionText();
+
+    context.music->play(Music::Menu);
 }
 
 void StateMenu::draw()
@@ -136,6 +138,7 @@ bool StateMenu::handleEvent(const sf::Event& event)
             mOptionIndex = mOptions.size() - 1;
 
         updateOptionText();
+        getContext().sounds->play(SoundEffects::Click);
     }
 
     else if (event.key.code == sf::Keyboard::Down)
@@ -146,6 +149,7 @@ bool StateMenu::handleEvent(const sf::Event& event)
             mOptionIndex = 0;
 
         updateOptionText();
+        getContext().sounds->play(SoundEffects::Click);
     }
 
     return true;

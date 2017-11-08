@@ -42,28 +42,12 @@ namespace Music
     };
 }
 
-namespace Sound
+namespace SoundEffects
 {
     enum ID
     {
         Test,
-    };
-}
-
-namespace Music
-{
-    enum ID
-    {
-        Menu,
-        Test,
-    };
-}
-
-namespace Sound
-{
-    enum ID
-    {
-        Test,
+        Click,
     };
 }
 
@@ -73,7 +57,7 @@ class ResourceHolder;
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
-typedef ResourceHolder<sf::SoundBuffer, Sound::ID> SoundBufferHolder;
+typedef ResourceHolder<sf::SoundBuffer, SoundEffects::ID> SoundBufferHolder;
 
 
 #endif //ISORPG_RESOURCE_IDENTIFIERS_H

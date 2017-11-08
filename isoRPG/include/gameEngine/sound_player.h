@@ -8,21 +8,18 @@
 #include <SFML/Audio/Sound.hpp>
 #include <list>
 
-class SoundPlayer
+class SoundPlayer : private sf::NonCopyable
 {
 public:
     SoundPlayer();
-    void play(Sound::ID effect);
-    void play(Sound::ID effect, sf::Vector2f position);
+
+    void play(SoundEffects::ID effect);
 
     void removeStoppedSounds();
-    void setListenerPosition(sf::Vector2f position);
-    sf::Vector2f getListenerPosition() const;
 
 private:
-    SoundBufferHolder mSoundBuffer;
+    SoundBufferHolder mSoundBuffers;
     std::list<sf::Sound> mSounds;
-
 };
 
 

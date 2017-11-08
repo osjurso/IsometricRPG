@@ -43,6 +43,12 @@ StatePause::StatePause(StateStack &stack, StateBase::Context context)
     exitOption.setPosition(saveOption.getPosition() + sf::Vector2f(0.f, 35.f));
     mOptions.push_back(exitOption);
 
+    getContext().music->setPaused(true);
+}
+
+StatePause::~StatePause()
+{
+    getContext().music->setPaused(false);
 }
 
 void StatePause::draw()
@@ -100,6 +106,7 @@ bool StatePause::handleEvent(const sf::Event &event)
             mOptionIndex = mOptions.size() - 1;
 
         updateOptionText();
+        getContext().sounds->play(SoundEffects::Click);
     }
 
     else if (event.key.code == sf::Keyboard::Down)
@@ -110,6 +117,7 @@ bool StatePause::handleEvent(const sf::Event &event)
             mOptionIndex = 0;
 
         updateOptionText();
+        getContext().sounds->play(SoundEffects::Click);
     }
 
     return false;
