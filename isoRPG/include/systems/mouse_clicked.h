@@ -55,6 +55,7 @@ private:
         {
             std::cout<< "You Pressed a element" << std::endl;
             //TODO implement functions to run when element is pressed
+            std::cout<< "You Pressed: " << e.getId() << std::endl;
 
         }
     }

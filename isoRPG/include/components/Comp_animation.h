@@ -9,8 +9,6 @@ class AnimationComponent: public anax::Component
     sf::Vector2u currentImage;
     float totalTime;
     float switchTime;
-    int Imagesize;
-    sf::Sprite;
 };
 
 #endif //ISORPG_COMP_ANIMATION_H

@@ -3,7 +3,7 @@
 #include <include/systems/mouse_clicked.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
-
+#include "include/collections/drawable.h"
 
 StateMenu::StateMenu(StateStack& stack, Context context)
         : StateBase(stack, context)
@@ -66,24 +66,16 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     mOptions.push_back(exitOption);
 
     //PositionComponent& positionComponent = e.getComponent<PositionComponent>();
-    anax::Entity e = context.world->createEntity();
 
-    e.addComponent<TextureComponent>();
-    TextureComponent& textureComponent = e.getComponent<TextureComponent>();
-    textureComponent.texture = context.textures->get(Textures::TitleLogo);
-    textureComponent.sprite.setTexture(textureComponent.texture);
+    anax::World& world = *getContext().world;
 
-    e.addComponent<PositionComponent>();
-    PositionComponent& positionComponent = e.getComponent<PositionComponent>();
-    positionComponent.YPos = 500;
-    positionComponent.XPos = 500;
+    Draweble draweble;
+    sf::Texture& texture = context.textures->get(Textures::MenuFire);
+    sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
 
-    e.addComponent<SizeComponent>();
-    SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
-    sizeComponent.Height = textureComponent.texture.getSize().y;
-    sizeComponent.Whith = textureComponent.texture.getSize().x;
-    e.activate();
-
+    draweble.makeDraweble(menuBackdrop,0,0,world);
+    //draweble.makeDraweble(texture,300,500, world);
+    //draweble.makeDraweble(texture,800,500, world);
     updateOptionText();
 }
 
@@ -93,7 +85,6 @@ void StateMenu::draw()
 
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
-    window.draw(mBackdrop);
     //window.draw(mFire);
     //window.draw(mFire2);
 
