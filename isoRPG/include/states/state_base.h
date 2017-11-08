@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <anax/anax.hpp>
 #include <include/gameEngine/music_player.h>
-#include <src/gamEngine/sound_player.h>
+#include <include/gameEngine/sound_player.h>
 
 #include "include/gameEngine/state_identifiers.h"
 #include "include/gameEngine/resource_identifiers.h"
