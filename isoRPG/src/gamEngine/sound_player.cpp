@@ -1,6 +1,6 @@
 #include <complex>
-#include "sound_player.h"
-#include <SFML/Audio/Listener.hpp>
+#include "include/gameEngine/sound_player.h"
+#include "SFML/Audio.hpp"
 
 namespace
 {

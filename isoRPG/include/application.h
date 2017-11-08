@@ -2,6 +2,7 @@
 #define ISORPG_APPLICATION_H
 
 #include <SFML/Graphics.hpp>
+#include "SFML/Audio.hpp"
 #include <anax/World.hpp>
 
 #include "include/gameEngine/state_stack.h"

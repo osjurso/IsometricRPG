@@ -1,6 +1,7 @@
 #include "include/states/state_base.h"
 #include "include/gameEngine/state_stack.h"
 
+
 StateBase::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, anax::World& world, MusicPlayer& music, SoundPlayer& sounds)
         : window(&window)
         , textures(&textures)
