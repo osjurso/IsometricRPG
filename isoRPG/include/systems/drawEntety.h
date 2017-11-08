@@ -24,15 +24,16 @@ class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent
 public:
     DrawEntetys(){}
 
-    void draw(sf::RenderWindow& window)
+    void draw(sf::RenderWindow& window, anax::World& world)
     {
-        auto enteties = getEntities();
+        auto enteties = world.getEntities();
 
         for(auto i : enteties)
         {
             TextureComponent textureComponent  = i.getComponent<TextureComponent>();
+            PositionComponent positionComponent = i.getComponent<PositionComponent>();
+            textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
             window.draw(textureComponent.sprite);
-            //process(i, window);
         }
     }
 };

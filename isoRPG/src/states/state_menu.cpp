@@ -1,9 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
 #include <include/systems/drawEntety.h>
-
+#include <include/systems/mouse_clicked.h>
 #include "include/states/state_menu.h"
-#include "include/gameEngine/resource_holder.h"
 #include "include/util/utility.h"
 
 
@@ -77,8 +75,8 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     e.addComponent<PositionComponent>();
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
-    positionComponent.YPos = 20;
-    positionComponent.XPos = 20;
+    positionComponent.YPos = 500;
+    positionComponent.XPos = 500;
 
     e.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
@@ -95,12 +93,14 @@ void StateMenu::draw()
 
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
-    //window.draw(mBackdrop);
-    window.draw(mFire);
-    window.draw(mFire2);
+    window.draw(mBackdrop);
+    //window.draw(mFire);
+    //window.draw(mFire2);
 
+    anax::World& world = *getContext().world;
     DrawEntetys drawEntetys;
-    drawEntetys.draw(window);
+    drawEntetys.draw(window,world);
+
 
     for (const sf::Text& text : mOptions)
         window.draw(text);
@@ -130,8 +130,14 @@ bool StateMenu::update(sf::Time)
 
 bool StateMenu::handleEvent(const sf::Event& event)
 {
+
     if (event.type != sf::Event::KeyPressed)
-        return false;
+    {
+        if(event.type != sf::Event::MouseButtonPressed)
+            return false;
+    }
+
+
 
     if (event.key.code == sf::Keyboard::Return)
     {
@@ -171,6 +177,15 @@ bool StateMenu::handleEvent(const sf::Event& event)
             mOptionIndex = 0;
 
         updateOptionText();
+    }
+
+    else if(event.type == sf::Event::MouseButtonPressed)
+    {
+        anax::World& world = *getContext().world;
+        sf::RenderWindow& window = *getContext().window;
+        MouseClicked mouseClicked;
+        mouseClicked.Clicked(world,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y);
+
     }
 
     return true;

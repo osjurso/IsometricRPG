@@ -9,15 +9,16 @@
 #include <include/components/Comp_size.h>
 #include <include/components/Comp_mousedOver.h>
 #include <components/Comp_position.h>
+#include <iostream>
 
 struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>
 {
 public:
     MouseClicked()
     {}
-    void Clicked(float MouseX, float MouseY)
+    void Clicked(anax::World& world, float MouseX, float MouseY)
     {
-        auto enteties = getEntities();
+        auto enteties = world.getEntities();
 
         for(auto i : enteties)
         {
@@ -30,19 +31,31 @@ private:
     {
         PositionComponent& positionComponent = e.getComponent<PositionComponent>();
         SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
-        MousedOver& mousedOver = e.getComponent<MousedOver>();
+        //MousedOver& mousedOver = e.getComponent<MousedOver>();
 
-        if(MouseX <= positionComponent.XPos && MouseX >= positionComponent.XPos + sizeComponent.Whith)
+        bool Venstre = false;
+        bool Hoyre = false;
+        bool Nede = false;
+        bool Oppe = false;
+
+        if(MouseX >= positionComponent.XPos)
+            Venstre = true;
+
+        if(MouseX <= positionComponent.XPos+ sizeComponent.Height)
+            Hoyre = true;
+
+        if(MouseY >= positionComponent.YPos)
+            Oppe = true;
+
+        if(MouseY <= positionComponent.YPos + sizeComponent.Whith)
+            Nede = true;
+
+
+        if(Venstre && Hoyre && Oppe && Nede)
         {
-            if(MouseY<= positionComponent.YPos && MouseY >= positionComponent.YPos + sizeComponent.Height)
-            {
-                //MouseClicked entety e
-                mousedOver.MousedOver = true;
+            std::cout<< "You Pressed a element" << std::endl;
+            //TODO implement functions to run when element is pressed
 
-            }else
-            {
-                mousedOver.MousedOver = false;
-            }
         }
     }
 };
