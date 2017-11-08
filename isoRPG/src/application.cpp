@@ -1,5 +1,4 @@
 #include <include/states/state_character.h>
-#include <anax/World.hpp>
 #include "include/states/state_menu.h"
 #include "include/states/state_settings.h"
 #include "include/states/state_game.h"

@@ -1,11 +1,11 @@
 #include <iostream>
-#include <anax/anax.hpp>
 
 #include "include/application.h"
 
 
 int main()
 {
+
     try
     {
         Application app;

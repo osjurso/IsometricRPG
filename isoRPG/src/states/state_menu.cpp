@@ -1,9 +1,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <iostream>
+#include <include/systems/drawEntety.h>
 
 #include "include/states/state_menu.h"
 #include "include/gameEngine/resource_holder.h"
 #include "include/util/utility.h"
+
 
 StateMenu::StateMenu(StateStack& stack, Context context)
         : StateBase(stack, context)
@@ -65,6 +67,25 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     exitOption.setPosition(aboutOption.getPosition() + sf::Vector2f(0.f, 35.f));
     mOptions.push_back(exitOption);
 
+    //PositionComponent& positionComponent = e.getComponent<PositionComponent>();
+    anax::Entity e = context.world->createEntity();
+
+    e.addComponent<TextureComponent>();
+    TextureComponent& textureComponent = e.getComponent<TextureComponent>();
+    textureComponent.texture = context.textures->get(Textures::TitleLogo);
+    textureComponent.sprite.setTexture(textureComponent.texture);
+
+    e.addComponent<PositionComponent>();
+    PositionComponent& positionComponent = e.getComponent<PositionComponent>();
+    positionComponent.YPos = 20;
+    positionComponent.XPos = 20;
+
+    e.addComponent<SizeComponent>();
+    SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
+    sizeComponent.Height = textureComponent.texture.getSize().y;
+    sizeComponent.Whith = textureComponent.texture.getSize().x;
+    e.activate();
+
     updateOptionText();
 }
 
@@ -74,9 +95,12 @@ void StateMenu::draw()
 
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
-    window.draw(mBackdrop);
+    //window.draw(mBackdrop);
     window.draw(mFire);
     window.draw(mFire2);
+
+    DrawEntetys drawEntetys;
+    drawEntetys.draw(window);
 
     for (const sf::Text& text : mOptions)
         window.draw(text);
@@ -99,6 +123,7 @@ bool StateMenu::update(sf::Time)
         mFire2.setTextureRect(spriteRect);
         clock.restart();
     }
+
 
     return true;
 }

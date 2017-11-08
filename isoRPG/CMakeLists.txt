@@ -22,7 +22,7 @@ set(SOURCE_FILES
         src/map/layer.cpp include/map/layer.h
         src/map/sprite.cpp include/map/sprite.h
         include/util/maths.h
-        src/states/state_character.cpp include/states/state_character.h)
+        src/states/state_character.cpp include/states/state_character.h include/components/Comp_position.h include/components/Comp_size.h src/systems/mouse_clicked.cpp include/components/Comp_animation.h include/systems/mouse_clicked.h include/components/Comp_mousedOver.h include/components/Comp_Texture.h include/systems/drawEntety.h)
 
 add_executable(isoRPG ${SOURCE_FILES})
 target_include_directories(isoRPG PUBLIC . include)

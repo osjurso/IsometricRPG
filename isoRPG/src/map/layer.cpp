@@ -15,7 +15,7 @@ void Layer::draw(sf::RenderWindow& window)
     //Calculating the Cartesian coordinates
     midTile = IsometricToCartesian(midTile);
 
-    //TODO: ViewSize is in the wrong coordinate system
+    //TODO: ViewSize is in the wrong coordinate systems
     int xMax = (int) (midTile.x + ((viewSize.x / 2) / (tileSize.x / 3))); //Bottom right tile
     int xMin = (int) (midTile.x - ((viewSize.x / 2) / (tileSize.x / 3))); //Top left tile
     int yMax = (int) (midTile.y + ((viewSize.y / 2) / (tileSize.y / 5))); //Bottom left tile
