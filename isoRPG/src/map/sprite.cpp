@@ -19,23 +19,38 @@ void Sprite::draw(sf::RenderWindow& window)
     int tilex, tiley;
     getTileCoords(id, tilex, tiley);
 
-    // Using vertex arrays or permanent sprites would be faster
+    // TODO: Using vertex arrays or permanent sprites would be faster
     sf::Sprite sprite(*texture, sf::IntRect(tilex + frame * (tileSize.x + tileSize.s), tiley, tileSize.x, tileSize.y));
-    sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height);
-    // Adjusting coordinates because it places tiles based on texture origin (texture is 64x64),
-    // instead of tilesize (64x32)
-    tilex = x; //- 32;
-    tiley = y; //+ 32;
 
-    // Converts screen position to world position
-    sf::Vector2f v((tilex - tiley), (tilex + tiley)/2);
+    sprite.setOrigin(0, sprite.getGlobalBounds().height);
+
+    //TODO: Braindead solution. Fix offset calculation
+    if (tileSize.y == 64)
+    {
+        tilex = x + (16 * -1);
+        tiley = y + (16 * 5);
+    }
+    else if (tileSize.y == 128)
+    {
+        tilex = x + (16 * 3);
+        tiley = y + (16 * 13);
+    }
+    else if (tileSize.y == 192)
+    {
+        tilex = x + (16 * 7);
+        tiley = y + (16 * 21);
+    }
+    else //tilesize.y == 256
+    {
+        tilex = x + (16 * 11);
+        tiley = y + (16 * 29);
+    }
+
+    sf::Vector2f v(tilex, tiley);
+    CartesianToIsometric(v);
     sprite.setPosition(v);
-    priority = (int)(v.y);
-    window.draw(sprite);
 
-    sf::CircleShape origin;
-    origin.setRadius(1);
-    origin.setFillColor(sf::Color::Green);
-    origin.setPosition(sprite.getPosition());
-    window.draw(origin);
+    priority = (int)(v.y);
+
+    window.draw(sprite);
 }

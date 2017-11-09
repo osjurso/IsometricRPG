@@ -2,6 +2,7 @@
 #define ISORPG_APPLICATION_H
 
 #include <SFML/Graphics.hpp>
+#include "SFML/Audio.hpp"
 #include <anax/World.hpp>
 
 #include "include/gameEngine/state_stack.h"
@@ -32,7 +33,8 @@ private:
     anax::World mWorld;
     TextureHolder mTextures;
     FontHolder mFonts;
-
+    MusicPlayer mMusic;
+    SoundPlayer mSounds;
 
     StateStack mStateStack;
 

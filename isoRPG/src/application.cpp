@@ -13,7 +13,9 @@ Application::Application()
         , mTextures()
         , mFonts()
         , mWorld()
-        , mStateStack(StateBase::Context(mWindow, mTextures, mFonts,mWorld))
+        , mMusic()
+        , mSounds()
+        , mStateStack(StateBase::Context(mWindow, mTextures, mFonts, mWorld, mMusic, mSounds))
         , mStatisticsText()
         , mStatisticsUpdateTime()
         , mStatisticsNumFrames(0)
@@ -21,6 +23,7 @@ Application::Application()
 
 {
     mFonts.load(Fonts::Main, "assets/fonts/Sansation.ttf");
+    mFonts.load(Fonts::RPG, "assets/fonts/breathe_fire.otf");
 
     mTextures.load(Textures::Hero, "assets/textures/hero-static-temp.png");
     mTextures.load(Textures::TitleLogo, "assets/textures/title-logo.png");
@@ -36,10 +39,8 @@ Application::Application()
     mStatisticsText.setPosition(5.f, 5.f);
     mStatisticsText.setCharacterSize(15);
 
-
-
     registerStates();
-    mStateStack.pushState(States::Menu);
+    mStateStack.pushState(States::Title);
 }
 
 void Application::run()
