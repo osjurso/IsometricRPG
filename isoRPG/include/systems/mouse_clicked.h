@@ -22,7 +22,8 @@ public:
 
         for(auto i : enteties)
         {
-            process(i,MouseX,MouseY);
+            if(i.hasComponent<MousedOver>())
+                process(i,MouseX,MouseY);
         }
     }
 

@@ -18,9 +18,8 @@
 class Draweble
 {
 public:
-    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::World& world)
+    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity)
     {
-        anax::Entity entity = world.createEntity();
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
         textureComponent.texture = texture;

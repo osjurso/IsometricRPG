@@ -70,12 +70,19 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     anax::World& world = *getContext().world;
 
     Draweble draweble;
-    sf::Texture& texture = context.textures->get(Textures::MenuFire);
+    sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
 
-    draweble.makeDraweble(menuBackdrop,0,0,world);
-    //draweble.makeDraweble(texture,300,500, world);
-    //draweble.makeDraweble(texture,800,500, world);
+    anax::Entity menuBackdropEntity = world.createEntity();
+    anax::Entity logo1 = world.createEntity();
+    anax::Entity logo2 = world.createEntity();
+
+    logo1.addComponent<MousedOver>();
+    logo2.addComponent<MousedOver>();
+
+    draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity);
+    draweble.makeDraweble(texture,300,500, logo1);
+    draweble.makeDraweble(texture,800,500, logo2);
     updateOptionText();
 }
 
