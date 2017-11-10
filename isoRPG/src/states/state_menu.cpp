@@ -95,6 +95,7 @@ void StateMenu::draw()
 {
     sf::RenderWindow& window = *getContext().window;
 
+    //Player player(sf::Vector2u(32,8), 2.0f, 50.0f);
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
     //window.draw(mFire);

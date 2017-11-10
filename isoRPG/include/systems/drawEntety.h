@@ -17,6 +17,7 @@
 #include <include/components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
+#include <include/components/Comp_animation.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -32,6 +33,11 @@ public:
         {
             TextureComponent textureComponent  = i.getComponent<TextureComponent>();
             PositionComponent positionComponent = i.getComponent<PositionComponent>();
+
+            if (i.hasComponent<AnimationComponent>()) {
+                textureComponent.spriteRect = textureComponent.spriteRect;
+            }
+
             textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
             window.draw(textureComponent.sprite);
         }
