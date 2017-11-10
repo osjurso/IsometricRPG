@@ -72,17 +72,20 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     Draweble draweble;
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
+    sf::Texture& hero = context.textures->get(Textures::tempHero);
 
     anax::Entity menuBackdropEntity = world.createEntity();
     anax::Entity logo1 = world.createEntity();
     anax::Entity logo2 = world.createEntity();
+    anax::Entity hero1 = world.createEntity();
 
     logo1.addComponent<MousedOver>();
     logo2.addComponent<MousedOver>();
 
     draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity);
     draweble.makeDraweble(texture,300,500, logo1);
-    draweble.makeDraweble(texture,800,500, logo2);
+    //draweble.makeDraweble(texture,800,500, logo2);
+    draweble.makeDraweble(hero, 800, 500, hero1);
     updateOptionText();
 
     context.music->play(Music::Menu);

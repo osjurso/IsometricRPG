@@ -35,6 +35,8 @@ public:
         sizeComponent.Height = textureComponent.texture.getSize().x;
         sizeComponent.Whith = textureComponent.texture.getSize().y;
         entity.activate();
+
+
     }
 };
 

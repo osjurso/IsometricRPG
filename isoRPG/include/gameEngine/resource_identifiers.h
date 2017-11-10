@@ -20,7 +20,8 @@ namespace Textures
         SettingsBackdorp,
         SettingsSlider,
         SettingKnob,
-        CharacterBox
+        CharacterBox,
+        tempHero
     };
 }
 
