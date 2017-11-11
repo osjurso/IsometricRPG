@@ -2,6 +2,7 @@
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
 #include <include/components/Player.h>
+#include <include/components/Comp_aniamteble.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
 #include "include/collections/drawable.h"
@@ -81,6 +82,7 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     //anax::Entity logo1 = world.createEntity();
     //anax::Entity logo2 = world.createEntity();
     anax::Entity hero1 = world.createEntity();
+    hero1.addComponent<Animated>();
     player.walk(clock.getElapsedTime().asSeconds());
 
     //logo1.addComponent<MousedOver>();
