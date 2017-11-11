@@ -9,7 +9,6 @@
 #include <application.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-
 #include <include/components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
@@ -35,8 +34,6 @@ public:
         sizeComponent.Height = textureComponent.texture.getSize().x;
         sizeComponent.Whith = textureComponent.texture.getSize().y;
         entity.activate();
-
-
     }
 };
 

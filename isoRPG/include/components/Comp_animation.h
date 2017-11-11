@@ -7,13 +7,13 @@ class AnimationComponent: public anax::Component
 {
 
 public:
-    AnimationComponent(sf::Vector2u imageCount, float switchTime);
+    AnimationComponent(sf::Texture& texture, sf::Vector2u imageCount, float switchTime);
     ~AnimationComponent();
 
     void walk(int row, float deltaTime, bool faceRight, bool faceUp, sf::Vector2f speed);
 
 public:
-    sf::IntRect spriteRect;
+    sf::IntRect animationRect;
 
 private:
     sf::Vector2u imageCounter;

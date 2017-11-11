@@ -1,12 +1,13 @@
 #include <include/components/Comp_animation.h>
 
 
-AnimationComponent::AnimationComponent(sf::Vector2u imageCount, float switchTime) {
+AnimationComponent::AnimationComponent(sf::Texture& texture, sf::Vector2u imageCount, float switchTime) {
     this->imageCounter = imageCount;
     this->switchTime = switchTime;
     totalTime = 0.0f;
-    spriteRect.width = pixleWidth;
-    spriteRect.height = pixleHeight;
+    animationRect.width = pixleWidth;
+    animationRect.height = pixleHeight;
+
 }
 
 AnimationComponent::~AnimationComponent() {}
@@ -48,21 +49,20 @@ void AnimationComponent::walk(int row, float deltaTime, bool faceRight, bool fac
         }
     }
 
-    spriteRect.top = currentImage.y * spriteRect.height;
-/*
+    animationRect.top = currentImage.y * animationRect.height;
+
     if (!faceRight) {
-        spriteRect.left = (currentImage.x + 1) * abs(spriteRect.width);
+        animationRect.left = (currentImage.x + 1) * abs(animationRect.width);
     }
 
     if(faceRight) {
-        spriteRect.left = currentImage.x * abs(spriteRect.width);
+        animationRect.left = currentImage.x * abs(animationRect.width);
     }
 
     if (!faceUp) {
-        spriteRect.left = (currentImage.x + 1) * abs(spriteRect.width);
+        animationRect.left = (currentImage.x + 1) * abs(animationRect.width);
     }
     if (faceUp) {
-        spriteRect.left = (currentImage.x + 1) * abs(spriteRect.width);
+        animationRect.left = (currentImage.x + 1) * abs(animationRect.width);
     }
-    */
 }

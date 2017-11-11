@@ -1,7 +1,3 @@
-//
-// Created by Bjornar on 02.11.2017.
-//
-
 #ifndef ISORPG_DRAWENTETY_H
 #define ISORPG_DRAWENTETY_H
 
@@ -25,6 +21,7 @@ class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent
 public:
     DrawEntetys(){}
 
+
     void draw(sf::RenderWindow& window, anax::World& world)
     {
         auto enteties = world.getEntities();
@@ -35,7 +32,6 @@ public:
             PositionComponent positionComponent = i.getComponent<PositionComponent>();
 
             if (i.hasComponent<AnimationComponent>()) {
-                textureComponent.spriteRect = textureComponent.spriteRect;
             }
 
             textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
@@ -43,6 +39,5 @@ public:
         }
     }
 };
-
 
 #endif //ISORPG_DRAWENTETY_H

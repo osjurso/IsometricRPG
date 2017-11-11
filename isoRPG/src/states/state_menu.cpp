@@ -1,6 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
+#include <include/components/Player.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
 #include "include/collections/drawable.h"
@@ -15,6 +16,7 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
     mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
     mFire.setTexture(context.textures->get(Textures::MenuFire));
+
 
     fireSpriteSize = 265;
     spriteRect.top = 0;
@@ -73,20 +75,26 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
     sf::Texture& hero = context.textures->get(Textures::tempHero);
+    Player player(hero, sf::Vector2u(32,8), 0.2f, 100.f);
 
     anax::Entity menuBackdropEntity = world.createEntity();
-    anax::Entity logo1 = world.createEntity();
-    anax::Entity logo2 = world.createEntity();
+    //anax::Entity logo1 = world.createEntity();
+    //anax::Entity logo2 = world.createEntity();
     anax::Entity hero1 = world.createEntity();
+    player.walk(clock.getElapsedTime().asSeconds());
 
-    logo1.addComponent<MousedOver>();
-    logo2.addComponent<MousedOver>();
+    //logo1.addComponent<MousedOver>();
+    //logo2.addComponent<MousedOver>();
 
     draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity);
-    draweble.makeDraweble(texture,300,500, logo1);
+    //draweble.makeDraweble(texture,300,500, logo1);
     //draweble.makeDraweble(texture,800,500, logo2);
-    draweble.makeDraweble(hero, 800, 500, hero1);
+    draweble.makeDraweble(hero, 100, 200, hero1);
     updateOptionText();
+
+
+
+    player.walk(clock.getElapsedTime().asSeconds());
 
     context.music->play(Music::Menu);
 }
@@ -95,7 +103,6 @@ void StateMenu::draw()
 {
     sf::RenderWindow& window = *getContext().window;
 
-    //Player player(sf::Vector2u(32,8), 2.0f, 50.0f);
     window.setView(window.getDefaultView());
     window.draw(mLogoSprite);
     //window.draw(mFire);
@@ -140,8 +147,6 @@ bool StateMenu::handleEvent(const sf::Event& event)
         if(event.type != sf::Event::MouseButtonPressed)
             return false;
     }
-
-
 
     if (event.key.code == sf::Keyboard::Return)
     {
