@@ -68,6 +68,7 @@ void Player::walk(float deltaTime) {
 
     sBody.setTextureRect(animation.animationRect);
 
+
     sBody.move(movement);
 
 }
