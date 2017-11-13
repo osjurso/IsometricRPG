@@ -34,6 +34,7 @@ private:
     sf::Sprite mFire2;
     sf::IntRect spriteRect;
     sf::Clock clock;
+    anax::Entity player;
 
     int fireSpriteSize;
 

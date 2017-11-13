@@ -1,6 +1,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
+#include <include/collections/setUpPlayer.h>
+#include <include/systems/resolve_movment.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
 #include "include/collections/drawable.h"
@@ -67,15 +69,21 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     //PositionComponent& positionComponent = e.getComponent<PositionComponent>();
 
-    anax::World& world = *getContext().world;
+    anax::World& world = *getContext().world;;
 
     Draweble draweble;
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
+    sf::Texture& Herobody = context.textures->get(Textures::Hero);
 
     anax::Entity menuBackdropEntity = world.createEntity();
     anax::Entity logo1 = world.createEntity();
     anax::Entity logo2 = world.createEntity();
+    player = world.createEntity();
+
+    SetUpPlayer playerSetup;
+
+    playerSetup.setUpPlayer(player, Herobody, *getContext().window);
 
     logo1.addComponent<MousedOver>();
     logo2.addComponent<MousedOver>();
@@ -168,6 +176,15 @@ bool StateMenu::handleEvent(const sf::Event& event)
 
         updateOptionText();
         getContext().sounds->play(SoundEffects::Click);
+
+        AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
+        if(animationComponent.direction != "Up" )animationComponent.changedDirection = true;
+        animationComponent.direction = "Up";
+        animationComponent.movementDirection.y -= animationComponent.movementSpeed*animationComponent.deltaTime;
+        animationComponent.row = 2;
+        ResolveMovment resolve;
+
+        resolve.resolveMovment(player, "Walk");
     }
 
     else if (event.key.code == sf::Keyboard::Down)
@@ -179,6 +196,14 @@ bool StateMenu::handleEvent(const sf::Event& event)
 
         updateOptionText();
         getContext().sounds->play(SoundEffects::Click);
+
+        AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
+        animationComponent.movementDirection.y += animationComponent.movementSpeed*animationComponent.deltaTime;
+        if(animationComponent.direction != "Down" )animationComponent.changedDirection = true;
+        animationComponent.row = 6;
+        ResolveMovment resolve;
+        resolve.resolveMovment(player, "Walk");
+
     }
 
     else if(event.type == sf::Event::MouseButtonPressed)

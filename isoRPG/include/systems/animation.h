@@ -27,7 +27,13 @@ public:
 
         for(auto i : enteties)
         {
-            TextureComponent &textureComponent = i.getComponent<TextureComponent>();
+            if(i.hasComponent<AnimationComponent>())
+            {
+                AnimationComponent animationComponent = i.getComponent<AnimationComponent>();
+                std::strign direction = animationComponent.direction;
+
+                resolveMovment(i);
+            }//end of hascomponent
         }
     }
 };
