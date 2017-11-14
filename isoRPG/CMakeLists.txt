@@ -38,7 +38,7 @@ set(SOURCE_FILES
         src/gamEngine/music_player.cpp
         include/gameEngine/music_player.h
         src/gamEngine/sound_player.cpp
-        include/gameEngine/sound_player.h src/components/Comp_animation.cpp src/components/Player.cpp include/components/Player.h include/components/Comp_aniamteble.h)
+        include/gameEngine/sound_player.h include/components/Comp_aniamteble.h)
 
 
 add_executable(isoRPG ${SOURCE_FILES})

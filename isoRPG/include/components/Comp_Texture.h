@@ -15,6 +15,7 @@ public:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::IntRect spriteRect;
+    int pixles;
 };
 
 #endif //ISORPG_COMP_TEXTURE_H

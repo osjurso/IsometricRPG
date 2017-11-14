@@ -19,14 +19,15 @@ class Draweble
 public:
     void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity)
     {
+
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
         textureComponent.texture = texture;
         textureComponent.sprite.setTexture(texture);
 
         if (entity.hasComponent<Animated>()) {
-            textureComponent.spriteRect.height = 128; //TODO: her må det vere mulig og sette in dynamisk, ville gjort det med og sende in noe til denne (makeDraweble)
-            textureComponent.spriteRect.width = 128;
+            textureComponent.spriteRect.height = textureComponent.pixles; //TODO: her må det vere mulig og sette in dynamisk, ville gjort det med og sende in noe til denne (makeDraweble)
+            textureComponent.spriteRect.width = textureComponent.pixles;
             textureComponent.spriteRect.top = 0;  //TODO: Det er denne og den under du må endre på en annen plass slik at den hopper rundt på texturen
             textureComponent.spriteRect.left = 0;
             textureComponent.sprite.setTextureRect(textureComponent.spriteRect);

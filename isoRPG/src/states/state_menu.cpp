@@ -1,7 +1,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
-#include <include/components/Player.h>
 #include <include/components/Comp_aniamteble.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
@@ -13,6 +12,8 @@ StateMenu::StateMenu(StateStack& stack, Context context)
         , mOptionIndex(0)
 {
     sf::Font& font = context.fonts->get(Fonts::Main);
+
+
 
     mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
     mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
@@ -72,18 +73,18 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     anax::World& world = *getContext().world;
 
+
     Draweble draweble;
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
     sf::Texture& hero = context.textures->get(Textures::tempHero);
-    Player player(hero, sf::Vector2u(32,8), 0.2f, 100.f);
 
     anax::Entity menuBackdropEntity = world.createEntity();
     //anax::Entity logo1 = world.createEntity();
     //anax::Entity logo2 = world.createEntity();
     anax::Entity hero1 = world.createEntity();
     hero1.addComponent<Animated>();
-    player.walk(clock.getElapsedTime().asSeconds());
+
 
     //logo1.addComponent<MousedOver>();
     //logo2.addComponent<MousedOver>();
@@ -94,9 +95,6 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     draweble.makeDraweble(hero, 100, 200, hero1);
     updateOptionText();
 
-
-
-    player.walk(clock.getElapsedTime().asSeconds());
 
     context.music->play(Music::Menu);
 }
@@ -119,8 +117,10 @@ void StateMenu::draw()
         window.draw(text);
 }
 
+
 bool StateMenu::update(sf::Time)
 {
+
     if(clock.getElapsedTime().asSeconds() > 0.1f)
     {
         if(spriteRect.left == 3*fireSpriteSize)
@@ -135,6 +135,7 @@ bool StateMenu::update(sf::Time)
         mFire.setTextureRect(spriteRect);
         mFire2.setTextureRect(spriteRect);
         clock.restart();
+
     }
 
 
@@ -190,6 +191,8 @@ bool StateMenu::handleEvent(const sf::Event& event)
 
         updateOptionText();
         getContext().sounds->play(SoundEffects::Click);
+    }
+        else if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::D) {
     }
 
     else if(event.type == sf::Event::MouseButtonPressed)
