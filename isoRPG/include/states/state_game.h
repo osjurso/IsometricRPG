@@ -22,6 +22,7 @@ public:
 private:
     sf::View playerCam;
     sf::Sprite mPlayer;
+    anax::Entity player;
 
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 

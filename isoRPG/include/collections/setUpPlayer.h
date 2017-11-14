@@ -15,6 +15,7 @@
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
 #include <include/components/Comp_animation.h>
+#include <include/components/Comp_moveble.h>
 
 
 class SetUpPlayer
@@ -31,8 +32,8 @@ public:
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-        positionComponent.YPos = window.getSize().x/2;
-        positionComponent.XPos = window.getSize().y/2;
+        positionComponent.YPos = 0;
+        positionComponent.XPos = 0;
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
@@ -45,7 +46,18 @@ public:
         animationComponent.imageCounter.y = 8;
         animationComponent.switchTime = 0.2f;
         animationComponent.pixels = 128;
-        animationComponent.movementSpeed = 50;
+        animationComponent.movementSpeed = 20;
+        animationComponent.row =0;
+        animationComponent.currentImage.x =0;
+        animationComponent.animationClock.restart().asSeconds();
+
+        entity.addComponent<StateComponent>();
+        StateComponent& stateComponent = entity.getComponent<StateComponent>();
+        stateComponent.state = "Game";
+
+        entity.addComponent<Moveble>();
+        Moveble& moveble = entity.getComponent<Moveble>();
+        moveble.speed = 5;
 
         entity.activate();
     }

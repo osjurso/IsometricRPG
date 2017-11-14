@@ -25,7 +25,7 @@ Application::Application()
     mFonts.load(Fonts::Main, "assets/fonts/Sansation.ttf");
     mFonts.load(Fonts::RPG, "assets/fonts/breathe_fire.otf");
 
-    mTextures.load(Textures::Hero, "assets/textures/hero-static-temp.png");
+    mTextures.load(Textures::Hero, "assets/textures/Hero_Clothes.png");
     mTextures.load(Textures::TitleLogo, "assets/textures/title-logo.png");
     mTextures.load(Textures::TitleText, "assets/textures/title-text.png");
     mTextures.load(Textures::MenuBackdrop, "assets/textures/menuBackdorp.png");

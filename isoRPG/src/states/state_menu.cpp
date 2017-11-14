@@ -79,18 +79,14 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     anax::Entity menuBackdropEntity = world.createEntity();
     anax::Entity logo1 = world.createEntity();
     anax::Entity logo2 = world.createEntity();
-    player = world.createEntity();
 
-    SetUpPlayer playerSetup;
-
-    playerSetup.setUpPlayer(player, Herobody, *getContext().window);
 
     logo1.addComponent<MousedOver>();
     logo2.addComponent<MousedOver>();
 
-    draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity);
-    draweble.makeDraweble(texture,300,500, logo1);
-    draweble.makeDraweble(texture,800,500, logo2);
+    draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity,"Menu");
+    draweble.makeDraweble(texture,300,500, logo1, "Menu");
+    draweble.makeDraweble(texture,800,500, logo2, "Menu");
     updateOptionText();
 
     context.music->play(Music::Menu);
@@ -107,7 +103,7 @@ void StateMenu::draw()
 
     anax::World& world = *getContext().world;
     DrawEntetys drawEntetys;
-    drawEntetys.draw(window,world);
+    drawEntetys.draw(window,world,"Menu");
 
 
     for (const sf::Text& text : mOptions)
@@ -176,15 +172,6 @@ bool StateMenu::handleEvent(const sf::Event& event)
 
         updateOptionText();
         getContext().sounds->play(SoundEffects::Click);
-
-        AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
-        if(animationComponent.direction != "Up" )animationComponent.changedDirection = true;
-        animationComponent.direction = "Up";
-        animationComponent.movementDirection.y -= animationComponent.movementSpeed*animationComponent.deltaTime;
-        animationComponent.row = 2;
-        ResolveMovment resolve;
-
-        resolve.resolveMovment(player, "Walk");
     }
 
     else if (event.key.code == sf::Keyboard::Down)
@@ -197,12 +184,7 @@ bool StateMenu::handleEvent(const sf::Event& event)
         updateOptionText();
         getContext().sounds->play(SoundEffects::Click);
 
-        AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
-        animationComponent.movementDirection.y += animationComponent.movementSpeed*animationComponent.deltaTime;
-        if(animationComponent.direction != "Down" )animationComponent.changedDirection = true;
-        animationComponent.row = 6;
-        ResolveMovment resolve;
-        resolve.resolveMovment(player, "Walk");
+
 
     }
 

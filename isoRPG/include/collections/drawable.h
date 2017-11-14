@@ -19,7 +19,7 @@
 class Draweble
 {
 public:
-    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity)
+    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity, std::string state)
     {
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
@@ -35,6 +35,10 @@ public:
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
         sizeComponent.Height = textureComponent.texture.getSize().x;
         sizeComponent.Whith = textureComponent.texture.getSize().y;
+
+        entity.addComponent<StateComponent>();
+        StateComponent& stateComponent = entity.getComponent<StateComponent>();
+        stateComponent.state = state;
         entity.activate();
     }
 };

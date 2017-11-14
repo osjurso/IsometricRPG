@@ -18,6 +18,7 @@ public:
     unsigned int row;
     sf::Vector2f movementDirection;
     int movementSpeed;
+    sf::Clock animationClock;
 
 };
 

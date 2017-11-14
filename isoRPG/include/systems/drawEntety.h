@@ -17,6 +17,8 @@
 #include <include/components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
+#include <components/Comp_animation.h>
+#include <include/components/Comp_State.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -24,16 +26,25 @@ class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent
 public:
     DrawEntetys(){}
 
-    void draw(sf::RenderWindow& window, anax::World& world)
+    void draw(sf::RenderWindow& window, anax::World& world, std::string state)
     {
         auto enteties = world.getEntities();
 
         for(auto i : enteties)
         {
-            TextureComponent textureComponent  = i.getComponent<TextureComponent>();
-            PositionComponent positionComponent = i.getComponent<PositionComponent>();
-            textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
-            window.draw(textureComponent.sprite);
+            StateComponent& stateComponent = i.getComponent<StateComponent>();
+            TextureComponent& textureComponent  = i.getComponent<TextureComponent>();
+            PositionComponent& positionComponent = i.getComponent<PositionComponent>();
+
+            if(stateComponent.state == state)
+            {
+                if(i.hasComponent<AnimationComponent>())
+                {
+                    textureComponent.sprite.setTextureRect(textureComponent.spriteRect);
+                }
+                textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
+                window.draw(textureComponent.sprite);
+            }
         }
     }
 };
