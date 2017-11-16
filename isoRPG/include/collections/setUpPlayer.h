@@ -62,7 +62,7 @@ public:
 
         entity.activate();
     }
-    void setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos)
+    void setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty)
     {
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
@@ -70,6 +70,9 @@ public:
         textureComponent.sprite.setTexture(texture);
         textureComponent.spriteRect.height = 128;
         textureComponent.spriteRect.width = 128;
+        sf::Color red(255,100,100);
+        sf::Color blue(100,100,255);
+
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
@@ -99,12 +102,28 @@ public:
 
         entity.addComponent<Moveble>();
         Moveble& moveble = entity.getComponent<Moveble>();
-        moveble.speed = 5;
+
 
         entity.addComponent<HealthComponent>();
         HealthComponent& healthComponent = entity.getComponent<HealthComponent>();
-        healthComponent.maxHealth = 20;
+
+        if(diffeculty == "Hard")
+        {
+            textureComponent.sprite.setColor(red);
+            healthComponent.maxHealth = 100;
+            moveble.speed = 10;
+        }else if(diffeculty == "Medium")
+        {
+            textureComponent.sprite.setColor((blue));
+            healthComponent.maxHealth = 50;
+            moveble.speed = 5;
+        }else
+        {
+            healthComponent.maxHealth = 20;
+            moveble.speed = 3;
+        }
         healthComponent.health = healthComponent.maxHealth;
+
 
         entity.activate();
     }
