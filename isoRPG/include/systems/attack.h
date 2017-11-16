@@ -17,7 +17,7 @@
 #include <iostream>
 
 
-class Attack : anax::System<anax::Requires<PositionComponent, SizeComponent>>
+class Attack
 {
 public:
     Attack(){}
@@ -28,44 +28,37 @@ public:
 
         for(auto i : enteties)
         {
-            if(i.getId() == attacker.getId())
+            if(i.hasComponent<HealthComponent>())
             {
-                if(i.hasComponent<HealthComponent>())
+                if(i.getId() != attacker.getId())
                 {
+
                     HealthComponent& healthComponent = i.getComponent<HealthComponent>();
-
-
                     PositionComponent& positionComponent = i.getComponent<PositionComponent>();
                     SizeComponent& sizeComponent = i.getComponent<SizeComponent>();
 
                     PositionComponent& Attackerposition = attacker.getComponent<PositionComponent>();
                     SizeComponent& Attackersize = attacker.getComponent<SizeComponent>();
-                    float attackerX = Attackerposition.XPos + (Attackersize.Whith/2);
-                    float attackerY = Attackerposition.YPos + (Attackersize.Height/2);
 
-                    bool Left = false;
-                    bool Right = false;
-                    bool Bottom = false;
-                    bool Top = false;
-                    int attackradius = 200;
+                    int attackradius = 50;
 
-                    if(attackerX + attackradius >= positionComponent.XPos)
-                        Left = true;
-
-                    if(attackerX + attackradius <= positionComponent.XPos+ sizeComponent.Height)
-                        Right = true;
-
-                    if(attackerY + attackradius >= positionComponent.YPos)
-                        Top = true;
-
-                    if(attackerY + attackradius <= positionComponent.YPos + sizeComponent.Whith)
-                        Bottom = true;
+                    sf::IntRect attacker;
+                    attacker.top = Attackerposition.YPos -attackradius;
+                    attacker.left = Attackerposition.XPos -attackradius;
+                    attacker.height = 2*attackradius;
+                    attacker.width = 2*attackradius;
 
 
-                    if(Left && Right && Top && Bottom)
+                    if(attacker.contains(positionComponent.XPos, positionComponent.YPos))
                     {
-                        std::cout<< "enemy inside radius of" << attackradius << std::endl;
-                        healthComponent.health - 10;//TODO: change to weapons damage (attacker.weapondamage)
+                        std::cout<< "enemy inside radius of " << attackradius << std::endl;
+                        healthComponent.health -= 5;//TODO: change to weapons damage (attacker.weapondamage)
+                        std::cout<< healthComponent.health << std::endl;
+                    }
+                    if(healthComponent.health <= 0)
+                    {
+                        i.kill();
+                        world.refresh();
                     }
 
 

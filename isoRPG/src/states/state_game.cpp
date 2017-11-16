@@ -4,6 +4,7 @@
 #include <include/systems/resolve_movment.h>
 #include <include/systems/drawEntety.h>
 #include <include/collections/setUpPlayer.h>
+#include <include/systems/attack.h>
 
 #include "states/state_game.h"
 #include "gameEngine/resource_holder.h"
@@ -27,23 +28,20 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     // Load map information from JSON into object list
     if (!Map::load("assets/map/map.json", objects))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
-/*
-    mPlayer.setTexture(context.textures->get(Textures::Hero));
-    mPlayer.setOrigin(mPlayer.getGlobalBounds().width/2, mPlayer.getGlobalBounds().height*0.8);
-
-    mPlayer.setPosition(0, 0);
-*/
 
     sf::Texture& Herobody = context.textures->get(Textures::Hero);
+    sf::Texture& GoblinTexture = context.textures->get(Textures::Goblin);
 
     anax::World& world = *getContext().world;
     sf::RenderWindow& window = *getContext().window;
     DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
     player = world.createEntity();
+    anax::Entity goblin = world.createEntity();
 
-    SetUpPlayer playerSetup;
-    playerSetup.setUpPlayer(player, Herobody, *getContext().window);
+    SetUpPlayer creatureSetup;
+    creatureSetup.setUpPlayer(player, Herobody, *getContext().window);
+    creatureSetup.setUpEnemie(goblin, GoblinTexture, *getContext().window);
     context.music->play(Music::Test);
 }
 
@@ -81,12 +79,10 @@ bool StateGame::update(sf::Time dt)
     if (isMovingRight)
         movement.x += 2.f;
 
-    //mPlayer.move(movement);
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
 
-
-    std::cout<< "XPOS:  " << positionComponent.XPos << " | YPOS:  " << positionComponent.YPos << std::endl;
+    //std::cout<< "XPOS:  " << positionComponent.XPos << " | YPOS:  " << positionComponent.YPos << std::endl;
 
     return true;
 }
@@ -174,6 +170,12 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         positionComponent.XPos += moveble.speed;
 
         isMovingRight = isPressed;
+    }
+    else if (key == sf::Keyboard::Space)
+    {
+        Attack attack;
+        anax::World& world = *getContext().world;
+        attack.resolveAttack(world,player);
     }
 
     else if (key == sf::Keyboard::Escape && isPressed)
