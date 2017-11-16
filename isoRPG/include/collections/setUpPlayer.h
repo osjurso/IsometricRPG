@@ -62,7 +62,7 @@ public:
 
         entity.activate();
     }
-    void setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window)
+    void setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos)
     {
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
@@ -73,8 +73,8 @@ public:
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-        positionComponent.YPos = 100;
-        positionComponent.XPos = 100;
+        positionComponent.YPos = Xpos;
+        positionComponent.XPos = Ypos;
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();

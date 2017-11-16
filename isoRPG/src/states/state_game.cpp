@@ -38,10 +38,12 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     drawEntetys.draw(window,world, "Game");
     player = world.createEntity();
     anax::Entity goblin = world.createEntity();
+    anax::Entity goblin2 = world.createEntity();
 
     SetUpPlayer creatureSetup;
     creatureSetup.setUpPlayer(player, Herobody, *getContext().window);
-    creatureSetup.setUpEnemie(goblin, GoblinTexture, *getContext().window);
+    creatureSetup.setUpEnemie(goblin, GoblinTexture, *getContext().window, 200, 200);
+    creatureSetup.setUpEnemie(goblin2, GoblinTexture, *getContext().window ,100 ,100);
     context.music->play(Music::Test);
 }
 
