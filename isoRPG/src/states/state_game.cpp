@@ -5,6 +5,7 @@
 #include <include/systems/drawEntety.h>
 #include <include/collections/setUpPlayer.h>
 #include <include/systems/attack.h>
+#include <include/systems/mouse_clicked.h>
 
 #include "states/state_game.h"
 #include "gameEngine/resource_holder.h"
@@ -22,8 +23,10 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     isMovingLeft = false;
     isMovingRight = false;
 
+
     playerCam.setSize(1920, 1080);
     playerCam.zoom(0.3f);
+
 
     // Load map information from JSON into object list
     if (!Map::load("assets/map/map.json", objects))
@@ -48,6 +51,15 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     creatureSetup.setUpEnemie(goblin2, GoblinTexture, *getContext().window ,100 ,100, "Medium");
     creatureSetup.setUpEnemie(goblin3, GoblinTexture, *getContext().window ,0 ,100, "Easy");
 
+    playerGold.setPosition(window.getPosition().x, window.getPosition().y);
+    sf::Font& font = context.fonts->get(Fonts::Main);
+    playerGold.setFont(font);
+    Looteble looteble = player.getComponent<Looteble>();
+    playerGold.setString(std::to_string(looteble.gold));
+    playerGold.setScale(0.3,0.3);
+    sf::Color gold(255,215,0);
+    playerGold.setColor(gold);
+
     context.music->play(Music::Test);
 }
 
@@ -56,7 +68,6 @@ void StateGame::draw()
     sf::RenderWindow& window = *getContext().window;
 
     window.setView(playerCam);
-
     //Sorting objects based on priority (y coordinate), from low to high.
     objects.sort([](Object *f, const Object *s) { return f->priority < s->priority; });
 
@@ -71,6 +82,18 @@ void StateGame::draw()
             window.draw(mPlayer);
     }
     drawEntetys.draw(window,world, "Game");
+    Looteble looteble = player.getComponent<Looteble>();
+    sf::Vector2f viewCenter = window.getView().getCenter();
+    sf::Vector2f halfExtents = window.getView().getSize() / 2.0f;
+    sf::Vector2f translation = viewCenter - halfExtents;
+
+    int mX = static_cast<int>(translation.x);
+    int mY = static_cast<int>(translation.y);
+
+    playerGold.setPosition(mX,mY);
+    playerGold.setString(std::to_string(looteble.gold));
+    window.draw(playerGold);
+
 }
 
 bool StateGame::update(sf::Time dt)
@@ -95,6 +118,15 @@ bool StateGame::update(sf::Time dt)
 
 bool StateGame::handleEvent(const sf::Event &event)
 {
+    if(event.type == sf::Event::MouseButtonPressed)
+    {
+        anax::World& world = *getContext().world;
+        sf::RenderWindow& window = *getContext().window;
+        MouseClicked mouseClicked;
+        mouseClicked.Clicked(world,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, player);
+
+    }
+
     switch (event.type)
     {
         case sf::Event::KeyPressed:

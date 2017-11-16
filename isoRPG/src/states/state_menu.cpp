@@ -147,10 +147,25 @@ bool StateMenu::handleEvent(const sf::Event& event)
     {
         if (mOptionIndex == Play)
         {
+            anax::World& world = *getContext().world;
+            auto enteties = world.getEntities();
+            for(auto i : enteties)
+            {
+                i.kill();
+                world.refresh();
+            }
             requestStateChange(States::Character);
+
         }
         else if (mOptionIndex == Settings)
         {
+            anax::World& world = *getContext().world;
+            auto enteties = world.getEntities();
+            for(auto i : enteties)
+            {
+                i.kill();
+                world.refresh();
+            }
             requestStateChange(States::Settings);
         }
         else if (mOptionIndex == About)
@@ -193,7 +208,8 @@ bool StateMenu::handleEvent(const sf::Event& event)
         anax::World& world = *getContext().world;
         sf::RenderWindow& window = *getContext().window;
         MouseClicked mouseClicked;
-        mouseClicked.Clicked(world,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y);
+        anax::Entity temp;
+        mouseClicked.Clicked(world,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y,temp);
 
     }
 

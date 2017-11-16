@@ -36,9 +36,11 @@ public:
                     HealthComponent& healthComponent = i.getComponent<HealthComponent>();
                     PositionComponent& positionComponent = i.getComponent<PositionComponent>();
                     SizeComponent& sizeComponent = i.getComponent<SizeComponent>();
+                    Looteble& looteble = i.getComponent<Looteble>();
 
                     PositionComponent& Attackerposition = attacker.getComponent<PositionComponent>();
                     SizeComponent& Attackersize = attacker.getComponent<SizeComponent>();
+                    Looteble& attackerLoot = attacker.getComponent<Looteble>();
 
                     int attackradius = 50;
 
@@ -57,6 +59,7 @@ public:
                     }
                     if(healthComponent.health <= 0)
                     {
+                        attackerLoot.gold += looteble.gold;
                         i.kill();
                         world.refresh();
                     }

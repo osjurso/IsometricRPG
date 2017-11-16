@@ -17,6 +17,7 @@
 #include <include/components/Comp_animation.h>
 #include <include/components/Comp_moveble.h>
 #include <include/components/Comp_healt.h>
+#include <include/components/Comp_looteble.h>
 
 
 class SetUpPlayer
@@ -59,6 +60,10 @@ public:
         entity.addComponent<Moveble>();
         Moveble& moveble = entity.getComponent<Moveble>();
         moveble.speed = 5;
+
+        entity.addComponent< Looteble>();
+        Looteble& looteble = entity.getComponent<Looteble>();
+        looteble.gold =0;
 
         entity.activate();
     }
@@ -107,19 +112,28 @@ public:
         entity.addComponent<HealthComponent>();
         HealthComponent& healthComponent = entity.getComponent<HealthComponent>();
 
+        entity.addComponent< Looteble>();
+        Looteble& looteble = entity.getComponent<Looteble>();
+
+        entity.addComponent<MousedOver>();
+
+
         if(diffeculty == "Hard")
         {
             textureComponent.sprite.setColor(red);
             healthComponent.maxHealth = 100;
             moveble.speed = 10;
+            looteble.gold =50 + (10*rand()%10+1);
         }else if(diffeculty == "Medium")
         {
             textureComponent.sprite.setColor((blue));
             healthComponent.maxHealth = 50;
             moveble.speed = 5;
+            looteble.gold =25+(5*rand()%10+1);
         }else
         {
             healthComponent.maxHealth = 20;
+            looteble.gold = rand()%10+1;
             moveble.speed = 3;
         }
         healthComponent.health = healthComponent.maxHealth;
