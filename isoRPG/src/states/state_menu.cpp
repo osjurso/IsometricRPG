@@ -1,7 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
-#include <include/collections/setUpPlayer.h>
+#include <include/collections/setUpCreature.h>
 #include <include/systems/resolve_movment.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
@@ -209,7 +209,8 @@ bool StateMenu::handleEvent(const sf::Event& event)
         sf::RenderWindow& window = *getContext().window;
         MouseClicked mouseClicked;
         anax::Entity temp;
-        mouseClicked.Clicked(world,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y,temp);
+        sf:: View tempView;
+        mouseClicked.Clicked(world, temp, window, tempView);
 
     }
 

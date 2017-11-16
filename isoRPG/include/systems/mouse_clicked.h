@@ -11,60 +11,57 @@
 #include <components/Comp_position.h>
 #include <iostream>
 #include <include/components/Comp_looteble.h>
+#include <include/components/Comp_talk.h>
 #include "loot.h"
+#include "talk.h"
 
 struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>
 {
 public:
     MouseClicked()
     {}
-    void Clicked(anax::World& world, float MouseX, float MouseY , anax::Entity& entity)
+    void Clicked(anax::World& world, anax::Entity& entity, sf::RenderWindow& window, sf::View cam)
     {
         auto enteties = world.getEntities();
 
         for(auto i : enteties)
         {
             if(i.hasComponent<MousedOver>())
-                process(i,MouseX,MouseY, world, entity);
+                process(i,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, world, entity, window, cam);
         }
     }
 
 
 private:
-    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player)
+    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam)
     {
         PositionComponent& positionComponent = e.getComponent<PositionComponent>();
         SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
-        //MousedOver& mousedOver = e.getComponent<MousedOver>();
+        sf::IntRect entityRect;
+        entityRect.top = positionComponent.SpriteTop;
+        entityRect.left = positionComponent.SpriteLeft;
+        entityRect.width = sizeComponent.SpriteWhith;
+        entityRect.height = sizeComponent.SpriteHeight;
 
-        bool Venstre = false;
-        bool Hoyre = false;
-        bool Nede = false;
-        bool Oppe = false;
-
-        if(MouseX >= positionComponent.XPos)
-            Venstre = true;
-
-        if(MouseX <= positionComponent.XPos+ sizeComponent.Height)
-            Hoyre = true;
-
-        if(MouseY >= positionComponent.YPos)
-            Oppe = true;
-
-        if(MouseY <= positionComponent.YPos + sizeComponent.Whith)
-            Nede = true;
-
-
-        if(Venstre && Hoyre && Oppe && Nede)
+        sf::Vector2i mouse;
+        mouse.x = MouseX;
+        mouse.y = MouseY;
+        sf::Vector2f mouseT= window.mapPixelToCoords(mouse, cam);
+        if(entityRect.contains(mouseT.x,mouseT.y))
         {
-            std::cout<< "You Pressed a element" << std::endl;
-            //TODO implement functions to run when element is pressed
-            std::cout<< "You Pressed: " << e.getId() << std::endl;
+            if(e.hasComponent<Talkative>())
+            {
+                std::cout << e.getId() << std::endl;
+                Talk talk;
+                talk.talk(e,window);
+            }
+
             if(e.hasComponent<Looteble>())
             {
                 Loot loot;
                 loot.loot(world,e, player);
             }
+
 
         }
     }

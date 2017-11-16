@@ -35,6 +35,7 @@ Application::Application()
     mTextures.load(Textures::SettingKnob, "assets/textures/volumeKnob.png");
     mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
     mTextures.load(Textures::Goblin, "assets/textures/goblin.png");
+    mTextures.load(Textures::Trader, "assets/textures/trader.png");
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);

@@ -42,8 +42,18 @@ public:
                 {
                     textureComponent.sprite.setTextureRect(textureComponent.spriteRect);
                 }
+                SizeComponent sizeComponent = i.getComponent<SizeComponent>();
+                sf::RectangleShape rect;
+                rect.setPosition(positionComponent.SpriteLeft,positionComponent.SpriteTop);
+                sf::Vector2f sice;
+                sice.x = sizeComponent.SpriteWhith;
+                sice.y = sizeComponent.SpriteHeight;
+                rect.setSize(sice);
+
                 textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
                 window.draw(textureComponent.sprite);
+                //window.draw(rect); // Remove to demonstrate waerd bug
+
             }
         }
     }

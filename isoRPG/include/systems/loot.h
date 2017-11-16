@@ -39,7 +39,7 @@ public:
             SizeComponent& Pickersize = picker.getComponent<SizeComponent>();
             Looteble& pickerLoot = picker.getComponent<Looteble>();
 
-            int pickupraduis =20;
+            int pickupraduis =50;
 
             sf::IntRect picker;
             picker.top = Pickerposition.YPos -pickupraduis;
@@ -50,7 +50,7 @@ public:
 
             if(picker.contains(positionComponent.XPos, positionComponent.YPos))
             {
-                std::cout<< "Lootable object pressed" << pickupraduis << std::endl;
+                std::cout<< "Player looted " << looteble.gold << " gold from "<< target.getId() << " that was whithin " << pickupraduis  << " of the player " << std::endl;
                 pickerLoot.gold += looteble.gold;
                 looteble.gold = 0;
             }

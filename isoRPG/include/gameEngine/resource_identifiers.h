@@ -21,7 +21,8 @@ namespace Textures
         SettingsSlider,
         SettingKnob,
         CharacterBox,
-        Goblin
+        Goblin,
+        Trader
     };
 }
 

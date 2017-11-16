@@ -3,9 +3,10 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/resolve_movment.h>
 #include <include/systems/drawEntety.h>
-#include <include/collections/setUpPlayer.h>
+#include <include/collections/setUpCreature.h>
 #include <include/systems/attack.h>
 #include <include/systems/mouse_clicked.h>
+#include <include/collections/addDialoge.h>
 
 #include "states/state_game.h"
 #include "gameEngine/resource_holder.h"
@@ -34,31 +35,37 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
 
     sf::Texture& Herobody = context.textures->get(Textures::Hero);
     sf::Texture& GoblinTexture = context.textures->get(Textures::Goblin);
+    sf::Texture& TraderTexture = context.textures->get(Textures::Trader);
 
     anax::World& world = *getContext().world;
     sf::RenderWindow& window = *getContext().window;
     DrawEntetys drawEntetys;
-    drawEntetys.draw(window,world, "Game");
+
     player = world.createEntity();
     anax::Entity goblin = world.createEntity();
     anax::Entity goblin2 = world.createEntity();
     anax::Entity goblin3 = world.createEntity();
+    anax::Entity goblin4 = world.createEntity();
+    anax::Entity trader = world.createEntity();
 
 
-    SetUpPlayer creatureSetup;
-    creatureSetup.setUpPlayer(player, Herobody, *getContext().window);
+    SetUpCreature creatureSetup;
+
     creatureSetup.setUpEnemie(goblin, GoblinTexture, *getContext().window, 200, 200, "Hard");
     creatureSetup.setUpEnemie(goblin2, GoblinTexture, *getContext().window ,100 ,100, "Medium");
-    creatureSetup.setUpEnemie(goblin3, GoblinTexture, *getContext().window ,0 ,100, "Easy");
+    creatureSetup.setUpEnemie(goblin3, GoblinTexture, *getContext().window ,400 ,200, "Easy");
+    creatureSetup.setUpEnemie(goblin4, GoblinTexture, *getContext().window ,300 ,100, "Hard");
+    creatureSetup.setUpPlayer(player, Herobody, *getContext().window);
+    creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300);
 
-    playerGold.setPosition(window.getPosition().x, window.getPosition().y);
     sf::Font& font = context.fonts->get(Fonts::Main);
     playerGold.setFont(font);
-    Looteble looteble = player.getComponent<Looteble>();
-    playerGold.setString(std::to_string(looteble.gold));
     playerGold.setScale(0.3,0.3);
     sf::Color gold(255,215,0);
     playerGold.setColor(gold);
+
+    AddDialoge addDialoge;
+    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
 
     context.music->play(Music::Test);
 }
@@ -90,10 +97,9 @@ void StateGame::draw()
     int mX = static_cast<int>(translation.x);
     int mY = static_cast<int>(translation.y);
 
-    playerGold.setPosition(mX,mY);
+    playerGold.setPosition(mX +5 ,mY +5);
     playerGold.setString(std::to_string(looteble.gold));
     window.draw(playerGold);
-
 }
 
 bool StateGame::update(sf::Time dt)
@@ -123,7 +129,7 @@ bool StateGame::handleEvent(const sf::Event &event)
         anax::World& world = *getContext().world;
         sf::RenderWindow& window = *getContext().window;
         MouseClicked mouseClicked;
-        mouseClicked.Clicked(world,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, player);
+        mouseClicked.Clicked(world, player, window, playerCam);
 
     }
 
@@ -160,6 +166,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.YPos -= moveble.speed;
+        positionComponent.SpriteTop -= moveble.speed;
         isMovingUp = isPressed;
     }
 
@@ -175,6 +182,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.YPos += moveble.speed;
+        positionComponent.SpriteTop += moveble.speed;
         isMovingDown = isPressed;
     }
 
@@ -190,6 +198,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.XPos -= moveble.speed;
+        positionComponent.SpriteLeft -= moveble.speed;
 
         isMovingDown = isPressed;
     }
@@ -206,6 +215,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.XPos += moveble.speed;
+        positionComponent.SpriteLeft += moveble.speed;
 
         isMovingRight = isPressed;
     }
