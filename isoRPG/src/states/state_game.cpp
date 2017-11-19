@@ -62,7 +62,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     playerGold.setFont(font);
     playerGold.setScale(0.3,0.3);
     sf::Color gold(255,215,0);
-    playerGold.setColor(gold);
+    playerGold.setFillColor(gold);
 
     AddDialoge addDialoge;
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
