@@ -23,23 +23,25 @@ struct MoveCreature : anax::System<anax::Requires<Moveble>>
 public:
     MoveCreature()
     {}
-    void Move(anax::World& world, int GoalX, int GoalY, int mapX, int mapY)
+    void Move(anax::World& world, int GoalX, int GoalY)
     {
         auto enteties = world.getEntities();
         for(auto i : enteties)
         {
             if(i.hasComponent<Moveble>())
-                process(i, GoalX, GoalY, mapX, mapY);
+                process(i, GoalX, GoalY);
         }
     }
 
 
 private:
-    void process(anax::Entity entity, int GoalX, int GoalY, int mapX, int mapY )
+    void process(anax::Entity entity, int GoalX, int GoalY)
     {
         PositionComponent positionComponent = entity.getComponent<PositionComponent>();
-        PathFiding pathFiding(mapX,mapY);
-        std::string path = pathFiding.findPath(positionComponent.SpriteLeft,positionComponent.SpriteTop,GoalX,GoalY);
+        std::string path= pathFind(positionComponent.XPos,positionComponent.XPos,GoalX,GoalY);
+        if(path=="") std::cout<<"An empty route generated!"<<std::endl;
+        std::cout << path << std::endl;
+
     }
 };
 
