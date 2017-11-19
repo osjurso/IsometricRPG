@@ -12,8 +12,17 @@
 struct TextureComponent : public anax::Component
 {
 public:
-    sf::Texture texture;
-    sf::Sprite sprite;
+
+    sf::Texture tHeroBody;
+    sf::Texture tHeroHead;
+    sf::Texture tHeroWeapon;
+    sf::Texture tHeroShield;
+
+    sf::Sprite sHeroBody;
+    sf::Sprite sHeroHead;
+    sf::Sprite sHeroWeapon;
+    sf::Sprite sHeroShield;
+
     sf::IntRect spriteRect;
 };
 

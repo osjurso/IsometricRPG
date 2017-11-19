@@ -19,6 +19,7 @@ public:
     sf::Vector2f movementDirection;
     int movementSpeed;
     sf::Clock animationClock;
+    sf::Clock idleTimer;
 
 };
 

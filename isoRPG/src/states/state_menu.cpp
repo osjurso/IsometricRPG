@@ -74,7 +74,7 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     Draweble draweble;
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
-    sf::Texture& Herobody = context.textures->get(Textures::Hero);
+    //sf::Texture& Herobody = context.textures->get(Textures::Hero);
 
     anax::Entity menuBackdropEntity = world.createEntity();
     anax::Entity logo1 = world.createEntity();

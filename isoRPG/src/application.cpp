@@ -34,6 +34,9 @@ Application::Application()
     mTextures.load(Textures::SettingsSlider, "assets/textures/volumeslider.png");
     mTextures.load(Textures::SettingKnob, "assets/textures/volumeKnob.png");
     mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
+    mTextures.load(Textures::HeroHead,"assets/textures/Hero_Head.png");
+    mTextures.load(Textures::HeroWeapon,"assets/textures/Hero_Longsword.png");
+    mTextures.load(Textures::HeroShield,"assets/textures/Hero_Shield.png");
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);

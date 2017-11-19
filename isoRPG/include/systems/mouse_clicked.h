@@ -48,7 +48,7 @@ private:
         if(MouseY >= positionComponent.YPos)
             Oppe = true;
 
-        if(MouseY <= positionComponent.YPos + sizeComponent.Whith)
+        if(MouseY <= positionComponent.YPos + sizeComponent.Width)
             Nede = true;
 
 

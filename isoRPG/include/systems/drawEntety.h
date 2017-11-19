@@ -40,10 +40,19 @@ public:
             {
                 if(i.hasComponent<AnimationComponent>())
                 {
-                    textureComponent.sprite.setTextureRect(textureComponent.spriteRect);
+                    textureComponent.sHeroBody.setTextureRect(textureComponent.spriteRect);
+                    textureComponent.sHeroHead.setTextureRect(textureComponent.spriteRect);
+                    textureComponent.sHeroWeapon.setTextureRect(textureComponent.spriteRect);
+                    textureComponent.sHeroShield.setTextureRect(textureComponent.spriteRect);
                 }
-                textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
-                window.draw(textureComponent.sprite);
+                textureComponent.sHeroBody.setPosition(positionComponent.XPos,positionComponent.YPos);
+                textureComponent.sHeroHead.setPosition(positionComponent.XPos,positionComponent.YPos);
+                textureComponent.sHeroWeapon.setPosition(positionComponent.XPos, positionComponent.YPos);
+                textureComponent.sHeroShield.setPosition(positionComponent.XPos, positionComponent.YPos);
+                window.draw(textureComponent.sHeroBody);
+                window.draw(textureComponent.sHeroHead);
+                window.draw(textureComponent.sHeroWeapon);
+                window.draw(textureComponent.sHeroShield);
             }
         }
     }

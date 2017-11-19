@@ -40,7 +40,7 @@ public:
 
                     PositionComponent& Attackerposition = attacker.getComponent<PositionComponent>();
                     SizeComponent& Attackersize = attacker.getComponent<SizeComponent>();
-                    float attackerX = Attackerposition.XPos + (Attackersize.Whith/2);
+                    float attackerX = Attackerposition.XPos + (Attackersize.Width/2);
                     float attackerY = Attackerposition.YPos + (Attackersize.Height/2);
 
                     bool Left = false;
@@ -58,7 +58,7 @@ public:
                     if(attackerY + attackradius >= positionComponent.YPos)
                         Top = true;
 
-                    if(attackerY + attackradius <= positionComponent.YPos + sizeComponent.Whith)
+                    if(attackerY + attackradius <= positionComponent.YPos + sizeComponent.Width)
                         Bottom = true;
 
 

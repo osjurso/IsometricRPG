@@ -21,14 +21,21 @@
 class SetUpPlayer
 {
 public:
-    void setUpPlayer(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window)
+    void setUpPlayer(anax::Entity& entity, sf::Texture& texture,sf::Texture& texture1, sf::Texture& texture2, sf::Texture& texture3 ,sf::RenderWindow& window)
     {
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
-        textureComponent.texture = texture;
-        textureComponent.sprite.setTexture(texture);
+        textureComponent.tHeroBody = texture;
+        textureComponent.sHeroBody.setTexture(texture);
+        textureComponent.tHeroHead = texture1;
+        textureComponent.sHeroHead.setTexture(texture1);
+        textureComponent.tHeroWeapon = texture2;
+        textureComponent.sHeroWeapon.setTexture(texture2);
+        textureComponent.tHeroShield = texture3;
+        textureComponent.sHeroShield.setTexture(texture3);
         textureComponent.spriteRect.height = 128;
         textureComponent.spriteRect.width = 128;
+
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
@@ -37,8 +44,14 @@ public:
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
-        sizeComponent.Height = textureComponent.texture.getSize().x;
-        sizeComponent.Whith = textureComponent.texture.getSize().y;
+        sizeComponent.Height = textureComponent.tHeroBody.getSize().x;
+        sizeComponent.Width = textureComponent.tHeroBody.getSize().y;
+        sizeComponent.Height = textureComponent.tHeroHead.getSize().x;
+        sizeComponent.Width = textureComponent.tHeroHead.getSize().y;
+        sizeComponent.Height = textureComponent.tHeroWeapon.getSize().x;
+        sizeComponent.Width = textureComponent.tHeroWeapon.getSize().y;
+        sizeComponent.Height = textureComponent.tHeroShield.getSize().x;
+        sizeComponent.Width = textureComponent.tHeroShield.getSize().y;
 
         entity.addComponent<AnimationComponent>();
         AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -49,7 +62,7 @@ public:
         animationComponent.movementSpeed = 20;
         animationComponent.row =0;
         animationComponent.currentImage.x =0;
-        animationComponent.animationClock.restart().asSeconds();
+        //animationComponent.animationClock.restart().asSeconds();
 
         entity.addComponent<StateComponent>();
         StateComponent& stateComponent = entity.getComponent<StateComponent>();

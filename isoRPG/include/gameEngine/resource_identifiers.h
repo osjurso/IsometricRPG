@@ -20,7 +20,11 @@ namespace Textures
         SettingsBackdorp,
         SettingsSlider,
         SettingKnob,
-        CharacterBox
+        CharacterBox,
+        HeroClothes,
+        HeroHead,
+        HeroWeapon,
+        HeroShield
     };
 }
 
