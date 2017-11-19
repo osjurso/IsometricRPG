@@ -52,7 +52,7 @@ public:
 
                 textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
                 window.draw(textureComponent.sprite);
-                //window.draw(rect); // Remove to demonstrate waerd bug
+                window.draw(rect); // Remove to demonstrate waerd bug
 
             }
         }

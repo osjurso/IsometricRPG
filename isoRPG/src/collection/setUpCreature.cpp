@@ -62,8 +62,8 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
 
 
-    positionComponent.YPos = Xpos;
-    positionComponent.XPos = Ypos;
+    positionComponent.YPos = Ypos;
+    positionComponent.XPos = Xpos;
     positionComponent.SpriteLeft = Xpos +45;
     positionComponent.SpriteTop = Ypos +65;
 
