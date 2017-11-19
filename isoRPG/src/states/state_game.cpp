@@ -13,8 +13,6 @@
 #include "map/map.h"
 #include "util/utility.h"
 
-
-
 StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
@@ -23,7 +21,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     isMovingDown = false;
     isMovingLeft = false;
     isMovingRight = false;
-
 
     playerCam.setSize(1920, 1080);
     playerCam.zoom(0.3f);
@@ -104,18 +101,9 @@ void StateGame::draw()
 
 bool StateGame::update(sf::Time dt)
 {
-    sf::Vector2f movement(0.f, 0.f);
-    if (isMovingUp)
-        movement.y -= 2.f;
-    if (isMovingDown)
-        movement.y += 2.f;
-    if (isMovingLeft)
-        movement.x -= 2.f;
-    if (isMovingRight)
-        movement.x += 2.f;
-
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
+
 
     //std::cout<< "XPOS:  " << positionComponent.XPos << " | YPOS:  " << positionComponent.YPos << std::endl;
 
