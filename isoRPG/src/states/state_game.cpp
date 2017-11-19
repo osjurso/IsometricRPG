@@ -137,7 +137,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.YPos -= moveble.speed;
-        isMovingUp = isPressed;
     }
 
     else if (key == sf::Keyboard::S|| key == sf::Keyboard::Down)
@@ -153,7 +152,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.YPos += moveble.speed;
-        isMovingDown = isPressed;
     }
 
     else if (key == sf::Keyboard::A || key == sf::Keyboard::Left)
@@ -169,8 +167,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.XPos -= moveble.speed;
-
-        isMovingDown = isPressed;
     }
 
     else if (key == sf::Keyboard::D || key == sf::Keyboard::Right)
@@ -186,8 +182,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
         Moveble moveble = player.getComponent<Moveble>();
         positionComponent.XPos += moveble.speed;
-
-        isMovingRight = isPressed;
     }
 
         //Attack method
@@ -197,13 +191,9 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.idle = false;
         if(animationComponent.direction != "Attack" )animationComponent.changedDirection = true;
         animationComponent.direction = "Attack";
-        animationComponent.movementDirection.x += animationComponent.movementSpeed*animationComponent.deltaTime;
-        //animationComponent.row = 4;
         resolve.resolveMovment(player, "Attack", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-
-        isMovingRight = isPressed;
     }
 
         //Defend method
@@ -213,16 +203,10 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.idle = false;
         if(animationComponent.direction != "Defend" )animationComponent.changedDirection = true;
         animationComponent.direction = "Defend";
-        animationComponent.movementDirection.x += animationComponent.movementSpeed*animationComponent.deltaTime;
-        //animationComponent.row = 4;
         resolve.resolveMovment(player, "Defend", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        isMovingRight = isPressed;
     }
-
-
-
 
     else if (key == sf::Keyboard::Escape && isPressed)
         requestStackPush(States::Pause);

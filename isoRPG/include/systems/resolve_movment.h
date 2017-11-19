@@ -99,7 +99,6 @@ void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTim
         animationComponent.currentImage.y = animationComponent.row;
 
         while (attack) {
-            textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
 
             animationComponent.totalTime += deltaTime;
 
@@ -115,9 +114,11 @@ void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTim
                     animationComponent.currentImage.x = 11;
                     attack = false;
                 }
+                textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
+                textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
             }
+
         }
-        textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
     }
 
     void Defend(anax::Entity& entity, float deltaTime) {
