@@ -22,7 +22,12 @@ namespace Textures
         SettingKnob,
         CharacterBox,
         Goblin,
-        Trader
+        Trader,
+        HeroClothes,
+        HeroHead,
+        HeroWeapon,
+        HeroShield
+
     };
 }
 

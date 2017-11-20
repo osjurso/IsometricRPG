@@ -25,7 +25,7 @@
 class SetUpCreature
 {
 public:
-    void setUpPlayer(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window);
+    void setUpPlayer(anax::Entity& entity, sf::RenderWindow& window);
 
     void setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty);
 

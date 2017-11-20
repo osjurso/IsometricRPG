@@ -40,20 +40,30 @@ public:
             {
                 if(i.hasComponent<AnimationComponent>())
                 {
-                    textureComponent.sprite.setTextureRect(textureComponent.spriteRect);
+                    textureComponent.sprite[0].setTextureRect(textureComponent.spriteRect);
+                    if(textureComponent.multisprite)
+                    {
+                        textureComponent.sprite[1].setTextureRect(textureComponent.spriteRect);
+                        textureComponent.sprite[2].setTextureRect(textureComponent.spriteRect);
+                        textureComponent.sprite[3].setTextureRect(textureComponent.spriteRect);
+                    }
                 }
-                SizeComponent sizeComponent = i.getComponent<SizeComponent>();
-                sf::RectangleShape rect;
-                rect.setPosition(positionComponent.SpriteLeft,positionComponent.SpriteTop);
-                sf::Vector2f sice;
-                sice.x = sizeComponent.SpriteWhith;
-                sice.y = sizeComponent.SpriteHeight;
-                rect.setSize(sice);
 
-                textureComponent.sprite.setPosition(positionComponent.XPos,positionComponent.YPos);
-                window.draw(textureComponent.sprite);
-                window.draw(rect); // Remove to demonstrate waerd bug
-
+                if(textureComponent.multisprite)
+                {
+                    textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
+                    textureComponent.sprite[1].setPosition(positionComponent.XPos,positionComponent.YPos);
+                    textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
+                    textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
+                    window.draw(textureComponent.sprite[0]);
+                    window.draw(textureComponent.sprite[1]);
+                    window.draw(textureComponent.sprite[2]);
+                    window.draw(textureComponent.sprite[3]);
+                }else
+                {
+                    textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
+                    window.draw(textureComponent.sprite[0]);
+                }
             }
         }
     }

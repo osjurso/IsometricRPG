@@ -2,14 +2,12 @@
 #include <include/components/Comp_talk.h>
 #include "include/collections/setUpCreature.h"
 
-void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window)
+void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 {
-    entity.addComponent<TextureComponent>();
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
-    textureComponent.texture = texture;
-    textureComponent.sprite.setTexture(texture);
     textureComponent.spriteRect.height = 128;
     textureComponent.spriteRect.width = 128;
+    textureComponent.multisprite = true;
 
     entity.addComponent<PositionComponent>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
@@ -27,9 +25,9 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::Texture& texture, sf::
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.imageCounter.x = 32;
     animationComponent.imageCounter.y = 8;
-    animationComponent.switchTime = 0.2f;
+    animationComponent.switchTime = 0.08f;
     animationComponent.pixels = 128;
-    animationComponent.movementSpeed = 20;
+    animationComponent.movementSpeed = 100;
     animationComponent.row =0;
     animationComponent.currentImage.x =0;
     animationComponent.animationClock.restart().asSeconds();
@@ -53,8 +51,8 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
 
     entity.addComponent<TextureComponent>();
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
-    textureComponent.texture = texture;
-    textureComponent.sprite.setTexture(texture);
+    textureComponent.texture[0] = texture;
+    textureComponent.sprite[0].setTexture(texture);
     textureComponent.spriteRect.height = 128;
     textureComponent.spriteRect.width = 128;
 
@@ -108,13 +106,13 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     sf::Color blue(100,100,255);
     if(diffeculty == "Hard")
     {
-        textureComponent.sprite.setColor(red);
+        textureComponent.sprite[0].setColor(red);
         healthComponent.maxHealth = 100;
         moveble.speed = 10;
         looteble.gold =50 + (10*rand()%10+1);
     }else if(diffeculty == "Medium")
     {
-        textureComponent.sprite.setColor((blue));
+        textureComponent.sprite[0].setColor((blue));
         healthComponent.maxHealth = 50;
         moveble.speed = 5;
         looteble.gold =25+(5*rand()%10+1);
@@ -130,8 +128,8 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
 {
     entity.addComponent<TextureComponent>();
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
-    textureComponent.texture = texture;
-    textureComponent.sprite.setTexture(texture);
+    textureComponent.texture[0] = texture;
+    textureComponent.sprite[0].setTexture(texture);
     textureComponent.spriteRect.height = 64;
     textureComponent.spriteRect.width = 32;
 
