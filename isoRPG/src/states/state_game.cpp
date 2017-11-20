@@ -30,7 +30,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     player = world.createEntity();
 
     // Load map information from JSON into object list
-    if (!Map::load("assets/map/map.json", objects))
+    if (!Map::load("assets/map/map.json", objects, context))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
     sf::Texture& Herobody = context.textures->get(Textures::Hero);
@@ -81,21 +81,26 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     AddDialoge addDialoge;
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
     context.music->play(Music::Test);
+
+    for (Object* object : objects)
+    {
+        object->process(1.f/60.f);
+        object->draw(window);
+    }
 }
 
 void StateGame::draw()
-
 {
 
     sf::RenderWindow& window = *getContext().window;
 
     window.setView(playerCam);
     //Sorting objects based on priority (y coordinate), from low to high.
-    objects.sort([](Object *f, const Object *s) { return f->priority < s->priority; });
+    //objects.sort([](Object *f, const Object *s) { return f->priority < s->priority; });
 
     anax::World& world = *getContext().world;
     DrawEntetys drawEntetys;
-
+    /*
     for (Object* object : objects)
     {
         object->process(1.f/60.f);
@@ -103,6 +108,7 @@ void StateGame::draw()
         if (object->priority < mPlayer.getPosition().y)
             window.draw(mPlayer);
     }
+    */
     drawEntetys.draw(window,world, "Game");
     Looteble looteble = player.getComponent<Looteble>();
     sf::Vector2f viewCenter = window.getView().getCenter();
@@ -277,7 +283,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     {
         objects.clear();
         std::cout << "Loading map data ..." << std::endl;
-        if (!Map::load("assets/map/map.json", objects))
+        if (!Map::load("assets/map/map.json", objects, getContext()))
         {
             std::cout << "Failed to reload map data." << std::endl;
         }

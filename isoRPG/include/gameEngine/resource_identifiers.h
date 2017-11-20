@@ -26,7 +26,8 @@ namespace Textures
         HeroClothes,
         HeroHead,
         HeroWeapon,
-        HeroShield
+        HeroShield,
+        Tileset,
 
     };
 }

@@ -14,6 +14,7 @@
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
 #include <include/components/Comp_animation.h>
+#include <include/components/Comp_State.h>
 
 
 class Draweble

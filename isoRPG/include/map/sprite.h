@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include <SFML/System/Clock.hpp>
+#include <states/state_base.h>
 
 #include "map/object.h"
 
@@ -11,7 +12,7 @@ class Sprite : public Object
     friend class Map;
 
 public:
-    Sprite(TileSize tileSize) : Object(tileSize) { }
+    Sprite(TileSize tileSize, StateBase::Context context) : Object(tileSize, context) { }
 
     void process(float time);
     void draw(sf::RenderWindow& window);
@@ -35,6 +36,8 @@ protected:
 
     // Times the animation
     sf::Clock clock;
+
+    bool test = true;
 };
 
 #endif

@@ -9,7 +9,7 @@
 #include "map/sprite.h"
 #include "map/layer.h"
 
-bool Map::load(std::string filename, std::list<Object*>& objects)
+bool Map::load(std::string filename, std::list<Object*>& objects, StateBase::Context context)
 {
     // Will contain the data we read in
     Json::Value root;
@@ -39,9 +39,9 @@ bool Map::load(std::string filename, std::list<Object*>& objects)
     for (Json::Value& layer: root["layers"])
     {
         if (layer["name"].asString() != "objects")
-            loadLayer(layer, objects, tileSize);
+            loadLayer(layer, objects, tileSize, context);
         else
-            loadObjects(root, layer, objects, tileSize);
+            loadObjects(root, layer, objects, tileSize, context);
     }
 
     // Read in tileset TODO: Should be handled by a resource handler
@@ -56,10 +56,10 @@ bool Map::load(std::string filename, std::list<Object*>& objects)
     return true;
 }
 
-void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize tileSize)
+void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize tileSize, StateBase::Context context)
 {
 
-    Layer* tmp = new Layer(tileSize);
+    Layer* tmp = new Layer(tileSize, context);
 
     // Store info on layer
     tmp->width = layer["width"].asInt();
@@ -76,7 +76,7 @@ void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize ti
     objects.push_back(tmp);
 }
 
-void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize)
+void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize, StateBase::Context context)
 {
     // Get all objects from layer
     for (Json::Value& object: layer["objects"])
@@ -95,7 +95,7 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>&
                 tileSize.y *= properties[std::to_string(gid)]["Height"].asInt();
         }
 
-        Sprite* sprite = new Sprite(tileSize);
+        Sprite* sprite = new Sprite(tileSize, context);
 
         // Load basic object info
         sprite->x = object["x"].asInt();
@@ -111,4 +111,16 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>&
 
         objects.push_back(sprite);
     }
+}
+
+void Map::loadCollision(Json::Value &root, Json::Value &layer, StateBase::Context context)
+{
+    int colissionMap[100][100];
+
+    int width = layer["width"].asInt();
+    int height = layer["height"].asInt();
+
+    for (size_t i = 0; i < layer["data"].size(); i++)
+        colissionMap[i % width][i / width] = layer["data"][(int)i].asInt();
+
 }

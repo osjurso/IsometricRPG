@@ -1,7 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <include/gameEngine/resource_identifiers.h>
+#include <gameEngine/resource_identifiers.h>
+#include <states/state_base.h>
 
 namespace sf
 {
@@ -24,7 +25,7 @@ class Object
     friend class Map;
 
 public:
-    Object(TileSize tileSize) : tileSize(tileSize) { }
+    Object(TileSize tileSize, StateBase::Context context) : tileSize(tileSize), context(context) { }
 
     virtual ~Object();
 
@@ -45,6 +46,7 @@ public:
 
 protected:
     sf::Texture* texture;
+    StateBase::Context context;
 };
 
 #endif
