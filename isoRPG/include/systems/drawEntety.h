@@ -26,15 +26,29 @@ class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent
 public:
     DrawEntetys(){}
 
+    struct entitySort
+    {
+        inline bool operator() (const anax::Entity& entity1, const anax::Entity& entity2)
+        {
+            int key1 = entity1.getComponent<TextureComponent>().sortKey;
+            int key2 = entity2.getComponent<TextureComponent>().sortKey;
+            return (key1 < key2);
+        }
+    };
+
+
     void draw(sf::RenderWindow& window, anax::World& world, std::string state)
     {
         auto enteties = world.getEntities();
+
+        std::sort (enteties.begin(), enteties.begin(), entitySort());
 
         for(auto i : enteties)
         {
             StateComponent& stateComponent = i.getComponent<StateComponent>();
             TextureComponent& textureComponent  = i.getComponent<TextureComponent>();
             PositionComponent& positionComponent = i.getComponent<PositionComponent>();
+
 
             if(stateComponent.state == state)
             {

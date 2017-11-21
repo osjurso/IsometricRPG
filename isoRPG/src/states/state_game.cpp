@@ -1,12 +1,12 @@
 #include <iostream>
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <include/systems/resolve_movment.h>
-#include <include/systems/drawEntety.h>
-#include <include/collections/setUpCreature.h>
-#include <include/systems/attack.h>
-#include <include/systems/mouse_clicked.h>
-#include <include/collections/addDialoge.h>
+#include <systems/resolve_movment.h>
+#include <systems/drawEntety.h>
+#include <systems/attack.h>
+#include <systems/mouse_clicked.h>
+#include <collections/setUpCreature.h>
+#include <collections/addDialoge.h>
 
 #include "states/state_game.h"
 #include "gameEngine/resource_holder.h"
@@ -51,7 +51,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
 
 
-
+    player.getComponent<TextureComponent>().sortKey = 2;
 
     sf::RenderWindow& window = *getContext().window;
     DrawEntetys drawEntetys;
@@ -81,34 +81,16 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     AddDialoge addDialoge;
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
     context.music->play(Music::Test);
-
-    for (Object* object : objects)
-    {
-        object->process(1.f/60.f);
-        object->draw(window);
-    }
 }
 
 void StateGame::draw()
 {
-
     sf::RenderWindow& window = *getContext().window;
-
     window.setView(playerCam);
-    //Sorting objects based on priority (y coordinate), from low to high.
-    //objects.sort([](Object *f, const Object *s) { return f->priority < s->priority; });
 
     anax::World& world = *getContext().world;
     DrawEntetys drawEntetys;
-    /*
-    for (Object* object : objects)
-    {
-        object->process(1.f/60.f);
-        object->draw(window);
-        if (object->priority < mPlayer.getPosition().y)
-            window.draw(mPlayer);
-    }
-    */
+
     drawEntetys.draw(window,world, "Game");
     Looteble looteble = player.getComponent<Looteble>();
     sf::Vector2f viewCenter = window.getView().getCenter();
@@ -142,6 +124,10 @@ bool StateGame::update(sf::Time dt)
 
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
+
+    // Updates player sort key
+    player.getComponent<TextureComponent>().sortKey = static_cast<int>(player.getComponent<PositionComponent>().YPos);
+    //std::cout << player.getComponent<TextureComponent>().sortKey;
 
     return true;
 }

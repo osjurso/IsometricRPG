@@ -30,7 +30,7 @@ public:
     virtual ~Object();
 
     virtual void process(float deltaTime) {}
-    virtual void draw(sf::RenderWindow& window) {}
+    virtual void draw() {}
 
     // Calculate x and y position of given tile in the texture
     void getTileCoords(int tile, int& x, int& y);

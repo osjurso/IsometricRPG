@@ -16,7 +16,7 @@ void Sprite::process(float deltaTime)
     clock.restart();
 }
 
-void Sprite::draw(sf::RenderWindow& window)
+void Sprite::draw()
 {
     if (test)
     {
@@ -62,6 +62,7 @@ void Sprite::draw(sf::RenderWindow& window)
 
         TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();
         textureComponent.sprite[0] = sprite;
+        textureComponent.sortKey = static_cast<int>(sprite.getPosition().y);
 
         test = false;
     }

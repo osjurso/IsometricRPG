@@ -17,6 +17,7 @@ public:
     sf::Sprite sprite[4];
     sf::IntRect spriteRect;
     bool multisprite = false;
+    int sortKey;
 };
 
 #endif //ISORPG_COMP_TEXTURE_H

@@ -15,7 +15,7 @@ public:
     Sprite(TileSize tileSize, StateBase::Context context) : Object(tileSize, context) { }
 
     void process(float time);
-    void draw(sf::RenderWindow& window);
+    void draw();
 
 
 protected:

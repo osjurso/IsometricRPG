@@ -12,7 +12,7 @@ class Layer : public Object
 public:
     Layer(TileSize tileSize, StateBase::Context context) : Object(tileSize, context) { }
 
-    void draw(sf::RenderWindow& window);
+    void draw();
 
 protected:
     // Size in tiles

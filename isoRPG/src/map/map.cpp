@@ -53,6 +53,14 @@ bool Map::load(std::string filename, std::list<Object*>& objects, StateBase::Con
         object->texture = tileset;
 
 
+
+    for (Object* object : objects)
+    {
+        object->process(1.f/60.f);
+        object->draw();
+    }
+
+
     return true;
 }
 
@@ -72,6 +80,7 @@ void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize ti
     // Read in tilemap
     for (size_t i = 0; i < layer["data"].size(); i++)
         tmp->tilemap[i % tmp->width][i / tmp->width] = layer["data"][(int)i].asInt();
+
 
     objects.push_back(tmp);
 }
