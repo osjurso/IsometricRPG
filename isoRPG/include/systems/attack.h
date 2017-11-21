@@ -10,11 +10,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 
-#include <include/components/Comp_size.h>
+#include <components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
-#include <include/components/Comp_healt.h>
+#include <components/Comp_healt.h>
 #include <iostream>
+#include <components/Comp_looteble.h>
 
 
 class Attack
