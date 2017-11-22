@@ -28,6 +28,7 @@ public:
         talkative.files.insert(std::pair<int, std::string>(talkative.numberOfDialoges, file));
         talkative.numberOfDialoges =+1;
     }
+    // test
 };
 
 #endif //ISORPG_ADDDIALOGE_H
