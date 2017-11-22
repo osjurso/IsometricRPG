@@ -6,7 +6,7 @@
 
 #include "states/state_base.h"
 
-class Moveble : public anax::Component
+class Movable : public anax::Component
 {
 public:
     int speed;

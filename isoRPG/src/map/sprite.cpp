@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "map/sprite.h"
 #include "collections/drawable.h"
@@ -28,31 +29,29 @@ void Sprite::draw()
         //TODO: Braindead solution. Fix offset calculation
         if (tileSize.y == 64)
         {
-            tilex = x + (16 * -5);
-            tiley = y + (16 * 1);
+            tilex = x + (16 * -1);
+            tiley = y + (16 * 5);
         }
         else if (tileSize.y == 128)
         {
-            tilex = x + (16 * -5);
-            tiley = y + (16 * 5);
+            tilex = x + (16 * 3);
+            tiley = y + (16 * 13);
         }
         else if (tileSize.y == 192)
         {
-            tilex = x + (16 * -5);
-            tiley = y + (16 * 9);
+            tilex = x + (16 * 7);
+            tiley = y + (16 * 21);
         }
         else //tilesize.y == 256
         {
-            tilex = x + (16 * -5);
-            tiley = y + (16 * 13);
+            tilex = x + (16 * 11);
+            tiley = y + (16 * 29);
         }
-
         sf::Vector2f v(tilex, tiley);
         CartesianToIsometric(v);
 
-
         sf::Sprite sprite = sf::Sprite(context.textures->get(Textures::Tileset), tileRect);
-
+        sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height);
         anax::World& world = *context.world;
 
         Draweble draweble;
@@ -62,7 +61,7 @@ void Sprite::draw()
 
         TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();
         textureComponent.sprite[0] = sprite;
-        textureComponent.sortKey = static_cast<int>(sprite.getPosition().y);
+        textureComponent.sortKey = mapEntity.getComponent<PositionComponent>().YPos;
 
         test = false;
     }

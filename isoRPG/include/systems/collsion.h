@@ -32,7 +32,7 @@ void checkCollision(anax::World& world)
         {
             if(e.getId() != i.getId())
             {
-                if(i.hasComponent<Moveble>())
+                if(i.hasComponent<Movable>())
                 {
                     PositionComponent& entity1Pos = i.getComponent<PositionComponent>();
                     PositionComponent& entity2Pos = e.getComponent<PositionComponent>();

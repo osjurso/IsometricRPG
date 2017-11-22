@@ -1,19 +1,17 @@
 #include <iostream>
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <systems/resolve_movment.h>
-#include <systems/drawEntety.h>
-#include <systems/attack.h>
-#include <systems/mouse_clicked.h>
-#include <collections/setUpCreature.h>
-#include <collections/addDialoge.h>
+#include <include/systems/sort_key_update.h>
 
+#include "systems/resolve_movment.h"
+#include "systems/drawEntety.h"
+#include "systems/attack.h"
+#include "systems/mouse_clicked.h"
+#include "collections/setUpCreature.h"
+#include "collections/addDialoge.h"
 #include "states/state_game.h"
-#include "gameEngine/resource_holder.h"
 #include "map/map.h"
 #include "util/utility.h"
-
-
 
 StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
@@ -50,8 +48,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     textureComponent.texture[3] = HeroWeapon;
     textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
 
-
-    player.getComponent<TextureComponent>().sortKey = 2;
 
     sf::RenderWindow& window = *getContext().window;
     DrawEntetys drawEntetys;
@@ -118,16 +114,16 @@ bool StateGame::update(sf::Time dt)
         resolve.resolveMovment(player, "Idle", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        Moveble& moveble = player.getComponent<Moveble>();
+        Movable& moveble = player.getComponent<Movable>();
     }
     animationComponent.animationClock.restart().asSeconds();
 
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
 
-    // Updates player sort key
-    player.getComponent<TextureComponent>().sortKey = static_cast<int>(player.getComponent<PositionComponent>().YPos);
-    //std::cout << player.getComponent<TextureComponent>().sortKey;
+    // Update the sort key for movable entities
+    SortKeyUpdate sortKeyUpdate;
+    sortKeyUpdate.Update(*getContext().world);
 
     return true;
 }
@@ -176,7 +172,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        Moveble moveble = player.getComponent<Moveble>();
+        Movable moveble = player.getComponent<Movable>();
         positionComponent.YPos -= moveble.speed;
         positionComponent.SpriteTop -= moveble.speed;
         isMovingUp = isPressed;
@@ -194,7 +190,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        Moveble moveble = player.getComponent<Moveble>();
+        Movable moveble = player.getComponent<Movable>();
         positionComponent.YPos += moveble.speed;
         positionComponent.SpriteTop += moveble.speed;
 
@@ -211,7 +207,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        Moveble moveble = player.getComponent<Moveble>();
+        Movable moveble = player.getComponent<Movable>();
         positionComponent.XPos -= moveble.speed;
         positionComponent.SpriteLeft -= moveble.speed;
 
@@ -228,7 +224,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        Moveble moveble = player.getComponent<Moveble>();
+        Movable moveble = player.getComponent<Movable>();
         positionComponent.XPos += moveble.speed;
         positionComponent.SpriteLeft += moveble.speed;
     }

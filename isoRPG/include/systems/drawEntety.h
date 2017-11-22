@@ -1,24 +1,21 @@
-//
-// Created by Bjornar on 02.11.2017.
-//
-
 #ifndef ISORPG_DRAWENTETY_H
 #define ISORPG_DRAWENTETY_H
 
 #include <anax/System.hpp>
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
+#include <iostream>
 
 #include <states/state_base.h>
 #include <application.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 
 
-#include <include/components/Comp_size.h>
+#include <components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
 #include <components/Comp_animation.h>
-#include <include/components/Comp_State.h>
+#include <components/Comp_State.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -26,22 +23,18 @@ class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent
 public:
     DrawEntetys(){}
 
-    struct entitySort
-    {
-        inline bool operator() (const anax::Entity& entity1, const anax::Entity& entity2)
-        {
-            int key1 = entity1.getComponent<TextureComponent>().sortKey;
-            int key2 = entity2.getComponent<TextureComponent>().sortKey;
-            return (key1 < key2);
-        }
-    };
-
-
-    void draw(sf::RenderWindow& window, anax::World& world, std::string state)
+    void draw(sf::RenderWindow& window, anax::World& world, const std::string &state)
     {
         auto enteties = world.getEntities();
 
-        std::sort (enteties.begin(), enteties.begin(), entitySort());
+        std::sort (enteties.begin(), enteties.end(),
+                   [](const anax::Entity entity1, const anax::Entity entity2)
+                   {
+                       int key1 = entity1.getComponent<TextureComponent>().sortKey;
+                       int key2 = entity2.getComponent<TextureComponent>().sortKey;
+                       return (key1 < key2);
+                   }
+        );
 
         for(auto i : enteties)
         {
@@ -49,9 +42,9 @@ public:
             TextureComponent& textureComponent  = i.getComponent<TextureComponent>();
             PositionComponent& positionComponent = i.getComponent<PositionComponent>();
 
-
             if(stateComponent.state == state)
             {
+
                 if(i.hasComponent<AnimationComponent>())
                 {
                     textureComponent.sprite[0].setTextureRect(textureComponent.spriteRect);

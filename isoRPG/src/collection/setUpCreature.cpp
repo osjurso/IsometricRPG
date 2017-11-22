@@ -13,8 +13,8 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
     positionComponent.YPos = 0;
     positionComponent.XPos = 0;
-    positionComponent.SpriteLeft = 45;
-    positionComponent.SpriteTop = 45;
+    positionComponent.SpriteLeft = 95;
+    positionComponent.SpriteTop = 95;
 
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
@@ -36,8 +36,8 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
 
-    entity.addComponent<Moveble>();
-    Moveble& moveble = entity.getComponent<Moveble>();
+    entity.addComponent<Movable>();
+    Movable& moveble = entity.getComponent<Movable>();
     moveble.speed = 5;
 
     entity.addComponent< Looteble>();
@@ -62,8 +62,8 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
 
     positionComponent.YPos = Ypos;
     positionComponent.XPos = Xpos;
-    positionComponent.SpriteLeft = Xpos +45;
-    positionComponent.SpriteTop = Ypos +65;
+    positionComponent.SpriteLeft = Xpos + 45;
+    positionComponent.SpriteTop = Ypos + 65;
 
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
@@ -88,8 +88,8 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
 
-    entity.addComponent<Moveble>();
-    Moveble& moveble = entity.getComponent<Moveble>();
+    entity.addComponent<Movable>();
+    Movable& moveble = entity.getComponent<Movable>();
 
 
     entity.addComponent<HealthComponent>();
@@ -161,8 +161,8 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
 
-    entity.addComponent<Moveble>();
-    Moveble& moveble = entity.getComponent<Moveble>();
+    entity.addComponent<Movable>();
+    Movable& moveble = entity.getComponent<Movable>();
     moveble.speed = 5;
 
     entity.addComponent<MousedOver>();
