@@ -45,7 +45,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     textureComponent.sprite[1].setTexture(textureComponent.texture[1]);
     textureComponent.texture[2] = HeroWeapon;
     textureComponent.sprite[2].setTexture(textureComponent.texture[2]);
-    textureComponent.texture[3] = HeroWeapon;
+    textureComponent.texture[3] = HeroShield;
     textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
 
 
@@ -168,7 +168,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         if(animationComponent.direction != "Up" )animationComponent.changedDirection = true;
         animationComponent.direction = "Up";
         animationComponent.movementDirection.y -= animationComponent.movementSpeed*animationComponent.deltaTime;
-        animationComponent.row = 2;
+        animationComponent.row = animationComponent.rowNorth;
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
@@ -186,7 +186,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         if(animationComponent.direction != "Down" )animationComponent.changedDirection = true;
         animationComponent.direction = "Down";
         animationComponent.movementDirection.y += animationComponent.movementSpeed*animationComponent.deltaTime;
-        animationComponent.row = 6;
+        animationComponent.row = animationComponent.rowSouth;
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
@@ -203,7 +203,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         if(animationComponent.direction != "Left" )animationComponent.changedDirection = true;
         animationComponent.direction = "Left";
         animationComponent.movementDirection.x -= animationComponent.movementSpeed*animationComponent.deltaTime;
-        animationComponent.row = 0;
+        animationComponent.row = animationComponent.rowWest;
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
@@ -220,7 +220,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         if(animationComponent.direction != "Right" )animationComponent.changedDirection = true;
         animationComponent.direction = "Right";
         animationComponent.movementDirection.x += animationComponent.movementSpeed*animationComponent.deltaTime;
-        animationComponent.row = 4;
+        animationComponent.row = animationComponent.rowEast;
         resolve.resolveMovment(player, "Walk", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
