@@ -31,6 +31,23 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     animationComponent.row =0;
     animationComponent.currentImage.x =0;
     animationComponent.animationClock.restart().asSeconds();
+    animationComponent.idleStart = 0;
+    animationComponent.idleEnd = 3;
+    animationComponent.walkStart = 4;
+    animationComponent.walkEnd = 11;
+    animationComponent.attackStart = 12;
+    animationComponent.attackEnd = 15;
+    animationComponent.defendStart = 16;
+    animationComponent.defendEnd = 17;
+
+    animationComponent.rowWest = 0;
+    animationComponent.rowNorthWest = 1;
+    animationComponent.rowNorth = 2;
+    animationComponent.rowNorthEast = 3;
+    animationComponent.rowEast = 4;
+    animationComponent.rowSouthEast = 5;
+    animationComponent.rowSouth = 6;
+    animationComponent.rowSouthWest = 7;
 
     entity.addComponent<StateComponent>();
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
@@ -76,13 +93,30 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.imageCounter.x = 32;
     animationComponent.imageCounter.y = 8;
-    animationComponent.switchTime = 0.2f;
+    animationComponent.switchTime = 0.08f;
     animationComponent.pixels = 128;
-    animationComponent.movementSpeed = 20;
+    animationComponent.movementSpeed = 100;
     animationComponent.row =0;
     animationComponent.currentImage.x =0;
     animationComponent.animationClock.restart().asSeconds();
-    animationComponent.idle = true;
+    animationComponent.idleStart = 0;
+    animationComponent.idleEnd = 3;
+    animationComponent.walkStart = 4;
+    animationComponent.walkEnd = 11;
+    animationComponent.attackStart = 12;
+    animationComponent.attackEnd = 15;
+    animationComponent.defendStart = 16;
+    animationComponent.defendEnd = 17;
+
+    animationComponent.rowWest = 0;
+    animationComponent.rowNorthWest = 1;
+    animationComponent.rowNorth = 2;
+    animationComponent.rowNorthEast = 3;
+    animationComponent.rowEast = 4;
+    animationComponent.rowSouthEast = 5;
+    animationComponent.rowSouth = 6;
+    animationComponent.rowSouthWest = 7;
+
 
     entity.addComponent<StateComponent>();
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
