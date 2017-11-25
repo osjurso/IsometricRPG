@@ -34,14 +34,14 @@ public:
 
         for(auto i : enteties)
         {
-            if(i.hasComponent<Moveble>())
+            if(i.hasComponent<Movable>())
             {
-                if(i.getComponent<Moveble>().path != "")
+                if(i.getComponent<Movable>().path != "")
                 {
                     moveCreature(i);
                 }else
                 {
-                    i.getComponent<Moveble>().agro = false;
+                    i.getComponent<Movable>().agro = false;
                 }
             }
         }
@@ -49,7 +49,7 @@ public:
 private:
     void moveCreature(anax::Entity& entity)
     {
-        Moveble& moveble = entity.getComponent<Moveble>();
+        Movable& moveble = entity.getComponent<Movable>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
         AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
         int speed = 10;

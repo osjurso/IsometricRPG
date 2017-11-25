@@ -17,7 +17,7 @@
 #include "loot.h"
 #include "talk.h"
 
-struct MoveCreature : anax::System<anax::Requires<Moveble>>
+struct MoveCreature : anax::System<anax::Requires<Movable>>
 {
 public:
     MoveCreature()
@@ -27,7 +27,7 @@ public:
         auto enteties = world.getEntities();
         for(auto i : enteties)
         {
-            if(i.hasComponent<Moveble>())
+            if(i.hasComponent<Movable>())
                 process(i, GoalX, GoalY);
         }
     }

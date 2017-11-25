@@ -33,7 +33,7 @@ void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderW
 void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float MouseY)
 {
     PositionComponent positionComponent = player.getComponent<PositionComponent>();
-    Moveble& moveble = player.getComponent<Moveble>();
+    Movable& moveble = player.getComponent<Movable>();
     moveble.path = "";
     const int mapsize = 64;
 
