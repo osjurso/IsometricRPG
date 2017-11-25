@@ -8,7 +8,6 @@
 #include "map/map.h"
 #include "map/sprite.h"
 #include "map/layer.h"
-#include "collections/pathfinfigVariables.h"
 
 bool Map::load(std::string filename, std::list<Object*>& objects, StateBase::Context context)
 {

@@ -1,5 +1,7 @@
 #include "include/systems/mouse_clicked.h"
-#include "systems/pathfinding.h"
+
+#include <components/Comp_moveble.h>
+
 
 void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderWindow &window, sf::View cam)
 {
@@ -42,8 +44,8 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
 
     std::string path= pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
     moveble.path = path;
-    //std::cout << path << std::endl;
 }
+
 void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player,
                            sf::RenderWindow &window, sf::View cam)
 {

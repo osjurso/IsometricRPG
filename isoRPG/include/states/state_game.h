@@ -25,6 +25,7 @@ private:
     anax::Entity player;
     sf::Text playerGold;
 
+
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
 protected:

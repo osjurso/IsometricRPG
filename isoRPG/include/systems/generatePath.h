@@ -6,12 +6,11 @@
 #include <anax/System.hpp>
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
-
+#include "systems/pathfinding.h"
 
 class GeneratePath
 {
 public:
-    GeneratePath(){}
 
     void generate( anax::World& world, anax::Entity player);
 };

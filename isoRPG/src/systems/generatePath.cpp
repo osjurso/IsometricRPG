@@ -2,10 +2,11 @@
 #include <application.h>
 #include <iostream>
 
-#include "systems/generatePath.h"
-#include "systems/pathfinding.h"
 #include <components/Comp_position.h>
 #include <components/Comp_moveble.h>
+
+#include <systems/generatePath.h>
+
 
 void GeneratePath::generate(anax::World &world, anax::Entity player)
 {

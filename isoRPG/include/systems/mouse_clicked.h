@@ -6,15 +6,13 @@
 #include <states/state_base.h>
 
 
-#include <include/components/Comp_size.h>
-#include <include/components/Comp_mousedOver.h>
+#include <components/Comp_size.h>
+#include <components/Comp_mousedOver.h>
 #include <components/Comp_position.h>
 #include <iostream>
-#include <include/components/Comp_looteble.h>
-#include <include/components/Comp_talk.h>
-#include <include/components/Comp_moveble.h>
 #include "loot.h"
 #include "talk.h"
+#include "systems/pathfinding.h"
 
 
 struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>

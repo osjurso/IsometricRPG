@@ -126,14 +126,16 @@ bool StateGame::update(sf::Time dt)
     playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
 
 
-    GeneratePath generatePath;
-    generatePath.generate(*getContext().world,player);
+
 
     PostitonChange postitonChange;
     postitonChange.change(*getContext().world);
 
     ResolveAgro resolveAgro;
     resolveAgro.agro(player, *getContext().world);
+
+    GeneratePath generatePath;
+    generatePath.generate(*getContext().world,player);
 
 
     // Update the sort key for movable entities
