@@ -13,10 +13,10 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::Texture& texture, sf::
 
     entity.addComponent<PositionComponent>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-    positionComponent.YPos = 0;
-    positionComponent.XPos = 0;
-    positionComponent.SpriteLeft = 45;
-    positionComponent.SpriteTop = 45;
+    positionComponent.YPos = -45;
+    positionComponent.XPos = -45;
+    positionComponent.SpriteLeft = 0;
+    positionComponent.SpriteTop = 0;
 
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();

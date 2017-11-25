@@ -13,16 +13,16 @@
 #include <math.h>
 #include <ctime>
 
-const int n=20; // horizontal size of the map
-const int m=20; // vertical size size of the map
+const int n=64; // horizontal size of the map
+const int m=64; // vertical size size of the map
 int map[n][m];
 int closed_nodes_map[n][m]; // map of closed (tried-out) nodes
 int open_nodes_map[n][m]; // map of open (not-yet-tried) nodes
 int dir_map[n][m]; // map of directions
-const int dir=4; // number of possible directions to go at any position
-static int dx[dir]={1, 0, -1, 0};
-static int dy[dir]={0, 1, 0, -1};
+const int dir=8; // number of possible directions to go at any position
 
+static int dx[dir]={1, 1, 0, -1, -1, -1, 0, 1};
+static int dy[dir]={0, 1, 1, 1, 0, -1, -1, -1};
 
 class node
 {
@@ -85,21 +85,6 @@ bool operator<(const node & a, const node & b)
 std::string pathFind( const int & xStart, const int & yStart,
                  const int & xFinish, const int & yFinish )
 {
-    // create empty map
-    for(int y=0;y<m;y++)
-    {
-        for(int x=0;x<n;x++) map[x][y]=0;
-    }
-
-    // fillout the map matrix with a '+' pattern
-    for(int x=n/8;x<n*7/8;x++)
-    {
-        map[x][m/2]=1;
-    }
-    for(int y=m/8;y<m*7/8;y++)
-    {
-        map[n/2][y]=1;
-    }
     static std::priority_queue<node> pq[2]; // list of open (not-yet-tried) nodes
     static int pqi; // pq index
     static node* n0;
@@ -220,5 +205,6 @@ std::string pathFind( const int & xStart, const int & yStart,
     }
     return ""; // no route found
 }
+
 
 #endif //ISORPG_PATHFINDING_H

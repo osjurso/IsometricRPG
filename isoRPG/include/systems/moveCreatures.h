@@ -16,7 +16,6 @@
 #include <include/components/Comp_moveble.h>
 #include "loot.h"
 #include "talk.h"
-#include "include/systems/pathfinding.h"
 
 struct MoveCreature : anax::System<anax::Requires<Moveble>>
 {
@@ -38,9 +37,9 @@ private:
     void process(anax::Entity entity, int GoalX, int GoalY)
     {
         PositionComponent positionComponent = entity.getComponent<PositionComponent>();
-        std::string path= pathFind(positionComponent.XPos,positionComponent.XPos,GoalX,GoalY);
-        if(path=="") std::cout<<"An empty route generated!"<<std::endl;
-        std::cout << path << std::endl;
+        //std::string path= pathFind(positionComponent.XPos,positionComponent.XPos,GoalX,GoalY);
+        //if(path=="") std::cout<<"An empty route generated!"<<std::endl;
+        //std::cout << path << std::endl;
 
     }
 };

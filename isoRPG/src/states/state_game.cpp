@@ -8,6 +8,7 @@
 #include <include/systems/mouse_clicked.h>
 #include <include/collections/addDialoge.h>
 #include <include/systems/moveCreatures.h>
+#include <include/systems/resolvePositionChange.h>
 
 #include "states/state_game.h"
 #include "gameEngine/resource_holder.h"
@@ -103,10 +104,13 @@ void StateGame::draw()
 bool StateGame::update(sf::Time dt)
 {
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-    playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
+    playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
 
     MoveCreature moveCreature;
     moveCreature.Move(*getContext().world,0 ,200);
+
+    PostitonChange postitonChange;
+    postitonChange.change(*getContext().world);
 
 
     //std::cout<< "XPOS:  " << positionComponent.XPos << " | YPOS:  " << positionComponent.YPos << std::endl;
