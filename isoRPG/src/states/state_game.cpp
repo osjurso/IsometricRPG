@@ -323,7 +323,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             positionComponent.SpriteTop += movable.speed / speedIdle;
 
         } else {
-            if (animationComponent.direction != "Right")animationComponent.changedDirection = true;
+            if (animationComponent.direction != "Right"){}animationComponent.changedDirection = true;
             animationComponent.direction = "Right";
             animationComponent.movementDirection.x += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowEast;
