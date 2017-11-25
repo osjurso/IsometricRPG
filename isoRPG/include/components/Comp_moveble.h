@@ -10,6 +10,9 @@ class Movable : public anax::Component
 {
 public:
     int speed;
+    std::string path;
+    bool agro = false;
+    int agroRage;
 };
 
 #endif //ISORPG_COMP_MOVEBLE_H

@@ -48,7 +48,14 @@ set(SOURCE_FILES
         include/components/Comp_talk.h
         include/collections/addDialoge.h
         include/systems/talk.h
-        include/systems/sort_key_update.h)
+        include/systems/sort_key_update.h
+        src/states/state_character.cpp
+        include/states/state_character.h
+        src/gamEngine/music_player.cpp
+        include/gameEngine/music_player.h
+        src/gamEngine/sound_player.cpp
+        include/gameEngine/sound_player.h include/systems/collsion.h include/components/Comp_moveble.h include/systems/attack.h include/collections/setUpCreature.h include/systems/resolve_movment.h include/components/Comp_State.h include/components/Comp_looteble.h include/systems/loot.h src/collection/setUpCreature.cpp include/components/Comp_talk.h include/collections/addDialoge.h include/systems/talk.h include/systems/pathfinding.h include/components/PathfindingNode.h include/systems/moveCreatures.h include/collections/pathfinfigVariables.h include/systems/generatePath.h include/systems/resolvePositionChange.h)
+
 
 
 add_executable(isoRPG ${SOURCE_FILES})

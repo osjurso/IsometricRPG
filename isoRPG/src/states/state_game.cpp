@@ -2,13 +2,21 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/sort_key_update.h>
-
 #include "systems/resolve_movment.h"
 #include "systems/drawEntety.h"
 #include "systems/attack.h"
 #include "systems/mouse_clicked.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
+#include <include/systems/resolve_movment.h>
+#include <include/systems/drawEntety.h>
+#include <include/collections/setUpCreature.h>
+#include <include/systems/attack.h>
+#include <include/systems/mouse_clicked.h>
+#include <include/collections/addDialoge.h>
+#include <include/systems/moveCreatures.h>
+#include <include/systems/resolvePositionChange.h>
+
 #include "states/state_game.h"
 #include "map/map.h"
 #include "util/utility.h"
@@ -119,7 +127,14 @@ bool StateGame::update(sf::Time dt)
     animationComponent.animationClock.restart().asSeconds();
 
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-    playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
+    playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
+
+    MoveCreature moveCreature;
+    moveCreature.Move(*getContext().world,0 ,200);
+
+    PostitonChange postitonChange;
+    postitonChange.change(*getContext().world);
+
 
     // Update the sort key for movable entities
     SortKeyUpdate sortKeyUpdate;

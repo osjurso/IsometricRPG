@@ -1,0 +1,8 @@
+
+#ifndef ISORPG_PATHFINDINGNODE_H
+#define ISORPG_PATHFINDINGNODE_H
+#include <math.h>
+
+
+
+#endif //ISORPG_PATHFINDINGNODE_H

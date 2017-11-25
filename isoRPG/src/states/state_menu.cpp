@@ -1,8 +1,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
-#include <include/collections/setUpCreature.h>
-#include <include/systems/resolve_movment.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
 #include "include/collections/drawable.h"
