@@ -1,20 +1,14 @@
 
 
-#include <include/systems/resolvePositionChange.h>
-#include <states/state_base.h>
-#include <application.h>
-#include <iostream>
+#include <systems/resolvePositionChange.h>
 
-#include <components/Comp_position.h>
-#include <components/Comp_moveble.h>
-#include <components/Comp_animation.h>
 
-void PostitonChange::change(anax::World &world)
+void PostitonChange::change(anax::World &world, anax::Entity player)
 {
     auto enteties = world.getEntities();
     for(auto i : enteties)
     {
-        if(i.hasComponent<Movable>())
+        if(i.hasComponent<Movable>() && player.getId() != i.getId())
         {
             if(i.getComponent<Movable>().path != "")
             {
@@ -92,6 +86,6 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         positionComponent.XPos += speed/2;
         positionComponent.SpriteLeft += speed/2;
     }
+    std::cout << "Entity ID: "<< entity.getId() << "  Path: " <<  moveble.path << std::endl;
     moveble.path.erase(0,1);
-    std::cout << moveble.path << std::endl;
 }

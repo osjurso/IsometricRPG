@@ -11,15 +11,16 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 
-#include <include/components/Comp_size.h>
+#include <components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
-#include <include/components/Comp_animation.h>
-#include <include/components/Comp_moveble.h>
-#include <include/components/Comp_healt.h>
-#include <include/components/Comp_looteble.h>
-#include <include/components/Comp_State.h>
-#include <include/components/Comp_mousedOver.h>
+#include <components/Comp_animation.h>
+#include <components/Comp_moveble.h>
+#include <components/Comp_healt.h>
+#include <components/Comp_looteble.h>
+#include <components/Comp_State.h>
+#include <components/Comp_mousedOver.h>
+#include <components/Comp_talk.h>
 
 
 class SetUpCreature

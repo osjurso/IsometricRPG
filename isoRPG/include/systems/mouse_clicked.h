@@ -12,8 +12,8 @@
 #include <iostream>
 #include "loot.h"
 #include "talk.h"
-#include "systems/pathfinding.h"
-
+#include <include/systems/pathfinding.h>
+#include <components/Comp_moveble.h>
 
 struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>
 {

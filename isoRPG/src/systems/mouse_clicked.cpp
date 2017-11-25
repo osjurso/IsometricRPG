@@ -1,8 +1,5 @@
 #include "include/systems/mouse_clicked.h"
 
-#include <components/Comp_moveble.h>
-
-
 void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderWindow &window, sf::View cam)
 {
     auto enteties = world.getEntities();

@@ -1,13 +1,5 @@
-#include <include/systems/resolve_movment.h>
-#include <states/state_base.h>
-#include <iostream>
+#include <systems/resolve_movment.h>
 
-#include <components/Comp_size.h>
-#include <components/Comp_mousedOver.h>
-#include <components/Comp_position.h>
-
-#include <components/Comp_animation.h>
-#include <components/Comp_Texture.h>
 
 
 void ResolveMovment::resolveMovment(anax::Entity &entity, std::string Occurrence, float deltaTime)

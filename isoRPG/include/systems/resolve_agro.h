@@ -1,6 +1,3 @@
-//
-// Created by Bjornar on 11/25/2017.
-//
 
 #ifndef ISORPG_RESOLVE_AGRO_H
 #define ISORPG_RESOLVE_AGRO_H
@@ -10,14 +7,20 @@
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
 
+#include <states/state_base.h>
+#include <application.h>
+#include <iostream>
+
+#include <components/Comp_size.h>
+#include <components/Comp_position.h>
+#include <components/Comp_moveble.h>
 
 
 
-class ResolveAgro
+
+struct ResolveAgro
 {
 public:
-    ResolveAgro(){}
-
     void agro(anax::Entity player, anax::World& world);
 
 };

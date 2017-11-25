@@ -1,5 +1,5 @@
 
-#include <include/components/Comp_talk.h>
+
 #include "include/collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)

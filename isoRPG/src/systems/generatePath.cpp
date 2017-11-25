@@ -1,10 +1,3 @@
-#include <states/state_base.h>
-#include <application.h>
-#include <iostream>
-
-#include <components/Comp_position.h>
-#include <components/Comp_moveble.h>
-
 #include <systems/generatePath.h>
 
 
@@ -14,42 +7,44 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
 
     for(auto i : enteties)
     {
-        PositionComponent positionComponent = i.getComponent<PositionComponent>();
-        Movable& moveble = i.getComponent<Movable>();
-        moveble.path = "";
-        const int mapsize = 64;
-
-        if(i.getComponent<Movable>().agro)
+        if(i.hasComponent<Movable>() && i.getId() != player.getId())
         {
-            PositionComponent playerPos = player.getComponent<PositionComponent>();
+            PositionComponent positionComponent = i.getComponent<PositionComponent>();
+            Movable& moveble = i.getComponent<Movable>();
+            moveble.path = "";
+            const int mapsize = 64;
 
-            const int distaceX = (playerPos.SpriteLeft  - positionComponent.SpriteLeft)/10;
-            const int distaceY = (playerPos.SpriteTop   - positionComponent.SpriteTop)/10;
+            if(i.getComponent<Movable>().agro)
+            {
+                PositionComponent& playerPos = player.getComponent<PositionComponent>();
 
-            if(0 < distaceX < mapsize && 0 < distaceY < mapsize)
-            {
-                std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
-                moveble.path = path;
-            }else
-            {
-                moveble.agro = false;
-            }
-        }else
-        {
-            const int distaceX = (positionComponent.originPosisionX  - positionComponent.SpriteLeft)/10;
-            const int distaceY = (positionComponent.originPosisionY   - positionComponent.SpriteTop)/10;
+                const int distaceX = (playerPos.XPos  - positionComponent.XPos)/10;
+                const int distaceY = (playerPos.YPos  - positionComponent.YPos)/10;
 
-            if(0 < distaceX < mapsize && 0 < distaceY < mapsize)
-            {
-                std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
-                moveble.path = path;
-            }else
-            {
-                i.kill();
-                world.refresh();
+                if(0 < distaceX < mapsize && 0 < distaceY < mapsize)
+                {
+                    std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
+                    moveble.path = path;
+                    std::cout << "Entity ID: "<< i.getId() << "  Path: " <<  path << std::endl;
+                }else
+                {
+                    moveble.agro = false;
+                    const int distaceX = (positionComponent.originPosisionX  - positionComponent.SpriteLeft)/10;
+                    const int distaceY = (positionComponent.originPosisionY   - positionComponent.SpriteTop)/10;
+
+                    if(0 < distaceX < mapsize && 0 < distaceY < mapsize)
+                    {
+                        std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
+                        moveble.path = path;
+                        std::cout << "Entity ID: "<< i.getId() << "  Path: " <<  path << std::endl;
+                    }else
+                    {
+                        i.kill();
+                        world.refresh();
+                    }
+                }
             }
 
         }
-
     }
 }

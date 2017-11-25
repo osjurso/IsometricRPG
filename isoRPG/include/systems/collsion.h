@@ -20,7 +20,6 @@
 class Collision : anax::System<anax::Requires<PositionComponent, SizeComponent>>
 {
 public:
-Collision(){}
 
 void checkCollision(anax::World& world)
 {

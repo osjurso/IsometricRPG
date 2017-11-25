@@ -21,8 +21,6 @@
 class Attack
 {
 public:
-    Attack(){}
-
     void resolveAttack( anax::World& world, anax::Entity attacker)
     {
         auto enteties = world.getEntities();

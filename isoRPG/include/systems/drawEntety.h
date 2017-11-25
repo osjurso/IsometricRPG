@@ -21,7 +21,6 @@
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
 {
 public:
-    DrawEntetys(){}
 
     void draw(sf::RenderWindow& window, anax::World& world, const std::string &state)
     {

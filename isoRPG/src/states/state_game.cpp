@@ -50,6 +50,10 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
 
 
+    movementTimer.restart().asSeconds();
+    pathfindingTimer.restart().asSeconds();
+
+
     sf::RenderWindow& window = *getContext().window;
     DrawEntetys drawEntetys;
 
@@ -126,16 +130,25 @@ bool StateGame::update(sf::Time dt)
     playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
 
 
+    if(movementTimer.getElapsedTime().asSeconds() >= 0.05f)
+    {
+        PostitonChange postitonChange;
+        postitonChange.change(*getContext().world, player);
+
+        ResolveAgro resolveAgro;
+        resolveAgro.agro(player, *getContext().world);
 
 
-    PostitonChange postitonChange;
-    postitonChange.change(*getContext().world);
 
-    ResolveAgro resolveAgro;
-    resolveAgro.agro(player, *getContext().world);
+        movementTimer.restart().asSeconds();
+    }
+    if(pathfindingTimer.getElapsedTime().asSeconds() >= 0.5)
+    {
+        GeneratePath generatePath;
+        generatePath.generate(*getContext().world,player);
 
-    GeneratePath generatePath;
-    generatePath.generate(*getContext().world,player);
+        pathfindingTimer.restart();
+    }
 
 
     // Update the sort key for movable entities

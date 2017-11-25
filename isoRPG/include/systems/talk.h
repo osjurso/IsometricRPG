@@ -25,7 +25,6 @@
 class Talk
 {
 public:
-    Talk(){}
 
     void talk(anax::Entity speaker, sf::RenderWindow& window)
     {

@@ -21,9 +21,10 @@ public:
 
 private:
     sf::View playerCam;
-    sf::Sprite mPlayer;
     anax::Entity player;
     sf::Text playerGold;
+    sf::Clock movementTimer;
+    sf::Clock pathfindingTimer;
 
 
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;

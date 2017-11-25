@@ -1,22 +1,24 @@
-//
-// Created by Bjornar on 13.11.2017.
-//
 
 #ifndef ISORPG_RESOLVE_MOVMENT_H
 #define ISORPG_RESOLVE_MOVMENT_H
 
-
+#include <states/state_base.h>
+#include <iostream>
 #include <anax/System.hpp>
+
+#include <components/Comp_size.h>
+#include <components/Comp_mousedOver.h>
+#include <components/Comp_position.h>
+
+#include <components/Comp_animation.h>
+#include <components/Comp_Texture.h>
+
 
 
 
 class ResolveMovment
 {
 public:
-ResolveMovment()
-{
-
-}
 
     void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTime);
 

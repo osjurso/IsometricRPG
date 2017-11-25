@@ -25,8 +25,6 @@
 class Loot
 {
 public:
-    Loot(){}
-
     void loot( anax::World& world, anax::Entity target, anax::Entity picker)
     {
         if(target.getId() != picker.getId())

@@ -22,7 +22,6 @@
 class SortKeyUpdate
 {
 public:
-    SortKeyUpdate(){}
 
     void Update(anax::World& world)
     {

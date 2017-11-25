@@ -54,7 +54,28 @@ set(SOURCE_FILES
         src/gamEngine/music_player.cpp
         include/gameEngine/music_player.h
         src/gamEngine/sound_player.cpp
-        include/gameEngine/sound_player.h include/systems/collsion.h include/components/Comp_moveble.h include/systems/attack.h include/collections/setUpCreature.h include/systems/resolve_movment.h include/components/Comp_State.h include/components/Comp_looteble.h include/systems/loot.h src/collection/setUpCreature.cpp include/components/Comp_talk.h include/collections/addDialoge.h include/systems/talk.h include/systems/pathfinding.h include/systems/generatePath.h include/systems/resolvePositionChange.h include/systems/resolve_agro.h src/systems/generatePath.cpp src/systems/resolve_agro.cpp src/systems/resolvePositionChange.cpp src/systems/resolve_movment.cpp)
+        include/gameEngine/sound_player.h
+        include/systems/collsion.h
+        include/components/Comp_moveble.h
+        include/systems/attack.h
+        include/collections/setUpCreature.h
+        include/systems/resolve_movment.h
+        include/components/Comp_State.h
+        include/components/Comp_looteble.h
+        include/systems/loot.h
+        src/collection/setUpCreature.cpp
+        include/components/Comp_talk.h
+        include/collections/addDialoge.h
+        include/systems/talk.h
+        include/systems/pathfinding.h
+        include/systems/generatePath.h
+        include/systems/resolvePositionChange.h
+        include/systems/resolve_agro.h
+        src/systems/generatePath.cpp
+        src/systems/resolve_agro.cpp
+        src/systems/resolvePositionChange.cpp
+        src/systems/resolve_movment.cpp
+        src/systems/pathfinding.cpp)
 
 
 

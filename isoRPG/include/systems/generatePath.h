@@ -6,9 +6,15 @@
 #include <anax/System.hpp>
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
-#include "systems/pathfinding.h"
+#include <systems/pathfinding.h>
+#include <states/state_base.h>
+#include <application.h>
+#include <iostream>
 
-class GeneratePath
+#include <components/Comp_position.h>
+#include <components/Comp_moveble.h>
+
+struct GeneratePath
 {
 public:
 

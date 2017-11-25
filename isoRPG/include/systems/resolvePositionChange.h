@@ -6,15 +6,22 @@
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
 
+#include <states/state_base.h>
+#include <application.h>
+#include <iostream>
+
+#include <components/Comp_position.h>
+#include <components/Comp_moveble.h>
+#include <components/Comp_animation.h>
 
 
 
-class PostitonChange
+
+struct PostitonChange
 {
 public:
-    PostitonChange(){}
 
-    void change(anax::World& world);
+    void change(anax::World& world, anax::Entity player);
 private:
     void moveCreature(anax::Entity& entity);
 
