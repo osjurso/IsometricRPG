@@ -1,21 +1,19 @@
 #include <iostream>
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <include/systems/sort_key_update.h>
+
+#include <systems/sort_key_update.h>
 #include "systems/resolve_movment.h"
 #include "systems/drawEntety.h"
 #include "systems/attack.h"
+#include <systems/resolvePositionChange.h>
+#include <systems/resolve_agro.h>
+#include <systems/generatePath.h>
 #include "systems/mouse_clicked.h"
+
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
-#include <include/systems/resolve_movment.h>
-#include <include/systems/drawEntety.h>
-#include <include/collections/setUpCreature.h>
-#include <include/systems/attack.h>
-#include <include/systems/mouse_clicked.h>
-#include <include/collections/addDialoge.h>
-#include <include/systems/moveCreatures.h>
-#include <include/systems/resolvePositionChange.h>
+
 
 #include "states/state_game.h"
 #include "map/map.h"
@@ -25,11 +23,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
 {
-    isMovingUp = false;
-    isMovingDown = false;
-    isMovingLeft = false;
-    isMovingRight = false;
-
     anax::World& world = *getContext().world;
     playerCam.setSize(1920, 1080);
     playerCam.zoom(0.3f);
@@ -85,6 +78,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     AddDialoge addDialoge;
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
     context.music->play(Music::Test);
+
 }
 
 void StateGame::draw()
@@ -107,6 +101,8 @@ void StateGame::draw()
     playerGold.setPosition(mX +5 ,mY +5);
     playerGold.setString(std::to_string(looteble.gold));
     window.draw(playerGold);
+
+
 }
 
 bool StateGame::update(sf::Time dt)
@@ -129,11 +125,15 @@ bool StateGame::update(sf::Time dt)
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
 
-    MoveCreature moveCreature;
-    moveCreature.Move(*getContext().world,0 ,200);
+
+    GeneratePath generatePath;
+    generatePath.generate(*getContext().world,player);
 
     PostitonChange postitonChange;
     postitonChange.change(*getContext().world);
+
+    ResolveAgro resolveAgro;
+    resolveAgro.agro(player, *getContext().world);
 
 
     // Update the sort key for movable entities

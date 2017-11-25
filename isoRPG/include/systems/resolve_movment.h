@@ -8,14 +8,13 @@
 
 #include <anax/System.hpp>
 #include <states/state_base.h>
-
-
-#include <include/components/Comp_size.h>
-#include <include/components/Comp_mousedOver.h>
-#include <components/Comp_position.h>
 #include <iostream>
-#include <include/components/Comp_animation.h>
-#include <include/components/Comp_Texture.h>
+
+#include <components/Comp_size.h>
+#include <components/Comp_mousedOver.h>
+#include <components/Comp_position.h>
+#include <components/Comp_animation.h>
+#include <components/Comp_Texture.h>
 
 
 class ResolveMovment
