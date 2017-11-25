@@ -101,24 +101,23 @@ void StateGame::draw()
     window.draw(playerGold);
 }
 
-bool StateGame::update(sf::Time dt)
-{
-    AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
+bool StateGame::update(sf::Time dt) {
+    AnimationComponent &animationComponent = player.getComponent<AnimationComponent>();
     ResolveMovment resolve;
-    anax::World& world = *getContext().world;
+    float deltaTime = animationComponent.animationClock.restart().asSeconds();
 
-    if(animationComponent.idleTimer.getElapsedTime().asSeconds() >= 0.2f && animationComponent.idle == false) {
-        if(animationComponent.direction != "Idle" )animationComponent.changedDirection = true;
+    if (animationComponent.idleTimer.getElapsedTime().asSeconds() >= 0.2f && animationComponent.idle == false) {
+        if (animationComponent.direction != "Idle")animationComponent.changedDirection = true;
         animationComponent.direction = "Idle";
         float deltaTime = animationComponent.animationClock.restart().asSeconds();
-        resolve.resolveMovment(world);
+        resolve.resolveMovment(player, "Idle", deltaTime);
 
-        PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-        Movable& moveble = player.getComponent<Movable>();
+        PositionComponent &positionComponent = player.getComponent<PositionComponent>();
+        Movable &moveble = player.getComponent<Movable>();
     }
     animationComponent.animationClock.restart().asSeconds();
 
-    PositionComponent& positionComponent = player.getComponent<PositionComponent>();
+    PositionComponent &positionComponent = player.getComponent<PositionComponent>();
     playerCam.setCenter(positionComponent.XPos, positionComponent.YPos);
 
     // Update the sort key for movable entities
@@ -155,12 +154,12 @@ bool StateGame::handleEvent(const sf::Event &event)
 void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
 {
     ResolveMovment resolve;
-    anax::World& world = *getContext().world;
     AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
+    float deltaTime = animationComponent.animationClock.restart().asSeconds();
 
     float speedIdle= 1.5f;
 
-    //animationComponent.animationClock.restart().asSeconds();
+    animationComponent.animationClock.restart().asSeconds();
 
     if (key == sf::Keyboard::W || key == sf::Keyboard::Up)
     {
@@ -171,7 +170,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowNorthWest;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -184,7 +183,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x += animationComponent.movementSpeed*animationComponent.deltaTime;
             animationComponent.movementDirection.y -= animationComponent.movementSpeed*animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowNorthEast;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent& positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -198,8 +197,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.direction = "Up";
             animationComponent.movementDirection.y -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowNorth;
-            resolve.resolveMovment(world);
-
+            resolve.resolveMovment(player, "Walk", deltaTime);
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
             positionComponent.YPos -= movable.speed;
@@ -214,7 +212,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowSouthWest;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -227,7 +225,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowSouthEast;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -241,7 +239,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.direction = "Down";
             animationComponent.movementDirection.y += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowSouth;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -257,7 +255,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowNorthWest;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -270,7 +268,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowSouthWest;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -284,7 +282,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.direction = "Left";
             animationComponent.movementDirection.x -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowWest;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -300,7 +298,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.movementDirection.x += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y -= animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowNorthEast;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -309,11 +307,11 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             positionComponent.YPos -= movable.speed / speedIdle;
             positionComponent.SpriteTop -= movable.speed / speedIdle;
 
-        }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.movementDirection.x += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.movementDirection.y += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowSouthEast;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
             Movable movable = player.getComponent<Movable>();
@@ -321,18 +319,17 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             positionComponent.SpriteLeft += movable.speed / speedIdle;
             positionComponent.YPos += movable.speed / speedIdle;
             positionComponent.SpriteTop += movable.speed / speedIdle;
-
         } else {
-            if (animationComponent.direction != "Right"){}animationComponent.changedDirection = true;
+            if (animationComponent.direction != "Right")animationComponent.changedDirection = true;
             animationComponent.direction = "Right";
             animationComponent.movementDirection.x += animationComponent.movementSpeed * animationComponent.deltaTime;
             animationComponent.row = animationComponent.rowEast;
-            resolve.resolveMovment(world);
+            resolve.resolveMovment(player, "Walk", deltaTime);
 
             PositionComponent &positionComponent = player.getComponent<PositionComponent>();
-            Movable movable = player.getComponent<Movable>();
-            positionComponent.XPos += movable.speed;
-            positionComponent.SpriteLeft += movable.speed;
+            Movable moveble = player.getComponent<Movable>();
+            positionComponent.XPos += moveble.speed;
+            positionComponent.SpriteLeft += moveble.speed;
         }
     }
 
@@ -343,10 +340,9 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.idle = false;
         if(animationComponent.direction != "Attack" )animationComponent.changedDirection = true;
         animationComponent.direction = "Attack";
-        resolve.resolveMovment(world);
+        resolve.resolveMovment(player, "Attack", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-
     }
 
         //Defend method
@@ -356,10 +352,11 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.idle = false;
         if(animationComponent.direction != "Defend" )animationComponent.changedDirection = true;
         animationComponent.direction = "Defend";
-        resolve.resolveMovment(world);
+        resolve.resolveMovment(player, "Defend", deltaTime);
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     }
+
     else if (key == sf::Keyboard::Space)
     {
         Attack attack;

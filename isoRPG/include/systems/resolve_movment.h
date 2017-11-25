@@ -26,9 +26,9 @@ ResolveMovment()
 
 }
 
-void resolveMovment(anax::World& world)
+void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTime)
 {
-
+/*
 auto entitys = world.getEntities();
     for (auto i : entitys) {
         if(i.hasComponent<Movable>()) {
@@ -40,7 +40,11 @@ auto entitys = world.getEntities();
             if(Occurrence == "Defend")Defend(i, deltaTime);
         }
     }
-
+*/
+    if(Occurrence == "Walk")Walk(entity, deltaTime);
+    if(Occurrence == "Idle")Idle(entity, deltaTime);
+    if(Occurrence == "Attack")Attack(entity, deltaTime);
+    if(Occurrence == "Defend")Defend(entity, deltaTime);
 }
 
     void Walk(anax::Entity& entity, float deltaTime)
@@ -49,12 +53,13 @@ auto entitys = world.getEntities();
         AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
         animationComponent.currentImage.y = animationComponent.row;
         animationComponent.totalTime += deltaTime;
+
             if(animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime)
             {
                 animationComponent.currentImage.x = animationComponent.walkStart;
                 animationComponent.changedDirection = false;
-
             }
+
             else if(animationComponent.totalTime >= animationComponent.switchTime)
             {
                 animationComponent.totalTime -= animationComponent.switchTime;
@@ -64,11 +69,10 @@ auto entitys = world.getEntities();
                     animationComponent.currentImage.x = animationComponent.walkStart;
                 }
         }
-
         textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
         textureComponent.spriteRect.left = (animationComponent.currentImage.x +1)* abs(textureComponent.spriteRect.width);
-
     }
+
     void Idle(anax::Entity& entity, float deltaTime)
     {
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
