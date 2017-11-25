@@ -45,7 +45,7 @@ void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTim
         animationComponent.totalTime += deltaTime;
             if(animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime)
             {
-                animationComponent.currentImage.x = 4;
+                animationComponent.currentImage.x = 3;
                 animationComponent.changedDirection = false;
 
             }
@@ -54,9 +54,8 @@ void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTim
                 animationComponent.totalTime -= animationComponent.switchTime;
                 animationComponent.currentImage.x++;
 
-
                 if (animationComponent.currentImage.x >= 11) {
-                    animationComponent.currentImage.x = 3;
+                    animationComponent.currentImage.x = 4;
                 }
         }
 
@@ -66,16 +65,88 @@ void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTim
     }
     void Idle(anax::Entity& entity, float deltaTime)
     {
-        bool isMoving = false;
+        TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
+        AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
+        animationComponent.currentImage.y = animationComponent.row;
+        animationComponent.currentImage.x = 0;
+
+        animationComponent.totalTime += deltaTime;
+
+        //animationComponent.changedDirection = false;
+
+        if(animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime)
+        {
+            animationComponent.currentImage.x = 0;
+            animationComponent.changedDirection = false;
+
+        }else if(animationComponent.totalTime >= animationComponent.switchTime) {
+            animationComponent.totalTime -= animationComponent.switchTime;
+            animationComponent.currentImage.x++;
+
+            if (animationComponent.currentImage.x >= 3) {
+                animationComponent.currentImage.x = 0;
+            }
+        }
+
+        textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
+        textureComponent.spriteRect.left = (animationComponent.currentImage.x +1)* abs(textureComponent.spriteRect.width);
 
     }
-    void Attack(anax::Entity& entity, float deltaTime)
-    {
+    void Attack(anax::Entity& entity, float deltaTime) {
+        bool attack = true;
+        TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
+        AnimationComponent &animationComponent = entity.getComponent<AnimationComponent>();
+        animationComponent.currentImage.y = animationComponent.row;
 
+        while (attack) {
+
+            animationComponent.totalTime += deltaTime;
+
+            if (animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime) {
+                animationComponent.currentImage.x = 11;
+                animationComponent.changedDirection = false;
+
+            } else if (animationComponent.totalTime >= animationComponent.switchTime) {
+                animationComponent.totalTime -= animationComponent.switchTime;
+                animationComponent.currentImage.x++;
+
+                if (animationComponent.currentImage.x >= 15) {
+                    animationComponent.currentImage.x = 11;
+                    attack = false;
+                }
+                textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
+                textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
+            }
+
+        }
     }
-    void Defend(anax::Entity& entity, float deltaTime)
-    {
 
+    void Defend(anax::Entity& entity, float deltaTime) {
+        bool defend = true;
+        TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
+        AnimationComponent &animationComponent = entity.getComponent<AnimationComponent>();
+        animationComponent.currentImage.y = animationComponent.row;
+
+        while (defend) {
+            textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
+
+            animationComponent.totalTime += deltaTime;
+
+            if (animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime) {
+                animationComponent.currentImage.x = 16;
+                animationComponent.changedDirection = false;
+
+            } else if (animationComponent.totalTime >= animationComponent.switchTime) {
+                animationComponent.totalTime -= animationComponent.switchTime;
+                animationComponent.currentImage.x++;
+
+                if (animationComponent.currentImage.x >= 17) {
+                    animationComponent.currentImage.x = 16;
+                    defend = false;
+                }
+            }
+        }
+        textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
     }
 };
 

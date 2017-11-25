@@ -10,16 +10,21 @@ class Layer : public Object
     friend class Map;
 
 public:
-    Layer(TileSize tileSize) : Object(tileSize) { }
+    Layer(TileSize tileSize, StateBase::Context context) : Object(tileSize, context) { }
 
-    void draw(sf::RenderWindow& window);
+    void draw();
 
 protected:
     // Size in tiles
     int width, height;
 
     // Lazy, but ram is cheap!
-    int tilemap[150][150];
+    int tilemap[100][100];
+
+    sf::RenderTexture renderTexture;
+    sf::Sprite sprite1;
+
+    bool test = true;
 
 };
 

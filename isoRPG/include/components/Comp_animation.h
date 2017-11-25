@@ -19,7 +19,23 @@ public:
     sf::Vector2f movementDirection;
     int movementSpeed;
     sf::Clock animationClock;
-
+    sf::Clock idleTimer;
+    int idleStart;
+    int idleEnd;
+    int walkStart;
+    int walkEnd;
+    int attackStart;
+    int attackEnd;
+    int defendStart;
+    int defendEnd;
+    int rowWest;
+    int rowNorthWest;
+    int rowNorth;
+    int rowNorthEast;
+    int rowEast;
+    int rowSouthEast;
+    int rowSouth;
+    int rowSouthWest;
 };
 
 #endif //ISORPG_COMP_ANIMATION_H

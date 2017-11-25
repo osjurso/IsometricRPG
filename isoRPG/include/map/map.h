@@ -16,16 +16,18 @@ class Map
 {
 public:
     // Load map from Tiled JSON file
-    static bool load(std::string filename, std::list<Object*>& objects);
+    static bool load(std::string filename, std::list<Object*>& objects, StateBase::Context context);
 
 
 private:
     // Handles regular layers
-    static void loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize tileSize);
+    static void loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize tileSize, StateBase::Context context);
 
     // Handles object layers
-    static void loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize);
+    static void loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize, StateBase::Context context);
 
+    // Handles collsion layer
+    static void loadCollision(Json::Value& root, Json::Value& layer, StateBase::Context context);
 };
 
 

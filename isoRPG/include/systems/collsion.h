@@ -32,7 +32,7 @@ void checkCollision(anax::World& world)
         {
             if(e.getId() != i.getId())
             {
-                if(i.hasComponent<Moveble>())
+                if(i.hasComponent<Movable>())
                 {
                     PositionComponent& entity1Pos = i.getComponent<PositionComponent>();
                     PositionComponent& entity2Pos = e.getComponent<PositionComponent>();
@@ -45,14 +45,14 @@ void checkCollision(anax::World& world)
                     bool Bottom = false;
 
 
-                    if(entity1Pos.XPos + entity1Size.Whith >= entity2Pos.XPos &&
-                       entity1Pos.XPos + entity1Size.Whith <= entity2Pos.XPos + entity2Size.Whith)
+                    if(entity1Pos.XPos + entity1Size.Width >= entity2Pos.XPos &&
+                       entity1Pos.XPos + entity1Size.Width <= entity2Pos.XPos + entity2Size.Width)
                     {
                         //Right side of entity1 inside entity2
                         Right = true;
                     }
                     if(entity1Pos.XPos >= entity2Pos.XPos &&
-                       entity1Pos.XPos <= entity2Pos.XPos + entity2Size.Whith)
+                       entity1Pos.XPos <= entity2Pos.XPos + entity2Size.Width)
                     {
                         //Left side of entity1 inside entity2
                         Left = true;

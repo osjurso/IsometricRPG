@@ -14,17 +14,19 @@
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
 #include <include/components/Comp_animation.h>
+#include <include/components/Comp_State.h>
 
 
 class Draweble
 {
 public:
-    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity, std::string state)
+    void makeDraweble(sf::Texture& texture,int Left, int Top, anax::Entity& entity, std::string state)
     {
+
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
-        textureComponent.texture = texture;
-        textureComponent.sprite.setTexture(texture);
+        textureComponent.texture[0] = texture;
+        textureComponent.sprite[0].setTexture(texture);
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
@@ -33,8 +35,8 @@ public:
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
-        sizeComponent.Height = textureComponent.texture.getSize().x;
-        sizeComponent.Whith = textureComponent.texture.getSize().y;
+        sizeComponent.Height = textureComponent.texture[0].getSize().x;
+        sizeComponent.Whith = textureComponent.texture[0].getSize().y;
 
         entity.addComponent<StateComponent>();
         StateComponent& stateComponent = entity.getComponent<StateComponent>();

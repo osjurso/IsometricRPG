@@ -12,9 +12,12 @@
 struct TextureComponent : public anax::Component
 {
 public:
-    sf::Texture texture;
-    sf::Sprite sprite;
+
+    sf::Texture texture[4];
+    sf::Sprite sprite[4];
     sf::IntRect spriteRect;
+    bool multisprite = false;
+    int sortKey;
 };
 
 #endif //ISORPG_COMP_TEXTURE_H

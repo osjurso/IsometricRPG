@@ -36,13 +36,17 @@ Application::Application()
     mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
     mTextures.load(Textures::Goblin, "assets/textures/goblin.png");
     mTextures.load(Textures::Trader, "assets/textures/trader.png");
+    mTextures.load(Textures::HeroHead,"assets/textures/Hero_Head.png");
+    mTextures.load(Textures::HeroWeapon,"assets/textures/Hero_Longsword.png");
+    mTextures.load(Textures::HeroShield,"assets/textures/Hero_Shield.png");
+    mTextures.load(Textures::Tileset, "assets/map/spritesheet.png");
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);
     mStatisticsText.setCharacterSize(15);
 
     registerStates();
-    mStateStack.pushState(States::Title);
+    mStateStack.pushState(States::Game);
 }
 
 void Application::run()
