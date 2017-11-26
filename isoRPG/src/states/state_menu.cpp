@@ -208,7 +208,7 @@ bool StateMenu::handleEvent(const sf::Event& event)
         MouseClicked mouseClicked;
         anax::Entity temp;
         sf:: View tempView;
-        mouseClicked.Clicked(world, temp, window, tempView);
+        mouseClicked.Clicked(world, temp, window, tempView,getContext().fonts->get(Fonts::RPG));
 
     }
 

@@ -26,7 +26,7 @@ void PostitonChange::moveCreature(anax::Entity &entity)
     Movable& moveble = entity.getComponent<Movable>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
-    int speed = 10;
+    int speed = 5;
     if(moveble.path.at(0) == '0')
     {
         //Move East

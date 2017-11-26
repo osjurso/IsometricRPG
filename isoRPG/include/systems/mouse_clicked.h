@@ -18,9 +18,9 @@
 struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>
 {
 public:
-    void Clicked(anax::World& world, anax::Entity& player, sf::RenderWindow& window, sf::View cam);
+    void Clicked(anax::World& world, anax::Entity& player, sf::RenderWindow& window, sf::View cam, sf::Font font);
 private:
-    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam);
+    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam, float zoom, sf::Font font);
     void createPlayerPath(anax::Entity player, float MouseX, float MouseY);
 };
 

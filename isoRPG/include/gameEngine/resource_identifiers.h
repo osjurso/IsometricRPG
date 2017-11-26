@@ -28,6 +28,9 @@ namespace Textures
         HeroWeapon,
         HeroShield,
         Tileset,
+        UIBottom,
+        UIItems,
+        UIConversation,
 
     };
 }

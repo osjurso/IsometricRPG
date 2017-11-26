@@ -1,6 +1,6 @@
 #include "include/systems/mouse_clicked.h"
 
-void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderWindow &window, sf::View cam)
+void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderWindow &window, sf::View cam, sf::Font font)
 {
     auto enteties = world.getEntities();
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
@@ -15,12 +15,13 @@ void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderW
     mouse.x = sf::Mouse::getPosition(window).x;
     mouse.y = sf::Mouse::getPosition(window).y;
     sf::Vector2f mouseT = window.mapPixelToCoords(mouse, cam);
+    float zoom = 0.3f;
     //std::cout << "X: "<< mouseT.x <<"  Y:" <<mouseT.y << std::endl;
     for(auto i : enteties)
     {
         if(i.hasComponent<MousedOver>())
         {
-            process(i,mouseT.x,mouseT.y, world,player, window, cam);
+            process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom, font);
         }else
         {
             //Move player to mouse.x, mouse.y
@@ -43,8 +44,7 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     moveble.path = path;
 }
 
-void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player,
-                           sf::RenderWindow &window, sf::View cam)
+void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom, sf::Font font)
 {
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
@@ -59,7 +59,7 @@ void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::Wo
         {
             std::cout << e.getId() << std::endl;
             Talk talk;
-            talk.talk(e,window);
+            talk.talk(e,window, world,cam ,zoom, font);
         }
 
         if(e.hasComponent<Looteble>())

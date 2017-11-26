@@ -9,6 +9,10 @@
 #include <systems/resolvePositionChange.h>
 #include <systems/resolve_agro.h>
 #include <systems/generatePath.h>
+#include <include/collections/drawable.h>
+#include <include/components/Comp_UI.h>
+#include <include/systems/update_UI.h>
+#include <include/collections/drawebleText.h>
 #include "systems/mouse_clicked.h"
 
 #include "collections/setUpCreature.h"
@@ -23,15 +27,18 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
 {
+    float zoom = 0.3f;
     anax::World& world = *getContext().world;
     playerCam.setSize(1920, 1080);
-    playerCam.zoom(0.3f);
+    playerCam.zoom(zoom);
+
     player = world.createEntity();
 
     // Load map information from JSON into object list
     if (!Map::load("assets/map/map.json", objects, context))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
+    // TODO get under one function: setUpCreatures
     sf::Texture& Herobody = context.textures->get(Textures::Hero);
     sf::Texture& GoblinTexture = context.textures->get(Textures::Goblin);
     sf::Texture& TraderTexture = context.textures->get(Textures::Trader);
@@ -73,11 +80,73 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     creatureSetup.setUpEnemie(goblin4, GoblinTexture, *getContext().window ,300 ,100, "Hard");
     creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300);
 
-    sf::Font& font = context.fonts->get(Fonts::Main);
-    playerGold.setFont(font);
-    playerGold.setScale(0.3,0.3);
+    //TODO get under one function: set up UI
+
+    anax::Entity bottom = world.createEntity();
+    anax::Entity items = world.createEntity();
+
+    bottom.addComponent<UIComp>();
+    items.addComponent<UIComp>();
+
+    bottom.getComponent<UIComp>().Yofset = -60;
+    items.getComponent<UIComp>().Yofset = -50;
+    items.getComponent<UIComp>().Xofset = 400;
+
+    sf::Texture& bottomTexture = context.textures->get(Textures::UIBottom);
+    sf::Texture& itemTexture = context.textures->get(Textures::UIItems);
+
+    Draweble draweble;
+    draweble.makeDraweble(itemTexture,0, 0, items,"Game");
+    items.getComponent<TextureComponent>().sprite->setScale(zoom,zoom);
+
+    draweble.makeDraweble(bottomTexture,0,0, bottom,"Game");
+    bottom.getComponent<TextureComponent>().sprite->setScale(zoom,zoom);
+
+    bottom.getComponent<TextureComponent>().sortKey = 1000;
+    items.getComponent<TextureComponent>().sortKey = 1001;
+
+
+
+    sf::Font font = getContext().fonts->get(Fonts::RPG);
     sf::Color gold(255,215,0);
-    playerGold.setFillColor(gold);
+    sf::Color steel(67, 70, 75);
+    sf::Color potionRed(230, 0, 27);
+
+    anax::Entity HPotionCount = world.createEntity();
+    anax::Entity GoldCount = world.createEntity();
+    anax::Entity ArmorCount = world.createEntity();
+    anax::Entity WeaponCount = world.createEntity();
+
+    DrawebleText drawebleText;
+    std::string nrPotion = "x "+ std::to_string(3);
+    std::string nrGold = "x "+ std::to_string(player.getComponent<Looteble>().gold);
+    std::string nrArmor = "10 + "+ std::to_string(0);
+    std::string nrSword = "10 + "+ std::to_string(0);
+
+
+    drawebleText.setUpDrawebleText(HPotionCount ,nrPotion, playerCam, "Game", zoom,font,potionRed);
+    drawebleText.setUpDrawebleText(GoldCount ,nrGold, playerCam, "Game", zoom,font,gold);
+    drawebleText.setUpDrawebleText(ArmorCount ,nrArmor, playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawebleText(WeaponCount ,nrSword, playerCam, "Game", zoom,font,steel);
+
+    HPotionCount.getComponent<UIComp>().Xofset = 425;
+    HPotionCount.getComponent<UIComp>().Yofset = -45;
+    HPotionCount.getComponent<TextComponent>().content = "Potion";
+
+    GoldCount.getComponent<UIComp>().Xofset = 425;
+    GoldCount.getComponent<UIComp>().Yofset = -20;
+    GoldCount.getComponent<TextComponent>().content = "Gold";
+
+    ArmorCount.getComponent<UIComp>().Xofset = 500;
+    ArmorCount.getComponent<UIComp>().Yofset = -20;
+    ArmorCount.getComponent<TextComponent>().content = "Armor";
+
+    WeaponCount.getComponent<UIComp>().Xofset = 500;
+    WeaponCount.getComponent<UIComp>().Yofset = -45;
+    ArmorCount.getComponent<TextComponent>().content = "Weapon";
+
+
+
 
     AddDialoge addDialoge;
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
@@ -91,10 +160,10 @@ void StateGame::draw()
     window.setView(playerCam);
 
     anax::World& world = *getContext().world;
-    DrawEntetys drawEntetys;
 
+    DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
-    Looteble looteble = player.getComponent<Looteble>();
+
     sf::Vector2f viewCenter = window.getView().getCenter();
     sf::Vector2f halfExtents = window.getView().getSize() / 2.0f;
     sf::Vector2f translation = viewCenter - halfExtents;
@@ -102,9 +171,7 @@ void StateGame::draw()
     int mX = static_cast<int>(translation.x);
     int mY = static_cast<int>(translation.y);
 
-    playerGold.setPosition(mX +5 ,mY +5);
-    playerGold.setString(std::to_string(looteble.gold));
-    window.draw(playerGold);
+
 
 
 }
@@ -150,6 +217,8 @@ bool StateGame::update(sf::Time dt)
         pathfindingTimer.restart();
     }
 
+    UpdateUI updateUI;
+    updateUI.update(*getContext().world, playerCam, player);
 
     // Update the sort key for movable entities
     SortKeyUpdate sortKeyUpdate;
@@ -165,7 +234,7 @@ bool StateGame::handleEvent(const sf::Event &event)
         anax::World& world = *getContext().world;
         sf::RenderWindow& window = *getContext().window;
         MouseClicked mouseClicked;
-        mouseClicked.Clicked(world, player, window, playerCam);
+        mouseClicked.Clicked(world, player, window, playerCam,getContext().fonts->get(Fonts::RPG));
 
     }
 

@@ -20,23 +20,29 @@
 #include <include/components/Comp_looteble.h>
 #include <include/components/Comp_talk.h>
 #include <fstream>
+#include <include/collections/drawebleText.h>
 
 
 class Talk
 {
 public:
 
-    void talk(anax::Entity speaker, sf::RenderWindow& window)
+    void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font)
     {
         Talkative& talkative = speaker.getComponent<Talkative>();
         if(talkative.numberOfDialoges <= 1)
         {
             std::ifstream file(talkative.files[0]);
             std::string str;
+            std::string wholestring;
             while (std::getline(file, str))
             {
-                std::cout << str  << std::endl;
+                wholestring = wholestring + str + " \n ";
             }
+            anax::Entity entity = world.createEntity();
+            DrawebleText drawebleText;
+            drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
+
         }
     }
 };

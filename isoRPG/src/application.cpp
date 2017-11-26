@@ -41,6 +41,11 @@ Application::Application()
     mTextures.load(Textures::HeroShield,"assets/textures/Hero_Shield.png");
     mTextures.load(Textures::Tileset, "assets/map/spritesheet.png");
 
+    mTextures.load(Textures::UIBottom, "assets/textures/UIBottom.png");
+    mTextures.load(Textures::UIItems, "assets/textures/ui_modifiers.png");
+    mTextures.load(Textures::UIConversation, "assets/textures/convoElement.png");
+
+
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
     mStatisticsText.setPosition(5.f, 5.f);
     mStatisticsText.setCharacterSize(15);
