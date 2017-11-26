@@ -8,7 +8,7 @@ void PostitonChange::change(anax::World &world, anax::Entity player)
     auto enteties = world.getEntities();
     for(auto i : enteties)
     {
-        if(i.hasComponent<Movable>() && player.getId() != i.getId())
+        if(i.hasComponent<Movable>())
         {
             if(i.getComponent<Movable>().path != "")
             {
@@ -86,6 +86,6 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         positionComponent.XPos += speed/2;
         positionComponent.SpriteLeft += speed/2;
     }
-    std::cout << "Entity ID: "<< entity.getId() << "  Path: " <<  moveble.path << std::endl;
+    //std::cout << "Entity ID: "<< entity.getId() << "  Path: " <<  moveble.path << std::endl;
     moveble.path.erase(0,1);
 }

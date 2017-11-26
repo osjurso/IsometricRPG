@@ -25,7 +25,6 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
                 {
                     std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
                     moveble.path = path;
-                    std::cout << "Entity ID: "<< i.getId() << "  Path: " <<  path << std::endl;
                 }else
                 {
                     moveble.agro = false;
@@ -36,7 +35,6 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
                     {
                         std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
                         moveble.path = path;
-                        std::cout << "Entity ID: "<< i.getId() << "  Path: " <<  path << std::endl;
                     }else
                     {
                         i.kill();
