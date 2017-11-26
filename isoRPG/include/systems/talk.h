@@ -32,7 +32,7 @@ public:
         Talkative& talkative = speaker.getComponent<Talkative>();
         if(talkative.numberOfDialoges <= 1)
         {
-            std::ifstream file(talkative.files[0]);
+            std::ifstream file(talkative.Talkingfiles[0]);
             std::string str;
             std::string wholestring;
             while (std::getline(file, str))
@@ -42,6 +42,11 @@ public:
             anax::Entity entity = world.createEntity();
             DrawebleText drawebleText;
             drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
+
+
+            entity.getComponent<UIComp>().Xofset = 200;
+            entity.getComponent<UIComp>().Yofset = -50;
+
 
         }
     }

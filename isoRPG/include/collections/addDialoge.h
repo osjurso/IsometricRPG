@@ -25,7 +25,7 @@ public:
     void addDialoge(anax::Entity& entity, std::string file)
     {
         Talkative& talkative = entity.getComponent<Talkative>();
-        talkative.files.insert(std::pair<int, std::string>(talkative.numberOfDialoges, file));
+        talkative.Talkingfiles.insert(std::pair<int, std::string>(talkative.numberOfDialoges, file));
         talkative.numberOfDialoges =+1;
     }
 };
