@@ -20,7 +20,7 @@ class ResolveMovment
 {
 public:
 
-    void resolveMovment(anax::Entity& entity, std::string Occurrence, float deltaTime);
+    void resolveMovment(anax::World& world, float deltaTime);
 
 private:
     void Walk(anax::Entity& entity, float deltaTime);

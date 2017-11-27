@@ -33,6 +33,7 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         animationComponent.direction = "Right";
         positionComponent.XPos += speed;
         positionComponent.SpriteLeft += speed;
+        animationComponent.animationDirection = 0;
 
     }else if(moveble.path.at(0) == '1')
     {
@@ -41,6 +42,7 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         positionComponent.SpriteTop += speed/2;
         positionComponent.XPos += speed/2;
         positionComponent.SpriteLeft += speed/2;
+        animationComponent.animationDirection = 1;
 
     }else if(moveble.path.at(0) == '2')
     {
@@ -48,6 +50,7 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         animationComponent.direction = "Down";
         positionComponent.YPos += speed;
         positionComponent.SpriteTop += speed;
+        animationComponent.animationDirection = 2;
 
     }else if(moveble.path.at(0) == '3')
     {
@@ -56,12 +59,16 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         positionComponent.SpriteTop += speed/2;
         positionComponent.XPos -= speed/2;
         positionComponent.SpriteLeft -= speed/2;
+        animationComponent.animationDirection = 3;
+
     }else if(moveble.path.at(0) == '4')
     {
         //Move West
         animationComponent.direction = "Left";
         positionComponent.XPos -= speed;
         positionComponent.SpriteLeft -= speed;
+        animationComponent.animationDirection = 4;
+
     }
     else if(moveble.path.at(0) == '5')
     {
@@ -70,6 +77,7 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         positionComponent.SpriteTop -= speed/2;
         positionComponent.XPos -= speed/2;
         positionComponent.SpriteLeft -= speed/2;
+        animationComponent.animationDirection = 5;
 
     }else if(moveble.path.at(0) == '6')
     {
@@ -77,6 +85,7 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         animationComponent.direction = "Up";
         positionComponent.YPos -= speed;
         positionComponent.SpriteTop -= speed;
+        animationComponent.animationDirection = 6;
 
     }else if(moveble.path.at(0) == '7')
     {
@@ -85,6 +94,8 @@ void PostitonChange::moveCreature(anax::Entity &entity)
         positionComponent.SpriteTop -= speed/2;
         positionComponent.XPos += speed/2;
         positionComponent.SpriteLeft += speed/2;
+        animationComponent.animationDirection = 7;
+
     }
     //std::cout << "Entity ID: "<< entity.getId() << "  Path: " <<  moveble.path << std::endl;
     moveble.path.erase(0,1);

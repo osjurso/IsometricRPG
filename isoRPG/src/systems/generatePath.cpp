@@ -1,4 +1,5 @@
 #include <systems/generatePath.h>
+#include <include/components/Comp_animation.h>
 
 
 void GeneratePath::generate(anax::World &world, anax::Entity player)
@@ -25,6 +26,7 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
                 {
                     std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
                     moveble.path = path;
+                    i.getComponent<AnimationComponent>().action = "Walk";
                 }else
                 {
                     moveble.agro = false;
@@ -35,6 +37,7 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
                     {
                         std::string path = pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
                         moveble.path = path;
+                        i.getComponent<AnimationComponent>().action = "Walk";
                     }else
                     {
                         i.kill();

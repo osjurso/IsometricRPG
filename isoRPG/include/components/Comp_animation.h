@@ -11,7 +11,7 @@ public:
     float totalTime;
     float switchTime;
     float deltaTime;
-    bool idle = true;
+    bool idle = false;
     bool changedDirection = false;
     int pixels;
     std::string direction;
@@ -36,6 +36,9 @@ public:
     int rowSouthEast;
     int rowSouth;
     int rowSouthWest;
+    int animationDirection = 0;
+
+    std::string action;
 };
 
 #endif //ISORPG_COMP_ANIMATION_H

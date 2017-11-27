@@ -118,6 +118,8 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     animationComponent.rowSouth = 6;
     animationComponent.rowSouthWest = 7;
 
+    animationComponent.animationDirection = 0;
+
     entity.addComponent<StateComponent>();
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
@@ -194,10 +196,6 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     entity.addComponent<StateComponent>();
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
-
-    entity.addComponent<Movable>();
-    Movable& moveble = entity.getComponent<Movable>();
-    moveble.speed = 5;
 
     entity.addComponent<MousedOver>();
 
