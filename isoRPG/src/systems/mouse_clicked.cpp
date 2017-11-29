@@ -17,17 +17,22 @@ void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderW
     sf::Vector2f mouseT = window.mapPixelToCoords(mouse, cam);
     float zoom = 0.3f;
     //std::cout << "X: "<< mouseT.x <<"  Y:" <<mouseT.y << std::endl;
+    bool interacteble = false;
     for(auto i : enteties)
     {
         if(i.hasComponent<MousedOver>())
         {
             process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom, font);
-        }else
-        {
-            //Move player to mouse.x, mouse.y
-            createPlayerPath(player, mouseT.x, mouseT.y);
+            interacteble = true;
         }
     }
+    if(!interacteble)
+    {
+        //Move player to mouse.x, mouse.y if not interactebø
+        createPlayerPath(player, mouseT.x, mouseT.y);
+    }
+
+
 }
 
 void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float MouseY)
@@ -36,12 +41,62 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     Movable& moveble = player.getComponent<Movable>();
     moveble.path = "";
     const int mapsize = 64;
+    int pixelsPerBlock = 10;
 
     const int distaceX = (MouseX  - positionComponent.SpriteLeft)/10;
     const int distaceY = (MouseY  - positionComponent.SpriteTop)/10;
 
     std::string path= pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
     moveble.path = path;
+    for(int i = 0; i < path.length(); i++)
+    {
+        int temp = i;
+        for(int n = 0; n < pixelsPerBlock ; n++)
+        {
+            char instruction = moveble.path.at(i);
+            int index = i*pixelsPerBlock +n;
+            if(instruction == '0')
+            {
+                moveble.moveX[index] = 1;
+                moveble.moveY[index] = 0;
+            }
+            if(instruction == '1')
+            {
+                moveble.moveX[index] = 0.5;
+                moveble.moveY[index] = 0.5;
+            }
+            if(instruction == '2')
+            {
+                moveble.moveX[index] = 0;
+                moveble.moveY[index] = 1;
+            }
+            if(instruction == '3')
+            {
+                moveble.moveX[index] = -0.5;
+                moveble.moveY[index] = 0.5;
+            }
+            if(instruction == '4')
+            {
+                moveble.moveX[index] = -1;
+                moveble.moveY[index] = 0;
+            }
+            if(instruction == '5')
+            {
+                moveble.moveX[index] = -0.5;
+                moveble.moveY[index] = -0.5;
+            }
+            if(instruction == '6')
+            {
+                moveble.moveX[index] = 0;
+                moveble.moveY[index] = -1;
+            }
+            if(instruction == '7')
+            {
+                moveble.moveX[index] =0.5;
+                moveble.moveY[index] = -0.5;
+            }
+        }
+    }
 }
 
 void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom, sf::Font font)

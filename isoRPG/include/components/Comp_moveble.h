@@ -13,6 +13,9 @@ public:
     std::string path;
     bool agro = false;
     int agroRage;
+    float moveX[320];
+    float moveY[320];
+    int curent = 0;
 };
 
 #endif //ISORPG_COMP_MOVEBLE_H

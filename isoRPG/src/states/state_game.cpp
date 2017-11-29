@@ -77,6 +77,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     creatureSetup.setUpEnemie(goblin,  GoblinTexture, *getContext().window, 200, 200, "Hard");
     creatureSetup.setUpEnemie(goblin2, GoblinTexture, *getContext().window ,100 ,100, "Medium");
     creatureSetup.setUpEnemie(goblin3, GoblinTexture, *getContext().window ,400 ,200, "Easy");
+
     creatureSetup.setUpEnemie(goblin4, GoblinTexture, *getContext().window ,300 ,100, "Hard");
     creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300);
 
@@ -149,7 +150,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
 
 
     AddDialoge addDialoge;
-    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
+    //addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
     context.music->play(Music::Test);
 
 }
@@ -191,7 +192,7 @@ bool StateGame::update(sf::Time dt)
     animationComponent.animationClock.restart().asSeconds();
 
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-    playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
+
 
 
     if(movementTimer.getElapsedTime().asSeconds() >= 0.05f)
@@ -207,10 +208,10 @@ bool StateGame::update(sf::Time dt)
 
         resolve.resolveMovment(*getContext().world, deltaTime);
 
-
+        playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
         movementTimer.restart().asSeconds();
     }
-    if(pathfindingTimer.getElapsedTime().asSeconds() >= 0.5)
+    if(pathfindingTimer.getElapsedTime().asSeconds() >= 0.5f)
     {
         GeneratePath generatePath;
         generatePath.generate(*getContext().world,player);
@@ -259,59 +260,87 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     Movable& movable = player.getComponent<Movable>();
 
     animationComponent.animationClock.restart().asSeconds();
+    movable.path= "";
+    float Xmove;
+    float Ymove;
+    char Dmove;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::A)) animationComponent.action = "Walk";
-
+        sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        animationComponent.action = "Walk";
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 7;
-            movable.path = "7";
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            Xmove = 0.5;
+            Ymove = -0.5;
+            Dmove = '7';
+
+        }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 5;
-            movable.path = "5";
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            Xmove = -0.5;
+            Ymove = -0.5;
+            Dmove = '5';
+        }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 1;
-            movable.path = "1";
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            Xmove = 0.5;
+            Ymove = 0.5;
+            Dmove = '1';
+        }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 3;
-            movable.path = "3";
-        }
-
-        if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {
+            Xmove = 0.5;
+            Ymove = -0.5;
+            Dmove = '3';
+            movable.path= "3";
+        }else if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 6;
-            movable.path = "6";
+            Xmove = 0;
+            Ymove = -1;
+            Dmove = '6';
 
-        } else if (key == sf::Keyboard::S || key == sf::Keyboard::Down) {
+        }else if (key == sf::Keyboard::S || key == sf::Keyboard::Down) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 2;
-            movable.path = "222";
+            Xmove = 0;
+            Ymove = 1;
+            Dmove = '2';
 
         } else if (key == sf::Keyboard::A || key == sf::Keyboard::Left) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 4;
-            movable.path = "4";
+            Xmove = -1;
+            Ymove = 0;
+            Dmove = '4';
 
         } else if (key == sf::Keyboard::D || key == sf::Keyboard::Right) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 0;
-            movable.path = "0";
+            Xmove = 1;
+            Ymove = 0;
+            Dmove = '0';
         }
+        movable.path= "";
+        for(int i = 0; i< movable.speed; i++)
+        {
+            movable.moveX[i] = Xmove;
+            movable.moveY[i] = Ymove;
+            movable.path.push_back(Dmove);
+        }
+    }
+
+
 
 
         //Attack method

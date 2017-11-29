@@ -26,77 +26,20 @@ void PostitonChange::moveCreature(anax::Entity &entity)
     Movable& moveble = entity.getComponent<Movable>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
-    int speed = 5;
-    if(moveble.path.at(0) == '0')
+    if(moveble.path != "")
     {
-        //Move East
-        animationComponent.direction = "Right";
-        positionComponent.XPos += speed;
-        positionComponent.SpriteLeft += speed;
-        animationComponent.animationDirection = 0;
+        for(int i = moveble.curent; i< moveble.speed+ moveble.curent; i++)
+        {
+            positionComponent.XPos += moveble.moveX[i];
+            positionComponent.YPos += moveble.moveY[i];
+            positionComponent.SpriteLeft += moveble.moveX[i];
+            positionComponent.SpriteTop += moveble.moveY[i];
 
-    }else if(moveble.path.at(0) == '1')
-    {
-        //Move South East
-        positionComponent.YPos += speed/2;
-        positionComponent.SpriteTop += speed/2;
-        positionComponent.XPos += speed/2;
-        positionComponent.SpriteLeft += speed/2;
-        animationComponent.animationDirection = 1;
+            animationComponent.animationDirection = (int)moveble.path.at(i);
 
-    }else if(moveble.path.at(0) == '2')
-    {
-        //Move South
-        animationComponent.direction = "Down";
-        positionComponent.YPos += speed;
-        positionComponent.SpriteTop += speed;
-        animationComponent.animationDirection = 2;
+            if(moveble.path.length() == i+1) i = moveble.speed;
 
-    }else if(moveble.path.at(0) == '3')
-    {
-        //Move South West
-        positionComponent.YPos += speed/2;
-        positionComponent.SpriteTop += speed/2;
-        positionComponent.XPos -= speed/2;
-        positionComponent.SpriteLeft -= speed/2;
-        animationComponent.animationDirection = 3;
 
-    }else if(moveble.path.at(0) == '4')
-    {
-        //Move West
-        animationComponent.direction = "Left";
-        positionComponent.XPos -= speed;
-        positionComponent.SpriteLeft -= speed;
-        animationComponent.animationDirection = 4;
-
+        }
     }
-    else if(moveble.path.at(0) == '5')
-    {
-        //Move North West
-        positionComponent.YPos -= speed/2;
-        positionComponent.SpriteTop -= speed/2;
-        positionComponent.XPos -= speed/2;
-        positionComponent.SpriteLeft -= speed/2;
-        animationComponent.animationDirection = 5;
-
-    }else if(moveble.path.at(0) == '6')
-    {
-        //Move North
-        animationComponent.direction = "Up";
-        positionComponent.YPos -= speed;
-        positionComponent.SpriteTop -= speed;
-        animationComponent.animationDirection = 6;
-
-    }else if(moveble.path.at(0) == '7')
-    {
-        //Move South West
-        positionComponent.YPos -= speed/2;
-        positionComponent.SpriteTop -= speed/2;
-        positionComponent.XPos += speed/2;
-        positionComponent.SpriteLeft += speed/2;
-        animationComponent.animationDirection = 7;
-
-    }
-    //std::cout << "Entity ID: "<< entity.getId() << "  Path: " <<  moveble.path << std::endl;
-    moveble.path.erase(0,1);
 }

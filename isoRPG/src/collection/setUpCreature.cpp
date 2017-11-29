@@ -56,7 +56,8 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 
     entity.addComponent<Movable>();
     Movable& moveble = entity.getComponent<Movable>();
-    moveble.speed = 5;
+    moveble.speed = 10;
+    moveble.path = "0";
 
     entity.addComponent< Looteble>();
     Looteble& looteble = entity.getComponent<Looteble>();
