@@ -295,8 +295,8 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 3;
-            Xmove = 0.5;
-            Ymove = -0.5;
+            Xmove = -0.5;
+            Ymove = 0.5;
             Dmove = '3';
             movable.path= "3";
         }else if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {

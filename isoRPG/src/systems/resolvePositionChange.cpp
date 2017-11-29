@@ -1,7 +1,7 @@
 
 
 #include <systems/resolvePositionChange.h>
-
+#include <string>
 
 void PostitonChange::change(anax::World &world, anax::Entity player)
 {
@@ -34,8 +34,9 @@ void PostitonChange::moveCreature(anax::Entity &entity)
             positionComponent.YPos += moveble.moveY[i];
             positionComponent.SpriteLeft += moveble.moveX[i];
             positionComponent.SpriteTop += moveble.moveY[i];
-
-            animationComponent.animationDirection = (int)moveble.path.at(i);
+            int tempInt = moveble.path.at(i);
+            tempInt = tempInt-48;
+            animationComponent.animationDirection = tempInt;
 
             if(moveble.path.length() == i+1) i = moveble.speed;
 

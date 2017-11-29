@@ -54,6 +54,7 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
         for(int n = 0; n < pixelsPerBlock ; n++)
         {
             char instruction = moveble.path.at(i);
+            moveble.path.push_back(instruction);
             int index = i*pixelsPerBlock +n;
             if(instruction == '0')
             {
