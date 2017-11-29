@@ -12,6 +12,9 @@ public:
     std::map<int, std::string> Talkingfiles;
     std::map<int, std::string> Optoinfiles;
     int numberOfDialoges = 0;
+    int numberOfOption = 0;
+    int DialogCurent = 0 ;
+    int OptionCurent = 0 ;
 };
 
 #endif //ISORPG_COMP_TALK_H

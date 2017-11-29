@@ -30,7 +30,7 @@ public:
     void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font)
     {
         Talkative& talkative = speaker.getComponent<Talkative>();
-        if(talkative.numberOfDialoges <= 1)
+        if(talkative.Talkingfiles.at(talkative.DialogCurent) != "")
         {
             std::ifstream file(talkative.Talkingfiles[0]);
             std::string str;
@@ -46,8 +46,17 @@ public:
 
             entity.getComponent<UIComp>().Xofset = 200;
             entity.getComponent<UIComp>().Yofset = -50;
-
-
+        }
+        if(talkative.Optoinfiles.at(talkative.OptionCurent) != "")
+        {
+            std::ifstream file(talkative.Talkingfiles[talkative.OptionCurent]);
+            std::string str;
+            std::string wholestring;
+            while (std::getline(file, str))
+            {
+                
+                wholestring = wholestring + str + " \n ";
+            }
         }
     }
 };

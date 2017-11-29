@@ -1,6 +1,3 @@
-//
-// Created by Bjornar on 11/26/2017.
-//
 
 #ifndef ISORPG_COMP_TEXT_H
 #define ISORPG_COMP_TEXT_H

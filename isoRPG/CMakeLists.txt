@@ -75,7 +75,7 @@ set(SOURCE_FILES
         src/systems/resolve_agro.cpp
         src/systems/resolvePositionChange.cpp
         src/systems/resolve_movment.cpp
-        src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h)
+        src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogOption.h)
 
 
 
