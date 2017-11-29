@@ -22,7 +22,6 @@ public:
 private:
     sf::View playerCam;
     anax::Entity player;
-    sf::Text playerGold;
     sf::Clock movementTimer;
     sf::Clock pathfindingTimer;
 

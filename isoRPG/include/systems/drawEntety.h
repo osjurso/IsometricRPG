@@ -16,6 +16,7 @@
 #include <components/Comp_Texture.h>
 #include <components/Comp_animation.h>
 #include <components/Comp_State.h>
+#include <include/components/Comp_Text.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -37,39 +38,48 @@ public:
 
         for(auto i : enteties)
         {
-            StateComponent& stateComponent = i.getComponent<StateComponent>();
-            TextureComponent& textureComponent  = i.getComponent<TextureComponent>();
-            PositionComponent& positionComponent = i.getComponent<PositionComponent>();
-
-            if(stateComponent.state == state)
+            if(!i.hasComponent<TextComponent>())
             {
+                StateComponent& stateComponent = i.getComponent<StateComponent>();
+                TextureComponent& textureComponent  = i.getComponent<TextureComponent>();
+                PositionComponent& positionComponent = i.getComponent<PositionComponent>();
 
-                if(i.hasComponent<AnimationComponent>())
+                if(stateComponent.state == state)
                 {
-                    textureComponent.sprite[0].setTextureRect(textureComponent.spriteRect);
+
+                    if(i.hasComponent<AnimationComponent>())
+                    {
+                        textureComponent.sprite[0].setTextureRect(textureComponent.spriteRect);
+                        if(textureComponent.multisprite)
+                        {
+                            textureComponent.sprite[1].setTextureRect(textureComponent.spriteRect);
+                            textureComponent.sprite[2].setTextureRect(textureComponent.spriteRect);
+                            textureComponent.sprite[3].setTextureRect(textureComponent.spriteRect);
+                        }
+                    }
+
                     if(textureComponent.multisprite)
                     {
-                        textureComponent.sprite[1].setTextureRect(textureComponent.spriteRect);
-                        textureComponent.sprite[2].setTextureRect(textureComponent.spriteRect);
-                        textureComponent.sprite[3].setTextureRect(textureComponent.spriteRect);
+                        textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
+                        textureComponent.sprite[1].setPosition(positionComponent.XPos,positionComponent.YPos);
+                        textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
+                        textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
+                        window.draw(textureComponent.sprite[0]);
+                        window.draw(textureComponent.sprite[1]);
+                        window.draw(textureComponent.sprite[2]);
+                        window.draw(textureComponent.sprite[3]);
+                    }else
+                    {
+                        textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
+                        window.draw(textureComponent.sprite[0]);
                     }
                 }
-
-                if(textureComponent.multisprite)
-                {
-                    textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
-                    textureComponent.sprite[1].setPosition(positionComponent.XPos,positionComponent.YPos);
-                    textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
-                    textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
-                    window.draw(textureComponent.sprite[0]);
-                    window.draw(textureComponent.sprite[1]);
-                    window.draw(textureComponent.sprite[2]);
-                    window.draw(textureComponent.sprite[3]);
-                }else
-                {
-                    textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
-                    window.draw(textureComponent.sprite[0]);
-                }
+            }else if(i.hasComponent<TextComponent>())
+            {
+                TextComponent& textComponent = i.getComponent<TextComponent>();
+                PositionComponent& positionComponent = i.getComponent<PositionComponent>();
+                textComponent.text.setPosition(positionComponent.XPos, positionComponent.YPos);
+                window.draw(textComponent.text);
             }
         }
     }

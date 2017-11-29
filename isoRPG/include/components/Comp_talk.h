@@ -9,7 +9,8 @@
 struct Talkative : public anax::Component
 {
 public:
-    std::map<int, std::string> files;
+    std::map<int, std::string> Talkingfiles;
+    std::map<int, std::string> Optoinfiles;
     int numberOfDialoges = 0;
 };
 

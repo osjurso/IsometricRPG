@@ -10,6 +10,9 @@ class Looteble : public anax::Component
 {
 public:
     int gold;
+    int HealtPotion;
+    int armorModifier;
+    int weaponModifier;
 };
 
 
