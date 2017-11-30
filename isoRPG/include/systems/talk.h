@@ -30,33 +30,43 @@ public:
     void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font)
     {
         Talkative& talkative = speaker.getComponent<Talkative>();
-        if(talkative.Talkingfiles.at(talkative.DialogCurent) != "")
+        DrawebleText drawebleText;
+        int line = 0;
+        if(talkative.Talkingfiles.at(talkative.Current) != "")
         {
-            std::ifstream file(talkative.Talkingfiles[0]);
+            std::ifstream file(talkative.Talkingfiles[talkative.Current]);
             std::string str;
             std::string wholestring;
             while (std::getline(file, str))
             {
                 wholestring = wholestring + str + " \n ";
+                line +=1;
             }
             anax::Entity entity = world.createEntity();
-            DrawebleText drawebleText;
             drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
-
-
             entity.getComponent<UIComp>().Xofset = 200;
             entity.getComponent<UIComp>().Yofset = -50;
         }
-        if(talkative.Optoinfiles.at(talkative.OptionCurent) != "")
+        if(talkative.Optoinfiles.at(talkative.Current) != "")
         {
-            std::ifstream file(talkative.Talkingfiles[talkative.OptionCurent]);
+            std::ifstream file(talkative.Optoinfiles[talkative.Current]);
             std::string str;
             std::string wholestring;
             while (std::getline(file, str))
             {
-                
                 wholestring = wholestring + str + " \n ";
+                anax::Entity entity = world.createEntity();
+                drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
+                entity.getComponent<UIComp>().Xofset = 200;
+                entity.getComponent<UIComp>().Yofset = -50+ line*10;
+                line +=1;
+                wholestring = "";
+                entity.addComponent<MousedOver>();
             }
+
+
+
+
         }
     }
 };

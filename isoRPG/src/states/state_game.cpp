@@ -16,6 +16,7 @@
 
 #include <collections/drawebleText.h>
 #include <collections/drawable.h>
+#include <include/collections/addDialogOption.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -28,7 +29,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
 {
-    float zoom = 0.3f;
+    zoom = 0.3f;
     anax::World& world = *getContext().world;
     playerCam.setSize(1920, 1080);
     playerCam.zoom(zoom);
@@ -85,10 +86,15 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     SetUpUI setUpUI;
     setUpUI.setUpUI(world,zoom, context.textures->get(Textures::UIBottom),context.textures->get(Textures::UIItems),getContext().fonts->get(Fonts::RPG),playerCam,player);
 
-    AddDialoge addDialoge;
-    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
-    context.music->play(Music::Test);
 
+    AddDialoge addDialoge;
+    AddOptionDialoge optionDialoge;
+    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_0.txt",0);
+    optionDialoge.addOptionDialoge(trader,"assets/dialog/trader_dialog_option_0.txt",0);
+
+
+
+    context.music->play(Music::Test);
 }
 
 void StateGame::draw()
@@ -168,8 +174,8 @@ bool StateGame::handleEvent(const sf::Event &event)
     {
         anax::World& world = *getContext().world;
         sf::RenderWindow& window = *getContext().window;
-        MouseClicked mouseClicked;
-        mouseClicked.Clicked(world, player, window, playerCam,getContext().fonts->get(Fonts::RPG));
+        MouseClicked mouseClicked(getContext());
+        mouseClicked.Clicked(player, playerCam, zoom);
 
     }
 
@@ -231,7 +237,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             Xmove = -0.5;
             Ymove = 0.5;
             Dmove = '3';
-            movable.path= "3";
         }else if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;

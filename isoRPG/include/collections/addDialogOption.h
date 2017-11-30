@@ -21,10 +21,10 @@
 class AddOptionDialoge
 {
 public:
-    void addOptionDialoge(anax::Entity& entity, std::string file)
+    void addOptionDialoge(anax::Entity& entity, std::string file, int index)
     {
         Talkative& talkative = entity.getComponent<Talkative>();
-        talkative.Optoinfiles.insert(std::pair<int, std::string>(talkative.numberOfDialoges, file));
+        talkative.Optoinfiles.insert(std::pair<int, std::string>(index, file));
         talkative.numberOfOption =+1;
     }
 };

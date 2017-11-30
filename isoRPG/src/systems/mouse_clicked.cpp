@@ -1,7 +1,12 @@
 #include "include/systems/mouse_clicked.h"
 
-void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderWindow &window, sf::View cam, sf::Font font)
+MouseClicked::MouseClicked(StateBase::Context context) :context(context)
+{}
+
+void MouseClicked::Clicked(anax::Entity &player, sf::View cam, float zoom)
 {
+    sf::RenderWindow& window = *context.window;
+    anax::World& world = *context.world;
     auto enteties = world.getEntities();
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = player.getComponent<SizeComponent>();
@@ -15,14 +20,13 @@ void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderW
     mouse.x = sf::Mouse::getPosition(window).x;
     mouse.y = sf::Mouse::getPosition(window).y;
     sf::Vector2f mouseT = window.mapPixelToCoords(mouse, cam);
-    float zoom = 0.3f;
     //std::cout << "X: "<< mouseT.x <<"  Y:" <<mouseT.y << std::endl;
     bool interacteble = false;
     for(auto i : enteties)
     {
         if(i.hasComponent<MousedOver>())
         {
-            process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom, font);
+            process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom);
             interacteble = true;
         }
     }
@@ -100,8 +104,9 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     }
 }
 
-void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom, sf::Font font)
+void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom)
 {
+    sf::Font& font = context.fonts->get(Fonts::RPG);
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
     sf::IntRect entityRect;

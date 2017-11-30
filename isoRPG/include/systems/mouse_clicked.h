@@ -18,10 +18,13 @@
 struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>
 {
 public:
-    void Clicked(anax::World& world, anax::Entity& player, sf::RenderWindow& window, sf::View cam, sf::Font font);
+    MouseClicked(StateBase::Context context);
+    void Clicked(anax::Entity& player,sf::View cam, float zoom);
 private:
-    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam, float zoom, sf::Font font);
+    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam, float zoom);
     void createPlayerPath(anax::Entity player, float MouseX, float MouseY);
+
+    StateBase::Context context;
 };
 
 #endif //ISORPG_MOUSE_CLICKED_H

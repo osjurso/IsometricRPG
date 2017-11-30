@@ -22,10 +22,10 @@
 class AddDialoge
 {
 public:
-    void addDialoge(anax::Entity& entity, std::string file)
+    void addDialoge(anax::Entity& entity, std::string file, int index)
     {
         Talkative& talkative = entity.getComponent<Talkative>();
-        talkative.Talkingfiles.insert(std::pair<int, std::string>(talkative.numberOfDialoges, file));
+        talkative.Talkingfiles.insert(std::pair<int, std::string>(index, file));
         talkative.numberOfDialoges =+1;
     }
 };
