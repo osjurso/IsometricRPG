@@ -10,8 +10,9 @@ struct Talkative : public anax::Component
 {
 public:
     std::map<int, std::string> Talkingfiles;
-    std::map<int, std::string> Optoinfiles;
+    std::map<int, std::string> Optionfiles;
     int numberOfDialoges = 0;
+    int numberOfOptions = 0;
 };
 
 #endif //ISORPG_COMP_TALK_H

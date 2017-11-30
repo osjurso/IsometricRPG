@@ -27,27 +27,47 @@ class Talk
 {
 public:
 
-    void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font)
+    void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font& font)
     {
         Talkative& talkative = speaker.getComponent<Talkative>();
-        if(talkative.numberOfDialoges <= 1)
+        DrawebleText drawebleText;
+        if(talkative.numberOfDialoges >= 1)
         {
             std::ifstream file(talkative.Talkingfiles[0]);
             std::string str;
-            std::string wholestring;
+            std::string dialogString;
             while (std::getline(file, str))
             {
-                wholestring = wholestring + str + " \n ";
+                dialogString = dialogString + str + " \n ";
             }
             anax::Entity entity = world.createEntity();
-            DrawebleText drawebleText;
-            drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
 
+            drawebleText.setUpDrawebleText(entity,dialogString,cam,"Game",zoom,font,sf::Color().Black);
+            entity.addComponent<MousedOver>();
 
             entity.getComponent<UIComp>().Xofset = 200;
             entity.getComponent<UIComp>().Yofset = -50;
+        }
 
+        if(talkative.numberOfOptions >= 1)
+        {
+            std::ifstream file2(talkative.Optionfiles[0]);
 
+            std::string str2;
+            std::string optionString;
+
+            while (std::getline(file2, str2))
+            {
+                optionString = str2;
+                std::cout << optionString << std::endl;
+
+                anax::Entity option = world.createEntity();
+
+                drawebleText.setUpDrawebleText(option,optionString,cam,"Game", zoom,font,sf::Color().Black);
+                option.getComponent<UIComp>().Xofset = 100;
+                option.getComponent<UIComp>().Yofset = -50;
+                option.addComponent<MousedOver>();
+            }
         }
     }
 };

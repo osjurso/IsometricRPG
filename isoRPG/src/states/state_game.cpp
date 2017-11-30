@@ -13,6 +13,7 @@
 #include <include/components/Comp_UI.h>
 #include <include/systems/update_UI.h>
 #include <include/collections/drawebleText.h>
+#include <include/collections/addDialogOption.h>
 #include "systems/mouse_clicked.h"
 
 #include "collections/setUpCreature.h"
@@ -27,7 +28,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
 {
-    float zoom = 0.3f;
+    zoom = 0.3f;
     anax::World& world = *getContext().world;
     playerCam.setSize(1920, 1080);
     playerCam.zoom(zoom);
@@ -150,8 +151,10 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
 
     AddDialoge addDialoge;
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt");
-    context.music->play(Music::Test);
+    AddDialogeOption addDialogeOption;
+    addDialogeOption.addOption(trader,"assets/dialog/trader_dialog_option_1.txt");
 
+    context.music->play(Music::Test);
 }
 
 void StateGame::draw()
@@ -233,8 +236,8 @@ bool StateGame::handleEvent(const sf::Event &event)
     {
         anax::World& world = *getContext().world;
         sf::RenderWindow& window = *getContext().window;
-        MouseClicked mouseClicked;
-        mouseClicked.Clicked(world, player, window, playerCam,getContext().fonts->get(Fonts::RPG));
+        MouseClicked mouseClicked(getContext());
+        mouseClicked.Clicked(player,playerCam, zoom);
 
     }
 

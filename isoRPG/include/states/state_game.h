@@ -24,6 +24,7 @@ private:
     anax::Entity player;
     sf::Clock movementTimer;
     sf::Clock pathfindingTimer;
+    float zoom;
 
 
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;

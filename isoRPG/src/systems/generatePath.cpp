@@ -12,7 +12,7 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
             PositionComponent positionComponent = i.getComponent<PositionComponent>();
             Movable& moveble = i.getComponent<Movable>();
             moveble.path = "";
-            const int mapsize = 64;
+            const int mapsize = 32;
 
             if(i.getComponent<Movable>().agro)
             {

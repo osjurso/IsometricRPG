@@ -205,10 +205,10 @@ bool StateMenu::handleEvent(const sf::Event& event)
     {
         anax::World& world = *getContext().world;
         sf::RenderWindow& window = *getContext().window;
-        MouseClicked mouseClicked;
+        MouseClicked mouseClicked(getContext());
         anax::Entity temp;
         sf:: View tempView;
-        mouseClicked.Clicked(world, temp, window, tempView,getContext().fonts->get(Fonts::RPG));
+        mouseClicked.Clicked(temp, tempView, 1);
 
     }
 

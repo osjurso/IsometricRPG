@@ -1,7 +1,7 @@
 #include <systems/pathfinding.h>
 
-const int n=64; // horizontal size of the map
-const int m=64; // vertical size size of the map
+const int n=32; // horizontal size of the map
+const int m=32; // vertical size size of the map
 int map[n][m];
 int closed_nodes_map[n][m]; // map of closed (tried-out) nodes
 int open_nodes_map[n][m]; // map of open (not-yet-tried) nodes
@@ -34,6 +34,8 @@ std::string pathFind( const int & xStart, const int & yStart, const int & xFinis
     n0->updatePriority(xFinish, yFinish);
     pq[pqi].push(*n0);
     open_nodes_map[x][y] = n0->getPriority(); // mark it on the open nodes map
+
+
 
     // A* search
     while (!pq[pqi].empty()) {
