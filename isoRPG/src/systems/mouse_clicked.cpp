@@ -1,3 +1,4 @@
+#include <include/components/Comp_animation.h>
 #include "include/systems/mouse_clicked.h"
 
 void MouseClicked::Clicked(anax::World &world, anax::Entity &player, sf::RenderWindow &window, sf::View cam)
@@ -41,6 +42,9 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
 
     std::string path= pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
     moveble.path = path;
+    AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
+    animationComponent.action = "Walk";
+
 }
 
 void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player,

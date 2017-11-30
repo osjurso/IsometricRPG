@@ -119,7 +119,6 @@ bool StateGame::update(sf::Time dt)
         animationComponent.action = "Idle";
         if(animationComponent.direction != "Idle" )animationComponent.changedDirection = true;
         animationComponent.direction = "Idle";
-        float deltaTime = animationComponent.animationClock.restart().asSeconds();
     }
     animationComponent.animationClock.restart().asSeconds();
 
@@ -129,17 +128,13 @@ bool StateGame::update(sf::Time dt)
 
     if(movementTimer.getElapsedTime().asSeconds() >= 0.05f)
     {
-        float deltaTime = movementTimer.getElapsedTime().asSeconds();
-
         PostitonChange postitonChange;
         postitonChange.change(*getContext().world, player);
 
         ResolveAgro resolveAgro;
         resolveAgro.agro(player, *getContext().world);
 
-
         resolve.resolveMovment(*getContext().world, deltaTime);
-
 
         movementTimer.restart().asSeconds();
     }
@@ -185,11 +180,9 @@ bool StateGame::handleEvent(const sf::Event &event)
 
 void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
 {
-    ResolveMovment resolve;
     AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
     Movable& movable = player.getComponent<Movable>();
 
-    animationComponent.animationClock.restart().asSeconds();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::A)) animationComponent.action = "Walk";
@@ -198,32 +191,32 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 7;
-            movable.path = "7";
+            movable.path = "777";
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 5;
-            movable.path = "5";
+            movable.path = "555";
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 1;
-            movable.path = "1";
+            movable.path = "111";
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 3;
-            movable.path = "3";
+            movable.path = "333";
         }
 
         if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 6;
-            movable.path = "6";
+            movable.path = "666";
 
         } else if (key == sf::Keyboard::S || key == sf::Keyboard::Down) {
             animationComponent.idleTimer.restart().asSeconds();
@@ -235,13 +228,13 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 4;
-            movable.path = "4";
+            movable.path = "444";
 
         } else if (key == sf::Keyboard::D || key == sf::Keyboard::Right) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 0;
-            movable.path = "0";
+            movable.path = "000";
         }
 
 
