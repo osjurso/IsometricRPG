@@ -3,7 +3,7 @@
 #define ISORPG_MOUSECLIKEDFUNCTIONS_H
 #include <iostream>
 #include <anax/Entity.hpp>
-    void killChildren();
+    void killChildren(anax::Entity entity);
 
     void printTempVoid(anax::Entity entity);
 

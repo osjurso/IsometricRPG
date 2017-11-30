@@ -44,6 +44,7 @@ Application::Application()
     mTextures.load(Textures::UIBottom, "assets/textures/UIBottom.png");
     mTextures.load(Textures::UIItems, "assets/textures/ui_modifiers.png");
     mTextures.load(Textures::UIConversation, "assets/textures/convoElement.png");
+    mTextures.load(Textures::UIRedX, "assets/textures/redX.png");
 
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));

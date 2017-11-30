@@ -31,6 +31,7 @@ namespace Textures
         UIBottom,
         UIItems,
         UIConversation,
+        UIRedX,
 
     };
 }

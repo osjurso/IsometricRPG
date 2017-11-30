@@ -107,6 +107,8 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
 void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom)
 {
     sf::Font& font = context.fonts->get(Fonts::RPG);
+    sf::Texture& paper = context.textures->get(Textures::UIConversation);
+    sf::Texture& redX = context.textures->get(Textures::UIRedX);
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
     sf::IntRect entityRect;
@@ -119,7 +121,7 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
         if(e.hasComponent<Talkative>())
         {
             Talk talk;
-            talk.talk(e,window, world,cam ,zoom, font);
+            talk.talk(e,window, world,cam ,zoom, font, paper, redX);
         }
 
         if(e.hasComponent<Looteble>())
