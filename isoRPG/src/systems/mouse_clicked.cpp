@@ -20,7 +20,7 @@ void MouseClicked::Clicked(anax::Entity &player, sf::View cam, float zoom)
     mouse.x = sf::Mouse::getPosition(window).x;
     mouse.y = sf::Mouse::getPosition(window).y;
     sf::Vector2f mouseT = window.mapPixelToCoords(mouse, cam);
-    //std::cout << "X: "<< mouseT.x <<"  Y:" <<mouseT.y << std::endl;
+    //std::cout << "X: "<< mouse.x <<"  Y:" <<mouse.y << std::endl;
     bool interacteble = false;
     for(auto i : enteties)
     {
@@ -104,7 +104,7 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     }
 }
 
-void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom)
+void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::World &world, anax::Entity player, sf::RenderWindow &window, sf::View cam, float zoom)
 {
     sf::Font& font = context.fonts->get(Fonts::RPG);
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
@@ -114,11 +114,10 @@ void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::Wo
     entityRect.left = positionComponent.SpriteLeft;
     entityRect.width = sizeComponent.SpriteWhith;
     entityRect.height = sizeComponent.SpriteHeight;
-    if(entityRect.contains(MouseX,MouseY))
+    if(entityRect.contains(MouseXT,MouseYT) && !e.hasComponent<UIComp>())
     {
         if(e.hasComponent<Talkative>())
         {
-            std::cout << e.getId() << std::endl;
             Talk talk;
             talk.talk(e,window, world,cam ,zoom, font);
         }
@@ -129,4 +128,30 @@ void MouseClicked::process(anax::Entity &e, float MouseX, float MouseY, anax::Wo
             loot.loot(world,e, player);
         }
     }
+
+    if(e.hasComponent<UIComp>())
+    {
+        UIComp uiComp = e.getComponent<UIComp>();
+        sf::IntRect textRect;
+        textRect.top = positionComponent.YPos ;
+        textRect.left = positionComponent.XPos ;
+        textRect.height = sizeComponent.Height;
+        textRect.width = sizeComponent.Whith;
+
+        if(textRect.contains(MouseXT,MouseYT))
+        {
+            e.getComponent<AssosateFunc>().voidfunc(e);
+        }
+    }
+
+
+}
+void MouseClicked::porssesFunctions(anax::Entity& e , anax::Entity& player ,float MouseX, float MouseY )
+{
+    PositionComponent& positionComponent = e.getComponent<PositionComponent>();
+    SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
+
+
+
+
 }

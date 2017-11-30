@@ -21,7 +21,8 @@
 #include <include/components/Comp_talk.h>
 #include <fstream>
 #include <include/collections/drawebleText.h>
-
+#include <include/components/Comp_AssosiateFunc.h>
+#include "collections/mouseClikedFunctions.h"
 
 class Talk
 {
@@ -62,6 +63,8 @@ public:
                 line +=1;
                 wholestring = "";
                 entity.addComponent<MousedOver>();
+                entity.addComponent<AssosateFunc>();
+                entity.getComponent<AssosateFunc>().voidfunc = printTempVoid;
             }
 
 

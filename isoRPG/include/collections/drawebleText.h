@@ -45,13 +45,17 @@ public:
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-        positionComponent.YPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().Xofset;;
+        positionComponent.YPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().Xofset;
         positionComponent.XPos = cam.getCenter().y + (cam.getSize().y/2) + entity.getComponent<UIComp>().Yofset;
+        positionComponent.SpriteLeft = positionComponent.XPos;
+        positionComponent.SpriteTop = positionComponent.YPos;
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
         sizeComponent.Height = textComponent.text.getGlobalBounds().height;
         sizeComponent.Whith = textComponent.text.getGlobalBounds().width;
+        sizeComponent.SpriteHeight = textComponent.text.getGlobalBounds().height;
+        sizeComponent.SpriteWhith = textComponent.text.getGlobalBounds().width;
 
 
         entity.addComponent<StateComponent>();

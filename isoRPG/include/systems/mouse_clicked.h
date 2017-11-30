@@ -21,8 +21,9 @@ public:
     MouseClicked(StateBase::Context context);
     void Clicked(anax::Entity& player,sf::View cam, float zoom);
 private:
-    void process(anax::Entity& e, float MouseX, float MouseY, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam, float zoom);
+    void process(anax::Entity& e, float MouseXT, float MouseYT, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam, float zoom);
     void createPlayerPath(anax::Entity player, float MouseX, float MouseY);
+    void porssesFunctions(anax::Entity& e , anax::Entity& player ,float MouseX, float MouseY );
 
     StateBase::Context context;
 };
