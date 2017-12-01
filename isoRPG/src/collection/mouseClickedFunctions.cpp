@@ -1,13 +1,13 @@
 #include "collections/mouseClikedFunctions.h"
 #include "components/Comp_Children.h"
 
-void killChildren(anax::Entity& entity)
+void killChildren(anax::Entity entity)
 {
     ChildComponent& childComponent = entity.getComponent<ChildComponent>();
 
-    for(int i =0; i < sizeof(childComponent.children) ; i++)
+    for(int i =0; i < childComponent.children.size(); i++)
     {
-        childComponent.children[i].kill();
+        std::cout << childComponent.children.at(i).getId() << std::endl;
     }
 
 }

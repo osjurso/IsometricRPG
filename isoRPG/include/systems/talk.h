@@ -36,12 +36,12 @@ public:
         Talkative& talkative = speaker.getComponent<Talkative>();
         DrawebleText drawebleText;
 
-        anax::Entity paper = world.createEntity();
         anax::Entity redX = world.createEntity();
 
         redX.addComponent<ChildComponent>();
         ChildComponent& childComponent = redX.getComponent<ChildComponent>();
 
+        anax::Entity paper = world.createEntity();
         Draweble draweble;
         draweble.makeDraweble(paperTexture,0,0,paper,"Game");
         draweble.makeDraweble(redXTexture,500,500,redX,"Game");

@@ -11,7 +11,7 @@ struct ChildComponent : public anax::Component
 {
 public:
 
-    std::vector<anax::Entity>& children;
+    std::vector<anax::Entity> children;
 };
 
 
