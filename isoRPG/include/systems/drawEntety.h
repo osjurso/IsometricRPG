@@ -16,7 +16,8 @@
 #include <components/Comp_Texture.h>
 #include <components/Comp_animation.h>
 #include <components/Comp_State.h>
-#include <include/components/Comp_Text.h>
+#include <components/Comp_Text.h>
+#include <components/Comp_mousedOver.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -36,12 +37,13 @@ public:
                    }
         );
 
+
         for(auto i : enteties)
         {
-            if(!i.hasComponent<TextComponent>())
+            if(!i.hasComponent<TextComponent>() && i.getComponent<TextureComponent>().draw)
             {
-                StateComponent& stateComponent = i.getComponent<StateComponent>();
-                TextureComponent& textureComponent  = i.getComponent<TextureComponent>();
+                StateComponent&    stateComponent    = i.getComponent<StateComponent>();
+                TextureComponent&  textureComponent  = i.getComponent<TextureComponent>();
                 PositionComponent& positionComponent = i.getComponent<PositionComponent>();
 
                 if(stateComponent.state == state)
@@ -74,12 +76,27 @@ public:
                         window.draw(textureComponent.sprite[0]);
                     }
                 }
-            }else if(i.hasComponent<TextComponent>())
+            }else if(i.hasComponent<TextComponent>() && i.getComponent<TextComponent>().draw)
             {
                 TextComponent& textComponent = i.getComponent<TextComponent>();
                 PositionComponent& positionComponent = i.getComponent<PositionComponent>();
                 textComponent.text.setPosition(positionComponent.XPos, positionComponent.YPos);
                 window.draw(textComponent.text);
+            }
+
+            if(i.hasComponent<TextComponent>()    && !i.getComponent<TextComponent>().draw)
+            {
+                //i.removeAllComponents();
+
+                i.removeComponent<MousedOver>();
+            }
+            if(i.hasComponent<TextureComponent>() && !i.getComponent<TextureComponent>().draw)
+            {
+                //i.removeAllComponents();
+
+                i.removeComponent<MousedOver>();
+
+
             }
         }
     }

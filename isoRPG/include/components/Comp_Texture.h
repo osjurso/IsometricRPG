@@ -17,6 +17,7 @@ public:
     sf::Sprite sprite[4];
     sf::IntRect spriteRect;
     bool multisprite = false;
+    bool draw = true;
     int sortKey;
 };
 
