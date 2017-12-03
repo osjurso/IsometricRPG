@@ -18,6 +18,7 @@
 #include <components/Comp_State.h>
 #include <components/Comp_Text.h>
 #include <components/Comp_mousedOver.h>
+#include <include/components/Comp_SqureShape.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -40,7 +41,7 @@ public:
 
         for(auto i : enteties)
         {
-            if(!i.hasComponent<TextComponent>() && i.getComponent<TextureComponent>().draw)
+            if(!i.hasComponent<TextComponent>() && i.getComponent<TextureComponent>().draw && !i.hasComponent<SqureComponent>())
             {
                 StateComponent&    stateComponent    = i.getComponent<StateComponent>();
                 TextureComponent&  textureComponent  = i.getComponent<TextureComponent>();
@@ -82,21 +83,9 @@ public:
                 PositionComponent& positionComponent = i.getComponent<PositionComponent>();
                 textComponent.text.setPosition(positionComponent.XPos, positionComponent.YPos);
                 window.draw(textComponent.text);
-            }
-
-            if(i.hasComponent<TextComponent>()    && !i.getComponent<TextComponent>().draw)
+            }else if(i.hasComponent<SqureComponent>())
             {
-                //i.removeAllComponents();
-
-                i.removeComponent<MousedOver>();
-            }
-            if(i.hasComponent<TextureComponent>() && !i.getComponent<TextureComponent>().draw)
-            {
-                //i.removeAllComponents();
-
-                i.removeComponent<MousedOver>();
-
-
+                window.draw(i.getComponent<SqureComponent>().rectShape);
             }
         }
     }

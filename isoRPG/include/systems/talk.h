@@ -69,9 +69,9 @@ public:
         childComponent.children.push_back(paper);
 
         int line = 0;
-        if(talkative.Talkingfiles.at(talkative.Current) != "")
+        if(talkative.talkingfiles[talkative.Current] != "")
         {
-            std::ifstream file(talkative.Talkingfiles[talkative.Current]);
+            std::ifstream file(talkative.talkingfiles[talkative.Current]);
             std::string str;
             std::string wholestring;
             while (std::getline(file, str))
@@ -86,30 +86,23 @@ public:
             entity.addComponent<DyingComponent>();
             childComponent.children.push_back(entity);
         }
-        if(talkative.Optoinfiles.at(talkative.Current) != "")
+        if(talkative.total[talkative.Current] > 0)
         {
-            std::ifstream file(talkative.Optoinfiles[talkative.Current]);
-            std::string str;
-            std::string wholestring;
-            while (std::getline(file, str))
+            for(int i = 0; i <= talkative.total[talkative.Current]; i++)
             {
-                wholestring = wholestring + str + " \n ";
                 anax::Entity entity = world.createEntity();
-                drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
+                //std::string content = tempStringMap[i];
+                std::string content = talkative.optionMap[i];
+                drawebleText.setUpDrawebleText(entity,content,cam,"Game",zoom,font,sf::Color().Black);
                 entity.getComponent<UIComp>().Xofset = 200;
                 entity.getComponent<UIComp>().Yofset = -60+ line*15;
                 line +=1;
-                wholestring = "";
                 entity.addComponent<MousedOver>();
                 entity.addComponent<AssosateFunc>();
-                entity.getComponent<AssosateFunc>().voidfunc = printTempVoid;
+                entity.getComponent<AssosateFunc>().voidfunc = speaker.getComponent<Talkative>().functionmap[i];
                 childComponent.children.push_back(entity);
                 entity.addComponent<DyingComponent>();
             }
-
-
-
-
         }
     }
 };

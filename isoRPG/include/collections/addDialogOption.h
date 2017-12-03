@@ -17,15 +17,22 @@
 #include <include/components/Comp_animation.h>
 #include <include/components/Comp_talk.h>
 
+typedef void (*pfunc)(anax::Entity, anax::Entity, anax::World&);
 
 class AddOptionDialoge
 {
 public:
-    void addOptionDialoge(anax::Entity& entity, std::string file, int index)
+    void addOptionDialoge(anax::Entity& entity, std::string optionString, int index, int optionNr, pfunc func)
     {
         Talkative& talkative = entity.getComponent<Talkative>();
-        talkative.Optoinfiles.insert(std::pair<int, std::string>(index, file));
-        talkative.numberOfOption =+1;
+        talkative.total[index] = optionNr;
+
+        talkative.optionMap.insert(std::pair<int,std::string>(optionNr,optionString));
+        talkative.options.insert(std::pair<int, std::map<int,std::string>>(index,talkative.optionMap));
+
+        talkative.functionmap.insert(std::pair<int,pfunc>(optionNr,func));
+        talkative.functions.insert(std::pair<int, std::map<int,pfunc>>(index,talkative.functionmap));
+
     }
 };
 

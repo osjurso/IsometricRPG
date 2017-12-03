@@ -17,14 +17,17 @@
 #include <collections/drawebleText.h>
 #include <collections/drawable.h>
 #include <include/collections/addDialogOption.h>
+#include <include/systems/killdying.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
+#include "collections/mouseClikedFunctions.h"
 
 
 #include "states/state_game.h"
 #include "map/map.h"
 #include "util/utility.h"
+
 
 StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
@@ -90,8 +93,11 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
 
     AddDialoge addDialoge;
     AddOptionDialoge optionDialoge;
+
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_0.txt",0);
-    optionDialoge.addOptionDialoge(trader,"assets/dialog/trader_dialog_option_0.txt",0);
+    optionDialoge.addOptionDialoge(trader,"wolfsbane"   ,0,0,printFirst);
+    optionDialoge.addOptionDialoge(trader,"madrake root",0,1,printSecond);
+    optionDialoge.addOptionDialoge(trader,"blood grass" ,0,2,printThird);
 
 
 
@@ -107,13 +113,6 @@ void StateGame::draw()
 
     DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
-
-    sf::Vector2f viewCenter = window.getView().getCenter();
-    sf::Vector2f halfExtents = window.getView().getSize() / 2.0f;
-    sf::Vector2f translation = viewCenter - halfExtents;
-
-    int mX = static_cast<int>(translation.x);
-    int mY = static_cast<int>(translation.y);
 
 }
 
@@ -133,6 +132,8 @@ bool StateGame::update(sf::Time dt)
 
     PositionComponent& positionComponent = player.getComponent<PositionComponent>();
 
+    KillDying killDying;
+    killDying.killDying(*getContext().world);
 
 
     if(movementTimer.getElapsedTime().asSeconds() >= 0.05f)

@@ -205,8 +205,6 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     looteble.gold =666;
 
     entity.addComponent<Talkative>();
-    Talkative& talkative = entity.getComponent<Talkative>();
-    talkative.numberOfDialoges = 0;
 
     entity.activate();
 }

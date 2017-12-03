@@ -142,18 +142,9 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
 
         if(textRect.contains(MouseXT,MouseYT))
         {
-            e.getComponent<AssosateFunc>().voidfunc(e);
+            e.getComponent<AssosateFunc>().voidfunc(e,player,world);
         }
     }
-
-
-}
-void MouseClicked::porssesFunctions(anax::Entity& e , anax::Entity& player ,float MouseX, float MouseY )
-{
-    PositionComponent& positionComponent = e.getComponent<PositionComponent>();
-    SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
-
-
 
 
 }

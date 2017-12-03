@@ -1,12 +1,21 @@
 #include <collections/setUpUI.h>
+#include <include/collections/setUpHealt.h>
 
 void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Font font, sf::View playerCam, anax::Entity player)
 {
     anax::Entity bottom = world.createEntity();
     anax::Entity items = world.createEntity();
+    anax::Entity healtTotal = world.createEntity();
+    anax::Entity healtCurrnet = world.createEntity();
+
+    SetUpHealt setUpHealt;
+    setUpHealt.setUpHealt(healtTotal,0,0,100,100,zoom,sf::Color(255,100,100));
+    setUpHealt.setUpHealt(healtTotal,3,3,80,80,zoom,sf::Color(255,200,200));
 
     bottom.addComponent<UIComp>();
     items.addComponent<UIComp>();
+    healtTotal.addComponent<UIComp>();
+    healtCurrnet.addComponent<UIComp>();
 
     bottom.getComponent<UIComp>().Yofset = -60;
     items.getComponent<UIComp>().Yofset = -50;

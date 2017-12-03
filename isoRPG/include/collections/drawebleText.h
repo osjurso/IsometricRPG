@@ -52,10 +52,10 @@ public:
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
-        sizeComponent.Height = textComponent.text.getGlobalBounds().height;
-        sizeComponent.Whith = textComponent.text.getGlobalBounds().width;
-        sizeComponent.SpriteHeight = textComponent.text.getGlobalBounds().height;
-        sizeComponent.SpriteWhith = textComponent.text.getGlobalBounds().width;
+        sizeComponent.Height = textComponent.text.getGlobalBounds().height +5;
+        sizeComponent.Whith = textComponent.text.getGlobalBounds().width +5;
+        sizeComponent.SpriteHeight = textComponent.text.getGlobalBounds().height +5;
+        sizeComponent.SpriteWhith = textComponent.text.getGlobalBounds().width+ 5;
 
 
         entity.addComponent<StateComponent>();
