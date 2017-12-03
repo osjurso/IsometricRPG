@@ -25,6 +25,7 @@
 #include "collections/mouseClikedFunctions.h"
 #include <collections/setUpUI.h>
 #include <include/components/Comp_Children.h>
+#include <include/components/Comp_Dying.h>
 
 
 class Talk
@@ -52,6 +53,7 @@ public:
         paper.getComponent<UIComp>().Xofset = 182;
         paper.getComponent<UIComp>().Yofset = -56;
         paper.getComponent<TextureComponent>().sortKey = 1001;
+        paper.addComponent<DyingComponent>();
 
         redX.getComponent<TextureComponent>().sprite[0].setScale(zoom/4,zoom/4);
         redX.addComponent<UIComp>();
@@ -61,6 +63,8 @@ public:
         redX.addComponent<MousedOver>();
         redX.addComponent<AssosateFunc>();
         redX.getComponent<AssosateFunc>().voidfunc = killChildren;
+        redX.addComponent<DyingComponent>();
+
 
         childComponent.children.push_back(paper);
 
@@ -79,6 +83,7 @@ public:
             drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
             entity.getComponent<UIComp>().Xofset = 200;
             entity.getComponent<UIComp>().Yofset = -58;
+            entity.addComponent<DyingComponent>();
             childComponent.children.push_back(entity);
         }
         if(talkative.Optoinfiles.at(talkative.Current) != "")
@@ -99,6 +104,7 @@ public:
                 entity.addComponent<AssosateFunc>();
                 entity.getComponent<AssosateFunc>().voidfunc = printTempVoid;
                 childComponent.children.push_back(entity);
+                entity.addComponent<DyingComponent>();
             }
 
 
