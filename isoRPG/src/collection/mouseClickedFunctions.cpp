@@ -1,11 +1,13 @@
 #include <include/components/Comp_Texture.h>
 #include <include/components/Comp_Text.h>
 #include <include/components/Comp_Dying.h>
+#include <include/components/Comp_healt.h>
+#include <include/components/Comp_looteble.h>
 #include "collections/mouseClikedFunctions.h"
 #include "components/Comp_Children.h"
 
 
-void killChildren(anax::Entity entity, anax::Entity player, anax::World& world)
+void killChildren(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
     ChildComponent& childComponent = entity.getComponent<ChildComponent>();
 
@@ -22,15 +24,18 @@ void killChildren(anax::Entity entity, anax::Entity player, anax::World& world)
 
 
 }
-void printFirst(anax::Entity entity, anax::Entity player, anax::World& world)
+void printFirst(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
     std::cout << "Hello from first" << std::endl;
+    player.getComponent<Looteble>().HealtPotion += 1;
 }
-void printSecond(anax::Entity entity, anax::Entity player, anax::World& world)
+void printSecond(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
+    player.getComponent<HealthComponent>().health -= 5;
     std::cout << "Hello from second" << std::endl;
 }
-void printThird(anax::Entity entity, anax::Entity player, anax::World& world)
+void printThird(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
+    player.getComponent<HealthComponent>().health -= 5;
     std::cout << "Hello from third" << std::endl;
 }

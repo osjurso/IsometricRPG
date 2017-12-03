@@ -6,7 +6,7 @@
 
 #include "states/state_base.h"
 
-typedef void (*pfunc)(anax::Entity, anax::Entity, anax::World&);
+typedef void (*pfunc)(anax::Entity&, anax::Entity&, anax::World&);
 
 struct Talkative : public anax::Component
 {

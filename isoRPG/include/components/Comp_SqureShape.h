@@ -10,6 +10,7 @@ struct SqureComponent : public anax::Component
 {
 public:
     sf::RectangleShape rectShape;
+    bool changeble = false;
 };
 
 #endif //ISORPG_COMP_SQURESHAPE_H

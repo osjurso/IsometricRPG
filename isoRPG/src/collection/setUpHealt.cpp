@@ -6,21 +6,30 @@
 #include <include/components/Comp_State.h>
 #include "include/collections/setUpHealt.h"
 
-void SetUpHealt::setUpHealt(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color)
+void SetUpHealt::setUpHealt(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color, sf::View cam)
 {
     entity.addComponent<SqureComponent>();
     SqureComponent& squreComponent = entity.getComponent<SqureComponent>();
-    squreComponent.rectShape.setScale(Height*zoom,Width*zoom);
+
+    sf::Vector2f size;
+    size.x = Height;
+    size.y = Width;
+    squreComponent.rectShape.setSize(size);
     squreComponent.rectShape.setFillColor(color);
     squreComponent.rectShape.setPosition(xPos,yPos);
+    squreComponent.rectShape.setFillColor(color);
 
     entity.addComponent<TextureComponent>();
-    entity.getComponent<TextureComponent>().sortKey = 1002;
+    entity.getComponent<TextureComponent>().sortKey = 1004;
 
     entity.addComponent<PositionComponent>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-    positionComponent.XPos = squreComponent.rectShape.getLocalBounds().left;
-    positionComponent.YPos = squreComponent.rectShape.getLocalBounds().top;
+
+    //positionComponent.YPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().Xofset;
+    //positionComponent.XPos = cam.getCenter().y + (cam.getSize().y/2) + entity.getComponent<UIComp>().Yofset;
+
+    positionComponent.XPos = cam.getCenter().x;
+    positionComponent.YPos = cam.getCenter().y;
     positionComponent.SpriteLeft = positionComponent.XPos;
     positionComponent.SpriteTop = positionComponent.YPos;
 

@@ -8,8 +8,8 @@
 class HealthComponent : public anax::Component
 {
 public:
-    int health;
-    int maxHealth;
+    float health;
+    float maxHealth;
 };
 
 #endif //ISORPG_COMP_HEALT_H

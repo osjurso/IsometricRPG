@@ -85,6 +85,9 @@ public:
                 window.draw(textComponent.text);
             }else if(i.hasComponent<SqureComponent>())
             {
+                SqureComponent& squreComponent = i.getComponent<SqureComponent>();
+                PositionComponent& positionComponent = i.getComponent<PositionComponent>();
+                squreComponent.rectShape.setPosition(positionComponent.XPos,positionComponent.YPos);
                 window.draw(i.getComponent<SqureComponent>().rectShape);
             }
         }

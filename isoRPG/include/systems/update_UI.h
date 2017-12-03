@@ -58,6 +58,17 @@ public:
                     }
 
                 }
+                if(i.hasComponent<SqureComponent>())
+                {
+                   if(i.getComponent<SqureComponent>().changeble)
+                   {
+                       sf::Vector2f size;
+                       size.x = i.getComponent<SizeComponent>().Whith*(player.getComponent<HealthComponent>().health/player.getComponent<HealthComponent>().maxHealth);
+                       //std::cout << player.getComponent<HealthComponent>().health/player.getComponent<HealthComponent>().maxHealth << std::endl;
+                       size.y = i.getComponent<SqureComponent>().rectShape.getSize().y;
+                       i.getComponent<SqureComponent>().rectShape.setSize(size);
+                   }
+                }
             }
         }
     }

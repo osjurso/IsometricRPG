@@ -1,22 +1,17 @@
 #include <collections/setUpUI.h>
 #include <include/collections/setUpHealt.h>
+#include <include/components/Comp_SqureShape.h>
 
 void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Font font, sf::View playerCam, anax::Entity player)
 {
+
+    //sets up background
     anax::Entity bottom = world.createEntity();
     anax::Entity items = world.createEntity();
-    anax::Entity healtTotal = world.createEntity();
-    anax::Entity healtCurrnet = world.createEntity();
 
-    SetUpHealt setUpHealt;
-    setUpHealt.setUpHealt(healtTotal,0,0,100,100,zoom,sf::Color(255,100,100));
-    setUpHealt.setUpHealt(healtTotal,3,3,80,80,zoom,sf::Color(255,200,200));
 
     bottom.addComponent<UIComp>();
     items.addComponent<UIComp>();
-    healtTotal.addComponent<UIComp>();
-    healtCurrnet.addComponent<UIComp>();
-
     bottom.getComponent<UIComp>().Yofset = -60;
     items.getComponent<UIComp>().Yofset = -50;
     items.getComponent<UIComp>().Xofset = 400;
@@ -30,6 +25,8 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
 
     bottom.getComponent<TextureComponent>().sortKey = 1000;
     items.getComponent<TextureComponent>().sortKey = 1001;
+
+    //sets up text
 
     sf::Color gold(255,215,0);
     sf::Color steel(67, 70, 75);
@@ -67,6 +64,26 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     WeaponCount.getComponent<UIComp>().Xofset = 500;
     WeaponCount.getComponent<UIComp>().Yofset = -45;
     ArmorCount.getComponent<TextComponent>().content = "Weapon";
+
+
+    //sets up healtbar
+    anax::Entity healtTotal = world.createEntity();
+    anax::Entity healtCurrnet = world.createEntity();
+
+    SetUpHealt setUpHealt;
+    setUpHealt.setUpHealt(healtTotal,100,100,100,9,zoom,sf::Color(100,10,10), playerCam);
+    setUpHealt.setUpHealt(healtCurrnet,100,100,96,5,zoom,sf::Color(125,10,10), playerCam);
+
+    healtCurrnet.getComponent<SqureComponent>().changeble = true;
+    healtCurrnet.getComponent<TextureComponent>().sortKey = 1005;
+
+    healtTotal.addComponent<UIComp>();
+    healtCurrnet.addComponent<UIComp>();
+    healtTotal.getComponent<UIComp>().Xofset = 40;
+    healtTotal.getComponent<UIComp>().Yofset = -50;
+
+    healtCurrnet.getComponent<UIComp>().Xofset = 42;
+    healtCurrnet.getComponent<UIComp>().Yofset = -48;
 }
 
 

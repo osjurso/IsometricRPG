@@ -10,7 +10,7 @@
 
 class SetUpHealt {
 public:
-    void setUpHealt(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color);
+    void setUpHealt(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color, sf::View cam);
 };
 
 

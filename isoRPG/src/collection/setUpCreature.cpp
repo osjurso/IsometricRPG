@@ -63,6 +63,10 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     Looteble& looteble = entity.getComponent<Looteble>();
     looteble.gold =0;
 
+    entity.addComponent<HealthComponent>();
+    entity.getComponent<HealthComponent>().health = 100;
+    entity.getComponent<HealthComponent>().maxHealth = 100;
+
     entity.activate();
 }
 void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty)

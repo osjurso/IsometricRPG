@@ -149,7 +149,7 @@ bool StateGame::update(sf::Time dt)
 
         resolve.resolveMovment(*getContext().world, deltaTime);
 
-        playerCam.setCenter(positionComponent.SpriteLeft, positionComponent.SpriteTop);
+        playerCam.setCenter(positionComponent.SpriteLeft + player.getComponent<SizeComponent>().SpriteWhith/2, positionComponent.SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
         movementTimer.restart().asSeconds();
     }
     if(pathfindingTimer.getElapsedTime().asSeconds() >= 0.5f)
@@ -311,6 +311,11 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         Attack attack;
         anax::World& world = *getContext().world;
         attack.resolveAttack(world,player);
+    }else if (key == sf::Keyboard::Q && player.getComponent<Looteble>().HealtPotion > 0)
+    {
+        player.getComponent<Looteble>().HealtPotion -=1;
+        player.getComponent<HealthComponent>().health += 50;
+        if(player.getComponent<HealthComponent>().health > player.getComponent<HealthComponent>().maxHealth) player.getComponent<HealthComponent>().health = player.getComponent<HealthComponent>().maxHealth;
     }
 
     else if (key == sf::Keyboard::Escape && isPressed)

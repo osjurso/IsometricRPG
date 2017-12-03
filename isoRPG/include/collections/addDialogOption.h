@@ -17,7 +17,7 @@
 #include <include/components/Comp_animation.h>
 #include <include/components/Comp_talk.h>
 
-typedef void (*pfunc)(anax::Entity, anax::Entity, anax::World&);
+typedef void (*pfunc)(anax::Entity&, anax::Entity&, anax::World&);
 
 class AddOptionDialoge
 {

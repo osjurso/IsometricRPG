@@ -34,6 +34,7 @@ public:
 
     void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font, sf::Texture& paperTexture, sf::Texture& redXTexture)
     {
+
         Talkative& talkative = speaker.getComponent<Talkative>();
         DrawebleText drawebleText;
 
