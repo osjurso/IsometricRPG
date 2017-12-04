@@ -23,9 +23,11 @@
 
 #include <collections/drawebleText.h>
 #include "collections/mouseClikedFunctions.h"
+#include "KillDialogs.h"
 #include <collections/setUpUI.h>
 #include <include/components/Comp_Children.h>
 #include <include/components/Comp_Dying.h>
+#include <include/components/Comp_Parent.h>
 
 
 class Talk
@@ -34,11 +36,19 @@ public:
 
     void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font, sf::Texture& paperTexture, sf::Texture& redXTexture)
     {
+        //Kill existing dialog
+        KillDilogs killDilogs;
+        anax::Entity tempEntity;
+        killDilogs.killDialogs(speaker,tempEntity,world);
+
 
         Talkative& talkative = speaker.getComponent<Talkative>();
         DrawebleText drawebleText;
 
         anax::Entity redX = world.createEntity();
+
+        redX.addComponent<ParentComponent>();
+        redX.getComponent<ParentComponent>().parent = speaker;
 
         redX.addComponent<ChildComponent>();
         ChildComponent& childComponent = redX.getComponent<ChildComponent>();
@@ -69,6 +79,10 @@ public:
 
         childComponent.children.push_back(paper);
 
+        speaker.getComponent<ChildComponent>().children.push_back(redX);
+        speaker.getComponent<ChildComponent>().children.push_back(paper);
+
+
         int line = 0;
         if(talkative.talkingfiles[talkative.Current] != "")
         {
@@ -86,6 +100,7 @@ public:
             entity.getComponent<UIComp>().Yofset = -58;
             entity.addComponent<DyingComponent>();
             childComponent.children.push_back(entity);
+            speaker.getComponent<ChildComponent>().children.push_back(entity);
         }
         if(talkative.total[talkative.Current] > 0)
         {
@@ -93,18 +108,27 @@ public:
             {
                 anax::Entity entity = world.createEntity();
                 //std::string content = tempStringMap[i];
-                std::string content = talkative.optionMap[i];
+                std::string content = talkative.optionMap[i + 3*talkative.Current];
                 drawebleText.setUpDrawebleText(entity,content,cam,"Game",zoom,font,sf::Color().Black);
                 entity.getComponent<UIComp>().Xofset = 200;
                 entity.getComponent<UIComp>().Yofset = -60+ line*15;
                 line +=1;
                 entity.addComponent<MousedOver>();
                 entity.addComponent<AssosateFunc>();
-                entity.getComponent<AssosateFunc>().voidfunc = speaker.getComponent<Talkative>().functionmap[i];
+                entity.getComponent<AssosateFunc>().voidfunc = speaker.getComponent<Talkative>().functionmap[i+ 3*talkative.Current];
                 childComponent.children.push_back(entity);
                 entity.addComponent<DyingComponent>();
+                speaker.getComponent<ChildComponent>().children.push_back(entity);
             }
         }
+        if(talkative.Current == talkative.TotalOfDialogs)
+        {
+            talkative.Current = 0;
+        }else
+        {
+            talkative.Current +=1;
+        }
+        talkative.activeDialog = true;
     }
 };
 

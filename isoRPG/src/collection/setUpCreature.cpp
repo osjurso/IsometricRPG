@@ -1,5 +1,6 @@
 
 
+#include <include/components/Comp_Children.h>
 #include "include/collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
@@ -209,6 +210,7 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     looteble.gold =666;
 
     entity.addComponent<Talkative>();
+    entity.addComponent<ChildComponent>();
 
     entity.activate();
 }

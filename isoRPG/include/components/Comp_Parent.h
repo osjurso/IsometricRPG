@@ -10,7 +10,7 @@ struct ParentComponent : public anax::Component
 {
 public:
 
-    anax::Entity& parent;
+    anax::Entity parent;
 };
 
 #endif //ISORPG_COMP_PARENT_H

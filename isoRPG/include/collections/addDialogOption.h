@@ -28,10 +28,10 @@ public:
         talkative.total[index] = optionNr;
 
         talkative.optionMap.insert(std::pair<int,std::string>(optionNr,optionString));
-        talkative.options.insert(std::pair<int, std::map<int,std::string>>(index,talkative.optionMap));
+        //talkative.options.insert(std::pair<int, std::map<int,std::string>>(index,talkative.optionMap));
 
         talkative.functionmap.insert(std::pair<int,pfunc>(optionNr,func));
-        talkative.functions.insert(std::pair<int, std::map<int,pfunc>>(index,talkative.functionmap));
+        //talkative.functions.insert(std::pair<int, std::map<int,pfunc>>(index,talkative.functionmap));
 
     }
 };
