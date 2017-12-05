@@ -25,12 +25,6 @@ private:
     sf::Clock movementTimer;
     sf::Clock pathfindingTimer;
     float zoom;
-
-
-    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
-
-protected:
-    std::list<Object*> objects;
 };
 
 

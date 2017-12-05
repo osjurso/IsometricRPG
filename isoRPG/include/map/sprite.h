@@ -14,8 +14,7 @@ class Sprite : public Object
 public:
     Sprite(TileSize tileSize, StateBase::Context context) : Object(tileSize, context) { }
 
-    void process(float time);
-    void draw();
+    void createEntities();
 
 
 protected:
@@ -24,20 +23,6 @@ protected:
 
     // Location on screen
     int x, y;
-
-    // Current animation frame
-    int frame;
-
-    //Frame count (duh)
-    int frameCount;
-
-    // Length of one frame in ms
-    int frameDuration;
-
-    // Times the animation
-    sf::Clock clock;
-
-    bool test = true;
 };
 
 #endif

@@ -24,8 +24,8 @@ void Object::CartesianToIsometric(sf::Vector2i& v)
 
 Object::~Object()
 {
-    delete texture;
-    texture = nullptr;
+    //delete texture;
+    //texture = nullptr;
 }
 
 void Object::getTileCoords(int tile, int& x, int& y)
@@ -33,7 +33,7 @@ void Object::getTileCoords(int tile, int& x, int& y)
     // Tileid 0 means no tile, so the ids actually start from 1
     tile--;
 
-    int tileXcount = texture->getSize().x / (tileSize.x + tileSize.s);
+    int tileXcount = context.textures->get(Textures::Tileset).getSize().x / (tileSize.x + tileSize.s);
 
     x = (tile % tileXcount) * (tileSize.x + tileSize.s);
     y = (tile / tileXcount) * (tileSize.x + tileSize.s);

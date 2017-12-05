@@ -1,18 +1,24 @@
+#include <fstream>
+
 #include <systems/pathfinding.h>
+#include <cstring>
+#include <SFML/System/Vector2.hpp>
 
 const int n=64; // horizontal size of the map
 const int m=64; // vertical size size of the map
-int map[n][m];
 int closed_nodes_map[n][m]; // map of closed (tried-out) nodes
 int open_nodes_map[n][m]; // map of open (not-yet-tried) nodes
 int dir_map[n][m]; // map of directions
+static int map[n][m];
+
 
 bool operator<(const node & a, const node & b)
 {
     return a.getPriority() > b.getPriority();
 }
 
-std::string pathFind( const int & xStart, const int & yStart, const int & xFinish, const int & yFinish ) {
+std::string pathFind(const int & xStart, const int & yStart, const int & xFinish, const int & yFinish )
+{
     static std::priority_queue<node> pq[2]; // list of open (not-yet-tried) nodes
     static int pqi; // pq index
     static node *n0;
@@ -22,8 +28,10 @@ std::string pathFind( const int & xStart, const int & yStart, const int & xFinis
     pqi = 0;
 
     // reset the node maps
-    for (y = 0; y < m; y++) {
-        for (x = 0; x < n; x++) {
+    for (y = 0; y < m; y++)
+    {
+        for (x = 0; x < n; x++)
+        {
             closed_nodes_map[x][y] = 0;
             open_nodes_map[x][y] = 0;
         }
@@ -36,7 +44,8 @@ std::string pathFind( const int & xStart, const int & yStart, const int & xFinis
     open_nodes_map[x][y] = n0->getPriority(); // mark it on the open nodes map
 
     // A* search
-    while (!pq[pqi].empty()) {
+    while (!pq[pqi].empty())
+    {
         // get the current node w/ the highest priority
         // from the list of open nodes
         n0 = new node(pq[pqi].top().getxPos(), pq[pqi].top().getyPos(),
@@ -52,11 +61,13 @@ std::string pathFind( const int & xStart, const int & yStart, const int & xFinis
 
         // quit searching when the goal state is reached
         //if((*n0).estimate(xFinish, yFinish) == 0)
-        if (x == xFinish && y == yFinish) {
+        if (x == xFinish && y == yFinish)
+        {
             // generate the path from finish to start
             // by following the directions
             std::string path = "";
-            while (!(x == xStart && y == yStart)) {
+            while (!(x == xStart && y == yStart))
+            {
                 j = dir_map[x][y];
                 c = '0' + (j + dir / 2) % dir;
                 path = c + path;
@@ -76,21 +87,24 @@ std::string pathFind( const int & xStart, const int & yStart, const int & xFinis
             xdx = x + dx[i];
             ydy = y + dy[i];
 
-            if (!(xdx < 0 || xdx > n - 1 || ydy < 0 || ydy > m - 1 || map[xdx][ydy] == 1
-                  || closed_nodes_map[xdx][ydy] == 1)) {
+            if(!(xdx < 0 || xdx > n - 1 || ydy < 0 || ydy>m - 1 || map[xdx][ydy] == 1
+                 || closed_nodes_map[xdx][ydy] == 1))
+            {
                 // generate a child node
-                m0 = new node(xdx, ydy, n0->getLevel(),
-                              n0->getPriority());
+                m0 = new node(xdx, ydy, n0->getLevel(), n0->getPriority());
                 m0->nextLevel(i);
                 m0->updatePriority(xFinish, yFinish);
 
                 // if it is not in the open list then add into that
-                if (open_nodes_map[xdx][ydy] == 0) {
+                if (open_nodes_map[xdx][ydy] == 0)
+                {
                     open_nodes_map[xdx][ydy] = m0->getPriority();
                     pq[pqi].push(*m0);
                     // mark its parent node direction
                     dir_map[xdx][ydy] = (i + dir / 2) % dir;
-                } else if (open_nodes_map[xdx][ydy] > m0->getPriority()) {
+                }
+                else if (open_nodes_map[xdx][ydy] > m0->getPriority())
+                {
                     // update the priority info
                     open_nodes_map[xdx][ydy] = m0->getPriority();
                     // update the parent direction info
@@ -115,11 +129,36 @@ std::string pathFind( const int & xStart, const int & yStart, const int & xFinis
                     }
                     pqi = 1 - pqi;
                     pq[pqi].push(*m0); // add the better node instead
-                } else delete m0; // garbage collection
+                }
+                else delete m0; // garbage collection
             }
         }
         delete n0; // garbage collection
     }
+    //std::cout << "No Path Found" << std::endl;
     return ""; // no route found
+}
 
+void node::loadMapData(int width, int height)
+{
+    memset(map, 0, sizeof(map));
+
+    std::ifstream file;
+    file.open("assets/map/collision_data");
+    std::string line;
+    std::cout << "Loading map from file." << std::endl;
+
+    for (int i = 0; i < height; i++)
+    {
+        getline(file, line);
+        for (int k = 0; k < width; k++)
+        {
+            int value = line[k];
+            map[k][i] = value - '0';
+            //std::cout << map[i][k];
+        }
+        //std::cout << std::endl;
+    }
+
+    file.close();
 }

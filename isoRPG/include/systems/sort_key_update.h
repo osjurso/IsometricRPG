@@ -29,12 +29,11 @@ public:
 
         for (auto i : entities)
         {
-            auto& textureComponent = i.getComponent<TextureComponent>();
-            auto positionComponent = i.getComponent<PositionComponent>();
-            auto sizeComponent = i.getComponent<SizeComponent>();
-
             if (i.hasComponent<Movable>())
             {
+                auto& textureComponent = i.getComponent<TextureComponent>();
+                auto positionComponent = i.getComponent<PositionComponent>();
+                auto sizeComponent = i.getComponent<SizeComponent>();
                 i.getComponent<TextureComponent>().sortKey = static_cast<int>(positionComponent.SpriteTop + sizeComponent.SpriteHeight);
             }
         }

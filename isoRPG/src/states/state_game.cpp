@@ -41,7 +41,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     player = world.createEntity();
 
     // Load map information from JSON into object list
-    if (!Map::load("assets/map/map.json", objects, context))
+    if (!Map::load("assets/map/map.json", context))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
     // TODO get under one function: setUpCreatures
@@ -62,14 +62,12 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     textureComponent.texture[3] = HeroShield;
     textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
 
-
     movementTimer.restart().asSeconds();
     pathfindingTimer.restart().asSeconds();
 
 
     sf::RenderWindow& window = *getContext().window;
     DrawEntetys drawEntetys;
-
 
     anax::Entity goblin = world.createEntity();
     anax::Entity goblin2 = world.createEntity();
@@ -90,7 +88,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     SetUpUI setUpUI;
     setUpUI.setUpUI(world,zoom, context.textures->get(Textures::UIBottom),context.textures->get(Textures::UIItems),getContext().fonts->get(Fonts::RPG),playerCam,player);
 
-
     AddDialoge addDialoge;
     AddOptionDialoge optionDialoge;
 
@@ -98,8 +95,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     optionDialoge.addOptionDialoge(trader,"wolfsbane"   ,0,0,printFirst);
     optionDialoge.addOptionDialoge(trader,"madrake root",0,1,printSecond);
     optionDialoge.addOptionDialoge(trader,"blood grass" ,0,2,printThird);
-
-
 
     context.music->play(Music::Test);
 }
@@ -113,7 +108,6 @@ void StateGame::draw()
 
     DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
-
 }
 
 bool StateGame::update(sf::Time dt)
@@ -214,30 +208,30 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 7;
-            Xmove = 0.5;
-            Ymove = -0.5;
+            Xmove = 0.66;
+            Ymove = -0.33;
             Dmove = '7';
 
         }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 5;
-            Xmove = -0.5;
-            Ymove = -0.5;
+            Xmove = -0.66;
+            Ymove = -0.33;
             Dmove = '5';
         }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 1;
-            Xmove = 0.5;
-            Ymove = 0.5;
+            Xmove = 0.66;
+            Ymove = 0.33;
             Dmove = '1';
         }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 3;
-            Xmove = -0.5;
-            Ymove = 0.5;
+            Xmove = -0.66;
+            Ymove = 0.33;
             Dmove = '3';
         }else if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {
             animationComponent.idleTimer.restart().asSeconds();
@@ -280,9 +274,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         }
     }
 
-
-
-
         //Attack method
     else if (key == sf::Keyboard::V)
     {
@@ -322,9 +313,10 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         requestStackPush(States::Pause);
     else if (key == sf::Keyboard::F5 && isPressed)
     {
-        objects.clear();
+        // Todo: Hvis vi skal bruke map reload må den også resette anax world
+
         std::cout << "Loading map data ..." << std::endl;
-        if (!Map::load("assets/map/map.json", objects, getContext()))
+        if (!Map::load("assets/map/map.json", getContext()))
         {
             std::cout << "Failed to reload map data." << std::endl;
         }
