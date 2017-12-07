@@ -109,6 +109,7 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
     sf::Font& font = context.fonts->get(Fonts::RPG);
     sf::Texture& paper = context.textures->get(Textures::UIConversation);
     sf::Texture& redX = context.textures->get(Textures::UIRedX);
+    sf::Texture& arrow = context.textures->get(Textures::UIArrow);
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
     sf::IntRect entityRect;
@@ -121,7 +122,7 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
         if(e.hasComponent<Talkative>())
         {
             Talk talk;
-            talk.talk(e,window, world,cam ,zoom, font, paper, redX);
+            talk.talk(e,window, world,cam ,zoom, font, paper, redX, arrow);
         }
 
         if(e.hasComponent<Looteble>())

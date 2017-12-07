@@ -34,7 +34,7 @@ class Talk
 {
 public:
 
-    void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font, sf::Texture& paperTexture, sf::Texture& redXTexture)
+    void talk(anax::Entity& speaker, sf::RenderWindow& window, anax::World& world,sf::View cam, float zoom, sf::Font font, sf::Texture& paperTexture, sf::Texture& redXTexture, sf::Texture& arrow)
     {
         //Kill existing dialog
         KillDilogs killDilogs;
@@ -56,8 +56,7 @@ public:
         anax::Entity paper = world.createEntity();
         Draweble draweble;
         draweble.makeDraweble(paperTexture,0,0,paper,"Game");
-        draweble.makeDraweble(redXTexture,500,500,redX,"Game");
-
+        draweble.makeDraweble(redXTexture,0,0,redX,"Game");
 
         paper.getComponent<TextureComponent>().sprite[0].setScale(zoom,zoom);
         paper.addComponent<UIComp>();
@@ -67,6 +66,10 @@ public:
         paper.addComponent<DyingComponent>();
 
         redX.getComponent<TextureComponent>().sprite[0].setScale(zoom/4,zoom/4);
+        redX.getComponent<SizeComponent>().Whith -= 160;
+        redX.getComponent<SizeComponent>().Height -= 153;
+        redX.getComponent<SizeComponent>().SpriteWhith = redX.getComponent<SizeComponent>().Whith;
+        redX.getComponent<SizeComponent>().SpriteHeight = redX.getComponent<SizeComponent>().Height;
         redX.addComponent<UIComp>();
         redX.getComponent<UIComp>().Xofset = 378;
         redX.getComponent<UIComp>().Yofset = -56;
@@ -75,13 +78,32 @@ public:
         redX.addComponent<AssosateFunc>();
         redX.getComponent<AssosateFunc>().voidfunc = killChildren;
         redX.addComponent<DyingComponent>();
-
-
         childComponent.children.push_back(paper);
 
         speaker.getComponent<ChildComponent>().children.push_back(redX);
         speaker.getComponent<ChildComponent>().children.push_back(paper);
 
+        if(speaker.getComponent<Talkative>().Default != -1 && (speaker.getComponent<Talkative>().Default =! speaker.getComponent<Talkative>().Current))
+        {
+            anax::Entity NextArrow = world.createEntity();
+            NextArrow.addComponent<ParentComponent>();
+
+            draweble.makeDraweble(arrow,0,0,NextArrow,"Game");
+            NextArrow.getComponent<TextureComponent>().sprite[0].setScale(zoom,zoom);
+            NextArrow.addComponent<UIComp>();
+            NextArrow.getComponent<UIComp>().Xofset = 378;
+            NextArrow.getComponent<UIComp>().Yofset = -20;
+            NextArrow.getComponent<TextureComponent>().sortKey = 1002;
+            NextArrow.addComponent<MousedOver>();
+            NextArrow.addComponent<AssosateFunc>();
+            NextArrow.getComponent<AssosateFunc>().voidfunc = setDefault;
+            NextArrow.addComponent<DyingComponent>();
+
+            childComponent.children.push_back(NextArrow);
+            speaker.getComponent<ChildComponent>().children.push_back(NextArrow);
+            redX.getComponent<ChildComponent>().children.push_back(NextArrow);
+            NextArrow.getComponent<ParentComponent>().parent = redX;
+        }
 
         int line = 0;
         if(talkative.talkingfiles[talkative.Current] != "")
@@ -107,7 +129,6 @@ public:
             for(int i = 0; i <= talkative.total[talkative.Current]; i++)
             {
                 anax::Entity entity = world.createEntity();
-                //std::string content = tempStringMap[i];
                 std::string content = talkative.optionMap[i + 3*talkative.Current];
                 drawebleText.setUpDrawebleText(entity,content,cam,"Game",zoom,font,sf::Color().Black);
                 entity.getComponent<UIComp>().Xofset = 200;
@@ -121,14 +142,6 @@ public:
                 speaker.getComponent<ChildComponent>().children.push_back(entity);
             }
         }
-        if(talkative.Current == talkative.TotalOfDialogs)
-        {
-            talkative.Current = 0;
-        }else
-        {
-            talkative.Current +=1;
-        }
-        talkative.activeDialog = true;
     }
 };
 

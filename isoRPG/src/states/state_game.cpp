@@ -19,6 +19,8 @@
 #include <include/collections/addDialogOption.h>
 #include <include/systems/killdying.h>
 #include <include/components/Comp_ActionTimers.h>
+#include <systems/UpdateDialog.h>
+#include <include/systems/UpdateDialog.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -113,6 +115,8 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     optionDialoge.addOptionDialoge(trader,"Baselisk blod"       ,1,5,healtPotionRevard);
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
+    trader.getComponent<Talkative>().Default = 1;
+
     trader.getComponent<Talkative>().Current = 0;
 
 
@@ -181,6 +185,9 @@ bool StateGame::update(sf::Time dt)
 
     UpdateUI updateUI;
     updateUI.update(*getContext().world, playerCam, player);
+
+    UpdateDialog updateDialog;
+    updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
 
     // Update the sort key for movable entities
     SortKeyUpdate sortKeyUpdate;

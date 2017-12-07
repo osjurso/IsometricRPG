@@ -70,7 +70,7 @@ public:
                     {
                         float size = player.getComponent<ActionTimer>().AttackTimer.getElapsedTime().asSeconds()/player.getComponent<ActionTimer>().AttackCooldown;
                         if(0.25*size >0.25) size = 1;
-                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25*size,0.25);
+                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25-0.25*size,0.25);
                     }else if(i.getComponent<ChangebleComponent>().source == "Defend")
                     {
                         float size = 0;
@@ -83,7 +83,7 @@ public:
                     {
                         float size = player.getComponent<ActionTimer>().PotionTimer.getElapsedTime().asSeconds()/player.getComponent<ActionTimer>().PotionCooldown;
                         if(0.25*size >0.25) size = 1;
-                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25*size,0.25);
+                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25-0.25*size,0.25);
                     }
 
                 }

@@ -23,6 +23,7 @@ public:
     int Default = -1;
     int TotalOfDialogs = -1;
     bool activeDialog = false;
+    bool changeDialog = false;
 
 };
 
