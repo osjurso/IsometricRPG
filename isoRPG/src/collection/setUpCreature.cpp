@@ -1,6 +1,7 @@
 
 
 #include <include/components/Comp_Children.h>
+#include <include/components/Comp_ActionTimers.h>
 #include "include/collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
@@ -67,6 +68,13 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     entity.addComponent<HealthComponent>();
     entity.getComponent<HealthComponent>().health = 100;
     entity.getComponent<HealthComponent>().maxHealth = 100;
+
+    entity.addComponent<ActionTimer>();
+    ActionTimer& actionTimer = entity.getComponent<ActionTimer>();
+    actionTimer.AttackCooldown = 3;
+    actionTimer.PotionCooldown = 10;
+    actionTimer.AttackTimer.restart().asSeconds();
+    actionTimer.PotionTimer.restart().asSeconds();
 
     entity.activate();
 }

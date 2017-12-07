@@ -16,6 +16,7 @@
 #include <components/Comp_healt.h>
 #include <iostream>
 #include <components/Comp_looteble.h>
+#include <include/components/Comp_Dying.h>
 
 
 class Attack
@@ -52,15 +53,15 @@ public:
 
                     if(attacker.contains(positionComponent.XPos, positionComponent.YPos))
                     {
-                        std::cout<< "enemy inside radius of " << attackradius << std::endl;
+                        //std::cout<< "enemy inside radius of " << attackradius << std::endl;
                         healthComponent.health -= 5;//TODO: change to weapons damage (attacker.weapondamage)
-                        std::cout<< healthComponent.health << std::endl;
+                        //std::cout<< healthComponent.health << std::endl;
                     }
                     if(healthComponent.health <= 0)
                     {
                         attackerLoot.gold += looteble.gold;
-                        i.kill();
-                        world.refresh();
+                        i.addComponent<DyingComponent>();
+                        i.getComponent<DyingComponent>().dying = true;
                     }
 
 

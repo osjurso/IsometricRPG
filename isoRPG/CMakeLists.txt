@@ -75,7 +75,7 @@ set(SOURCE_FILES
         src/systems/resolve_agro.cpp
         src/systems/resolvePositionChange.cpp
         src/systems/resolve_movment.cpp
-        src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogOption.h include/components/Comp_AssosiateFunc.h include/collections/mouseClikedFunctions.h src/collection/mouseClickedFunctions.cpp include/components/Comp_Dying.h include/systems/killdying.h src/collection/setUpHealt.cpp include/collections/setUpHealt.h include/components/Comp_SqureShape.h include/systems/KillDialogs.h)
+        src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogOption.h include/components/Comp_AssosiateFunc.h include/collections/mouseClikedFunctions.h src/collection/mouseClickedFunctions.cpp include/components/Comp_Dying.h include/systems/killdying.h src/collection/setUpHealt.cpp include/collections/setUpHealt.h include/components/Comp_SqureShape.h include/systems/KillDialogs.h include/components/Comp_ActionTimers.h)
 
 
 

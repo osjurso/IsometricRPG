@@ -45,6 +45,10 @@ Application::Application()
     mTextures.load(Textures::UIItems, "assets/textures/ui_modifiers.png");
     mTextures.load(Textures::UIConversation, "assets/textures/convoElement.png");
     mTextures.load(Textures::UIRedX, "assets/textures/redX.png");
+    mTextures.load(Textures::UIAbilities, "assets/textures/alitities.png");
+    mTextures.load(Textures::UIArrow, "assets/textures/arrow.png");
+    mTextures.load(Textures::UIHealtBar, "assets/textures/healtbar.png");
+
 
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));

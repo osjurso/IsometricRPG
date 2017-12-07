@@ -32,6 +32,9 @@ namespace Textures
         UIItems,
         UIConversation,
         UIRedX,
+        UIAbilities,
+        UIArrow,
+        UIHealtBar,
 
     };
 }

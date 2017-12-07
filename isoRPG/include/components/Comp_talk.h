@@ -20,6 +20,7 @@ public:
     std::map<int, std::map<int,pfunc>> functions;
 
     int Current = 0 ;
+    int Default = -1;
     int TotalOfDialogs = -1;
     bool activeDialog = false;
 

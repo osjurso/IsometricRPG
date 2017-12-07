@@ -18,6 +18,7 @@
 #include <collections/drawable.h>
 #include <include/collections/addDialogOption.h>
 #include <include/systems/killdying.h>
+#include <include/components/Comp_ActionTimers.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -88,7 +89,12 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300);
 
     SetUpUI setUpUI;
-    setUpUI.setUpUI(world,zoom, context.textures->get(Textures::UIBottom),context.textures->get(Textures::UIItems),getContext().fonts->get(Fonts::RPG),playerCam,player);
+    setUpUI.setUpUI(world,zoom,
+                    context.textures->get(Textures::UIBottom),
+                    context.textures->get(Textures::UIItems),
+                    context.textures->get(Textures::UIAbilities),
+                    context.textures->get(Textures::UIHealtBar),
+                    getContext().fonts->get(Fonts::RPG),playerCam,player);
 
 
     AddDialoge addDialoge;
@@ -293,10 +299,8 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     }
 
 
-
-
         //Attack method
-    else if (key == sf::Keyboard::V)
+    else if (key == sf::Keyboard::Space && player.getComponent<ActionTimer>().AttackTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().AttackCooldown)
     {
         animationComponent.action = "Attack";
         animationComponent.idleTimer.restart().asSeconds();
@@ -305,10 +309,16 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.direction = "Attack";
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
+
+        Attack attack;
+        anax::World& world = *getContext().world;
+        attack.resolveAttack(world,player);
+
+        player.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
     }
 
         //Defend method
-    else if (key == sf::Keyboard::B)
+    else if (key == sf::Keyboard::LShift)
     {
         animationComponent.action = "Defend";
         animationComponent.idleTimer.restart().asSeconds();
@@ -317,17 +327,12 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.direction = "Defend";
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-    }
-    else if (key == sf::Keyboard::Space)
-    {
-        Attack attack;
-        anax::World& world = *getContext().world;
-        attack.resolveAttack(world,player);
-    }else if (key == sf::Keyboard::Q && player.getComponent<Looteble>().HealtPotion > 0)
+    }else if (key == sf::Keyboard::Q && player.getComponent<Looteble>().HealtPotion > 0 && player.getComponent<ActionTimer>().PotionTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().PotionCooldown )
     {
         player.getComponent<Looteble>().HealtPotion -=1;
         player.getComponent<HealthComponent>().health += 50;
         if(player.getComponent<HealthComponent>().health > player.getComponent<HealthComponent>().maxHealth) player.getComponent<HealthComponent>().health = player.getComponent<HealthComponent>().maxHealth;
+        player.getComponent<ActionTimer>().PotionTimer.restart().asSeconds();
     }
 
     else if (key == sf::Keyboard::Escape && isPressed)
