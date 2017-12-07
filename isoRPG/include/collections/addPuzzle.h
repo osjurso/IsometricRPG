@@ -27,37 +27,74 @@ class AddPuzzle
 public:
     void add(anax::Entity& speaker)
     {
-        AddDialoge addDialoge;
-        AddOptionDialoge optionDialoge;
-    int number = 0;
-
-        if(number == 0)
+        if(numbers.size() != 0)
         {
-            addDialoge.addDialoge(speaker,"assets/dialog/trader_dialog_0.txt",0);
-            optionDialoge.addOptionDialoge(speaker,"wolfsbane"   ,0,0,healtPotionRevard);
-            optionDialoge.addOptionDialoge(speaker,"madrake root",0,1,healtPunishment);
-            optionDialoge.addOptionDialoge(speaker,"blood grass" ,0,2,healtPunishment);
+            AddDialoge addDialoge;
+            AddOptionDialoge optionDialoge;
+            int randomIndex = rand() % numbers.size();
+            int number = numbers.at(randomIndex);
 
 
-            addDialoge.addDialoge(speaker,"assets/dialog/puzzle_0_default",1);
-        }
-        if(number == 1)
-        {
-            addDialoge.addDialoge(speaker,"assets/dialog/trader_dialog_1.txt",1);
-            optionDialoge.addOptionDialoge(speaker,"Ground dragon scales",1,3,healtPunishment);
-            optionDialoge.addOptionDialoge(speaker,"Holy Water"          ,1,4,healtPunishment);
-            optionDialoge.addOptionDialoge(speaker,"Baselisk blod"       ,1,5,healtPotionRevard);
+            if(number == 0)
+            {
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_0_question.txt",0);
+                optionDialoge.addOptionDialoge(speaker,"Wolfsbane"   ,0,0,healtPotionRevard); //revard
+                optionDialoge.addOptionDialoge(speaker,"Madrake root",0,1,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Blood grass" ,0,2,healtPunishment);
 
-        }
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_0_default.txt",1);
+            }
+            if(number == 1)
+            {
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_1_question.txt",0);
+                optionDialoge.addOptionDialoge(speaker,"Dragon",0,3,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Orc"   ,0,4,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Baselisk",0,5,healtPotionRevard); //revard
+
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_1_default.txt",1);
+            }
+            if(number == 2)
+            {
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_2_question.txt",0);
+                optionDialoge.addOptionDialoge(speaker,"Undead",0,3,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Devil"   ,0,4,healtPotionRevard); //revard
+                optionDialoge.addOptionDialoge(speaker,"Demon",0,5,healtPunishment);
+
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_2_default.txt",1);
+            }
+            if(number == 3)
+            {
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_3_question.txt",0);
+                optionDialoge.addOptionDialoge(speaker,"Golden Cage",0,3,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Silver"   ,0,4,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Phylactery",0,5,healtPotionRevard); //revard
+
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_1_question.txt",1);
+            }
+            if(number == 4)
+            {
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_4_question.txt",0);
+                optionDialoge.addOptionDialoge(speaker,"Fey",0,3,healtPotionRevard);//revard
+                optionDialoge.addOptionDialoge(speaker,"Infernal"   ,0,4,healtPunishment);
+                optionDialoge.addOptionDialoge(speaker,"Elemental",0,5,healtPunishment);
+
+                addDialoge.addDialoge(speaker,"assets/dialog/puzzle_0_default.txt",1);
+            }
 
 
 
+            numbers.erase(numbers.begin()+randomIndex-1);
 
-        speaker.getComponent<Talkative>().TotalOfDialogs = 2;
-        speaker.getComponent<Talkative>().Default = 1;
-        speaker.getComponent<Talkative>().Current = 0;
+            speaker.getComponent<Talkative>().TotalOfDialogs = 1;
+            speaker.getComponent<Talkative>().Default = 1;
+            speaker.getComponent<Talkative>().Current = 0;
+
+        }//End of if(numbers.size != 0)
 
     }
+private:
+    static std::vector<int> numbers = {0,1,2,3,4};
 };
+
 
 #endif //ISORPG_ADDPUZZLE_H

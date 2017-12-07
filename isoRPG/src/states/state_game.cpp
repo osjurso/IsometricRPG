@@ -104,15 +104,13 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     AddOptionDialoge optionDialoge;
 
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_0.txt",0);
-    optionDialoge.addOptionDialoge(trader,"wolfsbane"   ,0,0,healtPotionRevard);
-    optionDialoge.addOptionDialoge(trader,"madrake root",0,1,healtPunishment);
-    optionDialoge.addOptionDialoge(trader,"blood grass" ,0,2,healtPunishment);
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(trader,"Ground dragon scales",1,3,healtPunishment);
-    optionDialoge.addOptionDialoge(trader,"Holy Water"          ,1,4,healtPunishment);
-    optionDialoge.addOptionDialoge(trader,"Baselisk blod"       ,1,5,healtPotionRevard);
+    optionDialoge.addOptionDialoge(trader,"Dragons",1,3,healtPunishment);
+    optionDialoge.addOptionDialoge(trader,"Orc"    ,1,4,healtPunishment);
+    optionDialoge.addOptionDialoge(trader,"Baselisks" ,1,5,healtPotionRevard);
+    
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     trader.getComponent<Talkative>().Default = 1;

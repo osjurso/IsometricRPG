@@ -118,7 +118,7 @@ public:
             }
             anax::Entity entity = world.createEntity();
             drawebleText.setUpDrawebleText(entity,wholestring,cam,"Game",zoom,font,sf::Color().Black);
-            entity.getComponent<UIComp>().Xofset = 200;
+            entity.getComponent<UIComp>().Xofset = 190;
             entity.getComponent<UIComp>().Yofset = -58;
             entity.addComponent<DyingComponent>();
             childComponent.children.push_back(entity);
@@ -130,9 +130,9 @@ public:
             {
                 anax::Entity entity = world.createEntity();
                 std::string content = talkative.optionMap[i + 3*talkative.Current];
-                drawebleText.setUpDrawebleText(entity,content,cam,"Game",zoom,font,sf::Color().Black);
-                entity.getComponent<UIComp>().Xofset = 200;
-                entity.getComponent<UIComp>().Yofset = -60+ line*15;
+                drawebleText.setUpDrawebleText(entity,content,cam,"Game",zoom,font,sf::Color(40,20,20));
+                entity.getComponent<UIComp>().Xofset = 190;
+                entity.getComponent<UIComp>().Yofset = -60+ line*12;
                 line +=1;
                 entity.addComponent<MousedOver>();
                 entity.addComponent<AssosateFunc>();
