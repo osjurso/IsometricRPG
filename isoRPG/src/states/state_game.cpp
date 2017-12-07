@@ -107,9 +107,9 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(trader,"Dragons",1,3,healtPunishment);
-    optionDialoge.addOptionDialoge(trader,"Orc"    ,1,4,healtPunishment);
-    optionDialoge.addOptionDialoge(trader,"Baselisks" ,1,5,healtPotionRevard);
+    optionDialoge.addOptionDialoge(trader,"Buy healt potion  50g",1,3,healtPotionRevard);
+    optionDialoge.addOptionDialoge(trader,"What's my purpose hear again?",1,4,healtPunishment);
+    optionDialoge.addOptionDialoge(trader,"Punch me i dear yha" ,1,5,healtPunishment);
     
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
