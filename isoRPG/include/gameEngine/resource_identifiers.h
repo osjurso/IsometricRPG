@@ -35,6 +35,7 @@ namespace Textures
         UIAbilities,
         UIArrow,
         UIHealtBar,
+        UITransparant,
 
     };
 }

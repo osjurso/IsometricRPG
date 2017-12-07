@@ -48,6 +48,7 @@ Application::Application()
     mTextures.load(Textures::UIAbilities, "assets/textures/alitities.png");
     mTextures.load(Textures::UIArrow, "assets/textures/arrow.png");
     mTextures.load(Textures::UIHealtBar, "assets/textures/healtbar.png");
+    mTextures.load(Textures::UITransparant, "assets/textures/transparant.png");
 
 
 

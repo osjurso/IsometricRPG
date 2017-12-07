@@ -11,6 +11,12 @@
 
 class SetUpUI {
 public:
-    void setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Texture& abilitiesTexture, sf::Texture& healtBar, sf::Font font, sf::View playerCam, anax::Entity player);
+    void setUpUI(anax::World &world, float zoom,
+                 sf::Texture& bottomTexture,
+                 sf::Texture& itemTexture,
+                 sf::Texture& abilitiesTexture,
+                 sf::Texture& healtBar,
+                 sf::Texture& transparant,
+                 sf::Font font, sf::View playerCam, anax::Entity player);
 };
 #endif //ISORPG_SETUPUI_H

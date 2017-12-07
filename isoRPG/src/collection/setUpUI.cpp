@@ -1,8 +1,9 @@
 #include <collections/setUpUI.h>
-#include <include/collections/setUpHealt.h>
+#include <include/collections/setUpRectShape.h>
 #include <include/components/Comp_SqureShape.h>
+#include <include/components/Comp_Changeble.h>
 
-void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Texture& abilitiesTexture, sf::Texture& healtBarTexture, sf::Font font, sf::View playerCam, anax::Entity player)
+void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Texture& abilitiesTexture, sf::Texture& healtBarTexture, sf::Texture& transparant, sf::Font font, sf::View playerCam, anax::Entity player)
 {
 
     //sets up background
@@ -10,6 +11,11 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     anax::Entity items = world.createEntity();
     anax::Entity abilities = world.createEntity();
     anax::Entity healtbar = world.createEntity();
+
+    anax::Entity attackCooldown = world.createEntity();
+    anax::Entity defendCooldown = world.createEntity();
+    anax::Entity healtCooldown = world.createEntity();
+
 
 
     bottom.addComponent<UIComp>();
@@ -46,6 +52,41 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     items.getComponent<TextureComponent>().sortKey = 1001;
     abilities.getComponent<TextureComponent>().sortKey = 1002;
     healtbar.getComponent<TextureComponent>().sortKey = 1005;
+
+    //set up timers
+    draweble.makeDraweble(transparant,0,0,attackCooldown,"Game");
+    draweble.makeDraweble(transparant,0,0,defendCooldown,"Game");
+    draweble.makeDraweble(transparant,0,0,healtCooldown,"Game");
+
+    attackCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
+    defendCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
+    healtCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
+
+    attackCooldown.getComponent<TextureComponent>().sortKey = 1007;
+    defendCooldown.getComponent<TextureComponent>().sortKey = 1007;
+    healtCooldown.getComponent<TextureComponent>().sortKey = 1007;
+
+    attackCooldown.addComponent<UIComp>();
+    attackCooldown.getComponent<UIComp>().Xofset = 42;
+    attackCooldown.getComponent<UIComp>().Yofset = -23;
+
+    defendCooldown.addComponent<UIComp>();
+    defendCooldown.getComponent<UIComp>().Xofset = 74;
+    defendCooldown.getComponent<UIComp>().Yofset = -23;
+
+    healtCooldown.addComponent<UIComp>();
+    healtCooldown.getComponent<UIComp>().Xofset = 106;
+    healtCooldown.getComponent<UIComp>().Yofset = -23;
+
+    attackCooldown.addComponent<ChangebleComponent>();
+    defendCooldown.addComponent<ChangebleComponent>();
+    healtCooldown.addComponent<ChangebleComponent>();
+    attackCooldown.getComponent<ChangebleComponent>().source = "Attack";
+    defendCooldown.getComponent<ChangebleComponent>().source = "Defend";
+    healtCooldown.getComponent<ChangebleComponent>().source = "Potion";
+
+
+
 
 
     //sets up text
@@ -114,11 +155,11 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     anax::Entity healtTotal = world.createEntity();
     anax::Entity healtCurrnet = world.createEntity();
 
-    SetUpHealt setUpHealt;
-    setUpHealt.setUpHealt(healtTotal,100,100,110,9,zoom,sf::Color(100,10,10), playerCam);
-    setUpHealt.setUpHealt(healtCurrnet,100,100,110,9,zoom,sf::Color(165,10,10), playerCam);
+    SetUpRectShape setUpRectShape;
 
-    healtCurrnet.getComponent<SqureComponent>().changeble = true;
+    setUpRectShape.setUpRectshape(healtTotal,100,100,110,9,zoom,sf::Color(100,10,10), playerCam);
+    setUpRectShape.setUpRectshape(healtCurrnet,100,100,110,9,zoom,sf::Color(165,10,10), playerCam);
+
     healtCurrnet.getComponent<TextureComponent>().sortKey = 1004;
     healtTotal.getComponent<TextureComponent>().sortKey = 1003;
 
@@ -129,6 +170,8 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
 
     healtCurrnet.getComponent<UIComp>().Xofset = 32;
     healtCurrnet.getComponent<UIComp>().Yofset = -52;
+
+    healtCurrnet.addComponent<ChangebleComponent>();
 }
 
 

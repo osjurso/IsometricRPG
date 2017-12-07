@@ -19,6 +19,8 @@
 #include <iostream>
 #include <components/Comp_looteble.h>
 #include <include/components/Comp_UI.h>
+#include <include/components/Comp_Changeble.h>
+#include <include/components/Comp_ActionTimers.h>
 
 
 class UpdateUI
@@ -43,7 +45,6 @@ public:
                     {
                         textComponent.text.setString("x " + std::to_string(player.getComponent<Looteble>().HealtPotion));
                     }
-
                     if(textComponent.content == "Gold")
                     {
                         textComponent.text.setString("x " + std::to_string(player.getComponent<Looteble>().gold));
@@ -56,18 +57,35 @@ public:
                     {
                         textComponent.text.setString("10 + " + std::to_string(player.getComponent<Looteble>().weaponModifier));
                     }
-
                 }
-                if(i.hasComponent<SqureComponent>())
+                if(i.hasComponent<ChangebleComponent>())
                 {
-                   if(i.getComponent<SqureComponent>().changeble)
-                   {
-                       sf::Vector2f size;
-                       size.x = i.getComponent<SizeComponent>().Whith*(player.getComponent<HealthComponent>().health/player.getComponent<HealthComponent>().maxHealth);
-                       //std::cout << player.getComponent<HealthComponent>().health/player.getComponent<HealthComponent>().maxHealth << std::endl;
-                       size.y = i.getComponent<SqureComponent>().rectShape.getSize().y;
-                       i.getComponent<SqureComponent>().rectShape.setSize(size);
-                   }
+                    if(i.hasComponent<SqureComponent>())
+                    {
+                        sf::Vector2f size;
+                        size.x = i.getComponent<SizeComponent>().Whith*(player.getComponent<HealthComponent>().health/player.getComponent<HealthComponent>().maxHealth);
+                        size.y = i.getComponent<SqureComponent>().rectShape.getSize().y;
+                        i.getComponent<SqureComponent>().rectShape.setSize(size);
+                    }else if(i.getComponent<ChangebleComponent>().source == "Attack")
+                    {
+                        float size = player.getComponent<ActionTimer>().AttackTimer.getElapsedTime().asSeconds()/player.getComponent<ActionTimer>().AttackCooldown;
+                        if(0.25*size >0.25) size = 1;
+                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25*size,0.25);
+                    }else if(i.getComponent<ChangebleComponent>().source == "Defend")
+                    {
+                        float size = 0;
+                        if(player.getComponent<AnimationComponent>().action == "Defend")
+                        {
+                            size = 1;
+                        }
+                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25*size,0.25);
+                    }else if(i.getComponent<ChangebleComponent>().source == "Potion")
+                    {
+                        float size = player.getComponent<ActionTimer>().PotionTimer.getElapsedTime().asSeconds()/player.getComponent<ActionTimer>().PotionCooldown;
+                        if(0.25*size >0.25) size = 1;
+                        i.getComponent<TextureComponent>().sprite[0].setScale(0.25*size,0.25);
+                    }
+
                 }
             }
         }

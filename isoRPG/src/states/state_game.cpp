@@ -94,6 +94,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
                     context.textures->get(Textures::UIItems),
                     context.textures->get(Textures::UIAbilities),
                     context.textures->get(Textures::UIHealtBar),
+                    context.textures->get(Textures::UITransparant),
                     getContext().fonts->get(Fonts::RPG),playerCam,player);
 
 

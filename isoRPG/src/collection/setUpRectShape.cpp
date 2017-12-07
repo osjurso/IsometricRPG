@@ -4,9 +4,9 @@
 #include <include/components/Comp_position.h>
 #include <include/components/Comp_size.h>
 #include <include/components/Comp_State.h>
-#include "include/collections/setUpHealt.h"
+#include "include/collections/setUpRectShape.h"
 
-void SetUpHealt::setUpHealt(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color, sf::View cam)
+void SetUpRectShape::setUpRectshape(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color, sf::View cam)
 {
     entity.addComponent<SqureComponent>();
     SqureComponent& squreComponent = entity.getComponent<SqureComponent>();
