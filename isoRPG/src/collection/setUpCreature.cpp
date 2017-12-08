@@ -174,28 +174,29 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     }
     healthComponent.health = healthComponent.maxHealth;
 }
-void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos)
+void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, int Xofset, int Yofset)
 {
     entity.addComponent<TextureComponent>();
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
     textureComponent.texture[0] = texture;
     textureComponent.sprite[0].setTexture(texture);
-    textureComponent.spriteRect.height = 64;
-    textureComponent.spriteRect.width = 32;
+    textureComponent.spriteRect.height = 64 + Xofset;
+    textureComponent.spriteRect.width =  32 + 2*Yofset;
+    textureComponent.sortKey = 999;
 
     entity.addComponent<PositionComponent>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
     positionComponent.YPos = Xpos;
     positionComponent.XPos = Ypos;
-    positionComponent.SpriteLeft = Xpos;
-    positionComponent.SpriteTop = Ypos;
+    positionComponent.SpriteLeft = Xpos + Xofset;
+    positionComponent.SpriteTop =  Ypos + Yofset;
 
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
     sizeComponent.Height = textureComponent.spriteRect.height;
     sizeComponent.Whith = textureComponent.spriteRect.width;
-    sizeComponent.SpriteHeight = 64;
-    sizeComponent.SpriteWhith = 32;
+    sizeComponent.SpriteHeight = 64 ;
+    sizeComponent.SpriteWhith =  32 ;
 
     entity.addComponent<AnimationComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -205,6 +206,7 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     animationComponent.movementSpeed = 20;
     animationComponent.row =0;
     animationComponent.currentImage.x =0;
+    animationComponent.action = "Idle";
     //animationComponent.animationClock.restart().asSeconds();
 
     entity.addComponent<StateComponent>();

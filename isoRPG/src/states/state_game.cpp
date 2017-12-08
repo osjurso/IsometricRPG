@@ -51,6 +51,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     sf::Texture& Herobody = context.textures->get(Textures::Hero);
     sf::Texture& GoblinTexture = context.textures->get(Textures::Goblin);
     sf::Texture& TraderTexture = context.textures->get(Textures::Trader);
+    sf::Texture& ArmorerTexture = context.textures->get(Textures::Armorer);
     sf::Texture& HeroHead = context.textures->get(Textures::HeroHead);
     sf::Texture& HeroWeapon = context.textures->get(Textures::HeroWeapon);
     sf::Texture& HeroShield = context.textures->get(Textures::HeroShield);
@@ -79,6 +80,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     anax::Entity goblin3 = world.createEntity();
     anax::Entity goblin4 = world.createEntity();
     anax::Entity trader = world.createEntity();
+    anax::Entity armorer = world.createEntity();
 
     SetUpCreature creatureSetup;
 
@@ -86,9 +88,11 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     creatureSetup.setUpEnemie(goblin,  GoblinTexture, *getContext().window, 200, 200, "Hard");
     creatureSetup.setUpEnemie(goblin2, GoblinTexture, *getContext().window ,100 ,100, "Medium");
     creatureSetup.setUpEnemie(goblin3, GoblinTexture, *getContext().window ,400 ,200, "Easy");
-
     creatureSetup.setUpEnemie(goblin4, GoblinTexture, *getContext().window ,300 ,100, "Hard");
-    creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300);
+
+
+    creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300,0,0);
+    creatureSetup.setUpNPC(armorer,ArmorerTexture,*getContext().window,350,350,42,42);
 
     SetUpUI setUpUI;
     setUpUI.setUpUI(world,zoom,
@@ -110,15 +114,24 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     optionDialoge.addOptionDialoge(trader,"Buy healt potion  50g",1,3,healtPotionRevard);
     optionDialoge.addOptionDialoge(trader,"What's my purpose hear again?",1,4,healtPunishment);
     optionDialoge.addOptionDialoge(trader,"Punch me i dear yha" ,1,5,healtPunishment);
-    
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     trader.getComponent<Talkative>().Default = 1;
-
     trader.getComponent<Talkative>().Current = 0;
 
 
 
+    addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_0.txt",0);
+    armorer.getComponent<Talkative>().TotalOfDialogs +=1;
+
+    addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_1.txt",1);
+    optionDialoge.addOptionDialoge(armorer,"Upgrade Armor",1,3,healtPotionRevard);
+    optionDialoge.addOptionDialoge(armorer,"Upgrade Weapon",1,4,healtPunishment);
+    optionDialoge.addOptionDialoge(armorer,"Pay me for my kills",1,5,healtPunishment);
+    armorer.getComponent<Talkative>().TotalOfDialogs +=1;
+
+    armorer.getComponent<Talkative>().Default = 1;
+    armorer.getComponent<Talkative>().Current = 0;
 
 
 

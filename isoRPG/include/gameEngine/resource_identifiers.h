@@ -23,6 +23,7 @@ namespace Textures
         CharacterBox,
         Goblin,
         Trader,
+        Armorer,
         HeroClothes,
         HeroHead,
         HeroWeapon,
@@ -36,6 +37,7 @@ namespace Textures
         UIArrow,
         UIHealtBar,
         UITransparant,
+
 
     };
 }

@@ -36,6 +36,7 @@ Application::Application()
     mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
     mTextures.load(Textures::Goblin, "assets/textures/goblin.png");
     mTextures.load(Textures::Trader, "assets/textures/trader.png");
+    mTextures.load(Textures::Armorer, "assets/textures/knight.png");
     mTextures.load(Textures::HeroHead,"assets/textures/Hero_Head.png");
     mTextures.load(Textures::HeroWeapon,"assets/textures/Hero_Longsword.png");
     mTextures.load(Textures::HeroShield,"assets/textures/Hero_Shield.png");
@@ -49,6 +50,8 @@ Application::Application()
     mTextures.load(Textures::UIArrow, "assets/textures/arrow.png");
     mTextures.load(Textures::UIHealtBar, "assets/textures/healtbar.png");
     mTextures.load(Textures::UITransparant, "assets/textures/transparant.png");
+
+
 
 
 
