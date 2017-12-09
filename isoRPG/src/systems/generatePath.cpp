@@ -41,8 +41,6 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
 
                     moveble.path = path;
 
-                    std::cout << "Hero: (" << heroTilePos.x << ", " << heroTilePos.y << ") Enemy: (" << enemyTilePos.x << ", " << enemyTilePos.y << ") Path: " << path << std::endl;
-
                     for(int i = 0; i< path.length(); i++)
                     {
                         for(int n = 0; n < pixelsPerBlock ; n++)

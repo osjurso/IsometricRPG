@@ -10,6 +10,8 @@ class HealthComponent : public anax::Component
 public:
     float health;
     float maxHealth;
+    int totalKills;
+    int unpaidKills;
 };
 
 #endif //ISORPG_COMP_HEALT_H

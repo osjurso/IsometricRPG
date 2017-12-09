@@ -22,7 +22,7 @@
 class Attack
 {
 public:
-    void resolveAttack( anax::World& world, anax::Entity attacker)
+    void resolveAttack( anax::World& world, anax::Entity& entity)
     {
         auto enteties = world.getEntities();
 
@@ -30,7 +30,7 @@ public:
         {
             if(i.hasComponent<HealthComponent>())
             {
-                if(i.getId() != attacker.getId())
+                if(i.getId() !=  entity.getId())
                 {
 
                     HealthComponent& healthComponent = i.getComponent<HealthComponent>();
@@ -38,9 +38,9 @@ public:
                     SizeComponent& sizeComponent = i.getComponent<SizeComponent>();
                     Looteble& looteble = i.getComponent<Looteble>();
 
-                    PositionComponent& Attackerposition = attacker.getComponent<PositionComponent>();
-                    SizeComponent& Attackersize = attacker.getComponent<SizeComponent>();
-                    Looteble& attackerLoot = attacker.getComponent<Looteble>();
+                    PositionComponent& Attackerposition =  entity.getComponent<PositionComponent>();
+                    SizeComponent& Attackersize = entity.getComponent<SizeComponent>();
+                    Looteble& attackerLoot =  entity.getComponent<Looteble>();
                     float attackerX = Attackerposition.XPos + (Attackersize.Whith/2);
                     float attackerY = Attackerposition.YPos + (Attackersize.Height/2);
                     int attackradius = 200;
@@ -53,15 +53,15 @@ public:
 
                     if(attacker.contains(positionComponent.XPos, positionComponent.YPos))
                     {
-                        //std::cout<< "enemy inside radius of " << attackradius << std::endl;
-                        healthComponent.health -= 5;//TODO: change to weapons damage (attacker.weapondamage)
-                        //std::cout<< healthComponent.health << std::endl;
+                        healthComponent.health -= entity.getComponent<Looteble>().weapon + entity.getComponent<Looteble>().weaponModifier;
                     }
                     if(healthComponent.health <= 0)
                     {
                         attackerLoot.gold += looteble.gold;
                         i.addComponent<DyingComponent>();
                         i.getComponent<DyingComponent>().dying = true;
+                        entity.getComponent<HealthComponent>().totalKills +=1;
+                        entity.getComponent<HealthComponent>().unpaidKills +=1;
                     }
 
 
