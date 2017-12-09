@@ -94,35 +94,30 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     sf::Color gold(255,215,0);
     sf::Color steel(67, 70, 75);
     sf::Color potionRed(230, 0, 27);
+    sf::Color magicPurple(102, 51, 153);
 
     anax::Entity HPotionCount = world.createEntity();
     anax::Entity GoldCount = world.createEntity();
-    anax::Entity ArmorCount = world.createEntity();
-    anax::Entity WeaponCount = world.createEntity();
-
-    anax::Entity attackText = world.createEntity();
-    anax::Entity defendText= world.createEntity();
-    anax::Entity HealText = world.createEntity();
+    anax::Entity ArmorModifierCount = world.createEntity();
+    anax::Entity WeaponModifierCount = world.createEntity();
+    anax::Entity ArmorBase = world.createEntity();
+    anax::Entity WeaponBase = world.createEntity();
 
     DrawebleText drawebleText;
-    std::string nrPotion = "x "+ std::to_string(3);
-    std::string nrGold = "x "+ std::to_string(player.getComponent<Looteble>().gold);
-    std::string nrArmor = "10 + "+ std::to_string(0);
-    std::string nrSword = "10 + "+ std::to_string(0);
-
-    std::string attackKey = "Spacebar";
-    std::string defendKey = "Shift";
-    std::string healKey = "Q";
-
+    std::string nrPotion = " x "+ std::to_string(player.getComponent<Looteble>().HealtPotion);
+    std::string nrGold   = " x "+ std::to_string(player.getComponent<Looteble>().gold);
+    std::string ModArmor = " + "+ std::to_string(player.getComponent<Looteble>().armorModifier);
+    std::string ModSword = " + "+ std::to_string(player.getComponent<Looteble>().weaponModifier);
+    std::string Armor    =  " " + std::to_string(player.getComponent<Looteble>().armor);
+    std::string Weapon   =  " " + std::to_string(player.getComponent<Looteble>().weapon);
 
     drawebleText.setUpDrawebleText(HPotionCount ,nrPotion, playerCam, "Game", zoom,font,potionRed);
-    drawebleText.setUpDrawebleText(GoldCount ,nrGold, playerCam, "Game", zoom,font,gold);
-    drawebleText.setUpDrawebleText(ArmorCount ,nrArmor, playerCam, "Game", zoom,font,steel);
-    drawebleText.setUpDrawebleText(WeaponCount ,nrSword, playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawebleText(GoldCount    ,nrGold  , playerCam, "Game", zoom,font,gold);
 
-    drawebleText.setUpDrawebleText(attackText ,attackKey, playerCam, "Game", zoom,font,steel);
-    drawebleText.setUpDrawebleText(defendText ,defendKey, playerCam, "Game", zoom,font,steel);
-    drawebleText.setUpDrawebleText(HealText ,healKey, playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawebleText(ArmorModifierCount  ,ModArmor, playerCam, "Game", zoom,font,magicPurple);
+    drawebleText.setUpDrawebleText(WeaponModifierCount ,ModSword, playerCam, "Game", zoom,font,magicPurple);
+    drawebleText.setUpDrawebleText(WeaponBase          ,Weapon,   playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawebleText(ArmorBase           ,Armor,    playerCam, "Game", zoom,font,steel);
 
     HPotionCount.getComponent<UIComp>().Xofset = 425;
     HPotionCount.getComponent<UIComp>().Yofset = -45;
@@ -132,14 +127,39 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     GoldCount.getComponent<UIComp>().Yofset = -20;
     GoldCount.getComponent<TextComponent>().content = "Gold";
 
-    ArmorCount.getComponent<UIComp>().Xofset = 500;
-    ArmorCount.getComponent<UIComp>().Yofset = -20;
-    ArmorCount.getComponent<TextComponent>().content = "Armor";
 
-    WeaponCount.getComponent<UIComp>().Xofset = 500;
-    WeaponCount.getComponent<UIComp>().Yofset = -45;
-    ArmorCount.getComponent<TextComponent>().content = "Weapon";
+    ArmorBase.getComponent<UIComp>().Xofset = 500;
+    ArmorBase.getComponent<UIComp>().Yofset = -20;
+    ArmorBase.getComponent<TextComponent>().content = "ArmorBase";
 
+    ArmorModifierCount.getComponent<UIComp>().Xofset = 540;
+    ArmorModifierCount.getComponent<UIComp>().Yofset = -20;
+    ArmorModifierCount.getComponent<TextComponent>().content = "ArmorMod";
+
+
+    WeaponBase.getComponent<UIComp>().Xofset = 500;
+    WeaponBase.getComponent<UIComp>().Yofset = -45;
+    WeaponBase.getComponent<TextComponent>().content = "WeaponBase";
+
+    WeaponModifierCount.getComponent<UIComp>().Xofset = 540;
+    WeaponModifierCount.getComponent<UIComp>().Yofset = -45;
+    WeaponModifierCount.getComponent<TextComponent>().content = "WeaponMod";
+
+
+
+
+
+    anax::Entity attackText = world.createEntity();
+    anax::Entity defendText= world.createEntity();
+    anax::Entity HealText = world.createEntity();
+
+    std::string attackKey = "Spacebar";
+    std::string defendKey = "Shift";
+    std::string healKey = "Q";
+
+    drawebleText.setUpDrawebleText(attackText ,attackKey, playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawebleText(defendText ,defendKey, playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawebleText(HealText   ,healKey,   playerCam, "Game", zoom,font,steel);
 
     attackText.getComponent<UIComp>().Xofset = 35;
     attackText.getComponent<UIComp>().Yofset = -40;

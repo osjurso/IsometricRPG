@@ -13,6 +13,8 @@ public:
     int HealtPotion;
     int armorModifier;
     int weaponModifier;
+    int armor;
+    int weapon;
 };
 
 

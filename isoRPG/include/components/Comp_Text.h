@@ -12,7 +12,8 @@ public:
 
     sf::Text text;
     sf::Font font;
-    std::string content;
+    std::string content = "";
+    std::string use = "";
     bool draw = true;
 
 };

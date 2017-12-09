@@ -140,6 +140,8 @@ public:
                 childComponent.children.push_back(entity);
                 entity.addComponent<DyingComponent>();
                 speaker.getComponent<ChildComponent>().children.push_back(entity);
+                entity.addComponent<ParentComponent>();
+                entity.getComponent<ParentComponent>().parent = redX;
             }
         }
     }

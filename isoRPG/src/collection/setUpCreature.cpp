@@ -2,6 +2,7 @@
 
 #include <include/components/Comp_Children.h>
 #include <include/components/Comp_ActionTimers.h>
+#include <include/components/CompCost.h>
 #include "include/collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
@@ -64,6 +65,9 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     entity.addComponent< Looteble>();
     Looteble& looteble = entity.getComponent<Looteble>();
     looteble.gold =0;
+    looteble.HealtPotion = 3;
+    looteble.weapon = 10;
+    looteble.armor = 10;
 
     entity.addComponent<HealthComponent>();
     entity.getComponent<HealthComponent>().health = 100;
@@ -75,6 +79,11 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     actionTimer.PotionCooldown = 10;
     actionTimer.AttackTimer.restart().asSeconds();
     actionTimer.PotionTimer.restart().asSeconds();
+
+    entity.addComponent<CostComponent>();
+    CostComponent& costComponent = entity.getComponent<CostComponent>();
+    costComponent.ArmorUpgrade = 100;
+    costComponent.WeaponUpgrade= 100;
 
     entity.activate();
 }

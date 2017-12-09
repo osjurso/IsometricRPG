@@ -21,6 +21,7 @@
 #include <include/components/Comp_ActionTimers.h>
 #include <systems/UpdateDialog.h>
 #include <include/systems/UpdateDialog.h>
+#include <include/components/CompCost.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -111,8 +112,8 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(trader,"Buy healt potion  50g",1,3,healtPotionRevard);
-    optionDialoge.addOptionDialoge(trader,"What's my purpose hear again?",1,4,healtPunishment);
+    optionDialoge.addOptionDialoge(trader,"Buy healt potion  50g",1,3,BuyHealtpotion);
+    optionDialoge.addOptionDialoge(trader,"What's my purpose hear again?",1,4,setInfo);
     optionDialoge.addOptionDialoge(trader,"Punch me i dear yha" ,1,5,healtPunishment);
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
@@ -125,8 +126,8 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     armorer.getComponent<Talkative>().TotalOfDialogs +=1;
 
     addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(armorer,"Upgrade Armor",1,3,healtPotionRevard);
-    optionDialoge.addOptionDialoge(armorer,"Upgrade Weapon",1,4,healtPunishment);
+    optionDialoge.addOptionDialoge(armorer,"Upgrade Armor " + std::to_string(player.getComponent<CostComponent>().ArmorUpgrade) + "g",1,3,BuyArmorUpgrade);
+    optionDialoge.addOptionDialoge(armorer,"Upgrade Weapon "+ std::to_string(player.getComponent<CostComponent>().WeaponUpgrade)+ "g",1,4,BuyWeaponUpgrade);
     optionDialoge.addOptionDialoge(armorer,"Pay me for my kills",1,5,healtPunishment);
     armorer.getComponent<Talkative>().TotalOfDialogs +=1;
 
@@ -185,6 +186,9 @@ bool StateGame::update(sf::Time dt)
 
         playerCam.setCenter(positionComponent.SpriteLeft + player.getComponent<SizeComponent>().SpriteWhith/2, positionComponent.SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
         movementTimer.restart().asSeconds();
+
+        UpdateUI updateUI;
+        updateUI.update(*getContext().world, playerCam, player);
     }
     if(pathfindingTimer.getElapsedTime().asSeconds() >= 0.5f)
     {
@@ -194,8 +198,7 @@ bool StateGame::update(sf::Time dt)
         pathfindingTimer.restart();
     }
 
-    UpdateUI updateUI;
-    updateUI.update(*getContext().world, playerCam, player);
+
 
     UpdateDialog updateDialog;
     updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
@@ -251,30 +254,30 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 7;
-            Xmove = 0.5;
-            Ymove = -0.5;
+            Xmove = 0.75;
+            Ymove = -0.75;
             Dmove = '7';
 
         }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 5;
-            Xmove = -0.5;
-            Ymove = -0.5;
+            Xmove = -0.75;
+            Ymove = -0.75;
             Dmove = '5';
         }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 1;
-            Xmove = 0.5;
-            Ymove = 0.5;
+            Xmove = 0.75;
+            Ymove = 0.75;
             Dmove = '1';
         }else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             animationComponent.idleTimer.restart().asSeconds();
             animationComponent.idle = false;
             animationComponent.animationDirection = 3;
-            Xmove = -0.5;
-            Ymove = 0.5;
+            Xmove = -0.75;
+            Ymove = 0.75;
             Dmove = '3';
         }else if (key == sf::Keyboard::W || key == sf::Keyboard::Up) {
             animationComponent.idleTimer.restart().asSeconds();

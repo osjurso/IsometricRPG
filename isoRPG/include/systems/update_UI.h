@@ -10,17 +10,21 @@
 #include <states/state_base.h>
 #include <application.h>
 #include <SFML/Graphics/RenderWindow.hpp>
-
+#include <iostream>
 
 #include <components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
 #include <components/Comp_healt.h>
-#include <iostream>
 #include <components/Comp_looteble.h>
-#include <include/components/Comp_UI.h>
-#include <include/components/Comp_Changeble.h>
-#include <include/components/Comp_ActionTimers.h>
+#include <components/Comp_UI.h>
+#include <components/Comp_Changeble.h>
+#include <components/Comp_ActionTimers.h>
+#include <components/CompCost.h>
+#include <components/Comp_talk.h>
+
+#include <collections/mouseClikedFunctions.h>
+#include <include/components/Comp_Parent.h>
 
 
 class UpdateUI
@@ -41,21 +45,31 @@ public:
                 if(i.hasComponent<TextComponent>())
                 {
                     TextComponent& textComponent = i.getComponent<TextComponent>();
+
                     if(textComponent.content == "Potion")
                     {
-                        textComponent.text.setString("x " + std::to_string(player.getComponent<Looteble>().HealtPotion));
+                        textComponent.text.setString(" x " + std::to_string(player.getComponent<Looteble>().HealtPotion));
                     }
                     if(textComponent.content == "Gold")
                     {
-                        textComponent.text.setString("x " + std::to_string(player.getComponent<Looteble>().gold));
+                        textComponent.text.setString(" x " + std::to_string(player.getComponent<Looteble>().gold));
                     }
-                    if(textComponent.content == "Armor")
+
+                    if(textComponent.content == "ArmorMod")
                     {
-                        textComponent.text.setString("10 + " + std::to_string(player.getComponent<Looteble>().armorModifier));
+                        textComponent.text.setString(" + " + std::to_string(player.getComponent<Looteble>().armorModifier));
                     }
-                    if(textComponent.content == "Weapon")
+                    if(textComponent.content == "ArmorBase")
                     {
-                        textComponent.text.setString("10 + " + std::to_string(player.getComponent<Looteble>().weaponModifier));
+                        textComponent.text.setString("" + std::to_string(player.getComponent<Looteble>().armor));
+                    }
+                    if(textComponent.content == "WeaponMod")
+                    {
+                        textComponent.text.setString( " + " + std::to_string(player.getComponent<Looteble>().weaponModifier));
+                    }
+                    if(textComponent.content == "WeaponBase")
+                    {
+                        textComponent.text.setString("" + std::to_string(player.getComponent<Looteble>().weapon));
                     }
                 }
                 if(i.hasComponent<ChangebleComponent>())

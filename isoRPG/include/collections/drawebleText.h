@@ -32,7 +32,7 @@ public:
 
         entity.addComponent<UIComp>();
         entity.addComponent<TextureComponent>();
-        entity.getComponent<TextureComponent>().sortKey = 1002;
+        entity.getComponent<TextureComponent>().sortKey = 1003;
 
         entity.addComponent<TextComponent>();
         TextComponent& textComponent = entity.getComponent<TextComponent>();
