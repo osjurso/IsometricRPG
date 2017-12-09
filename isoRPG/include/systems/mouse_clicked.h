@@ -19,9 +19,10 @@ struct MouseClicked : anax::System<anax::Requires<PositionComponent, SizeCompone
 {
 public:
     MouseClicked(StateBase::Context context);
-    void Clicked(anax::Entity& player,sf::View cam, float zoom);
+    void Clicked(anax::Entity& player,sf::View cam, float zoom, std::string state);
 private:
     void process(anax::Entity& e, float MouseXT, float MouseYT, anax::World& world, anax::Entity player, sf::RenderWindow& window, sf::View cam, float zoom);
+    void processMenu(anax::Entity& e, float MouseXT, float MouseYT,sf::RenderWindow& window, sf::View cam, float zoom);
     void createPlayerPath(anax::Entity player, float MouseX, float MouseY);
 
     StateBase::Context context;

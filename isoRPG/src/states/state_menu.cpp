@@ -10,7 +10,7 @@ StateMenu::StateMenu(StateStack& stack, Context context)
         , mOptions()
         , mOptionIndex(0)
 {
-    sf::Font& font = context.fonts->get(Fonts::Main);
+    sf::Font& font = context.fonts->get(Fonts::RPG);
 
     mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
     mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
@@ -34,6 +34,34 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     mFire.setPosition(530,90); //TODO: do dynamacly
     mFire2.setPosition(1130,90);
+
+
+    anax::Entity PlayOption = getContext().world->createEntity();
+    anax::Entity SettingsOption = getContext().world->createEntity();
+    anax::Entity AboutOption = getContext().world->createEntity();
+    anax::Entity ExitOption = getContext().world->createEntity();
+
+
+    DrawebleText drawebleText;
+    sf::View cam = getContext().window->getView();
+    drawebleText.setUpDrawebleText(PlayOption    ,"Play"    ,cam,"Menu",1,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(SettingsOption,"Settings",cam,"Menu",1,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(AboutOption   ,"About"   ,cam,"Menu",1,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(ExitOption    ,"Exit"    ,cam,"Menu",1,font,sf::Color().White);
+
+    int nr =0;
+    PlayOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - PlayOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    PlayOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    nr++;
+    SettingsOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - SettingsOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    SettingsOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    nr++;
+    AboutOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - AboutOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    AboutOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2 -1;
+    nr++;
+    ExitOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - ExitOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    ExitOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+
 
     // Creating menu choices
     sf::Text playOption;
@@ -65,26 +93,15 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     exitOption.setPosition(aboutOption.getPosition() + sf::Vector2f(0.f, 35.f));
     mOptions.push_back(exitOption);
 
-    //PositionComponent& positionComponent = e.getComponent<PositionComponent>();
 
     anax::World& world = *getContext().world;;
 
     Draweble draweble;
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
-    //sf::Texture& Herobody = context.textures->get(Textures::Hero);
 
     anax::Entity menuBackdropEntity = world.createEntity();
-    anax::Entity logo1 = world.createEntity();
-    anax::Entity logo2 = world.createEntity();
-
-
-    logo1.addComponent<MousedOver>();
-    logo2.addComponent<MousedOver>();
-
     draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity,"Menu");
-    draweble.makeDraweble(texture,300,500, logo1, "Menu");
-    draweble.makeDraweble(texture,800,500, logo2, "Menu");
     updateOptionText();
 
     context.music->play(Music::Menu);
@@ -93,11 +110,8 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 void StateMenu::draw()
 {
     sf::RenderWindow& window = *getContext().window;
-
     window.setView(window.getDefaultView());
-    window.draw(mLogoSprite);
-    //window.draw(mFire);
-    //window.draw(mFire2);
+
 
     anax::World& world = *getContext().world;
     DrawEntetys drawEntetys;
@@ -110,7 +124,7 @@ void StateMenu::draw()
 
 bool StateMenu::update(sf::Time)
 {
-    if(clock.getElapsedTime().asSeconds() > 0.1f)
+    if(clock.getElapsedTime().asSeconds() > 0.10f)
     {
         if(spriteRect.left == 3*fireSpriteSize)
         {
@@ -125,6 +139,7 @@ bool StateMenu::update(sf::Time)
         mFire2.setTextureRect(spriteRect);
         clock.restart();
     }
+    //sf::RenderWindow window = *getContext().window;
 
 
     return true;
@@ -133,85 +148,73 @@ bool StateMenu::update(sf::Time)
 bool StateMenu::handleEvent(const sf::Event& event)
 {
 
-    if (event.type != sf::Event::KeyPressed)
+
+    if(event.type == sf::Event::MouseButtonPressed)
     {
-        if(event.type != sf::Event::MouseButtonPressed)
-            return false;
-    }
-
-
-
-    if (event.key.code == sf::Keyboard::Return)
-    {
-        if (mOptionIndex == Play)
-        {
-            anax::World& world = *getContext().world;
-            auto enteties = world.getEntities();
-            for(auto i : enteties)
-            {
-                i.kill();
-                world.refresh();
-            }
-            requestStateChange(States::Character);
-
-        }
-        else if (mOptionIndex == Settings)
-        {
-            anax::World& world = *getContext().world;
-            auto enteties = world.getEntities();
-            for(auto i : enteties)
-            {
-                i.kill();
-                world.refresh();
-            }
-            requestStateChange(States::Settings);
-        }
-        else if (mOptionIndex == About)
-        {
-
-        }
-        else if (mOptionIndex == Exit)
-        {
-            requestStackPop();
-        }
-    }
-
-    else if (event.key.code == sf::Keyboard::Up)
-    {
-        if (mOptionIndex > 0)
-            mOptionIndex--;
-        else
-            mOptionIndex = mOptions.size() - 1;
-
-        updateOptionText();
-        getContext().sounds->play(SoundEffects::Click);
-    }
-
-    else if (event.key.code == sf::Keyboard::Down)
-    {
-        if (mOptionIndex < mOptions.size() - 1)
-            mOptionIndex++;
-        else
-            mOptionIndex = 0;
-
-        updateOptionText();
-        getContext().sounds->play(SoundEffects::Click);
-
-
-
-    }
-
-    else if(event.type == sf::Event::MouseButtonPressed)
-    {
-        anax::World& world = *getContext().world;
-        sf::RenderWindow& window = *getContext().window;
         MouseClicked mouseClicked(getContext());
-        anax::Entity temp;
-        sf:: View tempView;
-        mouseClicked.Clicked(temp,tempView,1);
+        anax::Entity entity = getContext().world->createEntity();
+        mouseClicked.Clicked(entity,getContext().window->getView(),1,"Menu");
 
     }
+    if(event.type == sf::Event::KeyPressed)
+    {
+        if (event.key.code == sf::Keyboard::Return)
+        {
+            if (mOptionIndex == Play)
+            {
+                anax::World& world = *getContext().world;
+                auto enteties = world.getEntities();
+                for(auto i : enteties)
+                {
+                    i.kill();
+                    world.refresh();
+                }
+                requestStateChange(States::Character);
 
+            }
+            else if (mOptionIndex == Settings)
+            {
+                anax::World& world = *getContext().world;
+                auto enteties = world.getEntities();
+                for(auto i : enteties)
+                {
+                    i.kill();
+                    world.refresh();
+                }
+                requestStateChange(States::Settings);
+            }
+            else if (mOptionIndex == About)
+            {
+
+            }
+            else if (mOptionIndex == Exit)
+            {
+                requestStackPop();
+            }
+        }
+
+        else if (event.key.code == sf::Keyboard::Up|| event.key.code == sf::Keyboard::W)
+        {
+            if (mOptionIndex > 0)
+                mOptionIndex--;
+            else
+                mOptionIndex = mOptions.size() - 1;
+
+            updateOptionText();
+            getContext().sounds->play(SoundEffects::Click);
+        }
+
+        else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+        {
+            if (mOptionIndex < mOptions.size() - 1)
+                mOptionIndex++;
+            else
+                mOptionIndex = 0;
+
+            updateOptionText();
+            getContext().sounds->play(SoundEffects::Click);
+        }
+    }
     return true;
 }
 

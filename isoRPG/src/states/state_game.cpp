@@ -22,6 +22,7 @@
 #include <systems/UpdateDialog.h>
 #include <include/systems/UpdateDialog.h>
 #include <include/components/CompCost.h>
+#include <include/collections/setUpAllCreatures.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -48,49 +49,12 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     if (!Map::load("assets/map/map.json", context))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
-    // TODO get under one function: setUpCreatures
-    sf::Texture& Herobody = context.textures->get(Textures::Hero);
-    sf::Texture& GoblinTexture = context.textures->get(Textures::Goblin);
-    sf::Texture& TraderTexture = context.textures->get(Textures::Trader);
-    sf::Texture& ArmorerTexture = context.textures->get(Textures::Armorer);
-    sf::Texture& HeroHead = context.textures->get(Textures::HeroHead);
-    sf::Texture& HeroWeapon = context.textures->get(Textures::HeroWeapon);
-    sf::Texture& HeroShield = context.textures->get(Textures::HeroShield);
-    player.addComponent<TextureComponent>();
-    TextureComponent& textureComponent = player.getComponent<TextureComponent>();
-    textureComponent.texture[0] = Herobody;
-    textureComponent.sprite[0].setTexture(textureComponent.texture[0]);
-    textureComponent.texture[1] = HeroHead;
-    textureComponent.sprite[1].setTexture(textureComponent.texture[1]);
-    textureComponent.texture[2] = HeroWeapon;
-    textureComponent.sprite[2].setTexture(textureComponent.texture[2]);
-    textureComponent.texture[3] = HeroShield;
-    textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
+    setUpAllCreatures setUpAllCreatures(getContext());
+    setUpAllCreatures.SetUpCreatures(player);
 
     movementTimer.restart().asSeconds();
     pathfindingTimer.restart().asSeconds();
 
-
-    sf::RenderWindow& window = *getContext().window;
-    DrawEntetys drawEntetys;
-
-    anax::Entity goblin = world.createEntity();
-    anax::Entity goblin2 = world.createEntity();
-    anax::Entity goblin3 = world.createEntity();
-    anax::Entity goblin4 = world.createEntity();
-    anax::Entity trader = world.createEntity();
-    anax::Entity armorer = world.createEntity();
-
-    SetUpCreature creatureSetup;
-
-    creatureSetup.setUpPlayer(player,window);
-    creatureSetup.setUpEnemie(goblin,  GoblinTexture, *getContext().window, 200, 200, "Hard");
-    creatureSetup.setUpEnemie(goblin2, GoblinTexture, *getContext().window ,100 ,100, "Medium");
-    creatureSetup.setUpEnemie(goblin3, GoblinTexture, *getContext().window ,400 ,200, "Easy");
-    creatureSetup.setUpEnemie(goblin4, GoblinTexture, *getContext().window ,300 ,100, "Hard");
-
-    creatureSetup.setUpNPC(trader,TraderTexture,*getContext().window,300,300,0,0);
-    creatureSetup.setUpNPC(armorer,ArmorerTexture,*getContext().window,350,350,42,42);
 
     SetUpUI setUpUI;
     setUpUI.setUpUI(world,zoom,
@@ -100,33 +64,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
                     context.textures->get(Textures::UIHealtBar),
                     context.textures->get(Textures::UITransparant),
                     getContext().fonts->get(Fonts::RPG),playerCam,player);
-
-    AddDialoge addDialoge;
-    AddOptionDialoge optionDialoge;
-
-    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_0.txt",0);
-    trader.getComponent<Talkative>().TotalOfDialogs += 1;
-
-    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(trader,"Buy healt potion  50g",1,3,BuyHealtpotion);
-    optionDialoge.addOptionDialoge(trader,"What's my purpose hear again?",1,4,setInfo);
-    optionDialoge.addOptionDialoge(trader,"Punch me i dear yha" ,1,5,healtPunishment);
-    trader.getComponent<Talkative>().TotalOfDialogs += 1;
-
-    trader.getComponent<Talkative>().Default = 1;
-    trader.getComponent<Talkative>().Current = 0;
-
-    addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_0.txt",0);
-    armorer.getComponent<Talkative>().TotalOfDialogs +=1;
-
-    addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(armorer,"Upgrade Armor " + std::to_string(player.getComponent<CostComponent>().ArmorUpgrade) + "g",1,3,BuyArmorUpgrade);
-    optionDialoge.addOptionDialoge(armorer,"Upgrade Weapon "+ std::to_string(player.getComponent<CostComponent>().WeaponUpgrade)+ "g",1,4,BuyWeaponUpgrade);
-    optionDialoge.addOptionDialoge(armorer,"Pay me for my kills",1,5,healtPunishment);
-    armorer.getComponent<Talkative>().TotalOfDialogs +=1;
-
-    armorer.getComponent<Talkative>().Default = 1;
-    armorer.getComponent<Talkative>().Current = 0;
 
     context.music->play(Music::Test);
 }
@@ -205,10 +142,9 @@ bool StateGame::handleEvent(const sf::Event &event)
 {
     if(event.type == sf::Event::MouseButtonPressed)
     {
-        anax::World& world = *getContext().world;
-        sf::RenderWindow& window = *getContext().window;
         MouseClicked mouseClicked(getContext());
-        mouseClicked.Clicked(player, playerCam, zoom);
+        mouseClicked.Clicked(player, playerCam, zoom, "Game");
+
 
     }
 

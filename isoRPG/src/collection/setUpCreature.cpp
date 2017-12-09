@@ -176,7 +176,7 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
         healthComponent.maxHealth = 50;
         moveble.speed = 5;
         looteble.gold =25+(5*rand()%10+1);
-        looteble.weapon = 30;
+        looteble.weapon = 35;
     }else
     {
         healthComponent.maxHealth = 20;

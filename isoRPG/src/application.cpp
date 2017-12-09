@@ -60,7 +60,7 @@ Application::Application()
     mStatisticsText.setCharacterSize(15);
 
     registerStates();
-    mStateStack.pushState(States::Game);
+    mStateStack.pushState(States::Menu);
 }
 
 void Application::run()

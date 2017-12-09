@@ -3,38 +3,45 @@
 MouseClicked::MouseClicked(StateBase::Context context) :context(context)
 {}
 
-void MouseClicked::Clicked(anax::Entity &player, sf::View cam, float zoom)
+void MouseClicked::Clicked(anax::Entity& player, sf::View cam, float zoom, std::string state)
 {
     sf::RenderWindow& window = *context.window;
     anax::World& world = *context.world;
-    auto enteties = world.getEntities();
-    PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-    SizeComponent& sizeComponent = player.getComponent<SizeComponent>();
-    int reach = 50;
-    sf::IntRect playerreach;
-    playerreach.top = positionComponent.YPos - reach;
-    playerreach.left = positionComponent.XPos -reach;
-    playerreach.height = 2*reach + sizeComponent.SpriteWhith;
-    playerreach.width = 2*reach + sizeComponent.SpriteHeight;
+
     sf::Vector2i mouse;
     mouse.x = sf::Mouse::getPosition(window).x;
     mouse.y = sf::Mouse::getPosition(window).y;
     sf::Vector2f mouseT = window.mapPixelToCoords(mouse, cam);
 
     bool interactable = false;
-    for(auto i : enteties)
+    auto enteties = world.getEntities();
+
+    if(state == "Game")
     {
-        if(i.hasComponent<MousedOver>())
+        for(auto i : enteties)
         {
-            process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom);
-            interactable = true;
+            if(i.hasComponent<MousedOver>())
+            {
+                process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom);
+                interactable = true;
+            }
+        }
+        if(!interactable)
+        {
+            //Move player to mouse.x, mouse.y if not intractable
+            createPlayerPath(player, mouseT.x, mouseT.y);
+        }
+    }else if(state == "Menu")
+    {
+        for(auto i : enteties)
+        {
+            if(i.hasComponent<MousedOver>())
+            {
+                processMenu(i,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, window, cam, zoom);
+            }
         }
     }
-    if(!interactable)
-    {
-        //Move player to mouse.x, mouse.y if not intractable
-        createPlayerPath(player, mouseT.x, mouseT.y);
-    }
+
 }
 
 void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float MouseY)
@@ -148,4 +155,23 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
     }
 
 
+}
+
+void MouseClicked::processMenu(anax::Entity &e, float MouseX, float MouseY, sf::RenderWindow &window, sf::View cam, float zoom)
+{
+    sf::IntRect entityRect;
+    PositionComponent& positionComponent = e.getComponent<PositionComponent>();
+    SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
+    entityRect.top = positionComponent.SpriteTop;
+    entityRect.left = positionComponent.SpriteLeft;
+    entityRect.width = sizeComponent.SpriteWhith;
+    entityRect.height = sizeComponent.SpriteHeight;
+    if(entityRect.contains(MouseX,MouseY))
+    {
+        if(e.hasComponent<AssosateFunc>())
+        {
+            anax::Entity entity;
+            e.getComponent<AssosateFunc>().voidfunc(e,entity,*context.world);
+        }
+    }
 }
