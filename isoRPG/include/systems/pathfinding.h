@@ -1,4 +1,3 @@
-
 #ifndef ISORPG_PATHFINDING_H
 #define ISORPG_PATHFINDING_H
 
@@ -14,12 +13,11 @@
 #include <ctime>
 
 
-const int dir=8; // number of possible directions to go at any position
-static int dx[dir]={1, 1, 0, -1, -1, -1, 0, 1};
-static int dy[dir]={0, 1, 1, 1, 0, -1, -1, -1};
+const int dir = 8; // number of possible directions to go at any position
+static int dx[dir] = {1, 1, 0, -1, -1, -1, 0, 1};
+static int dy[dir] = {0, 1, 1, 1, 0, -1, -1, -1};
 
-class node
-{
+class node {
     // current position
     int xPos;
     int yPos;
@@ -29,34 +27,34 @@ class node
     int priority;  // smaller: higher priority
 
 public:
-    node(int xp, int yp, int d, int p)
-    {xPos=xp; yPos=yp; level=d; priority=p;}
+    node(int xPos, int yPos, int level, int priority) : xPos(xPos), yPos(yPos), level(level), priority(priority) {};
 
-    int getxPos() const {return xPos;}
-    int getyPos() const {return yPos;}
-    int getLevel() const {return level;}
-    int getPriority() const {return priority;}
+    int getxPos() const { return xPos; }
+    int getyPos() const { return yPos; }
+    int getLevel() const { return level; }
+    int getPriority() const { return priority; }
 
-    void updatePriority(const int & xDest, const int & yDest)
-    {
-        priority=level+estimate(xDest, yDest)*10; //A*
+    void updatePriority(const int &xDest, const int &yDest) {
+        priority = level + estimate(xDest, yDest) * 10; //A*
     }
 
     // give better priority to going strait instead of diagonally
-    void nextLevel(const int & i) // i: direction
+    void nextLevel(const int &i) // i: direction
     {
-        level+=(dir==8?(i%2==0?10:14):10);
+        level += (dir == 8 ? (i % 2 == 0 ? 10 : 14) : 10);
     }
 
     // Estimation function for the remaining distance to the goal.
-    const int & estimate(const int & xDest, const int & yDest) const
+    const int &estimate(const int &xDest, const int &yDest) const
     {
         static int xd, yd, d;
-        xd=xDest-xPos;
-        yd=yDest-yPos;
+        xd = xDest - xPos;
+        yd = yDest - yPos;
+
+        // TODO: Test om dette påvirker performance, sqrt er en tung operasjon.
 
         // Euclidian Distance
-        d=static_cast<int>(sqrt(xd*xd+yd*yd));
+        d = static_cast<int>(sqrt(xd * xd + yd * yd));
 
         // Manhattan distance
         //d=abs(xd)+abs(yd);
@@ -64,15 +62,18 @@ public:
         // Chebyshev distance
         //d=max(abs(xd), abs(yd));
 
-        return(d);
+        return (d);
     }
+
+    void loadMapData(int width, int height);
+
 };
 
 // Determine priority (in the priority queue)
-bool operator<(const node & a, const node & b);
+bool operator<(const node &a, const node &b);
 
 // A-star algorithm.
 // The route returned is a string of direction digits.
-std::string pathFind( const int & xStart, const int & yStart, const int & xFinish, const int & yFinish );
+std::string pathFind(const int &xStart, const int &yStart, const int &xFinish, const int &yFinish);
 
 #endif //ISORPG_PATHFINDING_H

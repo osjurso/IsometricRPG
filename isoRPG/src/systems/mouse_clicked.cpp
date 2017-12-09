@@ -20,23 +20,21 @@ void MouseClicked::Clicked(anax::Entity &player, sf::View cam, float zoom)
     mouse.x = sf::Mouse::getPosition(window).x;
     mouse.y = sf::Mouse::getPosition(window).y;
     sf::Vector2f mouseT = window.mapPixelToCoords(mouse, cam);
-    //std::cout << "X: "<< mouse.x <<"  Y:" <<mouse.y << std::endl;
-    bool interacteble = false;
+
+    bool interactable = false;
     for(auto i : enteties)
     {
         if(i.hasComponent<MousedOver>())
         {
             process(i,mouseT.x,mouseT.y, world,player, window, cam, zoom);
-            interacteble = true;
+            interactable = true;
         }
     }
-    if(!interacteble)
+    if(!interactable)
     {
-        //Move player to mouse.x, mouse.y if not interactebø
+        //Move player to mouse.x, mouse.y if not intractable
         createPlayerPath(player, mouseT.x, mouseT.y);
     }
-
-
 }
 
 void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float MouseY)
@@ -47,10 +45,12 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     const int mapsize = 64;
     int pixelsPerBlock = 10;
 
-    const int distaceX = (MouseX  - positionComponent.SpriteLeft)/10;
-    const int distaceY = (MouseY  - positionComponent.SpriteTop)/10;
+    const int distaceX = (MouseX  - positionComponent.SpriteLeft) / 10;
+    const int distaceY = (MouseY  - positionComponent.SpriteTop) / 10;
 
-    std::string path= pathFind(mapsize/2,mapsize/2,mapsize/2 + distaceX,mapsize/2 + distaceY);
+    // TODO: Fix pathfind input
+
+    std::string path= pathFind(mapsize/2, mapsize/2, mapsize/2 + distaceX, mapsize/2 + distaceY);
     moveble.path = path;
     for(int i = 0; i < path.length(); i++)
     {

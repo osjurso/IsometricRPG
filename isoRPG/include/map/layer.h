@@ -12,7 +12,7 @@ class Layer : public Object
 public:
     Layer(TileSize tileSize, StateBase::Context context) : Object(tileSize, context) { }
 
-    void draw();
+    void createEntities();
 
 protected:
     // Size in tiles
@@ -22,10 +22,6 @@ protected:
     int tilemap[100][100];
 
     sf::RenderTexture renderTexture;
-    sf::Sprite sprite1;
-
-    bool test = true;
-
 };
 
 #endif

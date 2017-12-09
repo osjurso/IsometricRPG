@@ -29,8 +29,7 @@ public:
 
     virtual ~Object();
 
-    virtual void process(float deltaTime) {}
-    virtual void draw() {}
+    virtual void createEntities() {}
 
     // Calculate x and y position of given tile in the texture
     void getTileCoords(int tile, int& x, int& y);
@@ -45,7 +44,6 @@ public:
     int priority;
 
 protected:
-    sf::Texture* texture;
     StateBase::Context context;
 };
 

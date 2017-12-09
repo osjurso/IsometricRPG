@@ -1,19 +1,21 @@
 #include <fstream>
 #include <cstring>
+#include <random>
 
 #include <jsoncpp/json/json.h>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <include/collections/setUpCreature.h>
+#include <include/systems/pathfinding.h>
 
 #include "map/map.h"
 #include "map/sprite.h"
 #include "map/layer.h"
 
-bool Map::load(std::string filename, std::list<Object*>& objects, StateBase::Context context)
+bool Map::load(std::string filename, StateBase::Context context)
 {
     // Will contain the data we read in
     Json::Value root;
-
 
     //TODO: Switch to CharReader and CharReaderBuilder
     // Parses the file
@@ -38,33 +40,21 @@ bool Map::load(std::string filename, std::list<Object*>& objects, StateBase::Con
     // Read in each layer
     for (Json::Value& layer: root["layers"])
     {
-        if (layer["name"].asString() != "objects")
-            loadLayer(layer, objects, tileSize, context);
+        if (layer["name"].asString() == "enemy")
+            loadEntities(root, layer, context);
+        else if (layer["name"].asString() == "objects")
+            loadObjects(root, layer, tileSize, context);
+        else if (layer["name"].asString() == "collision")
+            loadCollision(root, layer);
         else
-            loadObjects(root, layer, objects, tileSize, context);
+         loadLayer(layer, tileSize, context);
+
     }
-
-    // Read in tileset TODO: Should be handled by a resource handler
-    sf::Texture* tileset = new sf::Texture();
-    tileset->loadFromFile("assets/map/" + root["tilesets"][0u]["image"].asString());
-
-    // Assign tileset to every object
-    for (Object* object: objects)
-        object->texture = tileset;
-
-
-
-    for (Object* object : objects)
-    {
-        object->process(1.f/60.f);
-        object->draw();
-    }
-
 
     return true;
 }
 
-void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize tileSize, StateBase::Context context)
+void Map::loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context context)
 {
 
     Layer* tmp = new Layer(tileSize, context);
@@ -81,11 +71,10 @@ void Map::loadLayer(Json::Value& layer, std::list<Object*>& objects, TileSize ti
     for (size_t i = 0; i < layer["data"].size(); i++)
         tmp->tilemap[i % tmp->width][i / tmp->width] = layer["data"][(int)i].asInt();
 
-
-    objects.push_back(tmp);
+    tmp->createEntities();
 }
 
-void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>& objects, TileSize tileSize, StateBase::Context context)
+void Map::loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, StateBase::Context context)
 {
     // Get all objects from layer
     for (Json::Value& object: layer["objects"])
@@ -112,24 +101,92 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, std::list<Object*>&
         sprite->id = object["gid"].asInt();
         sprite->priority = object["y"].asInt();
 
-        // Load animation data
-        Json::Value& tileInfo = root["tilesets"][0u]["tiles"][std::to_string(sprite->id - 1)];
-        sprite->frame = 0;
-        sprite->frameCount = tileInfo["animation"].size();
-        sprite->frameDuration = tileInfo["animation"][0u]["duration"].asInt();
+        sprite->createEntities();
 
-        objects.push_back(sprite);
+        delete sprite;
     }
 }
 
-void Map::loadCollision(Json::Value &root, Json::Value &layer, StateBase::Context context)
+void Map::loadCollision(Json::Value& root, Json::Value& layer)
 {
-    int colissionMap[100][100];
-
     int width = layer["width"].asInt();
     int height = layer["height"].asInt();
 
-    for (size_t i = 0; i < layer["data"].size(); i++)
-        colissionMap[i % width][i / width] = layer["data"][(int)i].asInt();
+    int collisionMap[64][64];
 
+    // Clear tilemap
+    memset(collisionMap, 0, sizeof(collisionMap));
+
+    for (size_t i = 0; i < layer["data"].size(); i++)
+    {
+        collisionMap[i % width][i / width] = layer["data"][(int)i].asInt();
+
+        // TODO: Cleaner way to replace >0 values?
+        if (collisionMap[i % width][i / width] != 0)
+            collisionMap[i % width][i / width] = 1;
+    }
+
+    std::ofstream collisionData;
+    collisionData.open("assets/map/collision_data");
+
+
+    for (int i = 0; i < height; ++i)
+    {
+        for (int j = 0; j < width; ++j)
+        {
+            collisionData << collisionMap[j][i];
+        }
+        collisionData << std::endl;
+    }
+
+    collisionData.close();
+
+    node node1(0, 0, 0, 0);
+    node1.loadMapData(width, height);
+}
+
+void Map::loadEntities(Json::Value &root, Json::Value &layer, StateBase::Context context)
+{
+    for (Json::Value& object: layer["objects"])
+    {
+        anax::World& world = *context.world;
+        SetUpCreature creatureSetup;
+
+        std::string category = object["properties"]["category"].asString();
+        int minNum = object["properties"]["minNum"].asInt();
+        int maxNum = object["properties"]["maxNum"].asInt();
+        std::string difficulty = object["properties"]["difficulty"].asString();
+
+        int left = object["x"].asInt();
+        int top = object["y"].asInt();
+        int width = object["width"].asInt();
+        int height = object["height"].asInt();
+
+        // TODO: Load texture by category property
+        sf::Texture& texture = context.textures->get(Textures::Goblin);
+
+        // Bad distribution, but good enough
+        srand(time(nullptr));
+        int number = minNum + rand() % (maxNum - minNum + 1);
+
+        // Uniform distribution needed to prevent repetitive placement
+        std::default_random_engine generator;
+        std::uniform_int_distribution<int> xDist(left, left + width);
+        std::uniform_int_distribution<int> yDist(top, top + height);
+
+        for (int i = 0; i < number; ++i)
+        {
+            int posX = xDist(generator);
+            int posY = yDist(generator);
+
+            sf::Vector2i v = sf::Vector2i((posX - posY), (posX + posY)/2);
+
+            // TODO: quick offset fix, wont be accurate for different sized enemies
+            v.y -= 90;
+            v.x -= 64;
+
+            anax::Entity entity = world.createEntity();
+            creatureSetup.setUpEnemie(entity, texture, *context.window, v.x, v.y, difficulty);
+        }
+    }
 }

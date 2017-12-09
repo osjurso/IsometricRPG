@@ -3,18 +3,19 @@
 
 #include "map/layer.h"
 
-void Layer::draw()
+void Layer::createEntities()
 {
     renderTexture.create(tileSize.x * width, tileSize.y * height);
     sf::View view = renderTexture.getView();
+
     // Centering the render texture canvas
     view.setCenter(0, 0);
     renderTexture.setView(view);
 
     // Render each tile in view
-    for (int y = 0; y < 100; y++)
+    for (int y = 0; y < width; y++)
     {
-        for (int x = 0; x < 100; x++)
+        for (int x = 0; x < height; x++)
         {
             //get the tileid (unique identifier for texture)
             int tileid = tilemap[x][y];
@@ -45,16 +46,18 @@ void Layer::draw()
     renderTexture.display();
 
     // Create a sprite from the render texture
-    sprite1.setTexture(renderTexture.getTexture());
+    sf::Sprite sprite;
+    sprite.setTexture(renderTexture.getTexture());
 
     anax::World& world = *context.world;
     anax::Entity mapEntity = world.createEntity();
 
     Draweble draweble;
+
     // Position coordinates offsets the texture back
     draweble.makeDraweble(context.textures->get(Textures::Tileset), -(width*tileSize.x)/2, -(width*tileSize.y)/2, mapEntity, "Game");
 
     TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();
-    textureComponent.sprite[0] = sprite1;
+    textureComponent.sprite[0] = sprite;
     textureComponent.sortKey = 0;
 }

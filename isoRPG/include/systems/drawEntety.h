@@ -29,6 +29,8 @@ public:
     {
         auto enteties = world.getEntities();
 
+
+        // Depth Sort
         std::sort (enteties.begin(), enteties.end(),
                    [](const anax::Entity entity1, const anax::Entity entity2)
                    {
@@ -37,7 +39,6 @@ public:
                        return (key1 < key2);
                    }
         );
-
 
         for(auto i : enteties)
         {
@@ -63,8 +64,8 @@ public:
 
                     if(textureComponent.multisprite)
                     {
-                        textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
-                        textureComponent.sprite[1].setPosition(positionComponent.XPos,positionComponent.YPos);
+                        textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
+                        textureComponent.sprite[1].setPosition(positionComponent.XPos, positionComponent.YPos);
                         textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
                         textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
                         window.draw(textureComponent.sprite[0]);
@@ -73,7 +74,7 @@ public:
                         window.draw(textureComponent.sprite[3]);
                     }else
                     {
-                        textureComponent.sprite[0].setPosition(positionComponent.XPos,positionComponent.YPos);
+                        textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
                         window.draw(textureComponent.sprite[0]);
                     }
                 }
