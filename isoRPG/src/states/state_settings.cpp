@@ -1,5 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <iostream>
+#include <include/collections/drawable.h>
+#include <include/systems/drawEntety.h>
 
 #include "include/states/state_settings.h"
 #include "include/gameEngine/resource_holder.h"
@@ -7,32 +9,32 @@
 StateSettings::StateSettings(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
 {
-    sf::Font& font = context.fonts->get(Fonts::Main);
+    sf::Font& font = context.fonts->get(Fonts::RPG);
+    anax::World& world = *getContext().world;
 
-    mTempText.setFont(context.fonts->get(Fonts::Main));
-    mTempText.setString("Do something here");
+    anax::Entity background = world.createEntity();
 
-    mBackdrop.setTexture(context.textures->get(Textures::SettingsBackdorp));
-    mBackdrop.setPosition(0,0);
+    anax::Entity masterSlider = world.createEntity();
+    anax::Entity musicSlider = world.createEntity();
+    anax::Entity sfxSlider = world.createEntity();
 
-    masterVolume.setTexture(context.textures->get(Textures::SettingsSlider));
-    SFXVolume.setTexture(context.textures->get(Textures::SettingsSlider));
-    musicVolume.setTexture(context.textures->get(Textures::SettingsSlider));
+    anax::Entity masterKnob = world.createEntity();
+    anax::Entity musicKnob = world.createEntity();
+    anax::Entity sfxKnob = world.createEntity();
 
-    VolumeKnobMaster.setTexture(context.textures->get(Textures::SettingKnob));
-    VolumeKnobSFX.setTexture(context.textures->get(Textures::SettingKnob));
-    VolumeKnobMusic.setTexture(context.textures->get(Textures::SettingKnob));
-
-    VolumeX = 800;
+    Draweble draweble;
+    int volumeX = 800;
+    int volumeY = 200;
     int SliderSpace = 100;
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingsBackdorp),0,0,background ,"Settings");
 
-    masterVolume.setPosition(VolumeX,2*SliderSpace);
-    SFXVolume.setPosition(VolumeX,3*SliderSpace);
-    musicVolume.setPosition(VolumeX,4*SliderSpace);
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingsSlider),volumeX, volumeY                , masterSlider,"Settings");
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingsSlider),volumeX, volumeY + SliderSpace  , musicSlider ,"Settings");
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingsSlider),volumeX, volumeY + SliderSpace*2, sfxSlider   ,"Settings");
 
-    VolumeKnobMaster.setPosition(VolumeX+ SFXVolume.getGlobalBounds().width/2,2*SliderSpace-15);
-    VolumeKnobMusic.setPosition(VolumeX+ SFXVolume.getGlobalBounds().width/2,3*SliderSpace-15);
-    VolumeKnobSFX.setPosition(VolumeX + SFXVolume.getGlobalBounds().width/2,4*SliderSpace-15);
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingKnob),volumeX, volumeY                 -12, masterKnob,"Settings");
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingKnob),volumeX, volumeY + SliderSpace   -12, musicKnob ,"Settings");
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingKnob),volumeX, volumeY + SliderSpace*2 -12, sfxKnob   ,"Settings");
 
 }
 
@@ -40,17 +42,13 @@ StateSettings::StateSettings(StateStack &stack, StateBase::Context context)
 void StateSettings::draw()
 {
     sf::RenderWindow& window = *getContext().window;
-    window.draw(mTempText);
-    window.draw(mBackdrop);
+    window.setView(window.getDefaultView());
 
 
-    window.draw(masterVolume);
-    window.draw(SFXVolume);
-    window.draw(musicVolume);
+    anax::World& world = *getContext().world;
+    DrawEntetys drawEntetys;
+    drawEntetys.draw(window,world,"Settings");
 
-    window.draw(VolumeKnobSFX);
-    window.draw(VolumeKnobMusic);
-    window.draw(VolumeKnobMaster);
 }
 
 bool StateSettings::update(sf::Time dt)

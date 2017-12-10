@@ -1,9 +1,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <include/systems/drawEntety.h>
 #include <include/systems/mouse_clicked.h>
+#include <include/systems/mouseClickedMenus.h>
+#include <include/components/Comp_Menuchoice.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
-#include "include/collections/drawable.h"
+#include "collections/drawable.h"
+#include "collections/mouseClikedFunctions.h"
 
 StateMenu::StateMenu(StateStack& stack, Context context)
         : StateBase(stack, context)
@@ -48,6 +51,30 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     drawebleText.setUpDrawebleText(SettingsOption,"Settings",cam,"Menu",1,font,sf::Color().White);
     drawebleText.setUpDrawebleText(AboutOption   ,"About"   ,cam,"Menu",1,font,sf::Color().White);
     drawebleText.setUpDrawebleText(ExitOption    ,"Exit"    ,cam,"Menu",1,font,sf::Color().White);
+
+    PlayOption.addComponent<MousedOver>();
+    PlayOption.addComponent<AssosateFunc>();
+    PlayOption.getComponent<AssosateFunc>().voidMenufunc =  setPlayOption;
+    PlayOption.addComponent<MenuChoiceComponent>();
+
+
+    SettingsOption.addComponent<MousedOver>();
+    SettingsOption.addComponent<AssosateFunc>();
+    SettingsOption.getComponent<AssosateFunc>().voidMenufunc = setSettingsOption;
+    SettingsOption.addComponent<MenuChoiceComponent>();
+
+
+    AboutOption.addComponent<MousedOver>();
+    AboutOption.addComponent<AssosateFunc>();
+    AboutOption.getComponent<AssosateFunc>().voidMenufunc = setAboutOption;
+    AboutOption.addComponent<MenuChoiceComponent>();
+
+
+    ExitOption.addComponent<MousedOver>();
+    ExitOption.addComponent<AssosateFunc>();
+    ExitOption.getComponent<AssosateFunc>().voidMenufunc = setExitOption;
+    ExitOption.addComponent<MenuChoiceComponent>();
+
 
     int nr =0;
     PlayOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - PlayOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
@@ -147,15 +174,6 @@ bool StateMenu::update(sf::Time)
 
 bool StateMenu::handleEvent(const sf::Event& event)
 {
-
-
-    if(event.type == sf::Event::MouseButtonPressed)
-    {
-        MouseClicked mouseClicked(getContext());
-        anax::Entity entity = getContext().world->createEntity();
-        mouseClicked.Clicked(entity,getContext().window->getView(),1,"Menu");
-
-    }
     if(event.type == sf::Event::KeyPressed)
     {
         if (event.key.code == sf::Keyboard::Return)
@@ -215,6 +233,56 @@ bool StateMenu::handleEvent(const sf::Event& event)
             getContext().sounds->play(SoundEffects::Click);
         }
     }
+
+    if(event.type == sf::Event::MouseButtonPressed)
+    {
+        mouseClickedMenus mouseClickedMenus1(getContext());
+        mouseClickedMenus1.Clicked();
+
+        anax::World& world = *getContext().world;
+        std::string choice = "";
+        auto entitys = world.getEntities();
+        for(auto i : entitys)
+        {
+            if(i.hasComponent<MenuChoiceComponent>())
+            {
+                if(i.getComponent<MenuChoiceComponent>().choice == "Game")
+                {
+                    choice = "Game";
+                    getContext().sounds->play(SoundEffects::Click);
+                }
+                if(i.getComponent<MenuChoiceComponent>().choice == "Settings")
+                {
+                    choice = "Settings";
+                    getContext().sounds->play(SoundEffects::Click);
+                }
+                if(i.getComponent<MenuChoiceComponent>().choice == "About")
+                {
+                    choice = "About";
+                    getContext().sounds->play(SoundEffects::Click);
+                }
+                if(i.getComponent<MenuChoiceComponent>().choice == "Exit")
+                {
+                    requestStackPop();
+                    getContext().sounds->play(SoundEffects::Click);
+                }
+            }
+        }
+        if(choice != "")
+        {
+            anax::World& world = *getContext().world;
+            auto enteties = world.getEntities();
+            for(auto i : enteties)
+            {
+                i.kill();
+                world.refresh();
+            }
+            if(choice == "Game") requestStateChange(States::Character);
+            if(choice == "Settings") requestStateChange(States::Settings);
+            if(choice == "About") requestStateChange(States::Character);
+        }
+    }
+
     return true;
 }
 

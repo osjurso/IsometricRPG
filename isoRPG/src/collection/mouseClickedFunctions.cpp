@@ -9,8 +9,11 @@
 #include <systems/talk.h>
 #include <systems/KillDialogs.h>
 #include <include/components/CompCost.h>
+#include <include/components/Comp_Menuchoice.h>
 #include "collections/mouseClikedFunctions.h"
 #include "components/Comp_Children.h"
+#include "include/states/state_base.h"
+
 
 
 void killChildren(anax::Entity& entity, anax::Entity& player, anax::World& world)
@@ -94,4 +97,24 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
         entity.getComponent<ParentComponent>().parent.getComponent<ParentComponent>().parent.getComponent<Talkative>().optionMap[4] = entity.getComponent<TextComponent>().content;
         Update(entity,player,world);
     }
+}
+
+void setPlayOption(anax::Entity& entity)
+{
+    entity.getComponent<MenuChoiceComponent>().choice = "Game";
+}
+
+void setSettingsOption(anax::Entity& entity)
+{
+    entity.getComponent<MenuChoiceComponent>().choice = "Settings";
+}
+
+void setAboutOption(anax::Entity& entity)
+{
+    entity.getComponent<MenuChoiceComponent>().choice = "About";
+}
+
+void setExitOption(anax::Entity& entity)
+{
+    entity.getComponent<MenuChoiceComponent>().choice = "Exit";
 }

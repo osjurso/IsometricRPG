@@ -21,7 +21,11 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
 
 void setInfo(anax::Entity& entity, anax::Entity& player, anax::World& world);
 
+void setPlayOption(anax::Entity& entity);
 
+void setSettingsOption(anax::Entity& entity);
 
+void setAboutOption(anax::Entity& entity);
 
+void setExitOption(anax::Entity& entity);
 #endif //ISORPG_MOUSECLIKEDFUNCTIONS_H

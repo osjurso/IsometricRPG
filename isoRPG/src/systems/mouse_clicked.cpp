@@ -159,19 +159,5 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
 
 void MouseClicked::processMenu(anax::Entity &e, float MouseX, float MouseY, sf::RenderWindow &window, sf::View cam, float zoom)
 {
-    sf::IntRect entityRect;
-    PositionComponent& positionComponent = e.getComponent<PositionComponent>();
-    SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
-    entityRect.top = positionComponent.SpriteTop;
-    entityRect.left = positionComponent.SpriteLeft;
-    entityRect.width = sizeComponent.SpriteWhith;
-    entityRect.height = sizeComponent.SpriteHeight;
-    if(entityRect.contains(MouseX,MouseY))
-    {
-        if(e.hasComponent<AssosateFunc>())
-        {
-            anax::Entity entity;
-            e.getComponent<AssosateFunc>().voidfunc(e,entity,*context.world);
-        }
-    }
+
 }

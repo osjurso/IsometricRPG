@@ -11,20 +11,6 @@ public:
     void draw() override;
     bool update(sf::Time dt) override;
     bool handleEvent(const sf::Event &event) override;
-
-private:
-    sf::Text mTempText;
-    sf::Sprite mBackdrop;
-
-    int VolumeX;
-
-    sf::Sprite masterVolume;
-    sf::Sprite musicVolume;
-    sf::Sprite SFXVolume;
-
-    sf::Sprite VolumeKnobMaster;
-    sf::Sprite VolumeKnobMusic;
-    sf::Sprite VolumeKnobSFX;
 };
 
 

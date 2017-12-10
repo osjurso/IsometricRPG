@@ -11,6 +11,8 @@ struct AssosateFunc : public anax::Component
 {
 public:
     void (*voidfunc)(anax::Entity& entity,anax::Entity& player, anax::World& world);
+    void (*voidMenufunc)(anax::Entity& entity);
+
 };
 
 #endif //ISORPG_COMP_ASSOSIATEFUNC_H
