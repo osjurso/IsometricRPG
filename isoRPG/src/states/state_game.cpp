@@ -349,6 +349,8 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
 
     else if (key == sf::Keyboard::Escape && isPressed)
         requestStackPush(States::Pause);
+    else if (key == sf::Keyboard::F2 && isPressed)
+        requestStackPush(States::GameOver);
     else if (key == sf::Keyboard::F5 && isPressed)
     {
         // Todo: Hvis vi skal bruke map reload må den også resette anax world

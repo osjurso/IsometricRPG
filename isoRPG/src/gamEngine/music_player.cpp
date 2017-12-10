@@ -7,6 +7,8 @@ MusicPlayer::MusicPlayer()
 {
     mFileNames[Music::Test] = "assets/music/test.wav";
     mFileNames[Music::Menu] = "assets/music/menu.ogg";
+    mFileNames[Music::GameOver] = "assets/music/game_over.ogg";
+
 }
 
 void MusicPlayer::play(Music::ID theme)

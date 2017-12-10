@@ -1,4 +1,5 @@
 #include <include/states/state_character.h>
+#include <include/states/state_game_over.h>
 #include "include/states/state_menu.h"
 #include "include/states/state_settings.h"
 #include "include/states/state_game.h"
@@ -142,4 +143,5 @@ void Application::registerStates()
     mStateStack.registerState<StateGame>(States::Game);
     mStateStack.registerState<StatePause>(States::Pause);
     mStateStack.registerState<StateCharacter>(States::Character);
+    mStateStack.registerState<StateGameOver>(States::GameOver);
 }
