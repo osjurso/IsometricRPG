@@ -12,6 +12,7 @@ struct ChangebleComponent : public anax::Component
 public:
     bool changeble;
     float max;
+    float min;
     float currnet;
     std::string source;
 };

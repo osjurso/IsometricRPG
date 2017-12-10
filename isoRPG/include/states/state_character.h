@@ -14,21 +14,9 @@ public:
     bool handleEvent(const sf::Event &event) override;
 
 private:
-    sf::Sprite mBackdrop;
-
-    sf::Sprite mCharacterBox1;
-    sf::Sprite mCharacterBox2;
-    sf::Sprite mCharacterBox3;
-
-    sf::Text mCharacterClass1;
-    sf::Text mCharacterName1;
-
-    sf::Text mCharacterClass2;
-    sf::Text mCharacterName2;
-
-    sf::Text mCharacterClass3;
-    sf::Text mCharacterName3;
-
+    bool firstFull;
+    bool secondFull;
+    bool thirdFull;
 
 
 };

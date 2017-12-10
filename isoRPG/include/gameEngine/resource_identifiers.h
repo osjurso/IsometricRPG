@@ -21,6 +21,7 @@ namespace Textures
         SettingsSlider,
         SettingKnob,
         CharacterBox,
+        CharacterNew,
         Goblin,
         Trader,
         Armorer,

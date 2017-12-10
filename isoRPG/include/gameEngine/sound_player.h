@@ -17,9 +17,12 @@ public:
 
     void removeStoppedSounds();
 
+    void setVolume(float volume);
+
 private:
     SoundBufferHolder mSoundBuffers;
     std::list<sf::Sound> mSounds;
+    float mVolume;
 };
 
 

@@ -11,6 +11,11 @@ public:
     void draw() override;
     bool update(sf::Time dt) override;
     bool handleEvent(const sf::Event &event) override;
+
+private:
+    float musicVolume = 0.5f;
+    float masterVolume= 0.5f;
+    float SFXVolume   = 0.5f;
 };
 
 

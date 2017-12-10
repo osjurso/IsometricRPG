@@ -28,4 +28,6 @@ void setSettingsOption(anax::Entity& entity);
 void setAboutOption(anax::Entity& entity);
 
 void setExitOption(anax::Entity& entity);
+
+void setNewCaracterOption(anax::Entity& entity);
 #endif //ISORPG_MOUSECLIKEDFUNCTIONS_H

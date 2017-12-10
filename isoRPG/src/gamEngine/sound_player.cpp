@@ -14,7 +14,9 @@ SoundPlayer::SoundPlayer()
 void SoundPlayer::play(SoundEffects::ID effect)
 {
     mSounds.push_back(sf::Sound(mSoundBuffers.get(effect)));
+    mSounds.back().setVolume(mVolume);
     mSounds.back().play();
+
 
 }
 
@@ -25,3 +27,8 @@ void SoundPlayer::removeStoppedSounds()
                           return s.getStatus() == sf::Sound::Stopped;
                       });
 }
+void SoundPlayer::setVolume(float volume)
+{
+    mVolume = volume;
+}
+

@@ -104,6 +104,11 @@ void setPlayOption(anax::Entity& entity)
     entity.getComponent<MenuChoiceComponent>().choice = "Game";
 }
 
+void setNewCaracterOption(anax::Entity& entity)
+{
+    entity.getComponent<MenuChoiceComponent>().choice = "New";
+}
+
 void setSettingsOption(anax::Entity& entity)
 {
     entity.getComponent<MenuChoiceComponent>().choice = "Settings";

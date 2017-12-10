@@ -34,6 +34,7 @@ Application::Application()
     mTextures.load(Textures::SettingsSlider, "assets/textures/volumeslider.png");
     mTextures.load(Textures::SettingKnob, "assets/textures/volumeKnob.png");
     mTextures.load(Textures::CharacterBox, "assets/textures/characterBox.png");
+    mTextures.load(Textures::CharacterNew, "assets/textures/button.png");
     mTextures.load(Textures::Goblin, "assets/textures/goblin.png");
     mTextures.load(Textures::Trader, "assets/textures/trader.png");
     mTextures.load(Textures::Armorer, "assets/textures/knight.png");
@@ -60,7 +61,7 @@ Application::Application()
     mStatisticsText.setCharacterSize(15);
 
     registerStates();
-    mStateStack.pushState(States::Settings);
+    mStateStack.pushState(States::Character);
 }
 
 void Application::run()
