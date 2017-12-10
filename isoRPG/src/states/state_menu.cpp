@@ -188,37 +188,21 @@ bool StateMenu::handleEvent(const sf::Event& event)
 {
     if(event.type == sf::Event::KeyPressed)
     {
-        if (event.key.code == sf::Keyboard::Return)
-        {
-            if (mOptionIndex == Play)
-            {
-                anax::World& world = *getContext().world;
+        if (event.key.code == sf::Keyboard::Return) {
+            if (mOptionIndex == Play) {
+                anax::World &world = *getContext().world;
                 auto enteties = world.getEntities();
-                for(auto i : enteties)
-                {
+                for (auto i : enteties) {
                     i.kill();
                     world.refresh();
                 }
                 requestStateChange(States::Character);
 
-            }
-            else if (mOptionIndex == Settings)
-            {
-                anax::World& world = *getContext().world;
-                auto enteties = world.getEntities();
-                for(auto i : enteties)
-                {
-                    i.kill();
-                    world.refresh();
-                }
-                requestStateChange(States::Settings);
-            }
-            else if (mOptionIndex == About)
-            {
+            } else if (mOptionIndex == Settings) {
+                requestStackPush(States::Settings);
+            } else if (mOptionIndex == About) {
 
-            }
-            else if (mOptionIndex == Exit)
-            {
+            } else if (mOptionIndex == Exit) {
                 requestStackPop();
             }
         }

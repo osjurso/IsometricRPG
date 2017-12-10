@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-// Todo: Move tilesize conversion here?
-
 /*
  * Overloaded function to convert a world position to a screen (view) position
  * CartX = (2 * isoY + isoX) / 2

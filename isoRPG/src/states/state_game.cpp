@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include <systems/sort_key_update.h>
+#include <systems/depth_sort_system.h>
 #include "systems/resolve_movment.h"
 #include "systems/drawEntety.h"
 #include "systems/attack.h"
@@ -39,9 +39,11 @@
 StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
+        , m_lightingSystem(context.textures->get(Textures::LightTexture))
 {
     zoom = 0.3f;
     anax::World& world = *getContext().world;
+    playerCam = context.window->getView();
     playerCam.setSize(1920, 1080);
     playerCam.zoom(zoom);
 
@@ -64,7 +66,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     player = world.createEntity();
 
     // Load map information from JSON into object list
-    if (!Map::load("assets/map/map.json", context))
+    if (!Map::load("assets/map/map.json", context, m_lightingSystem))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
     setUpAllCreatures setUpAllCreatures(getContext());
@@ -127,6 +129,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     // 6. Weapon
     // 7. Weapon mod
 
+
     movementTimer.restart().asSeconds();
     pathfindingTimer.restart().asSeconds();
     saveTimer.restart().asSeconds();
@@ -141,7 +144,15 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
                     context.textures->get(Textures::UITransparant),
                     getContext().fonts->get(Fonts::RPG),playerCam,player);
 
+
+    world.addSystem(m_collisionSystem);
+
     context.music->play(Music::Test);
+}
+
+StateGame::~StateGame()
+{
+    getContext().world->clear();
 }
 
 void StateGame::draw()
@@ -153,6 +164,7 @@ void StateGame::draw()
 
     DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
+    m_lightingSystem.draw(window, world);
 }
 
 bool StateGame::update(sf::Time dt)
@@ -231,8 +243,10 @@ bool StateGame::update(sf::Time dt)
     updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
 
     // Update the sort key for movable entities
-    SortKeyUpdate sortKeyUpdate;
-    sortKeyUpdate.Update(*getContext().world);
+    DepthSortSystem depthSortSystem;
+    depthSortSystem.Update(*getContext().world);
+
+    m_collisionSystem.update(dt.asSeconds(), *getContext().world);
 
     return true;
 }
@@ -243,8 +257,12 @@ bool StateGame::handleEvent(const sf::Event &event)
     {
         MouseClicked mouseClicked(getContext());
         mouseClicked.Clicked(player, playerCam, zoom, "Game");
+    }
 
-
+    if (event.type == sf::Event::Resized)
+    {
+        std::cout << "New resolution: " << event.size.width << "x" << event.size.height << std::endl;
+        playerCam = getLetterboxView(playerCam, event.size.width, event.size.height );
     }
 
     switch (event.type)
@@ -394,7 +412,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         // Todo: Hvis vi skal bruke map reload må den også resette anax world
 
         std::cout << "Loading map data ..." << std::endl;
-        if (!Map::load("assets/map/map.json", getContext()))
+        if (!Map::load("assets/map/map.json", getContext(), m_lightingSystem))
         {
             std::cout << "Failed to reload map data." << std::endl;
         }

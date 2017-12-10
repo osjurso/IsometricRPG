@@ -21,7 +21,7 @@
 class Draweble
 {
 public:
-    void makeDraweble(sf::Texture& texture,int Left, int Top, anax::Entity& entity, std::string state)
+    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity, std::string state)
     {
 
         entity.addComponent<TextureComponent>();

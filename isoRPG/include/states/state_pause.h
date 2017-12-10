@@ -8,6 +8,7 @@ class StatePause : public StateBase
 public:
     StatePause(StateStack &stack, Context context);
     ~StatePause();
+
     void draw() override;
     bool update(sf::Time dt) override;
     bool handleEvent(const sf::Event &event) override;
@@ -18,14 +19,16 @@ private:
     enum OptionNames
     {
         resume,
-        settings,
+        options,
         Save,
         exit,
     };
 
 
 private:
+    sf::View view;
     sf::Text mPauseText;
+    sf::RectangleShape backgroundShape;
 
     std::vector<sf::Text> mOptions;
     std::size_t mOptionIndex;

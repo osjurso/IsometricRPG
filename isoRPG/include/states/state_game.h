@@ -4,6 +4,8 @@
 #include <list>
 
 #include <SFML/Graphics.hpp>
+#include <include/systems/collision_system.h>
+#include <include/systems/lighting_system.h>
 
 #include "state_base.h"
 #include "map/object.h"
@@ -12,6 +14,7 @@ class StateGame : public StateBase
 {
 public:
     StateGame(StateStack &stack, Context context);
+    ~StateGame();
 
     void draw() override;
     bool update(sf::Time dt) override;
@@ -28,6 +31,11 @@ private:
     int save = -1;
     std::string saveFile = "";
     sf::Clock saveTimer;
+
+    CollisionSystem m_collisionSystem;
+    LightingSystem m_lightingSystem;
+
+    //sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight);
 };
 
 

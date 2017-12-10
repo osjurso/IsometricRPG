@@ -53,9 +53,9 @@ Application::Application()
     mTextures.load(Textures::UIArrow, "assets/textures/arrow.png");
     mTextures.load(Textures::UIHealtBar, "assets/textures/healtbar.png");
     mTextures.load(Textures::UITransparant, "assets/textures/transparant.png");
-
-
-
+    mTextures.load(Textures::TitleSword, "assets/textures/title_sword.png");
+    mTextures.load(Textures::TitleSwordSplash, "assets/textures/title_sword_splash.png");
+    mTextures.load(Textures::LightTexture, "assets/textures/light_texture.png");
 
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));

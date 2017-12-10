@@ -122,7 +122,8 @@ bool StateSettings::update(sf::Time dt)
             }
         }
     }
-    return true;
+
+    return false;
 }
 
 bool StateSettings::handleEvent(const sf::Event &event)
@@ -137,7 +138,7 @@ bool StateSettings::handleEvent(const sf::Event &event)
             world.refresh();
         }
         requestStackPop();
-        requestStackPush(States::Menu);
+        //requestStackPush(States::Menu);
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -179,7 +180,7 @@ bool StateSettings::handleEvent(const sf::Event &event)
         }
     }
 
-    return true;
+    return false;
 }
 
 

@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-#include "include/states/state_title.h"
-#include "include/gameEngine/resource_holder.h"
-#include "include/util/utility.h"
+#include "states/state_title.h"
+#include "util/utility.h"
 
 namespace
 {
@@ -13,6 +13,7 @@ namespace
     }
 }
 
+
 StateTitle::StateTitle(StateStack& stack, Context context)
         : StateBase(stack, context)
         , screenSize(context.window->getSize())
@@ -21,11 +22,11 @@ StateTitle::StateTitle(StateStack& stack, Context context)
         , shakeStrength(50.f)
         , letterScale(0.7f)
         , shakeLength(sf::seconds(0.6f))
-        , fadeStart(sf::seconds(11.f))
+        , fadeStart(sf::seconds(7.f))
         , length(sf::seconds(10.f))
-        , inAnimation(true)
+        , splashStart(sf::seconds(2.0f))
 {
-    logoSprite.setTexture(context.textures->get(Textures::TitleLogo));
+    logoSprite.setTexture(context.textures->get(Textures::TitleSword));
     isoSprite.setTexture(context.textures->get(Textures::TitleText));
     isoSprite.setTextureRect(sf::IntRect(0, 0, 175, 155));
     rpgSprite.setTexture(context.textures->get(Textures::TitleText));
@@ -34,88 +35,56 @@ StateTitle::StateTitle(StateStack& stack, Context context)
     centerOrigin(logoSprite);
     centerOrigin(isoSprite);
     centerOrigin(rpgSprite);
+
+    prepareAnimations();
+
+    clock.restart();
+    srand(static_cast<unsigned int>(time(nullptr)));
+
+    // TODO: Mabye use music to be able to stop the track?
+    getContext().sounds->play(SoundEffects::intro);
 }
 
 void StateTitle::draw()
 {
     sf::RenderWindow& window = *getContext().window;
 
-    srand(static_cast<unsigned int>(time(nullptr)));
-    prepareAnimations();
-    clock.restart();
-
-    // Todo: Need to separate into draw/update/handleEvents
-    while (inAnimation)
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-            if (event.type == sf::Event::KeyPressed)
-            {
-                inAnimation = false;
-                requestStackPop();
-                requestStackPush(States::Menu);
-            }
-        }
-        currentTime = clock.getElapsedTime();
-        if (currentTime > length)
-            inAnimation = false;
-
-        updateObjects(logoSprite, animationLogo);
-        updateObjects(isoSprite, animationIso);
-        updateObjects(rpgSprite, animationRpg);
-        updateFade();
-        updateShake(startingView);
-
-        window.setView(view);
-        window.clear();
-        window.draw(logoSprite);
-        window.draw(isoSprite);
-        window.draw(rpgSprite);
-        window.display();
-    }
-
+    window.setView(view);
+    window.draw(logoSprite);
+    window.draw(isoSprite);
+    window.draw(rpgSprite);
 }
 
 bool StateTitle::update(sf::Time dt)
 {
-    // update fade
-    if (currentTime > fadeStart)
-    {
-        const float ratio{ (currentTime - fadeStart) / (length - fadeStart) };
-        const sf::Color color(255, 255, 255, static_cast<sf::Uint8>(255.f * (1.f - ratio)));
-        logoSprite.setColor(color);
-        isoSprite.setColor(color);
-        rpgSprite.setColor(color);
-    }
 
-    // update shake
-    view = startingView;
-    if ((currentTime >= shakeStart) && (currentTime <= (shakeStart + shakeLength)))
-    {
-        const float ratio{ (currentTime - shakeStart) / shakeLength };
-        const float strength{ shakeStrength * (1.f - ratio) };
-        view.move({ (static_cast<float>(rand() % 200) / 100.f - 1.f) * strength, (static_cast<float>(rand() % 200) / 100.f - 1.f) * strength });
-    }
-
-    // Switch state when animation is done
+    currentTime = clock.getElapsedTime();
     if (currentTime > length)
-    {
         requestStateChange(States::Menu);
-    }
+    else if (currentTime < splashStart && currentTime > shakeStart)
+        logoSprite.setTexture(getContext().textures->get(Textures::TitleSwordSplash));
+
+    updateObjects(logoSprite, animationLogo);
+    updateObjects(isoSprite, animationIso);
+    updateObjects(rpgSprite, animationRpg);
+    updateFade();
+    updateShake(startingView);
 }
 
 bool StateTitle::handleEvent(const sf::Event& event)
 {
-    // If any key is pressed, enter the Menu state
+
     if (event.type == sf::Event::KeyPressed)
     {
         requestStateChange(States::Menu);
     }
+
+    if (event.type == sf::Event::Resized)
+    {
+        std::cout << "New resolution: " << event.size.width << "x" << event.size.height << std::endl;
+        view = getLetterboxView(view, event.size.width, event.size.height );
+    }
+
 
     return true;
 }
@@ -176,14 +145,6 @@ void StateTitle::updateFade()
         isoSprite.setColor(color);
         rpgSprite.setColor(color);
     }
-
-    view = startingView;
-    if ((currentTime >= shakeStart) && (currentTime <= (shakeStart + shakeLength)))
-    {
-        const float ratio{ (currentTime - shakeStart) / shakeLength };
-        const float strength{ shakeStrength * (1.f - ratio) };
-        view.move({ (static_cast<float>(rand() % 200) / 100.f - 1.f) * strength, (static_cast<float>(rand() % 200) / 100.f - 1.f) * strength });
-    }
 }
 
 void StateTitle::updateShake(const sf::View &startingView)
@@ -195,4 +156,9 @@ void StateTitle::updateShake(const sf::View &startingView)
         const float strength{ shakeStrength * (1.f - ratio) };
         view.move({ (static_cast<float>(rand() % 200) / 100.f - 1.f) * strength, (static_cast<float>(rand() % 200) / 100.f - 1.f) * strength });
     }
+}
+
+StateTitle::~StateTitle()
+{
+    getContext().sounds->removeStoppedSounds();
 }

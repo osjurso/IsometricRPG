@@ -16,7 +16,7 @@ class Map
 {
 public:
     // Load map from Tiled JSON file
-    static bool load(std::string filename, StateBase::Context context);
+    static bool load(std::string filename, StateBase::Context context, LightingSystem &lightingSystem);
 
 
 private:
@@ -28,6 +28,8 @@ private:
 
     // Handles collsion layer
     static void loadCollision(Json::Value& root, Json::Value& layer);
+
+    static void loadLights(Json::Value& root, Json::Value& layer, StateBase::Context context, LightingSystem &lightingSystem);
 
     static void loadEntities(Json::Value& root, Json::Value& layer, StateBase::Context context);
 };

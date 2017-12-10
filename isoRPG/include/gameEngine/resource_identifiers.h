@@ -38,7 +38,9 @@ namespace Textures
         UIArrow,
         UIHealtBar,
         UITransparant,
-
+        TitleSword,
+        TitleSwordSplash,
+        LightTexture,
 
     };
 }
@@ -68,6 +70,7 @@ namespace SoundEffects
     {
         Test,
         Click,
+        intro,
     };
 }
 

@@ -53,6 +53,7 @@ void MouseClicked::Clicked(anax::Entity& player, sf::View cam, float zoom, std::
         }
         //Move player to mouse.x, mouse.y if not intractable
         //if(!interactive)createPlayerPath(player, mouseT.x, mouseT.y);
+
     }
 }
 
@@ -75,6 +76,7 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     MousePos = sf::Vector2i((2 * MousePos.y + MousePos.x) / 64, (2 * MousePos.y - MousePos.x) / 64);
 
     if(0 < heroTilePos.x < mapsize && 0 < heroTilePos.y < mapsize)
+
     {
         std::string path= pathFind(heroTilePos.x, heroTilePos.y, MousePos.x ,MousePos.y);
 
@@ -143,15 +145,15 @@ void MouseClicked::process(anax::Entity &e, float MouseXT, float MouseYT, anax::
     sf::Texture& redX = context.textures->get(Textures::UIRedX);
     sf::Texture& arrow = context.textures->get(Textures::UIArrow);
 
-        if(e.hasComponent<Talkative>())
-        {
-            Talk talk;
-            talk.talk(e,window, world,cam ,zoom, font, paper, redX, arrow);
-        }
+    if(e.hasComponent<Talkative>())
+    {
+        Talk talk;
+        talk.talk(e,window, world,cam ,zoom, font, paper, redX, arrow);
+    }
 
-        if(e.hasComponent<Looteble>())
-        {
-            Loot loot;
-            loot.loot(world, e, player);
-        }
+    if(e.hasComponent<Looteble>())
+    {
+        Loot loot;
+        loot.loot(world, e, player);
+    }
 }

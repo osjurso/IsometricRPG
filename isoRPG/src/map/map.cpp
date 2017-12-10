@@ -7,29 +7,21 @@
 #include <iostream>
 #include <include/collections/setUpCreature.h>
 #include <include/systems/pathfinding.h>
+#include <include/systems/lighting_system.h>
 
 #include "map/map.h"
 #include "map/sprite.h"
 #include "map/layer.h"
 
-bool Map::load(std::string filename, StateBase::Context context)
+bool Map::load(std::string filename, StateBase::Context context, LightingSystem &lightingSystem)
 {
     // Will contain the data we read in
     Json::Value root;
 
-    //TODO: Switch to CharReader and CharReaderBuilder
-    // Parses the file
-    Json::Reader reader;
-
     // Stream used for reading the data file. The data file has been saved as JSON in Tiled
-    std::ifstream file(filename);
+    std::ifstream file(filename, std::ifstream::binary);
 
-    // Read data from file into root object
-    bool parsingSuccessful = reader.parse(file, root);
-
-    // Check for success
-    if (!parsingSuccessful)
-        return false;
+    file >> root;
 
     // Get tile size information
     TileSize tileSize;
@@ -46,9 +38,10 @@ bool Map::load(std::string filename, StateBase::Context context)
             loadObjects(root, layer, tileSize, context);
         else if (layer["name"].asString() == "collision")
             loadCollision(root, layer);
+        else if (layer["name"].asString() == "lights")
+            loadLights(root, layer, context, lightingSystem);
         else
          loadLayer(layer, tileSize, context);
-
     }
 
     return true;
@@ -145,6 +138,43 @@ void Map::loadCollision(Json::Value& root, Json::Value& layer)
     node1.loadMapData(width, height);
 }
 
+void Map::loadLights(Json::Value &root, Json::Value &layer, StateBase::Context context, LightingSystem &lightingSystem)
+{
+    // Store info on layer
+    int width = layer["width"].asInt();
+    int height = layer["height"].asInt();
+
+    int lightMap[width][height];
+
+    // Clear tilemap
+    memset(lightMap, 0, sizeof(lightMap));
+
+    for (size_t i = 0; i < layer["data"].size(); i++)
+    {
+        lightMap[i % width][i / width] = layer["data"][(int)i].asInt();
+    }
+
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            if (lightMap[x][y] == 0)
+                continue;
+
+            sf::Vector2f v(x, y);
+
+            v.x = (v.x - 12) * 32;
+            v.y = (v.y - 15) * 32;
+
+
+            v = sf::Vector2f((v.x - v.y), (v.x + v.y) / 2);
+
+            lightingSystem.addLight(v);
+        }
+    }
+
+}
+
 void Map::loadEntities(Json::Value &root, Json::Value &layer, StateBase::Context context)
 {
     for (Json::Value& object: layer["objects"])
@@ -181,7 +211,7 @@ void Map::loadEntities(Json::Value &root, Json::Value &layer, StateBase::Context
 
             sf::Vector2i v = sf::Vector2i((posX - posY), (posX + posY)/2);
 
-            // TODO: quick offset fix, wont be accurate for different sized enemies
+            // quick offset fix, wont be accurate for different sized enemies
             v.y -= 90;
             v.x -= 64;
 

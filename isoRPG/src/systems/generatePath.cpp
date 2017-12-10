@@ -20,24 +20,24 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
 
             if(i.getComponent<Movable>().agro)
             {
-                PositionComponent& heroPos = player.getComponent<PositionComponent>();
+                PositionComponent& playerPos = player.getComponent<PositionComponent>();
 
                 auto heroSize = player.getComponent<SizeComponent>();
                 auto enemySize = i.getComponent<SizeComponent>();
 
                 // Calulation the tile position of the hero
-                sf::Vector2i heroTilePos = sf::Vector2i(heroPos.XPos + heroSize.Whith/2, heroPos.SpriteTop);
-                heroTilePos = sf::Vector2i((2 * heroTilePos.y + heroTilePos.x) / 64, (2 * heroTilePos.y - heroTilePos.x) / 64);
+                sf::Vector2i playerTilePos = sf::Vector2i(playerPos.XPos + heroSize.Whith/2, playerPos.SpriteTop);
+                playerTilePos = sf::Vector2i((2 * playerTilePos.y + playerTilePos.x) / 64, (2 * playerTilePos.y - playerTilePos.x) / 64);
 
                 sf::Vector2i enemyTilePos = sf::Vector2i(positionComponent.SpriteLeft + 17, positionComponent.SpriteTop + 25);
                 enemyTilePos = sf::Vector2i((2 * enemyTilePos.y + enemyTilePos.x) / 64, (2 * enemyTilePos.y - enemyTilePos.x) / 64);
 
-                if (enemyTilePos == heroTilePos)
+                if (enemyTilePos == playerTilePos)
                     continue;
 
-                if(0 < heroTilePos.x < mapsize && 0 < heroTilePos.y < mapsize)
+                if(0 < playerTilePos.x < mapsize && 0 < playerTilePos.y < mapsize)
                 {
-                    std::string path = pathFind(enemyTilePos.x, enemyTilePos.y, heroTilePos.x, heroTilePos.y);
+                    std::string path = pathFind(enemyTilePos.x, enemyTilePos.y, playerTilePos.x, playerTilePos.y);
 
                     moveble.path = path;
 
@@ -97,11 +97,11 @@ void GeneratePath::generate(anax::World &world, anax::Entity player)
                 {
                     moveble.agro = false;
 
-                    std::string path = pathFind(enemyTilePos.x, enemyTilePos.y, heroTilePos.x, heroTilePos.y);
+                    std::string path = pathFind(enemyTilePos.x, enemyTilePos.y, playerTilePos.x, playerTilePos.y);
 
-                    if(0 < heroTilePos.x < mapsize && 0 < heroTilePos.y < mapsize)
+                    if(0 < playerTilePos.x < mapsize && 0 < playerTilePos.y < mapsize)
                     {
-                        std::string path = pathFind(enemyTilePos.x, enemyTilePos.y, heroTilePos.x, heroTilePos.y);
+                        std::string path = pathFind(enemyTilePos.x, enemyTilePos.y, playerTilePos.x, playerTilePos.y);
                         moveble.path = path;
                         i.getComponent<AnimationComponent>().action = "Walk";
                     }else

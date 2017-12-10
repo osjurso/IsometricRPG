@@ -36,7 +36,6 @@ set(SOURCE_FILES
         src/states/state_character.cpp include/states/state_character.h
         src/gamEngine/music_player.cpp include/gameEngine/music_player.h
         src/gamEngine/sound_player.cpp include/gameEngine/sound_player.h
-        include/systems/collsion.h
         include/components/Comp_moveble.h
         include/systems/attack.h
         include/collections/setUpCreature.h
@@ -48,14 +47,13 @@ set(SOURCE_FILES
         include/components/Comp_talk.h
         include/collections/addDialoge.h
         include/systems/talk.h
-        include/systems/sort_key_update.h
+        include/systems/depth_sort_system.h
         src/states/state_character.cpp
         include/states/state_character.h
         src/gamEngine/music_player.cpp
         include/gameEngine/music_player.h
         src/gamEngine/sound_player.cpp
         include/gameEngine/sound_player.h
-        include/systems/collsion.h
         include/components/Comp_moveble.h
         include/systems/attack.h
         include/collections/setUpCreature.h
@@ -76,7 +74,10 @@ set(SOURCE_FILES
         src/systems/resolvePositionChange.cpp
         src/systems/resolve_movment.cpp
         src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogOption.h include/components/Comp_AssosiateFunc.h include/collections/mouseClikedFunctions.h src/collection/mouseClickedFunctions.cpp include/components/Comp_Dying.h include/systems/killdying.h src/collection/setUpRectShape.cpp include/collections/setUpRectShape.h include/components/Comp_SqureShape.h include/systems/KillDialogs.h include/components/Comp_ActionTimers.h include/components/Comp_Changeble.h include/systems/UpdateDialog.h src/systems/update_dialog.cpp include/collections/addPuzzle.h include/components/CompCost.h src/collection/setUpAllCreatures.cpp include/collections/setUpAllCreatures.h src/systems/mouseClickedMenus.cpp include/systems/mouseClickedMenus.h include/components/Comp_Menuchoice.h include/components/Comp_save.h src/states/state_caracter_creation.cpp include/states/state_caracter_creation.h include/components/Comp_Draweble.h
-        src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogOption.h include/components/Comp_AssosiateFunc.h include/collections/mouseClikedFunctions.h src/collection/mouseClickedFunctions.cpp include/components/Comp_Dying.h include/systems/killdying.h src/collection/setUpRectShape.cpp include/collections/setUpRectShape.h include/components/Comp_SqureShape.h include/systems/KillDialogs.h include/components/Comp_ActionTimers.h include/components/Comp_Changeble.h include/systems/UpdateDialog.h src/systems/update_dialog.cpp include/collections/addPuzzle.h include/components/CompCost.h src/states/state_game_over.cpp include/states/state_game_over.h include/systems/resolveIAI_attack.h)
+        src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawebleText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogOption.h include/components/Comp_AssosiateFunc.h include/collections/mouseClikedFunctions.h src/collection/mouseClickedFunctions.cpp include/components/Comp_Dying.h include/systems/killdying.h src/collection/setUpRectShape.cpp include/collections/setUpRectShape.h include/components/Comp_SqureShape.h include/systems/KillDialogs.h include/components/Comp_ActionTimers.h include/components/Comp_Changeble.h include/systems/UpdateDialog.h src/systems/update_dialog.cpp include/collections/addPuzzle.h include/components/CompCost.h src/states/state_game_over.cpp include/states/state_game_over.h include/systems/resolveIAI_attack.h
+        src/systems/collision_system.cpp include/systems/collision_system.h
+        include/components/comp_collision.h
+        src/systems/lighting_system.cpp include/systems/lighting_system.h src/states/state_game_over.cpp include/states/state_game_over.h)
 
 
 

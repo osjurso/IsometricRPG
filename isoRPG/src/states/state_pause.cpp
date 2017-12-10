@@ -1,18 +1,19 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "include/states/state_pause.h"
-#include "include/gameEngine/resource_holder.h"
-#include "include/util/utility.h"
+#include "states/state_pause.h"
+#include "util/utility.h"
 
 StatePause::StatePause(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
+        , mOptionIndex(0)
+
 {
     mPauseText.setFont(context.fonts->get(Fonts::RPG));
     mPauseText.setString("Game Paused");
     mPauseText.setCharacterSize(48);
     centerOrigin(mPauseText);
-    mPauseText.setPosition(context.window->getSize().x/2,
-                           context.window->getSize().y/2);
+    mPauseText.setPosition(context.window->getView().getSize().x / 2,
+                           context.window->getView().getSize().y * 0.3f);
     
     // Creating menu choices
     sf::Text resumeOption;
@@ -43,6 +44,11 @@ StatePause::StatePause(StateStack &stack, StateBase::Context context)
     exitOption.setPosition(saveOption.getPosition() + sf::Vector2f(0.f, 35.f));
     mOptions.push_back(exitOption);
 
+    updateOptionText();
+
+    backgroundShape.setFillColor(sf::Color(0, 0, 0, 150));
+    backgroundShape.setSize(sf::Vector2f(getContext().window->getView().getSize()));
+
     getContext().music->setPaused(true);
 }
 
@@ -56,9 +62,6 @@ void StatePause::draw()
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
 
-    sf::RectangleShape backgroundShape;
-    backgroundShape.setFillColor(sf::Color(0, 0, 0, 150));
-    backgroundShape.setSize(sf::Vector2f(window.getSize()));
     window.draw(backgroundShape);
 
     window.draw(mPauseText);
@@ -75,6 +78,9 @@ bool StatePause::update(sf::Time dt)
 bool StatePause::handleEvent(const sf::Event &event)
 {
 
+    if (event.type == event.Resized)
+        backgroundShape.setSize(sf::Vector2f(getContext().window->getView().getSize()));
+
     if (event.type != sf::Event::KeyPressed)
         return false;
 
@@ -84,9 +90,9 @@ bool StatePause::handleEvent(const sf::Event &event)
         {
             requestStackPop();
         }
-        else if (mOptionIndex == settings)
+        else if (mOptionIndex == options)
         {
-            //requestStateChange(States::Settings);
+            requestStackPush(States::Settings);
         }
         else if (mOptionIndex == Save)
         {
@@ -94,7 +100,8 @@ bool StatePause::handleEvent(const sf::Event &event)
         }
         else if (mOptionIndex == exit)
         {
-            requestStateClear();
+            requestStackPop();
+            requestStateChange(States::Menu);
         }
     }
 
@@ -119,6 +126,9 @@ bool StatePause::handleEvent(const sf::Event &event)
         updateOptionText();
         getContext().sounds->play(SoundEffects::Click);
     }
+
+    else if (event.key.code == sf::Keyboard::Escape)
+        requestStackPop();
 
     return false;
 }

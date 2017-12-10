@@ -1,9 +1,9 @@
-
-
 #include <include/components/Comp_Children.h>
 #include <include/components/Comp_ActionTimers.h>
 #include <include/components/CompCost.h>
 #include <include/components/Comp_Draweble.h>
+#include <include/components/comp_collision.h>
+#include <include/systems/collision_system.h>
 #include "include/collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
@@ -88,11 +88,14 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 
     entity.addComponent<DrawebleComponent>();
 
+    auto& playerCollision = entity.addComponent<CollisionComponent>();
+    playerCollision.boundingBox = sf::FloatRect(53, 76, 25, 25); // feet
+    playerCollision.causesEvents = true;
+
     entity.activate();
 }
 void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty)
 {
-
     entity.addComponent<TextureComponent>();
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
     textureComponent.texture[0] = texture;
@@ -163,6 +166,7 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
 
     entity.addComponent<DrawebleComponent>();
     entity.addComponent<MousedOver>();
+
 
     entity.addComponent<ActionTimer>();
     entity.getComponent<ActionTimer>().AttackCooldown = 5;
@@ -237,7 +241,7 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
 
     entity.addComponent<Looteble>();
     Looteble& looteble = entity.getComponent<Looteble>();
-    looteble.gold =666;
+    looteble.gold = 666;
 
     entity.addComponent<Talkative>();
     entity.addComponent<ChildComponent>();

@@ -19,10 +19,10 @@
 #include <include/components/Comp_moveble.h>
 
 
-class SortKeyUpdate
+
+class DepthSortSystem : anax::System<anax::Requires<Movable>>
 {
 public:
-
     void Update(anax::World& world)
     {
         auto entities = world.getEntities();

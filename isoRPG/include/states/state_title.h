@@ -9,6 +9,7 @@ class StateTitle : public StateBase
 {
 public:
     StateTitle(StateStack& stack, Context context);
+    ~StateTitle();
 
     void draw() override;
     bool update(sf::Time dt) override;
@@ -37,6 +38,7 @@ private:
     sf::Time shakeLength;
     sf::Time fadeStart;
     sf::Time length;
+    sf::Time splashStart;
 
     const sf::Vector2f screenSize;
     const sf::View startingView;
@@ -44,8 +46,6 @@ private:
     sf::Clock clock;
     sf::Time currentTime;
     sf::View view;
-
-    bool inAnimation;
 
     Animation animationLogo;
     Animation animationIso;
