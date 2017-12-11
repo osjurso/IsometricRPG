@@ -28,16 +28,26 @@ void mouseClickedMenus::process(anax::Entity &e, float MouseX, float MouseY, sf:
     sf::IntRect entityRect;
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
-    entityRect.top =  positionComponent.YPos - e.getComponent<TextComponent>().text.getLocalBounds().height/2;
-    entityRect.left = positionComponent.XPos - e.getComponent<TextComponent>().text.getLocalBounds().width/2;
-    entityRect.width =  e.getComponent<TextComponent>().text.getLocalBounds().width;
-    entityRect.height = e.getComponent<TextComponent>().text.getLocalBounds().height;
+    if(e.hasComponent<TextComponent>())
+    {
+        entityRect.top =  positionComponent.YPos - e.getComponent<TextComponent>().text.getLocalBounds().height/2;
+        entityRect.left = positionComponent.XPos - e.getComponent<TextComponent>().text.getLocalBounds().width/2;
+        entityRect.width =  e.getComponent<TextComponent>().text.getLocalBounds().width;
+        entityRect.height = e.getComponent<TextComponent>().text.getLocalBounds().height;
+    }
+    else
+    {
+        entityRect.top =  positionComponent.YPos;
+        entityRect.left = positionComponent.XPos;
+        entityRect.width =  e.getComponent<SizeComponent>().Height;
+        entityRect.height = e.getComponent<SizeComponent>().Whith;
+    }
+
 
     if(entityRect.contains(MouseX,MouseY))
     {
         if(e.hasComponent<AssosateFunc>())
         {
-            anax::Entity entity;
             e.getComponent<AssosateFunc>().voidMenufunc(e);
 
         }

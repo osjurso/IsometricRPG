@@ -4,6 +4,7 @@
 #include <include/components/Comp_position.h>
 #include <include/components/Comp_size.h>
 #include <include/components/Comp_State.h>
+#include <include/components/Comp_Draweble.h>
 #include "include/collections/setUpRectShape.h"
 
 void SetUpRectShape::setUpRectshape(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color, sf::View cam)
@@ -43,5 +44,6 @@ void SetUpRectShape::setUpRectshape(anax::Entity& entity, float xPos,float yPos,
     entity.addComponent<StateComponent>();
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
+    entity.addComponent<DrawebleComponent>();
     entity.activate();
 }

@@ -25,6 +25,8 @@ private:
     sf::Clock movementTimer;
     sf::Clock pathfindingTimer;
     float zoom;
+    int save = -1;
+    std::string saveFile = "";
 };
 
 

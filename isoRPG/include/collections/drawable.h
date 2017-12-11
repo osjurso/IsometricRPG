@@ -15,6 +15,7 @@
 #include <components/Comp_Texture.h>
 #include <include/components/Comp_animation.h>
 #include <include/components/Comp_State.h>
+#include <include/components/Comp_Draweble.h>
 
 
 class Draweble
@@ -41,6 +42,8 @@ public:
         entity.addComponent<StateComponent>();
         StateComponent& stateComponent = entity.getComponent<StateComponent>();
         stateComponent.state = state;
+
+        entity.addComponent<DrawebleComponent>();
         entity.activate();
     }
 };

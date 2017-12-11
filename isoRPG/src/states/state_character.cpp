@@ -5,6 +5,8 @@
 #include <include/components/Comp_AssosiateFunc.h>
 #include <include/collections/mouseClikedFunctions.h>
 #include <include/components/Comp_Menuchoice.h>
+#include <include/systems/mouseClickedMenus.h>
+#include <include/components/Comp_save.h>
 #include "include/states/state_character.h"
 #include "include/gameEngine/resource_holder.h"
 
@@ -67,21 +69,21 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         file1Text[nr] = tempstring;
         nr++;
     }
-    if(nr > 0) firstFull = true;
+    if(nr > 6) firstFull = true;
     nr = 0;
     while (std::getline(file2, tempstring))
     {
         file2Text[nr] = tempstring;
         nr++;
     }
-    if(nr > 0) secondFull = true;
+    if(nr > 6) secondFull = true;
     nr = 0;
     while (std::getline(file3, tempstring))
     {
         file3Text[nr] = tempstring;
         nr++;
     }
-    if(nr > 0) thirdFull = true;
+    if(nr > 6) thirdFull = true;
 
     DrawebleText drawebleText;
     sf::View cam= window.getView();
@@ -92,6 +94,7 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
     createNew1.addComponent<MousedOver>();
     createNew1.addComponent<AssosateFunc>();
     createNew1.addComponent<MenuChoiceComponent>();
+    createNew1.getComponent<MenuChoiceComponent>().source = "Save1";
 
     if(firstFull)
     {
@@ -161,6 +164,7 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
     createNew2.addComponent<MousedOver>();
     createNew2.addComponent<AssosateFunc>();
     createNew2.addComponent<MenuChoiceComponent>();
+    createNew2.getComponent<MenuChoiceComponent>().source = "Save2";
     createNew2.getComponent<TextureComponent>().sortKey = 12;
 
     if(secondFull)
@@ -173,13 +177,13 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         anax::Entity player2Weapon = world.createEntity();
         anax::Entity player2WeaponMod = world.createEntity();
 
-        drawebleText.setUpDrawebleText(player2Name,               "Name: " + file1Text.at(0),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2Gold,               "Gold: " + file1Text.at(1),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2HeathPotion,"Healt potion: " + file1Text.at(2),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2Armor,             "Armor: " + file1Text.at(3),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2ArmorMod,              " + " + file1Text.at(4),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2Weapon,           "Weapon: " + file1Text.at(5),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2WeaponMod,             " + " + file1Text.at(6),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2Name,               "Name: " + file2Text.at(0),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2Gold,               "Gold: " + file2Text.at(1),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2HeathPotion,"Healt potion: " + file2Text.at(2),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2Armor,             "Armor: " + file2Text.at(3),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2ArmorMod,              " + " + file2Text.at(4),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2Weapon,           "Weapon: " + file2Text.at(5),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player2WeaponMod,             " + " + file2Text.at(6),cam,"Character",1,font,sf::Color().Black);
 
         player2Name.getComponent<TextureComponent>().sortKey = 13;
         player2Gold.getComponent<TextureComponent>().sortKey = 13;
@@ -232,6 +236,7 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
     createNew3.addComponent<MousedOver>();
     createNew3.addComponent<AssosateFunc>();
     createNew3.addComponent<MenuChoiceComponent>();
+    createNew3.getComponent<MenuChoiceComponent>().source = "Save3";
     createNew3.getComponent<TextureComponent>().sortKey = 12;
 
     if(thirdFull)
@@ -244,13 +249,13 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         anax::Entity player3Weapon = world.createEntity();
         anax::Entity player3WeaponMod = world.createEntity();
 
-        drawebleText.setUpDrawebleText(player3Name,               "Name: " + file1Text.at(0),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3Gold,               "Gold: " + file1Text.at(1),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3HeathPotion,"Healt potion: " + file1Text.at(2),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3Armor,             "Armor: " + file1Text.at(3),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3ArmorMod,              " + " + file1Text.at(4),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3Weapon,           "Weapon: " + file1Text.at(5),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3WeaponMod,             " + " + file1Text.at(6),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3Name,               "Name: " + file3Text.at(0),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3Gold,               "Gold: " + file3Text.at(1),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3HeathPotion,"Healt potion: " + file3Text.at(2),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3Armor,             "Armor: " + file3Text.at(3),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3ArmorMod,              " + " + file3Text.at(4),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3Weapon,           "Weapon: " + file3Text.at(5),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawebleText(player3WeaponMod,             " + " + file3Text.at(6),cam,"Character",1,font,sf::Color().Black);
 
         player3Name.getComponent<TextureComponent>().sortKey = 13;
         player3Gold.getComponent<TextureComponent>().sortKey = 13;
@@ -261,25 +266,25 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         player3WeaponMod.getComponent<TextureComponent>().sortKey = 13;
 
         player3Name.getComponent<PositionComponent>().XPos = 750;
-        player3Name.getComponent<PositionComponent>().YPos = 100 + boxoffset;
+        player3Name.getComponent<PositionComponent>().YPos = 100 + boxoffset*2;
 
         player3Gold.getComponent<PositionComponent>().XPos = 750;
-        player3Gold.getComponent<PositionComponent>().YPos = 150 + boxoffset;
+        player3Gold.getComponent<PositionComponent>().YPos = 150 + boxoffset*2;
 
         player3HeathPotion.getComponent<PositionComponent>().XPos = 750;
-        player3HeathPotion.getComponent<PositionComponent>().YPos = 200 + boxoffset;
+        player3HeathPotion.getComponent<PositionComponent>().YPos = 200 + boxoffset*2;
 
         player3Armor.getComponent<PositionComponent>().XPos = 1050;
-        player3Armor.getComponent<PositionComponent>().YPos = 150 + boxoffset;
+        player3Armor.getComponent<PositionComponent>().YPos = 150 + boxoffset*2;
 
         player3ArmorMod.getComponent<PositionComponent>().XPos = 1050 + player3Armor.getComponent<TextComponent>().text.getLocalBounds().width;
-        player3ArmorMod.getComponent<PositionComponent>().YPos = 150 + boxoffset;
+        player3ArmorMod.getComponent<PositionComponent>().YPos = 150 + boxoffset*2;
 
         player3Weapon.getComponent<PositionComponent>().XPos = 1050;
-        player3Weapon.getComponent<PositionComponent>().YPos = 200 + boxoffset;
+        player3Weapon.getComponent<PositionComponent>().YPos = 200 + boxoffset*2;
 
         player3WeaponMod.getComponent<PositionComponent>().XPos = 1050 + player3Weapon.getComponent<TextComponent>().text.getLocalBounds().width;
-        player3WeaponMod.getComponent<PositionComponent>().YPos = 200 + boxoffset;
+        player3WeaponMod.getComponent<PositionComponent>().YPos = 200 + boxoffset*2;
 
         createNew3.getComponent<AssosateFunc>().voidMenufunc = setPlayOption;
 
@@ -298,10 +303,6 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         newCaraterText3.getComponent<PositionComponent>().YPos = 250+boxoffset*2+5;
         newCaraterText3.getComponent<TextureComponent>().sortKey = 14;
     }
-
-
-
-
 
 }
 void StateCharacter::draw()
@@ -325,11 +326,71 @@ bool StateCharacter::handleEvent(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
-        requestStackPop();
-        requestStackPush(States::Game);
+        //requestStackPop();
+        //requestStackPush(States::Game);
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
+        mouseClickedMenus mouseClickedMenus(getContext());
+        mouseClickedMenus.Clicked();
+
+        anax::World& world = *getContext().world;
+        std::string choice = "";
+        std::string source = "";
+        auto entitys = world.getEntities();
+        for(auto i : entitys)
+        {
+            if(i.hasComponent<MenuChoiceComponent>())
+            {
+                if(i.getComponent<MenuChoiceComponent>().choice == "Game")
+                {
+                    choice = "Game";
+                    getContext().sounds->play(SoundEffects::Click);
+                    source = i.getComponent<MenuChoiceComponent>().source;
+
+                }
+                if(i.getComponent<MenuChoiceComponent>().choice == "New")
+                {
+                    choice = "New";
+                    getContext().sounds->play(SoundEffects::Click);
+                    source = i.getComponent<MenuChoiceComponent>().source;
+
+                }
+
+            }
+        }
+        if(choice != "")
+        {
+            anax::World& world = *getContext().world;
+            auto enteties = world.getEntities();
+            for(auto i : enteties)
+            {
+                i.kill();
+                world.refresh();
+            }
+
+            anax::Entity save = world.createEntity();
+            save.addComponent<SaveComponent>();
+            if(source == "Save1")
+            {
+                save.getComponent<SaveComponent>().number = 1;
+                save.getComponent<SaveComponent>().file = "assets/saves/save1.txt";
+            }
+            if(source == "Save2")
+            {
+                save.getComponent<SaveComponent>().number = 2;
+                save.getComponent<SaveComponent>().file = "assets/saves/save2.txt";
+            }
+            if(source == "Save3")
+            {
+                save.getComponent<SaveComponent>().number = 3;
+                save.getComponent<SaveComponent>().file = "assets/saves/save3.txt";
+            }
+
+            if(choice == "Game") requestStateChange(States::Game);
+            if(choice == "New")  requestStateChange(States::CharacterCreation);
+
+        }
 
     }
 

@@ -23,6 +23,7 @@
 #include <include/systems/UpdateDialog.h>
 #include <include/components/CompCost.h>
 #include <include/collections/setUpAllCreatures.h>
+#include <include/components/Comp_save.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -43,6 +44,22 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     playerCam.setSize(1920, 1080);
     playerCam.zoom(zoom);
 
+    auto entitys = world.getEntities();
+    for(auto i : entitys)
+    {
+        if(i.hasComponent<SaveComponent>())
+        {
+            if(i.getComponent<SaveComponent>().number != -1)
+            {
+                save = i.getComponent<SaveComponent>().number;
+                saveFile = i.getComponent<SaveComponent>().file;
+                std::cout << saveFile << std::endl;
+                i.kill();
+                world.refresh();
+            }
+        }
+    }
+
     player = world.createEntity();
 
     // Load map information from JSON into object list
@@ -51,6 +68,64 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
 
     setUpAllCreatures setUpAllCreatures(getContext());
     setUpAllCreatures.SetUpCreatures(player);
+    if(save != -1)
+    {
+        int nr = 0;
+        std::map<int, std::string> SaveText;
+        std::ifstream file(saveFile);
+        std::string tempstring;
+        while (std::getline(file, tempstring))
+        {
+            SaveText[nr] = tempstring;
+            nr++;
+        }
+        std::string gold = SaveText[1];
+        int goldNumber;
+        std::istringstream ( gold ) >> goldNumber;
+        player.getComponent<Looteble>().gold = goldNumber;
+
+        std::string HealtPotion = SaveText[2];
+        int HealtPotionNumber;
+        std::istringstream ( HealtPotion ) >> HealtPotionNumber;
+        player.getComponent<Looteble>().HealtPotion = HealtPotionNumber;
+
+        std::string Armor = SaveText[3];
+        int ArmorNumber;
+        std::istringstream ( Armor ) >> ArmorNumber;
+        player.getComponent<Looteble>().armor = ArmorNumber;
+
+        std::string ArmorMod = SaveText[4];
+        int ArmorModNumber;
+        std::istringstream ( ArmorMod ) >> ArmorModNumber;
+        player.getComponent<Looteble>().armorModifier = ArmorModNumber;
+
+        std::string Weapon = SaveText[5];
+        int WeaponNumber;
+        std::istringstream ( Weapon ) >> WeaponNumber;
+        player.getComponent<Looteble>().weapon = WeaponNumber;
+
+        std::string WeaponMod = SaveText[6];
+        int WeaponModNumber;
+        std::istringstream ( WeaponMod ) >> WeaponModNumber;
+        player.getComponent<Looteble>().weaponModifier = WeaponModNumber;
+
+        //TODO: add carecter color
+        player.getComponent<TextureComponent>().sprite[0].setColor(sf::Color(100,255,255)); // makes good bluealternative
+
+    }
+
+    //read form file
+    // 1. Name
+    // 2. Gold
+    // 3: Healt potion
+    // 4. Armor
+    // 5. Armor mod
+    // 6. Weapon
+    // 7. Weapon mod
+
+
+
+
 
     movementTimer.restart().asSeconds();
     pathfindingTimer.restart().asSeconds();

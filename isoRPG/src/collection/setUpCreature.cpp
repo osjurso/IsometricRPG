@@ -3,6 +3,7 @@
 #include <include/components/Comp_Children.h>
 #include <include/components/Comp_ActionTimers.h>
 #include <include/components/CompCost.h>
+#include <include/components/Comp_Draweble.h>
 #include "include/collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
@@ -85,6 +86,8 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     costComponent.ArmorUpgrade = 100;
     costComponent.WeaponUpgrade= 100;
 
+    entity.addComponent<DrawebleComponent>();
+
     entity.activate();
 }
 void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty)
@@ -157,6 +160,8 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     entity.addComponent< Looteble>();
     Looteble& looteble = entity.getComponent<Looteble>();
 
+
+    entity.addComponent<DrawebleComponent>();
     entity.addComponent<MousedOver>();
 
 
@@ -233,6 +238,7 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
 
     entity.addComponent<Talkative>();
     entity.addComponent<ChildComponent>();
+    entity.addComponent<DrawebleComponent>();
 
     entity.activate();
 }

@@ -102,11 +102,13 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
 void setPlayOption(anax::Entity& entity)
 {
     entity.getComponent<MenuChoiceComponent>().choice = "Game";
+    std::cout << " pressed play" << std::endl;
 }
 
 void setNewCaracterOption(anax::Entity& entity)
 {
     entity.getComponent<MenuChoiceComponent>().choice = "New";
+    std::cout << " pressed new caracter" << std::endl;
 }
 
 void setSettingsOption(anax::Entity& entity)

@@ -11,6 +11,7 @@ class MenuChoiceComponent : public anax::Component
 {
 public:
     std::string choice = "";
+    std::string source  = "";
 };
 
 

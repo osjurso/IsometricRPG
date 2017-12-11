@@ -12,7 +12,8 @@ namespace States
         Game,
         Pause,
         GameOver,
-        Character
+        Character,
+        CharacterCreation
     };
 }
 

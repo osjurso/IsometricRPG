@@ -19,6 +19,7 @@
 #include <components/Comp_Text.h>
 #include <components/Comp_mousedOver.h>
 #include <include/components/Comp_SqureShape.h>
+#include <include/components/Comp_Draweble.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -42,55 +43,59 @@ public:
 
         for(auto i : enteties)
         {
-            if(!i.hasComponent<TextComponent>() && i.getComponent<TextureComponent>().draw && !i.hasComponent<SqureComponent>())
+            if(i.hasComponent<DrawebleComponent>())
             {
-                StateComponent&    stateComponent    = i.getComponent<StateComponent>();
-                TextureComponent&  textureComponent  = i.getComponent<TextureComponent>();
-                PositionComponent& positionComponent = i.getComponent<PositionComponent>();
-
-                if(stateComponent.state == state)
+                if(!i.hasComponent<TextComponent>() && i.getComponent<TextureComponent>().draw && !i.hasComponent<SqureComponent>())
                 {
+                    StateComponent&    stateComponent    = i.getComponent<StateComponent>();
+                    TextureComponent&  textureComponent  = i.getComponent<TextureComponent>();
+                    PositionComponent& positionComponent = i.getComponent<PositionComponent>();
 
-                    if(i.hasComponent<AnimationComponent>())
+                    if(stateComponent.state == state)
                     {
-                        textureComponent.sprite[0].setTextureRect(textureComponent.spriteRect);
+
+                        if(i.hasComponent<AnimationComponent>())
+                        {
+                            textureComponent.sprite[0].setTextureRect(textureComponent.spriteRect);
+                            if(textureComponent.multisprite)
+                            {
+                                textureComponent.sprite[1].setTextureRect(textureComponent.spriteRect);
+                                textureComponent.sprite[2].setTextureRect(textureComponent.spriteRect);
+                                textureComponent.sprite[3].setTextureRect(textureComponent.spriteRect);
+                            }
+                        }
+
                         if(textureComponent.multisprite)
                         {
-                            textureComponent.sprite[1].setTextureRect(textureComponent.spriteRect);
-                            textureComponent.sprite[2].setTextureRect(textureComponent.spriteRect);
-                            textureComponent.sprite[3].setTextureRect(textureComponent.spriteRect);
+                            textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
+                            textureComponent.sprite[1].setPosition(positionComponent.XPos, positionComponent.YPos);
+                            textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
+                            textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
+                            window.draw(textureComponent.sprite[0]);
+                            window.draw(textureComponent.sprite[1]);
+                            window.draw(textureComponent.sprite[2]);
+                            window.draw(textureComponent.sprite[3]);
+                        }else
+                        {
+                            textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
+                            window.draw(textureComponent.sprite[0]);
                         }
                     }
-
-                    if(textureComponent.multisprite)
-                    {
-                        textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
-                        textureComponent.sprite[1].setPosition(positionComponent.XPos, positionComponent.YPos);
-                        textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
-                        textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
-                        window.draw(textureComponent.sprite[0]);
-                        window.draw(textureComponent.sprite[1]);
-                        window.draw(textureComponent.sprite[2]);
-                        window.draw(textureComponent.sprite[3]);
-                    }else
-                    {
-                        textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
-                        window.draw(textureComponent.sprite[0]);
-                    }
+                }else if(i.hasComponent<TextComponent>() && i.getComponent<TextComponent>().draw)
+                {
+                    TextComponent& textComponent = i.getComponent<TextComponent>();
+                    PositionComponent& positionComponent = i.getComponent<PositionComponent>();
+                    textComponent.text.setPosition(positionComponent.XPos, positionComponent.YPos);
+                    window.draw(textComponent.text);
+                }else if(i.hasComponent<SqureComponent>())
+                {
+                    SqureComponent& squreComponent = i.getComponent<SqureComponent>();
+                    PositionComponent& positionComponent = i.getComponent<PositionComponent>();
+                    squreComponent.rectShape.setPosition(positionComponent.XPos,positionComponent.YPos);
+                    window.draw(i.getComponent<SqureComponent>().rectShape);
                 }
-            }else if(i.hasComponent<TextComponent>() && i.getComponent<TextComponent>().draw)
-            {
-                TextComponent& textComponent = i.getComponent<TextComponent>();
-                PositionComponent& positionComponent = i.getComponent<PositionComponent>();
-                textComponent.text.setPosition(positionComponent.XPos, positionComponent.YPos);
-                window.draw(textComponent.text);
-            }else if(i.hasComponent<SqureComponent>())
-            {
-                SqureComponent& squreComponent = i.getComponent<SqureComponent>();
-                PositionComponent& positionComponent = i.getComponent<PositionComponent>();
-                squreComponent.rectShape.setPosition(positionComponent.XPos,positionComponent.YPos);
-                window.draw(i.getComponent<SqureComponent>().rectShape);
             }
+
         }
     }
 };

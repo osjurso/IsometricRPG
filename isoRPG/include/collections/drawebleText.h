@@ -23,6 +23,7 @@
 #include <components/Comp_talk.h>
 #include <include/components/Comp_UI.h>
 #include <include/components/Comp_Text.h>
+#include <include/components/Comp_Draweble.h>
 
 class DrawebleText
 {
@@ -61,6 +62,8 @@ public:
         entity.addComponent<StateComponent>();
         StateComponent& stateComponent = entity.getComponent<StateComponent>();
         stateComponent.state = state;
+
+        entity.addComponent<DrawebleComponent>();
         entity.activate();
 
     }
