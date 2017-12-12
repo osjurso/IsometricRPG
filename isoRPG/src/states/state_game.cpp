@@ -79,6 +79,9 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
             SaveText[nr] = tempstring;
             nr++;
         }
+        std::string name = SaveText[0];
+        player.getComponent<Looteble>().name = name;
+
         std::string gold = SaveText[1];
         int goldNumber;
         std::istringstream ( gold ) >> goldNumber;
@@ -123,12 +126,9 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     // 6. Weapon
     // 7. Weapon mod
 
-
-
-
-
     movementTimer.restart().asSeconds();
     pathfindingTimer.restart().asSeconds();
+    saveTimer.restart().asSeconds();
 
 
     SetUpUI setUpUI;
@@ -200,7 +200,27 @@ bool StateGame::update(sf::Time dt)
 
         pathfindingTimer.restart();
     }
-
+    if(saveTimer.getElapsedTime().asSeconds() >= 10)
+    {
+        std::ofstream ofs;
+        ofs.open(saveFile, std::ofstream::out | std::ofstream::trunc);
+        ofs << player.getComponent<Looteble>().name << std::endl;
+        ofs << player.getComponent<Looteble>().gold << std::endl;
+        ofs << player.getComponent<Looteble>().HealtPotion << std::endl;
+        ofs << player.getComponent<Looteble>().armor << std::endl;
+        ofs << player.getComponent<Looteble>().armorModifier << std::endl;
+        ofs << player.getComponent<Looteble>().weapon << std::endl;
+        ofs << player.getComponent<Looteble>().weaponModifier << std::endl;
+        ofs.close();
+    }
+    //read form file
+    // 1. Name
+    // 2. Gold
+    // 3: Healt potion
+    // 4. Armor
+    // 5. Armor mod
+    // 6. Weapon
+    // 7. Weapon mod
 
 
     UpdateDialog updateDialog;

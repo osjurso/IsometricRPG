@@ -3,6 +3,7 @@
 #include <include/systems/mouse_clicked.h>
 #include <include/systems/mouseClickedMenus.h>
 #include <include/components/Comp_Menuchoice.h>
+#include <include/collections/setUpRectShape.h>
 #include "include/states/state_menu.h"
 #include "include/util/utility.h"
 #include "collections/drawable.h"
@@ -14,6 +15,7 @@ StateMenu::StateMenu(StateStack& stack, Context context)
         , mOptionIndex(0)
 {
     sf::Font& font = context.fonts->get(Fonts::RPG);
+    sf::RenderWindow& window = *getContext().window;
 
     mLogoSprite.setTexture(context.textures->get(Textures::TitleText));
     mBackdrop.setTexture(context.textures->get(Textures::MenuBackdrop));
@@ -47,10 +49,10 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     DrawebleText drawebleText;
     sf::View cam = getContext().window->getView();
-    drawebleText.setUpDrawebleText(PlayOption    ,"Play"    ,cam,"Menu",1,font,sf::Color().White);
-    drawebleText.setUpDrawebleText(SettingsOption,"Settings",cam,"Menu",1,font,sf::Color().White);
-    drawebleText.setUpDrawebleText(AboutOption   ,"About"   ,cam,"Menu",1,font,sf::Color().White);
-    drawebleText.setUpDrawebleText(ExitOption    ,"Exit"    ,cam,"Menu",1,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(PlayOption    ,"Play"    ,cam,"Menu",1.0f,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(SettingsOption,"Settings",cam,"Menu",1.0f,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(AboutOption   ,"About"   ,cam,"Menu",1.0f,font,sf::Color().White);
+    drawebleText.setUpDrawebleText(ExitOption    ,"Exit"    ,cam,"Menu",1.0f,font,sf::Color().White);
 
     PlayOption.addComponent<MousedOver>();
     PlayOption.addComponent<AssosateFunc>();
@@ -79,15 +81,25 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     int nr =0;
     PlayOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - PlayOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
     PlayOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    PlayOption.getComponent<PositionComponent>().SpriteLeft = PlayOption.getComponent<PositionComponent>().XPos;
+    PlayOption.getComponent<PositionComponent>().SpriteTop = PlayOption.getComponent<PositionComponent>().YPos;
     nr++;
     SettingsOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - SettingsOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
     SettingsOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    SettingsOption.getComponent<PositionComponent>().SpriteLeft = SettingsOption.getComponent<PositionComponent>().XPos;
+    SettingsOption.getComponent<PositionComponent>().SpriteTop = SettingsOption.getComponent<PositionComponent>().YPos;
     nr++;
     AboutOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - AboutOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
     AboutOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2 -1;
+    AboutOption.getComponent<PositionComponent>().SpriteLeft = AboutOption.getComponent<PositionComponent>().XPos;
+    AboutOption.getComponent<PositionComponent>().SpriteTop = AboutOption.getComponent<PositionComponent>().YPos;
     nr++;
     ExitOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - ExitOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
     ExitOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    ExitOption.getComponent<PositionComponent>().SpriteLeft = ExitOption.getComponent<PositionComponent>().XPos;
+    ExitOption.getComponent<PositionComponent>().SpriteTop = ExitOption.getComponent<PositionComponent>().YPos;
+
+
 
 
     // Creating menu choices

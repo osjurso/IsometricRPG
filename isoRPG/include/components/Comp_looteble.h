@@ -15,6 +15,7 @@ public:
     int weaponModifier = 0;
     int armor = 0;
     int weapon = 10;
+    std::string name;
 };
 
 

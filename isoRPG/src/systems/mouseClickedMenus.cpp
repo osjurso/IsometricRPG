@@ -1,6 +1,7 @@
 
 
 #include <include/components/Comp_Text.h>
+#include <include/collections/setUpRectShape.h>
 #include "include/systems/mouseClickedMenus.h"
 
 mouseClickedMenus::mouseClickedMenus(StateBase::Context context) :context(context)
@@ -28,20 +29,32 @@ void mouseClickedMenus::process(anax::Entity &e, float MouseX, float MouseY, sf:
     sf::IntRect entityRect;
     PositionComponent& positionComponent = e.getComponent<PositionComponent>();
     SizeComponent& sizeComponent = e.getComponent<SizeComponent>();
+
+
     if(e.hasComponent<TextComponent>())
     {
-        entityRect.top =  positionComponent.YPos - e.getComponent<TextComponent>().text.getLocalBounds().height/2;
-        entityRect.left = positionComponent.XPos - e.getComponent<TextComponent>().text.getLocalBounds().width/2;
+        entityRect.left = positionComponent.XPos ;
         entityRect.width =  e.getComponent<TextComponent>().text.getLocalBounds().width;
+
+        entityRect.top =  positionComponent.YPos ;
         entityRect.height = e.getComponent<TextComponent>().text.getLocalBounds().height;
     }
     else
     {
-        entityRect.top =  positionComponent.YPos;
         entityRect.left = positionComponent.XPos;
-        entityRect.width =  e.getComponent<SizeComponent>().Height;
-        entityRect.height = e.getComponent<SizeComponent>().Whith;
+        entityRect.width =  e.getComponent<SizeComponent>().Whith ;
+
+        entityRect.top =  positionComponent.YPos -45;
+        entityRect.height = e.getComponent<SizeComponent>().Height;
+/*
+        anax::Entity temp = e.getWorld().createEntity();
+        SetUpRectShape setUpRectShape;
+        sf::View cam = window.getView();
+        setUpRectShape.setUpRectshape(temp,entityRect.top,entityRect.left,entityRect.height,entityRect.width,1,sf::Color().White, cam);
+        */
     }
+
+
 
 
     if(entityRect.contains(MouseX,MouseY))

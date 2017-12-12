@@ -13,11 +13,146 @@
 StateCharacter::StateCharacter(StateStack &stack, Context context)
         : StateBase(stack, context)
 {
-    sf::Font& font = context.fonts->get(Fonts::RPG);
+
+    setUpSaves();
+
+
+}
+void StateCharacter::draw()
+{
+    sf::RenderWindow& window = *getContext().window;
+
+    window.setView(window.getDefaultView());
+
+    anax::World& world = *getContext().world;
+    DrawEntetys drawEntetys;
+    drawEntetys.draw(window,world,"Character");
+
+}
+
+bool StateCharacter::update(sf::Time dt)
+{
+    return true;
+}
+
+bool StateCharacter::handleEvent(const sf::Event &event)
+{
+    if (event.type == sf::Event::KeyPressed)
+    {
+        //requestStackPop();
+        //requestStackPush(States::Game);
+    }
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        mouseClickedMenus mouseClickedMenus(getContext());
+        mouseClickedMenus.Clicked();
+
+        anax::World& world = *getContext().world;
+        std::string choice = "";
+        std::string source = "";
+        auto entitys = world.getEntities();
+        for(auto i : entitys)
+        {
+            if(i.hasComponent<MenuChoiceComponent>())
+            {
+                if(i.getComponent<MenuChoiceComponent>().choice == "Game")
+                {
+                    choice = "Game";
+                    getContext().sounds->play(SoundEffects::Click);
+                    source = i.getComponent<MenuChoiceComponent>().source;
+
+                }
+                if(i.getComponent<MenuChoiceComponent>().choice == "New")
+                {
+                    choice = "New";
+                    getContext().sounds->play(SoundEffects::Click);
+                    source = i.getComponent<MenuChoiceComponent>().source;
+                }
+                if(i.getComponent<MenuChoiceComponent>().choice == "Renew")
+                {
+                    auto enteties = world.getEntities();
+                    choice = "Renew";
+                    if(i.getComponent<MenuChoiceComponent>().source == "delete1")
+                    {
+                        for(auto i : enteties)
+                        {
+                            if(i.getComponent<TextureComponent>().sortKey == 15)i.kill();
+                        }
+                    }
+                    if(i.getComponent<MenuChoiceComponent>().source == "delete2")
+                    {
+                        for(auto i : enteties)
+                        {
+                            if(i.getComponent<TextureComponent>().sortKey == 16) i.kill();
+                        }
+                    }
+                    if(i.getComponent<MenuChoiceComponent>().source == "delete3")
+                    {
+                        for(auto i : enteties)
+                        {
+                            if(i.getComponent<TextureComponent>().sortKey == 17)i.kill();
+                        }
+                    }
+                    getContext().sounds->play(SoundEffects::Click);
+                    world.refresh();
+                    choice = "Renew";
+                }
+
+            }
+        }
+
+        if(choice != "")
+        {
+            anax::World& world = *getContext().world;
+            auto enteties = world.getEntities();
+            for(auto i : enteties)
+            {
+                i.kill();
+                world.refresh();
+            }
+
+            anax::Entity save = world.createEntity();
+            save.addComponent<SaveComponent>();
+            if(source == "Save1")
+            {
+                save.getComponent<SaveComponent>().number = 1;
+                save.getComponent<SaveComponent>().file = "assets/saves/save1.txt";
+            }
+            if(source == "Save2")
+            {
+                save.getComponent<SaveComponent>().number = 2;
+                save.getComponent<SaveComponent>().file = "assets/saves/save2.txt";
+            }
+            if(source == "Save3")
+            {
+                save.getComponent<SaveComponent>().number = 3;
+                save.getComponent<SaveComponent>().file = "assets/saves/save3.txt";
+            }
+
+            if(choice == "Game") requestStateChange(States::Game);
+            if(choice == "New")  requestStateChange(States::CharacterCreation);
+
+            if(choice == "Renew")
+            {
+                save.kill();
+                world.refresh();
+                setUpSaves();
+            }
+
+
+        }
+
+    }
+
+    return true;
+}
+
+void StateCharacter::setUpSaves()
+{
+    sf::Font& font = getContext().fonts->get(Fonts::RPG);
 
     anax::World& world = *getContext().world;
     sf::RenderWindow& window = *getContext().window;
-
 
     anax::Entity background = world.createEntity();
 
@@ -27,12 +162,12 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
 
     Draweble draweble;
 
-    draweble.makeDraweble(context.textures->get(Textures::SettingsBackdorp),0,0,background,"Character");
+    draweble.makeDraweble(getContext().textures->get(Textures::SettingsBackdorp),0,0,background,"Character");
 
     float boxoffset = 300;
-    draweble.makeDraweble(context.textures->get(Textures::CharacterBox),500,80,saveSlot1,"Character");
-    draweble.makeDraweble(context.textures->get(Textures::CharacterBox),500,80 + boxoffset,saveSlot2,"Character");
-    draweble.makeDraweble(context.textures->get(Textures::CharacterBox),500,80 + boxoffset*2,saveSlot3,"Character");
+    draweble.makeDraweble(getContext().textures->get(Textures::CharacterBox),500,80,saveSlot1,"Character");
+    draweble.makeDraweble(getContext().textures->get(Textures::CharacterBox),500,80 + boxoffset,saveSlot2,"Character");
+    draweble.makeDraweble(getContext().textures->get(Textures::CharacterBox),500,80 + boxoffset*2,saveSlot3,"Character");
 
     background.getComponent<TextureComponent>().sortKey = 10;
 
@@ -114,13 +249,13 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(player1Weapon,           "Weapon: " + file1Text.at(5),cam,"Character",1,font,sf::Color().Black);
         drawebleText.setUpDrawebleText(player1WeaponMod,             " + " + file1Text.at(6),cam,"Character",1,font,sf::Color().Black);
 
-        player1Name.getComponent<TextureComponent>().sortKey = 13;
-        player1Gold.getComponent<TextureComponent>().sortKey = 13;
-        player1HeathPotion.getComponent<TextureComponent>().sortKey = 13;
-        player1Armor.getComponent<TextureComponent>().sortKey = 13;
-        player1ArmorMod.getComponent<TextureComponent>().sortKey = 13;
-        player1Weapon.getComponent<TextureComponent>().sortKey = 13;
-        player1WeaponMod.getComponent<TextureComponent>().sortKey = 13;
+        player1Name.getComponent<TextureComponent>().sortKey = 15;
+        player1Gold.getComponent<TextureComponent>().sortKey = 15;
+        player1HeathPotion.getComponent<TextureComponent>().sortKey = 15;
+        player1Armor.getComponent<TextureComponent>().sortKey = 15;
+        player1ArmorMod.getComponent<TextureComponent>().sortKey = 15;
+        player1Weapon.getComponent<TextureComponent>().sortKey = 15;
+        player1WeaponMod.getComponent<TextureComponent>().sortKey = 15;
 
         player1Name.getComponent<PositionComponent>().XPos = 750;
         player1Name.getComponent<PositionComponent>().YPos = 100;
@@ -146,9 +281,21 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         createNew1.getComponent<AssosateFunc>().voidMenufunc = setPlayOption;
         anax::Entity PlayText1 = world.createEntity();
         drawebleText.setUpDrawebleText(PlayText1,"Play",cam,"Character",1,font,sf::Color().Black);
-        PlayText1.getComponent<TextureComponent>().sortKey = 14;
+        PlayText1.getComponent<TextureComponent>().sortKey = 15;
         PlayText1.getComponent<PositionComponent>().XPos = 850+110;
         PlayText1.getComponent<PositionComponent>().YPos = 250+5;
+
+        anax::Entity delete1 = world.createEntity();
+        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),500 + saveSlot1.getComponent<SizeComponent>().Height-50,95,delete1,"Character");
+        delete1.getComponent<TextureComponent>().sortKey = 15;
+        delete1.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
+
+        delete1.addComponent<MenuChoiceComponent>();
+        delete1.getComponent<MenuChoiceComponent>().source = "delete1";
+        delete1.addComponent<MousedOver>();
+        delete1.addComponent<AssosateFunc>();
+        delete1.getComponent<AssosateFunc>().voidMenufunc = setRenewOption;
+
     }else
     {
         createNew1.getComponent<AssosateFunc>().voidMenufunc = setNewCaracterOption;
@@ -156,7 +303,7 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(newCaraterText1,"New Character",cam,"Character",1,font,sf::Color().Black);
         newCaraterText1.getComponent<PositionComponent>().XPos = 850+50;
         newCaraterText1.getComponent<PositionComponent>().YPos = 250+5;
-        newCaraterText1.getComponent<TextureComponent>().sortKey = 14;
+        newCaraterText1.getComponent<TextureComponent>().sortKey = 15;
     }
 
     anax::Entity createNew2 = world.createEntity();
@@ -185,13 +332,13 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(player2Weapon,           "Weapon: " + file2Text.at(5),cam,"Character",1,font,sf::Color().Black);
         drawebleText.setUpDrawebleText(player2WeaponMod,             " + " + file2Text.at(6),cam,"Character",1,font,sf::Color().Black);
 
-        player2Name.getComponent<TextureComponent>().sortKey = 13;
-        player2Gold.getComponent<TextureComponent>().sortKey = 13;
-        player2HeathPotion.getComponent<TextureComponent>().sortKey = 13;
-        player2Armor.getComponent<TextureComponent>().sortKey = 13;
-        player2ArmorMod.getComponent<TextureComponent>().sortKey = 13;
-        player2Weapon.getComponent<TextureComponent>().sortKey = 13;
-        player2WeaponMod.getComponent<TextureComponent>().sortKey = 13;
+        player2Name.getComponent<TextureComponent>().sortKey = 16;
+        player2Gold.getComponent<TextureComponent>().sortKey = 16;
+        player2HeathPotion.getComponent<TextureComponent>().sortKey = 16;
+        player2Armor.getComponent<TextureComponent>().sortKey = 16;
+        player2ArmorMod.getComponent<TextureComponent>().sortKey = 16;
+        player2Weapon.getComponent<TextureComponent>().sortKey = 16;
+        player2WeaponMod.getComponent<TextureComponent>().sortKey = 16;
 
         player2Name.getComponent<PositionComponent>().XPos = 750;
         player2Name.getComponent<PositionComponent>().YPos = 100 + boxoffset;
@@ -220,7 +367,19 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(PlayText2,"Play",cam,"Character",1,font,sf::Color().Black);
         PlayText2.getComponent<PositionComponent>().XPos = 850+110;
         PlayText2.getComponent<PositionComponent>().YPos = 250+boxoffset+5;
-        PlayText2.getComponent<TextureComponent>().sortKey = 14;
+        PlayText2.getComponent<TextureComponent>().sortKey = 16;
+
+        anax::Entity delete2 = world.createEntity();
+        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),500 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset,delete2,"Character");
+        delete2.getComponent<TextureComponent>().sortKey = 16;
+        delete2.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
+
+
+        delete2.addComponent<MenuChoiceComponent>();
+        delete2.getComponent<MenuChoiceComponent>().source = "delete2";
+        delete2.addComponent<MousedOver>();
+        delete2.addComponent<AssosateFunc>();
+        delete2.getComponent<AssosateFunc>().voidMenufunc = setRenewOption;
     }else
     {
         createNew2.getComponent<AssosateFunc>().voidMenufunc = setNewCaracterOption;
@@ -228,7 +387,7 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(newCaraterText2,"New Character",cam,"Character",1,font,sf::Color().Black);
         newCaraterText2.getComponent<PositionComponent>().XPos = 850+50;
         newCaraterText2.getComponent<PositionComponent>().YPos = 250+boxoffset +5;
-        newCaraterText2.getComponent<TextureComponent>().sortKey = 14;
+        newCaraterText2.getComponent<TextureComponent>().sortKey = 16;
     }
 
     anax::Entity createNew3 = world.createEntity();
@@ -257,13 +416,13 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(player3Weapon,           "Weapon: " + file3Text.at(5),cam,"Character",1,font,sf::Color().Black);
         drawebleText.setUpDrawebleText(player3WeaponMod,             " + " + file3Text.at(6),cam,"Character",1,font,sf::Color().Black);
 
-        player3Name.getComponent<TextureComponent>().sortKey = 13;
-        player3Gold.getComponent<TextureComponent>().sortKey = 13;
-        player3HeathPotion.getComponent<TextureComponent>().sortKey = 13;
-        player3Armor.getComponent<TextureComponent>().sortKey = 13;
-        player3ArmorMod.getComponent<TextureComponent>().sortKey = 13;
-        player3Weapon.getComponent<TextureComponent>().sortKey = 13;
-        player3WeaponMod.getComponent<TextureComponent>().sortKey = 13;
+        player3Name.getComponent<TextureComponent>().sortKey = 17;
+        player3Gold.getComponent<TextureComponent>().sortKey = 17;
+        player3HeathPotion.getComponent<TextureComponent>().sortKey = 17;
+        player3Armor.getComponent<TextureComponent>().sortKey = 17;
+        player3ArmorMod.getComponent<TextureComponent>().sortKey = 17;
+        player3Weapon.getComponent<TextureComponent>().sortKey = 17;
+        player3WeaponMod.getComponent<TextureComponent>().sortKey = 17;
 
         player3Name.getComponent<PositionComponent>().XPos = 750;
         player3Name.getComponent<PositionComponent>().YPos = 100 + boxoffset*2;
@@ -292,7 +451,18 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(PlayText3,"Play",cam,"Character",1,font,sf::Color().Black);
         PlayText3.getComponent<PositionComponent>().XPos = 850+110;
         PlayText3.getComponent<PositionComponent>().YPos = 250+boxoffset*2+5;
-        PlayText3.getComponent<TextureComponent>().sortKey = 14;
+        PlayText3.getComponent<TextureComponent>().sortKey = 17;
+
+        anax::Entity delete3 = world.createEntity();
+        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),500 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset*2,delete3,"Character");
+        delete3.getComponent<TextureComponent>().sortKey = 17;
+        delete3.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
+
+        delete3.addComponent<MenuChoiceComponent>();
+        delete3.getComponent<MenuChoiceComponent>().source = "delete3";
+        delete3.addComponent<MousedOver>();
+        delete3.addComponent<AssosateFunc>();
+        delete3.getComponent<AssosateFunc>().voidMenufunc = setRenewOption;
     }else
     {
         createNew3.getComponent<AssosateFunc>().voidMenufunc = setNewCaracterOption;
@@ -301,98 +471,8 @@ StateCharacter::StateCharacter(StateStack &stack, Context context)
         drawebleText.setUpDrawebleText(newCaraterText3,"New Character",cam,"Character",1,font,sf::Color().Black);
         newCaraterText3.getComponent<PositionComponent>().XPos = 850+50;
         newCaraterText3.getComponent<PositionComponent>().YPos = 250+boxoffset*2+5;
-        newCaraterText3.getComponent<TextureComponent>().sortKey = 14;
+        newCaraterText3.getComponent<TextureComponent>().sortKey = 17;
     }
 
-}
-void StateCharacter::draw()
-{
-    sf::RenderWindow& window = *getContext().window;
 
-    window.setView(window.getDefaultView());
-
-    anax::World& world = *getContext().world;
-    DrawEntetys drawEntetys;
-    drawEntetys.draw(window,world,"Character");
-
-}
-
-bool StateCharacter::update(sf::Time dt)
-{
-    return true;
-}
-
-bool StateCharacter::handleEvent(const sf::Event &event)
-{
-    if (event.type == sf::Event::KeyPressed)
-    {
-        //requestStackPop();
-        //requestStackPush(States::Game);
-    }
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        mouseClickedMenus mouseClickedMenus(getContext());
-        mouseClickedMenus.Clicked();
-
-        anax::World& world = *getContext().world;
-        std::string choice = "";
-        std::string source = "";
-        auto entitys = world.getEntities();
-        for(auto i : entitys)
-        {
-            if(i.hasComponent<MenuChoiceComponent>())
-            {
-                if(i.getComponent<MenuChoiceComponent>().choice == "Game")
-                {
-                    choice = "Game";
-                    getContext().sounds->play(SoundEffects::Click);
-                    source = i.getComponent<MenuChoiceComponent>().source;
-
-                }
-                if(i.getComponent<MenuChoiceComponent>().choice == "New")
-                {
-                    choice = "New";
-                    getContext().sounds->play(SoundEffects::Click);
-                    source = i.getComponent<MenuChoiceComponent>().source;
-
-                }
-
-            }
-        }
-        if(choice != "")
-        {
-            anax::World& world = *getContext().world;
-            auto enteties = world.getEntities();
-            for(auto i : enteties)
-            {
-                i.kill();
-                world.refresh();
-            }
-
-            anax::Entity save = world.createEntity();
-            save.addComponent<SaveComponent>();
-            if(source == "Save1")
-            {
-                save.getComponent<SaveComponent>().number = 1;
-                save.getComponent<SaveComponent>().file = "assets/saves/save1.txt";
-            }
-            if(source == "Save2")
-            {
-                save.getComponent<SaveComponent>().number = 2;
-                save.getComponent<SaveComponent>().file = "assets/saves/save2.txt";
-            }
-            if(source == "Save3")
-            {
-                save.getComponent<SaveComponent>().number = 3;
-                save.getComponent<SaveComponent>().file = "assets/saves/save3.txt";
-            }
-
-            if(choice == "Game") requestStateChange(States::Game);
-            if(choice == "New")  requestStateChange(States::CharacterCreation);
-
-        }
-
-    }
-
-    return true;
 }

@@ -31,6 +31,8 @@ public:
     void setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty);
 
     void setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, int Xofset, int Yofset);
+
+    void setUpBoss(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos);
 };
 
 #endif //ISORPG_SETUPPLAYER_H

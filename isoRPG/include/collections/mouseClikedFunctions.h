@@ -30,4 +30,6 @@ void setAboutOption(anax::Entity& entity);
 void setExitOption(anax::Entity& entity);
 
 void setNewCaracterOption(anax::Entity& entity);
+
+void setRenewOption(anax::Entity& entity);
 #endif //ISORPG_MOUSECLIKEDFUNCTIONS_H

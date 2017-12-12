@@ -31,13 +31,13 @@ public:
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-        positionComponent.YPos = Top;
         positionComponent.XPos = Left;
+        positionComponent.YPos = Top;
 
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
-        sizeComponent.Height = textureComponent.texture[0].getSize().x;
-        sizeComponent.Whith = textureComponent.texture[0].getSize().y;
+        sizeComponent.Height = textureComponent.texture[0].getSize().y;
+        sizeComponent.Whith = textureComponent.texture[0].getSize().x;
 
         entity.addComponent<StateComponent>();
         StateComponent& stateComponent = entity.getComponent<StateComponent>();

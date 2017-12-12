@@ -125,3 +125,23 @@ void setExitOption(anax::Entity& entity)
 {
     entity.getComponent<MenuChoiceComponent>().choice = "Exit";
 }
+
+void setRenewOption(anax::Entity& entity)
+{
+    entity.getComponent<MenuChoiceComponent>().choice = "Renew";
+    std::ofstream ofs;
+    if(entity.getComponent<MenuChoiceComponent>().source == "delete1")
+    {
+        ofs.open("assets/saves/save1.txt", std::ofstream::out | std::ofstream::trunc);
+    }
+    if(entity.getComponent<MenuChoiceComponent>().source == "delete2")
+    {
+        ofs.open("assets/saves/save2.txt", std::ofstream::out | std::ofstream::trunc);
+    }
+    if(entity.getComponent<MenuChoiceComponent>().source == "delete3")
+    {
+        ofs.open("assets/saves/save3.txt", std::ofstream::out | std::ofstream::trunc);
+    }
+
+    ofs.close();
+}

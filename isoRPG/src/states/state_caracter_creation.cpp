@@ -7,6 +7,7 @@
 #include <include/collections/mouseClikedFunctions.h>
 #include <include/components/Comp_Menuchoice.h>
 #include <fstream>
+#include <include/collections/setUpRectShape.h>
 #include "include/states/state_caracter_creation.h"
 
 StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context) : StateBase(stack, context)
@@ -50,6 +51,7 @@ StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context)
     CaracterName.getComponent<PositionComponent>().XPos = 300 + nameText.getComponent<SizeComponent>().Whith;
     CaracterName.getComponent<PositionComponent>().YPos = 100;
 
+
     anax::Entity playButton = world.createEntity();
     draweble.makeDraweble(getContext().textures->get(Textures::CharacterNew),cam.getCenter().x,cam.getSize().y -200,playButton,"CharacterCreation");
     playButton.getComponent<PositionComponent>().XPos = playButton.getComponent<PositionComponent>().XPos - playButton.getComponent<TextureComponent>().sprite->getLocalBounds().width/2;
@@ -64,6 +66,13 @@ StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context)
     PlayText.getComponent<PositionComponent>().XPos = cam.getCenter().x- PlayText.getComponent<TextComponent>().text.getLocalBounds().width/2;
     PlayText.getComponent<PositionComponent>().YPos = cam.getSize().y -200 +8;
     PlayText.getComponent<TextureComponent>().sortKey = 13;
+
+
+    anax::Entity temp = getContext().world->createEntity();
+    SetUpRectShape setUpRectShape;
+    setUpRectShape.setUpRectshape(temp,PlayText.getComponent<PositionComponent>().XPos,PlayText.getComponent<PositionComponent>().YPos,
+                                  PlayText.getComponent<SizeComponent>().Height,PlayText.getComponent<SizeComponent>().Whith,1,sf::Color().White, cam);
+
 }
 
 void StateCaracterCreation::draw()

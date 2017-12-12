@@ -13,7 +13,10 @@ public:
     bool update(sf::Time dt) override;
     bool handleEvent(const sf::Event &event) override;
 
+
 private:
+    void setUpSaves();
+
     bool firstFull;
     bool secondFull;
     bool thirdFull;

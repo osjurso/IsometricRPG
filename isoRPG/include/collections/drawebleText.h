@@ -46,8 +46,8 @@ public:
 
         entity.addComponent<PositionComponent>();
         PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
-        positionComponent.YPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().Xofset;
-        positionComponent.XPos = cam.getCenter().y + (cam.getSize().y/2) + entity.getComponent<UIComp>().Yofset;
+        positionComponent.XPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().Xofset;
+        positionComponent.YPos = cam.getCenter().y + (cam.getSize().y/2) + entity.getComponent<UIComp>().Yofset;
         positionComponent.SpriteLeft = positionComponent.XPos;
         positionComponent.SpriteTop = positionComponent.YPos;
 

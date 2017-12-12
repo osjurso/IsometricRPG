@@ -42,6 +42,7 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     anax::Entity goblin4 = world.createEntity();
     anax::Entity trader = world.createEntity();
     anax::Entity armorer = world.createEntity();
+    anax::Entity boss = world.createEntity();
 
     SetUpCreature creatureSetup;
 
@@ -50,6 +51,7 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     creatureSetup.setUpEnemie(goblin2, GoblinTexture, window ,100 ,100, "Medium");
     creatureSetup.setUpEnemie(goblin3, GoblinTexture, window ,400 ,200, "Easy");
     creatureSetup.setUpEnemie(goblin4, GoblinTexture, window ,300 ,100, "Hard");
+    creatureSetup.setUpBoss(boss,GoblinTexture,window,200,200);
 
     creatureSetup.setUpNPC(trader,TraderTexture  ,window,300,300,0,0);
     creatureSetup.setUpNPC(armorer,ArmorerTexture,window,350,350,42,42);
