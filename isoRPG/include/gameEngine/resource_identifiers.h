@@ -58,6 +58,7 @@ namespace Music
     {
         Menu,
         Test,
+        GameOver,
     };
 }
 

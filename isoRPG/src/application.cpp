@@ -1,5 +1,6 @@
 #include <include/states/state_character.h>
 #include <include/states/state_caracter_creation.h>
+#include <include/states/state_game_over.h>
 #include "include/states/state_menu.h"
 #include "include/states/state_settings.h"
 #include "include/states/state_game.h"
@@ -62,7 +63,7 @@ Application::Application()
     mStatisticsText.setCharacterSize(15);
 
     registerStates();
-    mStateStack.pushState(States::Character);
+    mStateStack.pushState(States::Menu);
 }
 
 void Application::run()
@@ -145,4 +146,5 @@ void Application::registerStates()
     mStateStack.registerState<StatePause>(States::Pause);
     mStateStack.registerState<StateCharacter>(States::Character);
     mStateStack.registerState<StateCaracterCreation>(States::CharacterCreation);
+    mStateStack.registerState<StateGameOver>(States::GameOver);
 }
