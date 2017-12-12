@@ -1,10 +1,15 @@
 #include <include/collections/drawable.h>
+#include <iostream>
 #include "include/systems/lighting_system.h"
 
 LightingSystem::LightingSystem(sf::Texture &texture)
+        : ambientLight(sf::Color(50, 50, 80))
+        , duskTime(sf::seconds(720.0f))
+        , dawnTime(sf::seconds(1440.0f))
+        , dayNightCycle(false)
 {
     // Make a lightMap that can cover our screen
-    lightMapTexture.create(1920, 1080);
+    lightMapTexture.create(4096, 2160);
 
     // Centering the render texture canvas
     sf::View view = lightMapTexture.getView();
@@ -23,6 +28,8 @@ LightingSystem::LightingSystem(sf::Texture &texture)
     light.setTextureRect(sf::IntRect(0, 0, 512, 512));
     // This will offset where we draw our lights so the center of the light is right over where we want our light to be
     light.setOrigin(256.f, 256.f);
+
+    clock.restart();
 }
 
 void LightingSystem::draw(sf::RenderWindow &window, anax::World& world)
@@ -33,7 +40,7 @@ void LightingSystem::draw(sf::RenderWindow &window, anax::World& world)
     window.setView(view);
 
     // Clear the buffer where we draw the lights, this color could be changed depending on the time of day in the game to show a night/daytime cycle
-    lightMapTexture.clear(sf::Color(50, 50, 80));
+    lightMapTexture.clear(ambientLight);
 
     // Loop over the lights in the vector
     for (std::size_t i = 0; i < lights.size(); ++i)
@@ -51,13 +58,43 @@ void LightingSystem::draw(sf::RenderWindow &window, anax::World& world)
     lightMapTexture.display();
 
     // What from the lightMap we will draw
-    lightMap.setTextureRect(sf::IntRect(0, -70, 1920, 1080));
+    lightMap.setTextureRect(sf::IntRect(0, -70, 4096, 2160));
     // Where on the backbuffer we will draw
     lightMap.setPosition((-lightMap.getGlobalBounds().width/2), 0);
 
 
     // This blendmode is used to add the darkness from the lightMap with the parts where we draw ur light image show up brighter
     window.draw(lightMap, sf::BlendMultiply);
+}
+
+void LightingSystem::update(float dt)
+{
+    if (dayNightCycle)
+    {
+        currentTime = clock.getElapsedTime();
+        // "From dusk til dawn"
+        if (currentTime < duskTime)
+        {
+            const float ratio{ currentTime / duskTime };
+            ambientLight = sf::Color(static_cast<sf::Uint8>(50.f + 200.f * ratio), static_cast<sf::Uint8>(50.f + 200.f * ratio), static_cast<sf::Uint8>(80.f + 175.f * ratio));
+        }
+            //f "From dawn til dusk"
+        else if (currentTime > duskTime && currentTime < dawnTime)
+        {
+            const float ratio{ (currentTime - duskTime) / (dawnTime - duskTime) };
+            ambientLight = sf::Color(static_cast<sf::Uint8>(50.f + 200.f * (1.f - ratio)), static_cast<sf::Uint8>(50.f + 200.f * (1.f - ratio)), static_cast<sf::Uint8>(80.f + 175.f * (1.f - ratio)));
+        }
+            // Start a new day
+        else if(currentTime > dawnTime)
+            clock.restart();
+
+    }
+}
+
+void LightingSystem::updateMovingLight(sf::Vector2f position)
+{
+    // Updates player light source
+    lights.back().position = position;
 }
 
 void LightingSystem::addLight(sf::Vector2f position)

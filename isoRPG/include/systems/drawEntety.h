@@ -30,7 +30,6 @@ public:
     {
         auto enteties = world.getEntities();
 
-
         // Depth Sort
         std::sort (enteties.begin(), enteties.end(),
                    [](const anax::Entity entity1, const anax::Entity entity2)
@@ -40,6 +39,8 @@ public:
                        return (key1 < key2);
                    }
         );
+
+        //sf::FloatRect viewRect(window.getPosition().x, window.getPosition().y, window.getSize().x, window.getSize().y);
 
         for(auto i : enteties)
         {
@@ -53,6 +54,9 @@ public:
 
                     if(stateComponent.state == state)
                     {
+                        //auto rect = textureComponent.sprite->getLocalBounds();
+                        //if (rect.intersects(viewRect))
+                        //    continue;
 
                         if(i.hasComponent<AnimationComponent>())
                         {

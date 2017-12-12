@@ -274,7 +274,7 @@ bool StateMenu::handleEvent(const sf::Event& event)
                 world.refresh();
             }
             if(choice == "Game") requestStateChange(States::Character);
-            if(choice == "Settings") requestStateChange(States::Settings);
+            if(choice == "Settings") requestStackPush(States::Settings);
             if(choice == "About") requestStateChange(States::Character);
         }
     }

@@ -88,9 +88,9 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 
     entity.addComponent<DrawebleComponent>();
 
-    auto& playerCollision = entity.addComponent<CollisionComponent>();
-    playerCollision.boundingBox = sf::FloatRect(53, 76, 25, 25); // feet
-    playerCollision.causesEvents = true;
+    //auto& playerCollision = entity.addComponent<CollisionComponent>();
+    //playerCollision.boundingBox = sf::FloatRect(53, 76, 25, 25); // feet
+    //playerCollision.causesEvents = true;
 
     entity.activate();
 }
@@ -171,7 +171,6 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     entity.addComponent<ActionTimer>();
     entity.getComponent<ActionTimer>().AttackCooldown = 5;
     entity.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
-
 
     sf::Color red(255,100,100);
     sf::Color blue(100,100,255);

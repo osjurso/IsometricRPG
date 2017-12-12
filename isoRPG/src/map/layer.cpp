@@ -28,7 +28,12 @@ void Layer::createEntities()
             int tilex, tiley;
             getTileCoords(tileid, tilex, tiley);
 
-            sf::Sprite sprite(context.textures->get(Textures::Tileset), sf::IntRect(tilex, tiley, tileSize.x, tileSize.y));
+            sf::Sprite sprite;
+
+            if (tileset == "spritesheet")
+                sprite = sf::Sprite(context.textures->get(Textures::grasslandTileset), sf::IntRect(tilex, tiley, tileSize.x, tileSize.y));
+            else if (tileset == "cave_tiles")
+                sprite = sf::Sprite(context.textures->get(Textures::caveTileset), sf::IntRect(tilex, tiley, tileSize.x, tileSize.y));
 
             sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 
@@ -55,7 +60,12 @@ void Layer::createEntities()
     Draweble draweble;
 
     // Position coordinates offsets the texture back
-    draweble.makeDraweble(context.textures->get(Textures::Tileset), -(width*tileSize.x)/2, -(width*tileSize.y)/2, mapEntity, "Game");
+
+    if (tileset == "spritesheet")
+        draweble.makeDraweble(context.textures->get(Textures::grasslandTileset), -(width*tileSize.x)/2, -(width*tileSize.y)/2, mapEntity, "Game");
+    else if (tileset == "cave_tiles")
+        draweble.makeDraweble(context.textures->get(Textures::caveTileset), -(width*tileSize.x)/2, -(width*tileSize.y)/2, mapEntity, "Game");
+
 
     TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();
     textureComponent.sprite[0] = sprite;

@@ -21,10 +21,10 @@ public:
 
 private:
     // Handles regular layers
-    static void loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context context);
+    static void loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context context, std::string tileset);
 
     // Handles object layers
-    static void loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, StateBase::Context context);
+    static void loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, StateBase::Context context, std::string tileset);
 
     // Handles collsion layer
     static void loadCollision(Json::Value& root, Json::Value& layer);

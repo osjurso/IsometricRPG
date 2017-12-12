@@ -41,6 +41,8 @@ public:
 
     const TileSize tileSize;
 
+    std::string tileset;
+
     int priority;
 
 protected:

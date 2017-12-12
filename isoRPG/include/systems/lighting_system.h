@@ -27,6 +27,8 @@ public:
     LightingSystem(sf::Texture &texture);
 
     void draw(sf::RenderWindow& window, anax::World& world);
+    void update(float dt);
+    void updateMovingLight(sf::Vector2f position);
 
     void addLight(sf::Vector2f position);
     void addLight(float x, float y);
@@ -37,6 +39,15 @@ private:
 
     sf::RenderTexture lightMapTexture;
     sf::Sprite lightMap;
+
+    sf::Color ambientLight;
+
+    sf::Clock clock;
+    sf::Time currentTime;
+    sf::Time duskTime;
+    sf::Time dawnTime;
+
+    bool dayNightCycle;
 
     std::vector<Light> lights; // Contains all the lights
 };

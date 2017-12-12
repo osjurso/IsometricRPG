@@ -43,7 +43,7 @@ Application::Application()
     mTextures.load(Textures::HeroHead,"assets/textures/Hero_Head.png");
     mTextures.load(Textures::HeroWeapon,"assets/textures/Hero_Longsword.png");
     mTextures.load(Textures::HeroShield,"assets/textures/Hero_Shield.png");
-    mTextures.load(Textures::Tileset, "assets/map/spritesheet.png");
+    mTextures.load(Textures::grasslandTileset, "assets/map/spritesheet.png");
 
     mTextures.load(Textures::UIBottom, "assets/textures/UIBottom.png");
     mTextures.load(Textures::UIItems, "assets/textures/ui_modifiers.png");
@@ -56,6 +56,7 @@ Application::Application()
     mTextures.load(Textures::TitleSword, "assets/textures/title_sword.png");
     mTextures.load(Textures::TitleSwordSplash, "assets/textures/title_sword_splash.png");
     mTextures.load(Textures::LightTexture, "assets/textures/light_texture.png");
+    mTextures.load(Textures::caveTileset, "assets/map/cave_tiles.png");
 
 
     mStatisticsText.setFont(mFonts.get(Fonts::Main));
@@ -63,7 +64,7 @@ Application::Application()
     mStatisticsText.setCharacterSize(15);
 
     registerStates();
-    mStateStack.pushState(States::Game);
+    mStateStack.pushState(States::Title);
 }
 
 void Application::run()

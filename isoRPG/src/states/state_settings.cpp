@@ -79,7 +79,7 @@ void StateSettings::draw()
 {
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
-
+    window.clear();
 
     anax::World& world = *getContext().world;
     DrawEntetys drawEntetys;

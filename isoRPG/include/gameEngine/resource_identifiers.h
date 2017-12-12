@@ -29,7 +29,7 @@ namespace Textures
         HeroHead,
         HeroWeapon,
         HeroShield,
-        Tileset,
+        grasslandTileset,
         UIBottom,
         UIItems,
         UIConversation,
@@ -41,6 +41,7 @@ namespace Textures
         TitleSword,
         TitleSwordSplash,
         LightTexture,
+        caveTileset,
 
     };
 }

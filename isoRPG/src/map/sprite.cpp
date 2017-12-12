@@ -18,7 +18,13 @@ void Sprite::createEntities()
     sf::Vector2f v(tilex, tiley);
     CartesianToIsometric(v);
 
-    sf::Sprite sprite = sf::Sprite(context.textures->get(Textures::Tileset), tileRect);
+    sf::Sprite sprite;
+
+    if (tileset == "spritesheet")
+        sprite = sf::Sprite(context.textures->get(Textures::grasslandTileset), tileRect);
+    else if (tileset == "cave_tiles")
+        sprite = sf::Sprite(context.textures->get(Textures::caveTileset), tileRect);
+
     sprite.setOrigin(sprite.getGlobalBounds().width/2, sprite.getGlobalBounds().height);
     anax::World& world = *context.world;
 
@@ -26,6 +32,7 @@ void Sprite::createEntities()
 
     anax::Entity mapEntity = world.createEntity();
 
+    /*
     auto& collisionComp = mapEntity.addComponent<CollisionComponent>();
     collisionComp.causesEvents = true;
 
@@ -37,8 +44,12 @@ void Sprite::createEntities()
     //    collisionComp.boundingBox = sf::FloatRect(0, 160, 64, 64);
     //else if (tileSize.y == 256)
     //    collisionComp.boundingBox = sf::FloatRect(0, 224, 64, 64);
+    */
 
-    draweble.makeDraweble(context.textures->get(Textures::Tileset), v.x, v.y, mapEntity, "Game");
+    if (tileset == "spritesheet")
+        draweble.makeDraweble(context.textures->get(Textures::grasslandTileset), v.x, v.y, mapEntity, "Game");
+    else if (tileset == "cave_tiles")
+        draweble.makeDraweble(context.textures->get(Textures::caveTileset), v.x, v.y, mapEntity, "Game");
 
     TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();
     textureComponent.sprite[0] = sprite;

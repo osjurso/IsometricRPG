@@ -16495,7 +16495,7 @@
                  "type":"",
                  "visible":true,
                  "width":96,
-                 "x":1152,
+                 "x":1120,
                  "y":1184
                 }],
          "opacity":1,
@@ -16504,7 +16504,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":6544,
+ "nextobjectid":6545,
  "orientation":"isometric",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

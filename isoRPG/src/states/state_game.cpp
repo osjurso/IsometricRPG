@@ -66,7 +66,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     player = world.createEntity();
 
     // Load map information from JSON into object list
-    if (!Map::load("assets/map/map.json", context, m_lightingSystem))
+    if (!Map::load("assets/map/world_1.json", context, m_lightingSystem))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
     setUpAllCreatures setUpAllCreatures(getContext());
@@ -134,7 +134,6 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     pathfindingTimer.restart().asSeconds();
     saveTimer.restart().asSeconds();
 
-
     SetUpUI setUpUI;
     setUpUI.setUpUI(world,zoom,
                     context.textures->get(Textures::UIBottom),
@@ -145,7 +144,9 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
                     getContext().fonts->get(Fonts::RPG),playerCam,player);
 
 
-    world.addSystem(m_collisionSystem);
+    //world.addSystem(m_collisionSystem);
+
+    //m_lightingSystem.addLight(player.getComponent<PositionComponent>().SpriteLeft - 130, player.getComponent<PositionComponent>().SpriteTop - 730);
 
     context.music->play(Music::Test);
 }
@@ -164,7 +165,7 @@ void StateGame::draw()
 
     DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
-    m_lightingSystem.draw(window, world);
+    //m_lightingSystem.draw(window, world);
 }
 
 bool StateGame::update(sf::Time dt)
@@ -246,7 +247,8 @@ bool StateGame::update(sf::Time dt)
     DepthSortSystem depthSortSystem;
     depthSortSystem.Update(*getContext().world);
 
-    m_collisionSystem.update(dt.asSeconds(), *getContext().world);
+    //m_collisionSystem.update(dt.asSeconds(), *getContext().world);
+    //m_lightingSystem.updateMovingLight(sf::Vector2f(player.getComponent<PositionComponent>().SpriteLeft + 65,  player.getComponent<PositionComponent>().SpriteTop - 1000));
 
     return true;
 }

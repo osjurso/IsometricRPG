@@ -28,6 +28,8 @@ bool Map::load(std::string filename, StateBase::Context context, LightingSystem 
     tileSize.x = root["tilesets"][0u]["tilewidth"].asInt();
     tileSize.y = root["tilesets"][0u]["tileheight"].asInt();
     tileSize.s = root["tilesets"][0u]["spacing"].asInt();
+    std::string tileset = root["tilesets"][0u]["name"].asString();
+
 
     // Read in each layer
     for (Json::Value& layer: root["layers"])
@@ -35,19 +37,19 @@ bool Map::load(std::string filename, StateBase::Context context, LightingSystem 
         if (layer["name"].asString() == "enemy")
             loadEntities(root, layer, context);
         else if (layer["name"].asString() == "objects")
-            loadObjects(root, layer, tileSize, context);
+            loadObjects(root, layer, tileSize, context, tileset);
         else if (layer["name"].asString() == "collision")
             loadCollision(root, layer);
         else if (layer["name"].asString() == "lights")
             loadLights(root, layer, context, lightingSystem);
         else
-         loadLayer(layer, tileSize, context);
+         loadLayer(layer, tileSize, context, tileset);
     }
 
     return true;
 }
 
-void Map::loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context context)
+void Map::loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context context, std::string tileset)
 {
 
     Layer* tmp = new Layer(tileSize, context);
@@ -56,6 +58,7 @@ void Map::loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context co
     tmp->width = layer["width"].asInt();
     tmp->height = layer["height"].asInt();
     tmp->priority = layer["priority"]["Priority"].asInt();
+    tmp->tileset = tileset;
 
     // Clear tilemap
     memset(tmp->tilemap, 0, sizeof(tmp->tilemap));
@@ -67,7 +70,7 @@ void Map::loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context co
     tmp->createEntities();
 }
 
-void Map::loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, StateBase::Context context)
+void Map::loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, StateBase::Context context, std::string tileset)
 {
     // Get all objects from layer
     for (Json::Value& object: layer["objects"])
@@ -93,6 +96,7 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, 
         sprite->y = object["y"].asInt() - sprite->tileSize.y;
         sprite->id = object["gid"].asInt();
         sprite->priority = object["y"].asInt();
+        sprite->tileset = tileset;
 
         sprite->createEntities();
 
