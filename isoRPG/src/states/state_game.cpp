@@ -24,6 +24,7 @@
 #include <include/components/CompCost.h>
 #include <include/collections/setUpAllCreatures.h>
 #include <include/components/Comp_save.h>
+#include <include/systems/resolveIAI_attack.h>
 #include "collections/setUpUI.h"
 #include "collections/setUpCreature.h"
 #include "collections/addDialoge.h"
@@ -197,6 +198,9 @@ bool StateGame::update(sf::Time dt)
     {
         GeneratePath generatePath;
         generatePath.generate(*getContext().world,player);
+
+        ResolveAIAttack resolveAIAttack;
+        resolveAIAttack.resolve(*getContext().world,player);
 
         pathfindingTimer.restart();
     }
@@ -373,7 +377,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     }else if (key == sf::Keyboard::Q && player.getComponent<Looteble>().HealtPotion > 0 && player.getComponent<ActionTimer>().PotionTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().PotionCooldown )
     {
         player.getComponent<Looteble>().HealtPotion -=1;
-        player.getComponent<HealthComponent>().health += 50;
+        player.getComponent<HealthComponent>().health += 200;
         if(player.getComponent<HealthComponent>().health > player.getComponent<HealthComponent>().maxHealth) player.getComponent<HealthComponent>().health = player.getComponent<HealthComponent>().maxHealth;
         player.getComponent<ActionTimer>().PotionTimer.restart().asSeconds();
     }

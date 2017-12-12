@@ -71,12 +71,12 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     looteble.armor = 10;
 
     entity.addComponent<HealthComponent>();
-    entity.getComponent<HealthComponent>().health = 100;
-    entity.getComponent<HealthComponent>().maxHealth = 100;
+    entity.getComponent<HealthComponent>().health = 500;
+    entity.getComponent<HealthComponent>().maxHealth = entity.getComponent<HealthComponent>().health;
 
     entity.addComponent<ActionTimer>();
     ActionTimer& actionTimer = entity.getComponent<ActionTimer>();
-    actionTimer.AttackCooldown = 3;
+    actionTimer.AttackCooldown = 1;
     actionTimer.PotionCooldown = 10;
     actionTimer.AttackTimer.restart().asSeconds();
     actionTimer.PotionTimer.restart().asSeconds();
@@ -164,6 +164,9 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     entity.addComponent<DrawebleComponent>();
     entity.addComponent<MousedOver>();
 
+    entity.addComponent<ActionTimer>();
+    entity.getComponent<ActionTimer>().AttackCooldown = 5;
+    entity.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
 
 
     sf::Color red(255,100,100);
@@ -172,22 +175,22 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     {
         textureComponent.sprite[0].setColor(red);
         healthComponent.maxHealth = 100;
-        moveble.speed = 10;
+        moveble.speed = 7;
         looteble.gold =50 + (10*rand()%10+1);
-        looteble.weapon = 50;
+        looteble.weapon = 25;
     }else if(diffeculty == "Medium")
     {
         textureComponent.sprite[0].setColor((blue));
         healthComponent.maxHealth = 50;
         moveble.speed = 5;
         looteble.gold =25+(5*rand()%10+1);
-        looteble.weapon = 35;
+        looteble.weapon = 20;
     }else
     {
         healthComponent.maxHealth = 20;
         looteble.gold = rand()%10+1;
         moveble.speed = 3;
-        looteble.weapon = 20;
+        looteble.weapon = 15;
     }
     healthComponent.health = healthComponent.maxHealth;
 }
@@ -239,6 +242,8 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     entity.addComponent<Talkative>();
     entity.addComponent<ChildComponent>();
     entity.addComponent<DrawebleComponent>();
+
+
 
     entity.activate();
 }
@@ -312,11 +317,16 @@ void SetUpCreature::setUpBoss(anax::Entity& entity, sf::Texture& texture, sf::Re
 
     entity.addComponent< Looteble>();
     Looteble& looteble = entity.getComponent<Looteble>();
+    looteble.weapon = 50;
 
 
     entity.addComponent<DrawebleComponent>();
     entity.addComponent<MousedOver>();
 
+
+    entity.addComponent<ActionTimer>();
+    entity.getComponent<ActionTimer>().AttackCooldown = 5;
+    entity.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
 
 
     sf::Color black(100,100,100);
@@ -325,7 +335,6 @@ void SetUpCreature::setUpBoss(anax::Entity& entity, sf::Texture& texture, sf::Re
     healthComponent.maxHealth = 100;
     moveble.speed = 10;
     looteble.gold =50 + (10*rand()%10+1);
-    looteble.weapon = 50;
-    looteble.weapon = 20;
+    looteble.weapon = 30;
     healthComponent.health = healthComponent.maxHealth;
 }

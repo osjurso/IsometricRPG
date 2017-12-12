@@ -12,6 +12,7 @@ public:
     float maxHealth;
     int totalKills;
     int unpaidKills;
+    int attackRange;
 };
 
 #endif //ISORPG_COMP_HEALT_H

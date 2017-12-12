@@ -43,7 +43,7 @@ public:
                     Looteble& attackerLoot =  entity.getComponent<Looteble>();
                     float attackerX = Attackerposition.XPos + (Attackersize.Whith/2);
                     float attackerY = Attackerposition.YPos + (Attackersize.Height/2);
-                    int attackradius = 200;
+                    int attackradius = 50;
 
                     sf::IntRect attacker;
                     attacker.top = Attackerposition.YPos -attackradius;
