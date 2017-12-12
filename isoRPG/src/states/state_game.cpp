@@ -190,7 +190,7 @@ bool StateGame::handleEvent(const sf::Event &event)
 
 void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
 {
-    ResolveMovment resolve;
+    //ResolveMovment resolve;
     AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
     Movable& movable = player.getComponent<Movable>();
 
@@ -282,8 +282,14 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.idle = false;
         if(animationComponent.direction != "Attack" )animationComponent.changedDirection = true;
         animationComponent.direction = "Attack";
-
-        PositionComponent& positionComponent = player.getComponent<PositionComponent>();
+        Attack attack;
+        anax::World& world = *getContext().world;
+        attack.resolveAttack(world,player);
+    }else if (key == sf::Keyboard::Q && player.getComponent<Looteble>().HealtPotion > 0)
+    {
+        player.getComponent<Looteble>().HealtPotion -=1;
+        player.getComponent<HealthComponent>().health += 50;
+        if(player.getComponent<HealthComponent>().health > player.getComponent<HealthComponent>().maxHealth) player.getComponent<HealthComponent>().health = player.getComponent<HealthComponent>().maxHealth;
     }
 
         //Defend method
@@ -294,8 +300,16 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.idle = false;
         if(animationComponent.direction != "Defend" )animationComponent.changedDirection = true;
         animationComponent.direction = "Defend";
+    }
 
-        PositionComponent& positionComponent = player.getComponent<PositionComponent>();
+        //Die method
+    else if (key == sf::Keyboard::H)
+    {
+        animationComponent.action = "Die";
+        animationComponent.idleTimer.restart().asSeconds();
+        animationComponent.idle = false;
+        if(animationComponent.direction != "Die" )animationComponent.changedDirection = true;
+        animationComponent.direction = "Die";
     }
     else if (key == sf::Keyboard::Space)
     {

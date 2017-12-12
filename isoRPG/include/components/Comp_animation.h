@@ -28,6 +28,11 @@ public:
     int attackEnd;
     int defendStart;
     int defendEnd;
+    int hitStart;
+    int hitEnd;
+    int dieStart;
+    int dieEnd;
+
     int rowWest;
     int rowNorthWest;
     int rowNorth;

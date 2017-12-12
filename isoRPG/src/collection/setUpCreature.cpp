@@ -26,9 +26,9 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.imageCounter.x = 32;
     animationComponent.imageCounter.y = 8;
-    animationComponent.switchTime = 0.08f;
+    animationComponent.switchTime = 1.2f;
     animationComponent.pixels = 128;
-    animationComponent.movementSpeed = 100;
+    animationComponent.movementSpeed = 50;
     animationComponent.row =0;
     animationComponent.currentImage.x =0;
     animationComponent.animationClock.restart().asSeconds();
@@ -40,6 +40,10 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     animationComponent.attackEnd = 15;
     animationComponent.defendStart = 16;
     animationComponent.defendEnd = 17;
+    animationComponent.hitStart = 18;
+    animationComponent.hitEnd = 19;
+    animationComponent.dieStart = 20;
+    animationComponent.dieEnd = 23;
 
     animationComponent.rowWest = 0;
     animationComponent.rowNorthWest = 1;
@@ -99,7 +103,7 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.imageCounter.x = 32;
     animationComponent.imageCounter.y = 8;
-    animationComponent.switchTime = 0.08f;
+    animationComponent.switchTime = 0.2f;
     animationComponent.pixels = 128;
     animationComponent.movementSpeed = 100;
     animationComponent.row =0;
@@ -113,6 +117,10 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     animationComponent.attackEnd = 15;
     animationComponent.defendStart = 16;
     animationComponent.defendEnd = 17;
+    animationComponent.hitStart = 18;
+    animationComponent.hitEnd = 19;
+    animationComponent.dieStart = 20;
+    animationComponent.dieEnd = 23;
 
     animationComponent.rowWest = 0;
     animationComponent.rowNorthWest = 1;

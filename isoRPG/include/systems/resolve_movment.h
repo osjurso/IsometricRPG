@@ -31,6 +31,8 @@ private:
 
     void Defend(anax::Entity& entity, float deltaTime);
 
+    void Die(anax::Entity& entity, float deltaTime);
+
 };
 
 #endif //ISORPG_RESOLVE_MOVMENT_H

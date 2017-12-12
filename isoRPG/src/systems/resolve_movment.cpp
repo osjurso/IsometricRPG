@@ -65,6 +65,7 @@ void ResolveMovment::resolveMovment(anax::World& world, float deltaTime) {
             if(animationComponent.action == "Idle")Idle(i,deltaTime);
             if(animationComponent.action == "Attack")Attack(i,deltaTime);
             if(animationComponent.action == "Defend")Defend(i,deltaTime);
+            if(animationComponent.action == "Die")Die(i,deltaTime);
         }
     }
 }
@@ -128,44 +129,40 @@ void ResolveMovment::Idle(anax::Entity &entity, float deltaTime)
 }
 void ResolveMovment::Attack(anax::Entity &entity, float deltaTime)
 {
-    bool attack = true;
+    sf::Clock attackClock;
+    float attackClockTemp = attackClock.getElapsedTime().asMilliseconds();
+
     TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
     AnimationComponent &animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.currentImage.y = animationComponent.row;
 
     animationComponent.totalTime += deltaTime;
-
-    while (attack) {
 
         if (animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime) {
             animationComponent.currentImage.x = animationComponent.attackStart;
             animationComponent.changedDirection = false;
 
-        } else if (animationComponent.totalTime >= animationComponent.switchTime) {
+        } else if (attackClockTemp <= animationComponent.switchTime) {
             animationComponent.totalTime -= animationComponent.switchTime;
             animationComponent.currentImage.x++;
 
             if (animationComponent.currentImage.x >= animationComponent.attackEnd) {
                 animationComponent.currentImage.x = animationComponent.attackStart;
-                attack = false;
+                attackClock.restart().asMilliseconds();
             }
+
             textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
             textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
         }
-
     }
-}
+
 void ResolveMovment::Defend(anax::Entity &entity, float deltaTime)
 {
-    bool defend = true;
     TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
     AnimationComponent &animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.currentImage.y = animationComponent.row;
 
     animationComponent.totalTime += deltaTime;
-
-    while (defend) {
-        textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
 
         if (animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime) {
             animationComponent.currentImage.x = animationComponent.defendStart;
@@ -177,9 +174,34 @@ void ResolveMovment::Defend(anax::Entity &entity, float deltaTime)
 
             if (animationComponent.currentImage.x >= animationComponent.defendEnd) {
                 animationComponent.currentImage.x = animationComponent.defendStart;
-                defend = false;
             }
+        }
+    textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
+    textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
+}
+
+void ResolveMovment::Die(anax::Entity &entity, float deltaTime) {
+    TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
+    AnimationComponent &animationComponent = entity.getComponent<AnimationComponent>();
+    animationComponent.currentImage.y = animationComponent.row;
+
+    animationComponent.totalTime += deltaTime;
+
+    std::cout << "Die method" << std::endl;
+
+    if (animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime) {
+        animationComponent.currentImage.x = animationComponent.dieStart;
+        animationComponent.changedDirection = false;
+
+    } else if (animationComponent.totalTime >= animationComponent.switchTime) {
+        animationComponent.totalTime -= animationComponent.switchTime;
+        animationComponent.currentImage.x++;
+
+        if (animationComponent.currentImage.x >= animationComponent.dieEnd) {
+            animationComponent.currentImage.x = animationComponent.dieStart;
         }
     }
     textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
+    textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1)* abs(textureComponent.spriteRect.width);
 }
+
