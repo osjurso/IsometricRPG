@@ -286,7 +286,7 @@ void StateCharacter::setUpSaves()
         PlayText1.getComponent<PositionComponent>().YPos = 250+5;
 
         anax::Entity delete1 = world.createEntity();
-        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),500 + saveSlot1.getComponent<SizeComponent>().Height-50,95,delete1,"Character");
+        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95,delete1,"Character");
         delete1.getComponent<TextureComponent>().sortKey = 15;
         delete1.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
 
@@ -370,7 +370,7 @@ void StateCharacter::setUpSaves()
         PlayText2.getComponent<TextureComponent>().sortKey = 16;
 
         anax::Entity delete2 = world.createEntity();
-        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),500 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset,delete2,"Character");
+        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset,delete2,"Character");
         delete2.getComponent<TextureComponent>().sortKey = 16;
         delete2.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
 
@@ -454,7 +454,7 @@ void StateCharacter::setUpSaves()
         PlayText3.getComponent<TextureComponent>().sortKey = 17;
 
         anax::Entity delete3 = world.createEntity();
-        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),500 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset*2,delete3,"Character");
+        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset*2,delete3,"Character");
         delete3.getComponent<TextureComponent>().sortKey = 17;
         delete3.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
 

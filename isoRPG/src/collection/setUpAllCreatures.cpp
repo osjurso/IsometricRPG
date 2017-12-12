@@ -36,22 +36,22 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
 
     anax::World& world = *context.world;
 
-    anax::Entity goblin = world.createEntity();
-    anax::Entity goblin2 = world.createEntity();
-    anax::Entity goblin3 = world.createEntity();
-    anax::Entity goblin4 = world.createEntity();
+    //anax::Entity goblin = world.createEntity();
+    //anax::Entity goblin2 = world.createEntity();
+    //anax::Entity goblin3 = world.createEntity();
+    //anax::Entity goblin4 = world.createEntity();
     anax::Entity trader = world.createEntity();
     anax::Entity armorer = world.createEntity();
-    anax::Entity boss = world.createEntity();
+    //anax::Entity boss = world.createEntity();
 
     SetUpCreature creatureSetup;
 
     creatureSetup.setUpPlayer(player,window);
-    creatureSetup.setUpEnemie(goblin,  GoblinTexture, window, 200, 200, "Hard");
-    creatureSetup.setUpEnemie(goblin2, GoblinTexture, window ,100 ,100, "Medium");
-    creatureSetup.setUpEnemie(goblin3, GoblinTexture, window ,400 ,200, "Easy");
-    creatureSetup.setUpEnemie(goblin4, GoblinTexture, window ,300 ,100, "Hard");
-    creatureSetup.setUpBoss(boss,GoblinTexture,window,200,200);
+    //creatureSetup.setUpEnemie(goblin,  GoblinTexture, window, 200, 200, "Hard");
+    //creatureSetup.setUpEnemie(goblin2, GoblinTexture, window ,100 ,100, "Medium");
+    //creatureSetup.setUpEnemie(goblin3, GoblinTexture, window ,400 ,200, "Easy");
+    //creatureSetup.setUpEnemie(goblin4, GoblinTexture, window ,300 ,100, "Hard");
+    //creatureSetup.setUpBoss(boss,GoblinTexture,window,200,200);
 
     creatureSetup.setUpNPC(trader,TraderTexture  ,window,300,300,0,0);
     creatureSetup.setUpNPC(armorer,ArmorerTexture,window,350,350,42,42);
@@ -77,7 +77,7 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_1.txt",1);
     optionDialoge.addOptionDialoge(armorer,"Upgrade Armor " + std::to_string(player.getComponent<CostComponent>().ArmorUpgrade) + "g",1,3,BuyArmorUpgrade);
     optionDialoge.addOptionDialoge(armorer,"Upgrade Weapon "+ std::to_string(player.getComponent<CostComponent>().WeaponUpgrade)+ "g",1,4,BuyWeaponUpgrade);
-    optionDialoge.addOptionDialoge(armorer,"Pay me for my kills",1,5,healtPunishment);
+    optionDialoge.addOptionDialoge(armorer,"Pay me for my kills",1,5,PayUp);
     armorer.getComponent<Talkative>().TotalOfDialogs +=1;
 
     armorer.getComponent<Talkative>().Default = 1;

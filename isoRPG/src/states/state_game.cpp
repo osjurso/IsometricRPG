@@ -266,7 +266,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
     Movable& movable = player.getComponent<Movable>();
 
-    animationComponent.animationClock.restart().asSeconds();
+    animationComponent.idleTimer.restart().asSeconds();
     movable.path= "";
     float Xmove;
     float Ymove;
@@ -275,6 +275,8 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
+        movable.path= "";
+        player.getComponent<AnimationComponent>().idleTimer.restart().asSeconds();
         animationComponent.action = "Walk";
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             animationComponent.idleTimer.restart().asSeconds();
@@ -338,6 +340,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             Dmove = '0';
         }
         movable.path= "";
+        player.getComponent<AnimationComponent>().idleTimer.restart().asSeconds();
         for(int i = 0; i< movable.speed; i++)
         {
             movable.moveX[i] = Xmove;

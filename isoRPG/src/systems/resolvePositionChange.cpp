@@ -34,6 +34,9 @@ void PostitonChange::moveCreature(anax::Entity &entity)
             positionComponent.YPos += moveble.moveY[i];
             positionComponent.SpriteLeft += moveble.moveX[i];
             positionComponent.SpriteTop += moveble.moveY[i];
+
+
+
             int tempInt = moveble.path.at(i);
             tempInt = tempInt-48;
             animationComponent.animationDirection = tempInt;

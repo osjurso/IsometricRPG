@@ -62,6 +62,11 @@ public:
                         i.getComponent<DyingComponent>().dying = true;
                         entity.getComponent<HealthComponent>().totalKills +=1;
                         entity.getComponent<HealthComponent>().unpaidKills +=1;
+                        if(entity.getComponent<HealthComponent>().totalKills >= 5)
+                        {
+                            entity.getComponent<Looteble>().weaponModifier ++;
+                            entity.getComponent<HealthComponent>().totalKills = 0;
+                        }
                     }
 
 
