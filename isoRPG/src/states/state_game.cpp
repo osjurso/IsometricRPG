@@ -215,6 +215,13 @@ bool StateGame::update(sf::Time dt)
         ResolveAIAttack resolveAIAttack;
         resolveAIAttack.resolve(*getContext().world,player);
 
+        UpdateDialog updateDialog;
+        updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
+
+        // Update the sort key for movable entities
+        DepthSortSystem depthSortSystem;
+        depthSortSystem.Update(*getContext().world);
+
         pathfindingTimer.restart();
     }
     if(saveTimer.getElapsedTime().asSeconds() >= 10)
@@ -240,12 +247,7 @@ bool StateGame::update(sf::Time dt)
     // 7. Weapon mod
 
 
-    UpdateDialog updateDialog;
-    updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
 
-    // Update the sort key for movable entities
-    DepthSortSystem depthSortSystem;
-    depthSortSystem.Update(*getContext().world);
 
     //m_collisionSystem.update(dt.asSeconds(), *getContext().world);
     //m_lightingSystem.updateMovingLight(sf::Vector2f(player.getComponent<PositionComponent>().SpriteLeft + 65,  player.getComponent<PositionComponent>().SpriteTop - 1000));

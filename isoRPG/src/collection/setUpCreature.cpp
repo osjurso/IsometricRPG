@@ -169,7 +169,7 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
 
 
     entity.addComponent<ActionTimer>();
-    entity.getComponent<ActionTimer>().AttackCooldown = 5;
+    entity.getComponent<ActionTimer>().AttackCooldown = 1;
     entity.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
 
     sf::Color red(255,100,100);
@@ -180,20 +180,20 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
         healthComponent.maxHealth = 100;
         moveble.speed = 7;
         looteble.gold =50 + (10*rand()%10+1);
-        looteble.weapon = 25;
+        looteble.weapon = 50;
     }else if(diffeculty == "Medium")
     {
         textureComponent.sprite[0].setColor((blue));
         healthComponent.maxHealth = 50;
         moveble.speed = 5;
-        looteble.gold =25+(5*rand()%10+1);
-        looteble.weapon = 20;
+        looteble.gold =50+(5*rand()%10+1);
+        looteble.weapon = 50;
     }else
     {
         healthComponent.maxHealth = 20;
         looteble.gold = rand()%10+1;
         moveble.speed = 3;
-        looteble.weapon = 15;
+        looteble.weapon = 20;
     }
     healthComponent.health = healthComponent.maxHealth;
 }
@@ -240,7 +240,7 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
 
     entity.addComponent<Looteble>();
     Looteble& looteble = entity.getComponent<Looteble>();
-    looteble.gold = 666;
+    looteble.gold = 0;
 
     entity.addComponent<Talkative>();
     entity.addComponent<ChildComponent>();

@@ -11772,8 +11772,8 @@
                  "properties":
                     {
                      "category":"goblin",
-                     "difficulty":"Easy",
-                     "maxNum":2,
+                     "difficulty":"Medium",
+                     "maxNum":3,
                      "minNum":2
                     },
                  "propertytypes":
@@ -11787,8 +11787,8 @@
                  "type":"",
                  "visible":true,
                  "width":48,
-                 "x":1472,
-                 "y":1536
+                 "x":1647,
+                 "y":391
                 }, 
                 {
                  "height":32,
@@ -11817,7 +11817,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
@@ -13629,7 +13629,7 @@
         {
          "columns":15,
          "firstgid":929,
-         "image":"..\/..\/..\/..\/flare-game\/tiled\/grassland\/tiled_collision.png",
+         "image":"tiled_collision.png",
          "imageheight":32,
          "imagewidth":960,
          "margin":0,

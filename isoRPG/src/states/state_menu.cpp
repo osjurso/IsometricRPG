@@ -199,7 +199,15 @@ bool StateMenu::handleEvent(const sf::Event& event)
                 requestStateChange(States::Character);
 
             } else if (mOptionIndex == Settings) {
-                requestStackPush(States::Settings);
+                {
+                    anax::World &world = *getContext().world;
+                    auto enteties = world.getEntities();
+                    for (auto i : enteties) {
+                        i.kill();
+                        world.refresh();
+                    }
+                    requestStateChange(States::Settings);
+                }
             } else if (mOptionIndex == About) {
 
             } else if (mOptionIndex == Exit) {

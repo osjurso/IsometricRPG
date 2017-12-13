@@ -9,6 +9,7 @@ SoundPlayer::SoundPlayer()
     mSoundBuffers.load(SoundEffects::Test, "assets/sounds/test.wav");
     mSoundBuffers.load(SoundEffects::Click, "assets/sounds/click.wav");
     mSoundBuffers.load(SoundEffects::intro, "assets/sounds/intro.wav");
+    mVolume = 50;
 
 }
 

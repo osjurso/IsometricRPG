@@ -33,19 +33,19 @@ public:
             {
                 if(i.getComponent<ActionTimer>().AttackTimer.getElapsedTime().asSeconds() > i.getComponent<ActionTimer>().AttackCooldown)
                 {
-                    float playerCenterX = player.getComponent<PositionComponent>().SpriteLeft + player.getComponent<SizeComponent>().SpriteWhith/2;
-                    float playerCenterY = player.getComponent<PositionComponent>().SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2;
+                    float playerCenterX = player.getComponent<PositionComponent>().SpriteLeft;
+                    float playerCenterY = player.getComponent<PositionComponent>().SpriteTop;
 
-                    float iCenterX  = i.getComponent<PositionComponent>().SpriteLeft + i.getComponent<SizeComponent>().SpriteWhith/2;
-                    float iCenterY  = i.getComponent<PositionComponent>().SpriteTop + i.getComponent<SizeComponent>().SpriteHeight/2;
+                    float iCenterX  = i.getComponent<PositionComponent>().SpriteLeft ;
+                    float iCenterY  = i.getComponent<PositionComponent>().SpriteTop ;
 
                     float distanceX = playerCenterX -iCenterX;
-                    if(distanceX < 0) distanceX*-1;
+                    if(distanceX < 0) distanceX = distanceX*-1;
 
                     float distanceY = playerCenterY -iCenterY;
-                    if(distanceY < 0) distanceY*-1;
+                    if(distanceY < 0) distanceY = distanceY*-1;
 
-                    if(distanceX + distanceY < i.getComponent<HealthComponent>().attackRange)
+                    if(distanceX + distanceY < 50)
                     {
                         player.getComponent<HealthComponent>().health -=  (i.getComponent<Looteble>().weapon - (player.getComponent<Looteble>().armor + player.getComponent<Looteble>().armorModifier));
                     }

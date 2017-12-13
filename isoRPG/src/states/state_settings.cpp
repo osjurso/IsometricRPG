@@ -137,8 +137,7 @@ bool StateSettings::handleEvent(const sf::Event &event)
             i.kill();
             world.refresh();
         }
-        requestStackPop();
-        //requestStackPush(States::Menu);
+        requestStateChange(States::Menu);
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
