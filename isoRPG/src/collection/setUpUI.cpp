@@ -48,10 +48,10 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     healtbar.getComponent<TextureComponent>().sprite->setScale(zoom/2,zoom/2);
 
 
-    bottom.getComponent<TextureComponent>().sortKey = 1000;
-    items.getComponent<TextureComponent>().sortKey = 1001;
-    abilities.getComponent<TextureComponent>().sortKey = 1002;
-    healtbar.getComponent<TextureComponent>().sortKey = 1005;
+    bottom.getComponent<TextureComponent>().sortKey = 5000;
+    items.getComponent<TextureComponent>().sortKey = 5001;
+    abilities.getComponent<TextureComponent>().sortKey = 5002;
+    healtbar.getComponent<TextureComponent>().sortKey = 5005;
 
     //set up timers
     draweble.makeDraweble(transparant,0,0,attackCooldown,"Game");
@@ -62,9 +62,9 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     defendCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
     healtCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
 
-    attackCooldown.getComponent<TextureComponent>().sortKey = 1007;
-    defendCooldown.getComponent<TextureComponent>().sortKey = 1007;
-    healtCooldown.getComponent<TextureComponent>().sortKey = 1007;
+    attackCooldown.getComponent<TextureComponent>().sortKey = 5007;
+    defendCooldown.getComponent<TextureComponent>().sortKey = 5007;
+    healtCooldown.getComponent<TextureComponent>().sortKey = 5007;
 
     attackCooldown.addComponent<UIComp>();
     attackCooldown.getComponent<UIComp>().Xofset = 42;
@@ -84,10 +84,6 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     attackCooldown.getComponent<ChangebleComponent>().source = "Attack";
     defendCooldown.getComponent<ChangebleComponent>().source = "Defend";
     healtCooldown.getComponent<ChangebleComponent>().source = "Potion";
-
-
-
-
 
     //sets up text
 
@@ -122,32 +118,34 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     HPotionCount.getComponent<UIComp>().Xofset = 425;
     HPotionCount.getComponent<UIComp>().Yofset = -45;
     HPotionCount.getComponent<TextComponent>().content = "Potion";
+    HPotionCount.getComponent<TextureComponent>().sortKey = 5020;
 
     GoldCount.getComponent<UIComp>().Xofset = 425;
     GoldCount.getComponent<UIComp>().Yofset = -20;
     GoldCount.getComponent<TextComponent>().content = "Gold";
+    GoldCount.getComponent<TextureComponent>().sortKey = 5020;
 
 
     ArmorBase.getComponent<UIComp>().Xofset = 500;
     ArmorBase.getComponent<UIComp>().Yofset = -20;
     ArmorBase.getComponent<TextComponent>().content = "ArmorBase";
+    ArmorBase.getComponent<TextureComponent>().sortKey = 5020;
 
     ArmorModifierCount.getComponent<UIComp>().Xofset = 540;
     ArmorModifierCount.getComponent<UIComp>().Yofset = -20;
     ArmorModifierCount.getComponent<TextComponent>().content = "ArmorMod";
+    ArmorModifierCount.getComponent<TextureComponent>().sortKey = 5020;
 
 
     WeaponBase.getComponent<UIComp>().Xofset = 500;
     WeaponBase.getComponent<UIComp>().Yofset = -45;
     WeaponBase.getComponent<TextComponent>().content = "WeaponBase";
+    WeaponBase.getComponent<TextureComponent>().sortKey = 5020;
 
     WeaponModifierCount.getComponent<UIComp>().Xofset = 540;
     WeaponModifierCount.getComponent<UIComp>().Yofset = -45;
     WeaponModifierCount.getComponent<TextComponent>().content = "WeaponMod";
-
-
-
-
+    WeaponModifierCount.getComponent<TextureComponent>().sortKey = 5020;
 
     anax::Entity attackText = world.createEntity();
     anax::Entity defendText= world.createEntity();
@@ -180,8 +178,8 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     setUpRectShape.setUpRectshape(healtTotal,100,100,110,9,zoom,sf::Color(100,10,10), playerCam);
     setUpRectShape.setUpRectshape(healtCurrnet,100,100,110,9,zoom,sf::Color(165,10,10), playerCam);
 
-    healtCurrnet.getComponent<TextureComponent>().sortKey = 1004;
-    healtTotal.getComponent<TextureComponent>().sortKey = 1003;
+    healtCurrnet.getComponent<TextureComponent>().sortKey = 5004;
+    healtTotal.getComponent<TextureComponent>().sortKey = 5003;
 
     healtTotal.addComponent<UIComp>();
     healtCurrnet.addComponent<UIComp>();
