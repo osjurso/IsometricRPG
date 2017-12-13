@@ -62,7 +62,7 @@ public:
         paper.addComponent<UIComp>();
         paper.getComponent<UIComp>().Xofset = 182;
         paper.getComponent<UIComp>().Yofset = -56;
-        paper.getComponent<TextureComponent>().sortKey = 1001;
+        paper.getComponent<TextureComponent>().sortKey = 5001;
         paper.addComponent<DyingComponent>();
 
         redX.getComponent<TextureComponent>().sprite[0].setScale(zoom/4,zoom/4);
@@ -73,7 +73,7 @@ public:
         redX.addComponent<UIComp>();
         redX.getComponent<UIComp>().Xofset = 378;
         redX.getComponent<UIComp>().Yofset = -56;
-        redX.getComponent<TextureComponent>().sortKey = 1002;
+        redX.getComponent<TextureComponent>().sortKey = 5002;
         redX.addComponent<MousedOver>();
         redX.addComponent<AssosateFunc>();
         redX.getComponent<AssosateFunc>().voidfunc = killChildren;
@@ -93,7 +93,7 @@ public:
             NextArrow.addComponent<UIComp>();
             NextArrow.getComponent<UIComp>().Xofset = 378;
             NextArrow.getComponent<UIComp>().Yofset = -20;
-            NextArrow.getComponent<TextureComponent>().sortKey = 1002;
+            NextArrow.getComponent<TextureComponent>().sortKey = 5002;
             NextArrow.addComponent<MousedOver>();
             NextArrow.addComponent<AssosateFunc>();
             NextArrow.getComponent<AssosateFunc>().voidfunc = setDefault;
@@ -123,6 +123,7 @@ public:
             entity.addComponent<DyingComponent>();
             childComponent.children.push_back(entity);
             speaker.getComponent<ChildComponent>().children.push_back(entity);
+            entity.getComponent<TextureComponent>().sortKey = 5003;
         }
         if(talkative.total[talkative.Current] > 0)
         {
@@ -142,6 +143,7 @@ public:
                 speaker.getComponent<ChildComponent>().children.push_back(entity);
                 entity.addComponent<ParentComponent>();
                 entity.getComponent<ParentComponent>().parent = redX;
+                entity.getComponent<TextureComponent>().sortKey = 5003;
             }
         }
     }

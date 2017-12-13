@@ -30,6 +30,11 @@ void MouseClicked::Clicked(anax::Entity& player, sf::View cam, float zoom, std::
                 entityRect.width = sizeComponent.SpriteWhith;
                 entityRect.height = sizeComponent.SpriteHeight;
 
+                std::cout << "top: " << entityRect.top <<"  left: " <<entityRect.left <<  "  Height: " << entityRect.height << "  Whith: " <<entityRect.width <<std::endl;
+                std::cout << "  MouseX: " << mouseT.x << "  MouseY: " <<  mouseT.y<<std::endl;
+                std::cout  <<std::endl;
+                std::cout <<  std::endl;
+
                 if(entityRect.contains(mouseT.x,mouseT.y) && !i.hasComponent<UIComp>())
                 {
                     process(i, mouseT.x, mouseT.y, world, player, window, cam, zoom);

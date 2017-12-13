@@ -64,7 +64,7 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     armorer.getComponent<PositionComponent>().XPos = 680;
     armorer.getComponent<PositionComponent>().SpriteLeft = trader.getComponent<PositionComponent>().XPos +42;
     armorer.getComponent<PositionComponent>().YPos = 700;
-    armorer.getComponent<PositionComponent>().SpriteTop = trader.getComponent<PositionComponent>().YPos+42;
+    armorer.getComponent<PositionComponent>().SpriteTop = trader.getComponent<PositionComponent>().YPos +42;
 
     trader.getComponent<TextureComponent>().sortKey = trader.getComponent<PositionComponent>().YPos;
     armorer.getComponent<TextureComponent>().sortKey = armorer.getComponent<PositionComponent>().YPos;

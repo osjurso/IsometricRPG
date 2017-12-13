@@ -76,7 +76,7 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 
     entity.addComponent<ActionTimer>();
     ActionTimer& actionTimer = entity.getComponent<ActionTimer>();
-    actionTimer.AttackCooldown = 1;
+    actionTimer.AttackCooldown = 1.5f;
     actionTimer.PotionCooldown = 10;
     actionTimer.AttackTimer.restart().asSeconds();
     actionTimer.PotionTimer.restart().asSeconds();
