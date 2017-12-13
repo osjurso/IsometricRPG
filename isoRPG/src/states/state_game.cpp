@@ -215,6 +215,17 @@ bool StateGame::update(sf::Time dt)
         ResolveAIAttack resolveAIAttack;
         resolveAIAttack.resolve(*getContext().world,player);
 
+        if (player.getComponent<HealthComponent>().health < 0)
+        {
+            // TODO: Reset position to spawn
+
+            // 50% gold penalty
+            player.getComponent<Looteble>().gold *= 0.5;
+
+            // TODO: Play death animation before pushing game over screen
+            requestStackPush(States::GameOver);
+        }
+
         UpdateDialog updateDialog;
         updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
 
@@ -416,7 +427,9 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     }
 
     else if (key == sf::Keyboard::F2 && isPressed)
+    {
         requestStackPush(States::GameOver);
+    }
     else if (key == sf::Keyboard::F5 && isPressed)
     {
         // Todo: Hvis vi skal bruke map reload må den også resette anax world

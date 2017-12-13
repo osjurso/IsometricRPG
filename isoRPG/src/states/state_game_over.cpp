@@ -62,7 +62,7 @@ bool StateGameOver::update(sf::Time dt)
     // Change text and restart clock to begin fading again
     if (currentTime > titleFadeOutLength && !respawn)
     {
-        mTitleText.setString("Press enter to respawn");
+        mTitleText.setString("Press any key to respawn");
         centerOrigin(mTitleText);
         clock.restart();
     }
@@ -94,7 +94,7 @@ bool StateGameOver::handleEvent(const sf::Event &event)
     if (event.type == event.Resized)
         backgroundShape.setSize(sf::Vector2f(getContext().window->getView().getSize()));
 
-    if (event.key.code == sf::Keyboard::Return)
+    if (event.type == sf::Event::KeyPressed && !respawn)
     {
         respawn = true;
         titleFadeOutStart = sf::seconds(0);
