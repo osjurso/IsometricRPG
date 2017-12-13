@@ -123,8 +123,8 @@ void ResolveMovment::Idle(anax::Entity &entity, float deltaTime)
         }
     }
 
-    textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
-    textureComponent.spriteRect.left = (animationComponent.currentImage.x +1)* abs(textureComponent.spriteRect.width);
+    textureComponent.spriteRect.top = animationComponent.currentImage.y * textureComponent.spriteRect.height;
+    textureComponent.spriteRect.left = (animationComponent.currentImage.x + 1) * abs(textureComponent.spriteRect.width);
 
 }
 void ResolveMovment::Attack(anax::Entity &entity, float deltaTime)
@@ -132,23 +132,22 @@ void ResolveMovment::Attack(anax::Entity &entity, float deltaTime)
     sf::Clock attackClock;
     float attackClockTemp = attackClock.getElapsedTime().asMilliseconds();
 
+    entity.getComponent<Movable>().path = "";
+
     TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
     AnimationComponent &animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.currentImage.y = animationComponent.row;
-
-    animationComponent.totalTime += deltaTime;
 
         if (animationComponent.changedDirection && animationComponent.totalTime >= animationComponent.switchTime) {
             animationComponent.currentImage.x = animationComponent.attackStart;
             animationComponent.changedDirection = false;
 
-        } else if (attackClockTemp <= animationComponent.switchTime) {
-            animationComponent.totalTime -= animationComponent.switchTime;
+        } else if (animationComponent.switchTime >= attackClockTemp) {
+            attackClock.restart().asMilliseconds();
             animationComponent.currentImage.x++;
 
             if (animationComponent.currentImage.x >= animationComponent.attackEnd) {
                 animationComponent.currentImage.x = animationComponent.attackStart;
-                attackClock.restart().asMilliseconds();
             }
 
             textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;
@@ -198,7 +197,7 @@ void ResolveMovment::Die(anax::Entity &entity, float deltaTime) {
         animationComponent.currentImage.x++;
 
         if (animationComponent.currentImage.x >= animationComponent.dieEnd) {
-            animationComponent.currentImage.x = animationComponent.dieStart;
+            //animationComponent.currentImage.x = animationComponent.dieStart;
         }
     }
     textureComponent.spriteRect.top = animationComponent.currentImage.y* textureComponent.spriteRect.height;

@@ -26,7 +26,7 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
     animationComponent.imageCounter.x = 32;
     animationComponent.imageCounter.y = 8;
-    animationComponent.switchTime = 1.2f;
+    animationComponent.switchTime = 0.2f;
     animationComponent.pixels = 128;
     animationComponent.movementSpeed = 50;
     animationComponent.row =0;
