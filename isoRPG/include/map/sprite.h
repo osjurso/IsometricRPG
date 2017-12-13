@@ -23,6 +23,10 @@ protected:
 
     // Location on screen
     int x, y;
+
+    bool hasPuzzle = false;
+    bool lootable = false;
+    int puzzleNum;
 };
 
 #endif

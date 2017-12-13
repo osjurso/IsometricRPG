@@ -62,6 +62,7 @@ namespace Music
         Menu,
         Test,
         GameOver,
+        CaveTheme
     };
 }
 

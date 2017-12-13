@@ -11,25 +11,30 @@
 setUpAllCreatures::setUpAllCreatures(StateBase::Context context) :context(context)
 {}
 
-void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
+void setUpAllCreatures::SetUpCreatures(anax::Entity& player, bool createPlayer)
 {
-    sf::Texture& Herobody = context.textures->get(Textures::Hero);
     sf::Texture& GoblinTexture = context.textures->get(Textures::Goblin);
     sf::Texture& TraderTexture = context.textures->get(Textures::Trader);
     sf::Texture& ArmorerTexture = context.textures->get(Textures::Armorer);
-    sf::Texture& HeroHead = context.textures->get(Textures::HeroHead);
-    sf::Texture& HeroWeapon = context.textures->get(Textures::HeroWeapon);
-    sf::Texture& HeroShield = context.textures->get(Textures::HeroShield);
-    player.addComponent<TextureComponent>();
-    TextureComponent& textureComponent = player.getComponent<TextureComponent>();
-    textureComponent.texture[0] = Herobody;
-    textureComponent.sprite[0].setTexture(textureComponent.texture[0]);
-    textureComponent.texture[1] = HeroHead;
-    textureComponent.sprite[1].setTexture(textureComponent.texture[1]);
-    textureComponent.texture[2] = HeroWeapon;
-    textureComponent.sprite[2].setTexture(textureComponent.texture[2]);
-    textureComponent.texture[3] = HeroShield;
-    textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
+
+    if (createPlayer)
+    {
+        sf::Texture& Herobody = context.textures->get(Textures::Hero);
+        sf::Texture& HeroHead = context.textures->get(Textures::HeroHead);
+        sf::Texture& HeroWeapon = context.textures->get(Textures::HeroWeapon);
+        sf::Texture& HeroShield = context.textures->get(Textures::HeroShield);
+
+        player.addComponent<TextureComponent>();
+        TextureComponent& textureComponent = player.getComponent<TextureComponent>();
+        textureComponent.texture[0] = Herobody;
+        textureComponent.sprite[0].setTexture(textureComponent.texture[0]);
+        textureComponent.texture[1] = HeroHead;
+        textureComponent.sprite[1].setTexture(textureComponent.texture[1]);
+        textureComponent.texture[2] = HeroWeapon;
+        textureComponent.sprite[2].setTexture(textureComponent.texture[2]);
+        textureComponent.texture[3] = HeroShield;
+        textureComponent.sprite[3].setTexture(textureComponent.texture[3]);
+    }
 
     sf::RenderWindow& window = *context.window;
     DrawEntetys drawEntetys;
@@ -46,7 +51,9 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
 
     SetUpCreature creatureSetup;
 
-    creatureSetup.setUpPlayer(player,window);
+    if (createPlayer)
+        creatureSetup.setUpPlayer(player, window);
+
     //creatureSetup.setUpEnemie(goblin,  GoblinTexture, window, 200, 200, "Hard");
     //creatureSetup.setUpEnemie(goblin2, GoblinTexture, window ,100 ,100, "Medium");
     //creatureSetup.setUpEnemie(goblin3, GoblinTexture, window ,400 ,200, "Easy");
@@ -66,8 +73,8 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     armorer.getComponent<PositionComponent>().YPos = 700;
     armorer.getComponent<PositionComponent>().SpriteTop = armorer.getComponent<PositionComponent>().YPos +42;
 
-    trader.getComponent<TextureComponent>().sortKey = trader.getComponent<PositionComponent>().YPos;
-    armorer.getComponent<TextureComponent>().sortKey = armorer.getComponent<PositionComponent>().YPos;
+    trader.getComponent<TextureComponent>().sortKey = trader.getComponent<PositionComponent>().SpriteTop + 60;
+    armorer.getComponent<TextureComponent>().sortKey = armorer.getComponent<PositionComponent>().SpriteTop + 60;
 
     AddDialoge addDialoge;
     AddOptionDialoge optionDialoge;
@@ -76,9 +83,9 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(trader,"Buy healt potion  50g",1,3,BuyHealtpotion);
-    optionDialoge.addOptionDialoge(trader,"What's my purpose hear again?",1,4,setInfo);
-    optionDialoge.addOptionDialoge(trader,"Punch me i dear yha" ,1,5,healtPunishment);
+    optionDialoge.addOptionDialoge(trader,"Buy health potion  50g",1,3,BuyHealtpotion);
+    optionDialoge.addOptionDialoge(trader,"What's my purpose here again?",1,4,setInfo);
+    optionDialoge.addOptionDialoge(trader,"Punch me, I dare you!" ,1,5,healtPunishment);
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     trader.getComponent<Talkative>().Default = 1;

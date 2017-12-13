@@ -22,6 +22,10 @@ public:
 
     void handleUserInput(sf::Keyboard::Key key, bool isPressed);
 
+    void setUpWorldLevel();
+    void setUpCaveLevel();
+    void changePlayerPos(int x, int y);
+
 private:
     sf::View playerCam;
     anax::Entity player;
@@ -32,8 +36,10 @@ private:
     std::string saveFile = "";
     sf::Clock saveTimer;
 
-    CollisionSystem m_collisionSystem;
     LightingSystem m_lightingSystem;
+
+    bool isCaveLevel;
+    sf::FloatRect loadLevelOnIntersect;
 
     //sf::View getLetterboxView(sf::View view, int windowWidth, int windowHeight);
 };

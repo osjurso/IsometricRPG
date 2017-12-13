@@ -80,6 +80,11 @@ public:
         redX.addComponent<DyingComponent>();
         childComponent.children.push_back(paper);
 
+        if (!speaker.hasComponent<ChildComponent>())
+        {
+            speaker.addComponent<ChildComponent>();
+        }
+
         speaker.getComponent<ChildComponent>().children.push_back(redX);
         speaker.getComponent<ChildComponent>().children.push_back(paper);
 
@@ -143,7 +148,7 @@ public:
                 speaker.getComponent<ChildComponent>().children.push_back(entity);
                 entity.addComponent<ParentComponent>();
                 entity.getComponent<ParentComponent>().parent = redX;
-                entity.getComponent<TextureComponent>().sortKey = 5003;
+                entity.getComponent<TextureComponent>().sortKey = 10000;
             }
         }
     }

@@ -188,12 +188,22 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
         moveble.speed = 5;
         looteble.gold =50+(5*rand()%10+1);
         looteble.weapon = 50;
-    }else
+    }else if (diffeculty == "Easy")
     {
         healthComponent.maxHealth = 20;
         looteble.gold = rand()%10+1;
         moveble.speed = 3;
         looteble.weapon = 20;
+    } else
+    {
+        sf::Color black(100, 100, 100);
+        textureComponent.sprite[0].setColor(black);
+        textureComponent.sprite[0].setScale(1.5, 1.5);
+        healthComponent.maxHealth = 100;
+        moveble.speed = 10;
+        looteble.gold = 50 + (10*rand()%10+1);
+        looteble.weapon = 30;
+        healthComponent.health = healthComponent.maxHealth;
     }
     healthComponent.health = healthComponent.maxHealth;
 }

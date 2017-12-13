@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <include/components/comp_collision.h>
+#include <include/collections/addPuzzle.h>
+#include <include/components/Comp_looteble.h>
 
 #include "map/sprite.h"
 #include "collections/drawable.h"
@@ -32,20 +34,6 @@ void Sprite::createEntities()
 
     anax::Entity mapEntity = world.createEntity();
 
-    /*
-    auto& collisionComp = mapEntity.addComponent<CollisionComponent>();
-    collisionComp.causesEvents = true;
-
-    if (tileSize.y == 64)
-        collisionComp.boundingBox = sf::FloatRect(-16, -32, 32, 25);
-    //else if (tileSize.y == 128)
-    //    collisionComp.boundingBox = sf::FloatRect(0, 96, 64, 64);
-    //else if (tileSize.y == 192)
-    //    collisionComp.boundingBox = sf::FloatRect(0, 160, 64, 64);
-    //else if (tileSize.y == 256)
-    //    collisionComp.boundingBox = sf::FloatRect(0, 224, 64, 64);
-    */
-
     if (tileset == "spritesheet")
         draweble.makeDraweble(context.textures->get(Textures::grasslandTileset), v.x, v.y, mapEntity, "Game");
     else if (tileset == "cave_tiles")
@@ -54,4 +42,39 @@ void Sprite::createEntities()
     TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();
     textureComponent.sprite[0] = sprite;
     textureComponent.sortKey = static_cast<int>(mapEntity.getComponent<PositionComponent>().YPos);
+
+
+    if (hasPuzzle)
+    {
+        auto &posComp = mapEntity.getComponent<PositionComponent>();
+        auto &sizeComp = mapEntity.getComponent<SizeComponent>();
+
+        posComp.SpriteLeft = posComp.XPos - 32;
+        posComp.SpriteTop = posComp.YPos - 96;
+
+        sizeComp.SpriteWhith = tileSize.x;
+        sizeComp.SpriteHeight = tileSize.y -32;
+
+        AddPuzzle addPuzzle;
+        addPuzzle.add(mapEntity, puzzleNum);
+        std::cout << "Loading puzzle with puzzleNum: " << puzzleNum << std::endl;
+    }
+    if (lootable)
+    {
+        std::cout << "Lootable";
+        auto &posComp = mapEntity.getComponent<PositionComponent>();
+        auto &sizeComp = mapEntity.getComponent<SizeComponent>();
+
+        posComp.SpriteLeft = posComp.XPos - 32;
+        posComp.SpriteTop = posComp.YPos - 40;
+
+        sizeComp.SpriteWhith = tileSize.x;
+        sizeComp.SpriteHeight = tileSize.y - 32;
+
+        mapEntity.addComponent<MousedOver>();
+        mapEntity.addComponent<Looteble>();
+
+        srand(time(nullptr));
+        mapEntity.getComponent<Looteble>().gold = rand() % 150 + 100;
+    }
 }

@@ -10,7 +10,7 @@ struct setUpAllCreatures
 public:
     setUpAllCreatures(StateBase::Context context);
 
-    void SetUpCreatures(anax::Entity& player);
+    void SetUpCreatures(anax::Entity& player, bool createPlayer);
 
 private:
     StateBase::Context context;

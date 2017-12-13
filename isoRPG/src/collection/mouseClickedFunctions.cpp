@@ -102,6 +102,7 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
 void PayUp(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
     player.getComponent<Looteble>().gold += (player.getComponent<HealthComponent>().unpaidKills*20);
+    player.getComponent<HealthComponent>().unpaidKills = 0;
 }
 
 void setPlayOption(anax::Entity& entity)

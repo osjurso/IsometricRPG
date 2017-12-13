@@ -46,7 +46,7 @@ public:
             picker.width = 2*pickupraduis;
 
 
-            if(picker.contains(positionComponent.XPos, positionComponent.YPos))
+            if(picker.contains(positionComponent.SpriteLeft, positionComponent.SpriteTop))
             {
                 std::cout<< "Player looted " << looteble.gold << " gold from "<< target.getId() << " that was whithin " << pickupraduis  << " of the player " << std::endl;
                 pickerLoot.gold += looteble.gold;

@@ -35,7 +35,8 @@ bool Map::load(std::string filename, StateBase::Context context, LightingSystem 
     for (Json::Value& layer: root["layers"])
     {
         if (layer["name"].asString() == "enemy")
-            loadEntities(root, layer, context);
+            continue;
+            //loadEntities(root, layer, context);
         else if (layer["name"].asString() == "objects")
             loadObjects(root, layer, tileSize, context, tileset);
         else if (layer["name"].asString() == "collision")
@@ -72,6 +73,7 @@ void Map::loadLayer(Json::Value& layer, TileSize tileSize, StateBase::Context co
 
 void Map::loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, StateBase::Context context, std::string tileset)
 {
+    int puzzleNum = 0;
     // Get all objects from layer
     for (Json::Value& object: layer["objects"])
     {
@@ -97,6 +99,16 @@ void Map::loadObjects(Json::Value& root, Json::Value& layer, TileSize tileSize, 
         sprite->id = object["gid"].asInt();
         sprite->priority = object["y"].asInt();
         sprite->tileset = tileset;
+        sprite->puzzleNum = puzzleNum;
+
+        if (object["properties"].isMember("lootable"))
+            sprite->lootable = object["properties"]["lootable"].asBool();
+
+        if (object["properties"].isMember("hasPuzzle"))
+        {
+            sprite->hasPuzzle = object["properties"]["hasPuzzle"].asBool();
+            puzzleNum++;
+        }
 
         sprite->createEntities();
 
@@ -176,7 +188,6 @@ void Map::loadLights(Json::Value &root, Json::Value &layer, StateBase::Context c
             lightingSystem.addLight(v);
         }
     }
-
 }
 
 void Map::loadEntities(Json::Value &root, Json::Value &layer, StateBase::Context context)
@@ -221,6 +232,7 @@ void Map::loadEntities(Json::Value &root, Json::Value &layer, StateBase::Context
 
             anax::Entity entity = world.createEntity();
             creatureSetup.setUpEnemie(entity, texture, *context.window, v.x, v.y, difficulty);
+            world.refresh();
         }
     }
 }

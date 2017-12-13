@@ -40,6 +40,8 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
         , playerCam()
         , m_lightingSystem(context.textures->get(Textures::LightTexture))
+        , isCaveLevel(false)
+        , loadLevelOnIntersect(-765, 475, 100, 50)
 {
     zoom = 0.3f;
     anax::World& world = *getContext().world;
@@ -69,8 +71,9 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
     if (!Map::load("assets/map/world_1.json", context, m_lightingSystem))
         std::runtime_error("StateGame::StateGame - Failed to load map data.");
 
-    setUpAllCreatures setUpAllCreatures(getContext());
-    setUpAllCreatures.SetUpCreatures(player);
+    setUpAllCreatures setUpAllCreatures(context);
+    setUpAllCreatures.SetUpCreatures(player, true);
+
     if(save != -1)
     {
         int nr = 0;
@@ -143,17 +146,88 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
                     context.textures->get(Textures::UITransparant),
                     getContext().fonts->get(Fonts::RPG),playerCam,player);
 
-
-    //world.addSystem(m_collisionSystem);
-
-    //m_lightingSystem.addLight(player.getComponent<PositionComponent>().SpriteLeft - 130, player.getComponent<PositionComponent>().SpriteTop - 730);
-
     context.music->play(Music::Test);
 }
 
-StateGame::~StateGame()
+void StateGame::setUpWorldLevel()
 {
-    getContext().world->clear();
+    anax::World& world = *getContext().world;
+    auto entities = world.getEntities();
+    for(auto i : entities)
+    {
+        if (i.getId() != player.getId())
+        {
+            i.kill();
+            world.refresh();
+        }
+    }
+    isCaveLevel = false;
+    loadLevelOnIntersect = sf::FloatRect(-765, 475, 100, 50);
+
+    getContext().music->play(Music::Test);
+
+    // Load map information from JSON into object list
+    if (!Map::load("assets/map/world_1.json", getContext(), m_lightingSystem))
+        std::runtime_error("StateGame::StateGame - Failed to load map data.");
+
+    setUpAllCreatures setUpAllCreatures(getContext());
+    setUpAllCreatures.SetUpCreatures(player, false);
+
+
+    movementTimer.restart().asSeconds();
+    pathfindingTimer.restart().asSeconds();
+    saveTimer.restart().asSeconds();
+
+    SetUpUI setUpUI;
+    setUpUI.setUpUI(*getContext().world,zoom,
+                    getContext().textures->get(Textures::UIBottom),
+                    getContext().textures->get(Textures::UIItems),
+                    getContext().textures->get(Textures::UIAbilities),
+                    getContext().textures->get(Textures::UIHealtBar),
+                    getContext().textures->get(Textures::UITransparant),
+                    getContext().fonts->get(Fonts::RPG), playerCam, player);
+
+    changePlayerPos(-700, 522);
+}
+
+void StateGame::setUpCaveLevel()
+{
+    anax::World& world = *getContext().world;
+    auto entities = world.getEntities();
+    for(auto i : entities)
+    {
+        if (i.getId() != player.getId())
+        {
+            i.kill();
+            world.refresh();
+        }
+    }
+
+    isCaveLevel = true;
+    loadLevelOnIntersect = sf::FloatRect(1200, 725, 125, 75);
+
+    getContext().music->play(Music::CaveTheme);
+
+    // Load map information from JSON into object list
+    if (!Map::load("assets/map/cave.json", getContext(), m_lightingSystem))
+        std::runtime_error("StateGame::StateGame - Failed to load map data.");
+
+    movementTimer.restart().asSeconds();
+    pathfindingTimer.restart().asSeconds();
+    saveTimer.restart().asSeconds();
+
+    SetUpUI setUpUI;
+    setUpUI.setUpUI(*getContext().world,zoom,
+                    getContext().textures->get(Textures::UIBottom),
+                    getContext().textures->get(Textures::UIItems),
+                    getContext().textures->get(Textures::UIAbilities),
+                    getContext().textures->get(Textures::UIHealtBar),
+                    getContext().textures->get(Textures::UITransparant),
+                    getContext().fonts->get(Fonts::RPG),playerCam,player);
+
+    m_lightingSystem.addLight(player.getComponent<PositionComponent>().SpriteLeft - 130, player.getComponent<PositionComponent>().SpriteTop - 730);
+
+    changePlayerPos(860, 630);
 }
 
 void StateGame::draw()
@@ -165,7 +239,9 @@ void StateGame::draw()
 
     DrawEntetys drawEntetys;
     drawEntetys.draw(window,world, "Game");
-    //m_lightingSystem.draw(window, world);
+
+    if (isCaveLevel)
+        m_lightingSystem.draw(window, world);
 }
 
 bool StateGame::update(sf::Time dt)
@@ -206,6 +282,10 @@ bool StateGame::update(sf::Time dt)
 
         UpdateUI updateUI;
         updateUI.update(*getContext().world, playerCam, player);
+
+        // Update the sort key for movable entities
+        DepthSortSystem depthSortSystem;
+        depthSortSystem.Update(*getContext().world);
     }
     if(pathfindingTimer.getElapsedTime().asSeconds() >= 0.5f)
     {
@@ -217,21 +297,28 @@ bool StateGame::update(sf::Time dt)
 
         if (player.getComponent<HealthComponent>().health < 0)
         {
-            // TODO: Reset position to spawn
+            player.getComponent<HealthComponent>().health = player.getComponent<HealthComponent>().maxHealth;
+
+            if (isCaveLevel)
+                changePlayerPos(860, 630);
+            else
+                changePlayerPos(-95, 1650);
 
             // 50% gold penalty
             player.getComponent<Looteble>().gold *= 0.5;
 
             // TODO: Play death animation before pushing game over screen
             requestStackPush(States::GameOver);
+
         }
+
+        if (loadLevelOnIntersect.contains(positionComponent.SpriteLeft, positionComponent.SpriteTop) && isCaveLevel)
+            setUpWorldLevel();
+        else if (loadLevelOnIntersect.contains(positionComponent.SpriteLeft, positionComponent.SpriteTop))
+            setUpCaveLevel();
 
         UpdateDialog updateDialog;
         updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
-
-        // Update the sort key for movable entities
-        DepthSortSystem depthSortSystem;
-        depthSortSystem.Update(*getContext().world);
 
         pathfindingTimer.restart();
     }
@@ -257,11 +344,9 @@ bool StateGame::update(sf::Time dt)
     // 6. Weapon
     // 7. Weapon mod
 
-
-
-
-    //m_collisionSystem.update(dt.asSeconds(), *getContext().world);
-    //m_lightingSystem.updateMovingLight(sf::Vector2f(player.getComponent<PositionComponent>().SpriteLeft + 65,  player.getComponent<PositionComponent>().SpriteTop - 1000));
+    if (isCaveLevel)
+        m_lightingSystem.updateMovingLight(sf::Vector2f(positionComponent.SpriteLeft + 65,
+                                                        positionComponent.SpriteTop - 1000));
 
     return true;
 }
@@ -430,14 +515,38 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     {
         requestStackPush(States::GameOver);
     }
+    else if (key == sf::Keyboard::F4 && isPressed)
+    {
+        setUpWorldLevel();
+    }
     else if (key == sf::Keyboard::F5 && isPressed)
     {
-        // Todo: Hvis vi skal bruke map reload må den også resette anax world
-
-        std::cout << "Loading map data ..." << std::endl;
-        if (!Map::load("assets/map/map.json", getContext(), m_lightingSystem))
-        {
-            std::cout << "Failed to reload map data." << std::endl;
-        }
+        setUpCaveLevel();
     }
+    else if (key == sf::Keyboard::F6 && isPressed)
+    {
+
+    }
+}
+
+void StateGame::changePlayerPos(int x, int y)
+{
+    PositionComponent& positionComponent = player.getComponent<PositionComponent>();
+    TextureComponent& textureComponent = player.getComponent<TextureComponent>();
+
+    positionComponent.XPos = x;
+    positionComponent.YPos = y;
+    positionComponent.SpriteLeft = positionComponent.XPos +95;
+    positionComponent.SpriteTop = positionComponent.YPos +95;
+    playerCam.setCenter(player.getComponent<PositionComponent>().SpriteLeft + player.getComponent<SizeComponent>().SpriteWhith/2, player.getComponent<PositionComponent>().SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
+
+    textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
+    textureComponent.sprite[1].setPosition(positionComponent.XPos, positionComponent.YPos);
+    textureComponent.sprite[2].setPosition(positionComponent.XPos, positionComponent.YPos);
+    textureComponent.sprite[3].setPosition(positionComponent.XPos, positionComponent.YPos);
+}
+
+StateGame::~StateGame()
+{
+    getContext().world->clear();
 }
