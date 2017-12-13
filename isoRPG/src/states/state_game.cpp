@@ -407,6 +407,12 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
 
     else if (key == sf::Keyboard::Escape && isPressed)
         requestStackPush(States::Pause);
+    else if(key == sf::Keyboard::P && isPressed)
+    {
+        std::cout << "XPos" <<  player.getComponent<PositionComponent>().XPos << std::endl;
+        std::cout << "YPos" <<  player.getComponent<PositionComponent>().YPos << std::endl;
+    }
+
     else if (key == sf::Keyboard::F2 && isPressed)
         requestStackPush(States::GameOver);
     else if (key == sf::Keyboard::F5 && isPressed)

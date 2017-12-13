@@ -287,8 +287,13 @@ void StateCharacter::setUpSaves()
 
         anax::Entity delete1 = world.createEntity();
         draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95,delete1,"Character");
+
         delete1.getComponent<TextureComponent>().sortKey = 15;
         delete1.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
+        //delete1.getComponent<PositionComponent>().XPos = 95;
+        //delete1.getComponent<PositionComponent>().YPos = 1000 + saveSlot1.getComponent<SizeComponent>().Height-50;
+        delete1.getComponent<SizeComponent>().Whith = delete1.getComponent<TextureComponent>().sprite[0].getLocalBounds().width;
+        delete1.getComponent<SizeComponent>().Height = delete1.getComponent<TextureComponent>().sprite[0].getLocalBounds().height;
 
         delete1.addComponent<MenuChoiceComponent>();
         delete1.getComponent<MenuChoiceComponent>().source = "delete1";

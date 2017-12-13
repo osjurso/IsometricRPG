@@ -44,7 +44,7 @@ void mouseClickedMenus::process(anax::Entity &e, float MouseX, float MouseY, sf:
         entityRect.left = positionComponent.XPos;
         entityRect.width =  e.getComponent<SizeComponent>().Whith ;
 
-        entityRect.top =  positionComponent.YPos -45;
+        entityRect.top =  positionComponent.YPos;
         entityRect.height = e.getComponent<SizeComponent>().Height;
 /*
         anax::Entity temp = e.getWorld().createEntity();

@@ -53,8 +53,21 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player)
     //creatureSetup.setUpEnemie(goblin4, GoblinTexture, window ,300 ,100, "Hard");
     //creatureSetup.setUpBoss(boss,GoblinTexture,window,200,200);
 
-    creatureSetup.setUpNPC(trader,TraderTexture  ,window,300,300,0,0);
+    creatureSetup.setUpNPC(trader,TraderTexture  ,window,62,1060,0,0);
     creatureSetup.setUpNPC(armorer,ArmorerTexture,window,350,350,42,42);
+
+    trader.getComponent<PositionComponent>().XPos = 152;
+    trader.getComponent<PositionComponent>().SpriteLeft = trader.getComponent<PositionComponent>().XPos;
+    trader.getComponent<PositionComponent>().YPos = 1110;
+    trader.getComponent<PositionComponent>().SpriteTop = trader.getComponent<PositionComponent>().YPos;
+
+    armorer.getComponent<PositionComponent>().XPos = 680;
+    armorer.getComponent<PositionComponent>().SpriteLeft = trader.getComponent<PositionComponent>().XPos +42;
+    armorer.getComponent<PositionComponent>().YPos = 700;
+    armorer.getComponent<PositionComponent>().SpriteTop = trader.getComponent<PositionComponent>().YPos+42;
+
+    trader.getComponent<TextureComponent>().sortKey = trader.getComponent<PositionComponent>().YPos;
+    armorer.getComponent<TextureComponent>().sortKey = armorer.getComponent<PositionComponent>().YPos;
 
     AddDialoge addDialoge;
     AddOptionDialoge optionDialoge;
