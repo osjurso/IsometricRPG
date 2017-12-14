@@ -78,49 +78,55 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
         std::string path = pathFind(heroTilePos.x, heroTilePos.y, MouseTilePos.x, MouseTilePos.y);
 
         moveble.path = path;
+        moveble.moveX[320] = {0};
+        moveble.moveY[320] = {0};
+        float fullspeed = 1.0f;
+        float halfspeedX = 0.66f;
+        float halfspeedY = 0.33f;
 
         for (int i = 0; i < path.length(); i++) {
-            for (int n = 0; n < pixelsPerBlock; n++) {
+            for (int n = 0; n < pixelsPerBlock*2; n++) {
                 char instruction = moveble.path.at(i);
                 moveble.path.push_back(instruction);
                 int index = i * pixelsPerBlock + n;
 
                 if (instruction == '0') {
-                    moveble.moveX[index] = 0.66;
-                    moveble.moveY[index] = 0.33;
+                    moveble.moveX[index] = halfspeedX;
+                    moveble.moveY[index] = halfspeedY;
                 }
                 if (instruction == '1') {
                     moveble.moveX[index] = 0;
-                    moveble.moveY[index] = 1;
+                    moveble.moveY[index] = fullspeed;
                 }
                 if (instruction == '2') {
-                    moveble.moveX[index] = -0.66;
-                    moveble.moveY[index] = 0.33;
+                    moveble.moveX[index] = halfspeedX;
+                    moveble.moveY[index] = halfspeedY;
                 }
                 if (instruction == '3') {
-                    moveble.moveX[index] = -1;
+                    moveble.moveX[index] = -fullspeed;
                     moveble.moveY[index] = 0;
                 }
                 if (instruction == '4') {
-                    moveble.moveX[index] = -0.66;
-                    moveble.moveY[index] = -0.33;
+                    moveble.moveX[index] = -halfspeedX;
+                    moveble.moveY[index] = -halfspeedY;
                 }
                 if (instruction == '5') {
                     moveble.moveX[index] = 0;
-                    moveble.moveY[index] = -1;
+                    moveble.moveY[index] = -fullspeed;
                 }
                 if (instruction == '6') {
-                    moveble.moveX[index] = 0.66;
-                    moveble.moveY[index] = -0.33;
+                    moveble.moveX[index] = halfspeedX;
+                    moveble.moveY[index] = -halfspeedY;
                 }
                 if (instruction == '7') {
-                    moveble.moveX[index] = 1;
+                    moveble.moveX[index] = fullspeed;
                     moveble.moveY[index] = 0;
                 }
             }
         }
         std::cout <<  moveble.path << std::endl;
         player.getComponent<AnimationComponent>().action = "Walk";
+        player.getComponent<AnimationComponent>().idleTimer.restart().asSeconds();
     }
 }
 
