@@ -66,15 +66,6 @@ StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context)
     PlayText.getComponent<PositionComponent>().XPos = cam.getCenter().x- PlayText.getComponent<TextComponent>().text.getLocalBounds().width/2;
     PlayText.getComponent<PositionComponent>().YPos = cam.getSize().y -200 +8;
     PlayText.getComponent<TextureComponent>().sortKey = 13;
-
-
-    anax::Entity temp = getContext().world->createEntity();
-    SetUpRectShape setUpRectShape;
-    setUpRectShape.setUpRectShape(temp, PlayText.getComponent<PositionComponent>().XPos,
-                                  PlayText.getComponent<PositionComponent>().YPos,
-                                  PlayText.getComponent<SizeComponent>().Height,
-                                  PlayText.getComponent<SizeComponent>().width, 1, sf::Color().White, cam);
-
 }
 
 void StateCaracterCreation::draw()
@@ -132,6 +123,18 @@ bool StateCaracterCreation::handleEvent(const sf::Event &event)
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && caracterNameText.length() > 0) caracterNameText.erase(caracterNameText.length()-1, caracterNameText.length());
 
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                auto entitys = getContext().world->getEntities();
+                for(auto i : entitys)
+                {
+                    i.kill();
+                    getContext().world->refresh();
+
+                }
+                requestStateChange(States::Character);
+            }
+
 
         }
 
@@ -152,6 +155,7 @@ bool StateCaracterCreation::handleEvent(const sf::Event &event)
                 {
                     choice = "Game";
                     getContext().sounds->play(SoundEffects::Click);
+
 
                 }
             }

@@ -8,14 +8,19 @@ void mouseClickedMenus::Clicked()
 {
     sf::RenderWindow& window = *context.window;
     anax::World& world = *context.world;
-    sf::Mouse::getPosition(window).x;
-    sf::Mouse::getPosition(window).y;
+    sf::Vector2i mouse;
+    mouse.x = sf::Mouse::getPosition(window).x;
+    mouse.y = sf::Mouse::getPosition(window).y;
+
+    sf::Vector2f mouseT = window.mapPixelToCoords(mouse, window.getView());
+    //std::cout << sf::Mouse::getPosition(window).x << std::endl;
+
     auto entities = world.getEntities();
     for(auto i : entities)
     {
         if(i.hasComponent<MousedOver>())
         {
-            process(i,sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y, window);
+            process(i,mouseT.x,mouseT.y, window);
         }
     }
 

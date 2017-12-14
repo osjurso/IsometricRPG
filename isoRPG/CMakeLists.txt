@@ -77,7 +77,7 @@ set(SOURCE_FILES
         src/systems/pathfinding.cpp include/components/Comp_UI.h include/systems/update_UI.h include/collections/drawableText.h include/components/Comp_Text.h include/components/Comp_Children.h include/components/Comp_Parent.h src/collection/setUpUI.cpp include/collections/setUpUI.h include/collections/addDialogueOption.h include/components/Comp_AssosiateFunc.h include/collections/mouseClickedFunctions.h src/collection/mouseClickedFunctions.cpp include/components/Comp_Dying.h include/systems/killdying.h src/collection/setUpRectShape.cpp include/collections/setUpRectShape.h include/components/Comp_SqureShape.h include/systems/KillDialogues.h include/components/Comp_ActionTimers.h include/components/Comp_Changeable.h include/systems/UpdateDialogue.h src/systems/update_dialogue.cpp include/collections/addPuzzle.h include/components/CompCost.h src/states/state_game_over.cpp include/states/state_game_over.h include/systems/resolveIAI_attack.h
         src/systems/collision_system.cpp include/systems/collision_system.h
         include/components/comp_collision.h
-        src/systems/lighting_system.cpp include/systems/lighting_system.h src/states/state_game_over.cpp include/states/state_game_over.h)
+        src/systems/lighting_system.cpp include/systems/lighting_system.h src/states/state_game_over.cpp include/states/state_game_over.h include/systems/updateMenu.h src/systems/updateMenu.cpp)
 
 
 

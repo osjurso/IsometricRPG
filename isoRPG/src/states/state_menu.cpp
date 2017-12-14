@@ -76,25 +76,44 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
 
     int nr =0;
-    PlayOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - PlayOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
-    PlayOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    PlayOption.getComponent<PositionComponent>().XPos       = cam.getCenter().x - PlayOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    PlayOption.getComponent<PositionComponent>().YPos       = cam.getCenter().y -250 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
     PlayOption.getComponent<PositionComponent>().SpriteLeft = PlayOption.getComponent<PositionComponent>().XPos;
-    PlayOption.getComponent<PositionComponent>().SpriteTop = PlayOption.getComponent<PositionComponent>().YPos;
+    PlayOption.getComponent<PositionComponent>().SpriteTop  = PlayOption.getComponent<PositionComponent>().YPos;
+    PlayOption.getComponent<SizeComponent>().width          = PlayOption.getComponent<TextComponent>().text.getLocalBounds().width;
+    PlayOption.getComponent<SizeComponent>().SpriteWidth    = PlayOption.getComponent<SizeComponent>().width;
+    PlayOption.getComponent<SizeComponent>().Height         = PlayOption.getComponent<TextComponent>().text.getLocalBounds().height;
+    PlayOption.getComponent<SizeComponent>().SpriteHeight   = PlayOption.getComponent<SizeComponent>().Height;
+
     nr++;
     SettingsOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - SettingsOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
     SettingsOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
     SettingsOption.getComponent<PositionComponent>().SpriteLeft = SettingsOption.getComponent<PositionComponent>().XPos;
     SettingsOption.getComponent<PositionComponent>().SpriteTop = SettingsOption.getComponent<PositionComponent>().YPos;
+    SettingsOption.getComponent<SizeComponent>().width = SettingsOption.getComponent<TextComponent>().text.getLocalBounds().width;
+    SettingsOption.getComponent<SizeComponent>().SpriteWidth = SettingsOption.getComponent<SizeComponent>().width;
+    SettingsOption.getComponent<SizeComponent>().Height = SettingsOption.getComponent<TextComponent>().text.getLocalBounds().height;
+    SettingsOption.getComponent<SizeComponent>().SpriteHeight = SettingsOption.getComponent<SizeComponent>().Height;
+
     nr++;
-    AboutOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - AboutOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
-    AboutOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2 -1;
+    AboutOption.getComponent<PositionComponent>().XPos       = cam.getCenter().x - AboutOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    AboutOption.getComponent<PositionComponent>().YPos       = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2 -1;
     AboutOption.getComponent<PositionComponent>().SpriteLeft = AboutOption.getComponent<PositionComponent>().XPos;
-    AboutOption.getComponent<PositionComponent>().SpriteTop = AboutOption.getComponent<PositionComponent>().YPos;
+    AboutOption.getComponent<PositionComponent>().SpriteTop  = AboutOption.getComponent<PositionComponent>().YPos;
+    AboutOption.getComponent<SizeComponent>().width          = AboutOption.getComponent<TextComponent>().text.getLocalBounds().width;
+    AboutOption.getComponent<SizeComponent>().SpriteWidth    = AboutOption.getComponent<SizeComponent>().width;
+    AboutOption.getComponent<SizeComponent>().Height         = AboutOption.getComponent<TextComponent>().text.getLocalBounds().height;
+    AboutOption.getComponent<SizeComponent>().SpriteHeight   = AboutOption.getComponent<SizeComponent>().Height;
+
     nr++;
-    ExitOption.getComponent<PositionComponent>().XPos = cam.getCenter().x - ExitOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
-    ExitOption.getComponent<PositionComponent>().YPos = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
+    ExitOption.getComponent<PositionComponent>().XPos       = cam.getCenter().x - ExitOption.getComponent<TextComponent>().text.getLocalBounds().width/2;
+    ExitOption.getComponent<PositionComponent>().YPos       = cam.getCenter().y -250 + nr*35 - PlayOption.getComponent<TextComponent>().text.getLocalBounds().height/2;
     ExitOption.getComponent<PositionComponent>().SpriteLeft = ExitOption.getComponent<PositionComponent>().XPos;
-    ExitOption.getComponent<PositionComponent>().SpriteTop = ExitOption.getComponent<PositionComponent>().YPos;
+    ExitOption.getComponent<PositionComponent>().SpriteTop  = ExitOption.getComponent<PositionComponent>().YPos;
+    ExitOption.getComponent<SizeComponent>().width          = ExitOption.getComponent<TextComponent>().text.getLocalBounds().width;
+    ExitOption.getComponent<SizeComponent>().SpriteWidth    = ExitOption.getComponent<SizeComponent>().width;
+    ExitOption.getComponent<SizeComponent>().Height         = ExitOption.getComponent<TextComponent>().text.getLocalBounds().height;
+    ExitOption.getComponent<SizeComponent>().SpriteHeight   = ExitOption.getComponent<SizeComponent>().Height;
 
 
 

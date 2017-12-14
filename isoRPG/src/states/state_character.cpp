@@ -39,8 +39,17 @@ bool StateCharacter::handleEvent(const sf::Event &event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
-        //requestStackPop();
-        //requestStackPush(States::Game);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            auto entitys = getContext().world->getEntities();
+            for(auto i : entitys)
+            {
+                i.kill();
+                getContext().world->refresh();
+
+            }
+            requestStateChange(States::Menu);
+        }
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
