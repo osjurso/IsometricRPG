@@ -103,7 +103,15 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
 void ArmorReward(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
     player.getComponent<Lootable>().armorModifier +=1;
-    setDefault(entity,player,world);
+    //setDefault(entity,player,world);
+    sf::Color tempColor = player.getComponent<TextureComponent>().sprite[0].getColor();
+    /*
+    std::cout << static_cast<int>(tempColor.r)<< std::endl;
+    std::cout << static_cast<int>(tempColor.g)<< std::endl;     //Code for geting rgb values of a color
+    std::cout << static_cast<int>(tempColor.b)<< std::endl;
+     */
+
+    player.getComponent<TextureComponent>().sprite[0].setColor(sf::Color(static_cast<int>(tempColor.r) -20,static_cast<int>(tempColor.g),static_cast<int>(tempColor.b)));
 }
 
 void PayUp(anax::Entity& entity, anax::Entity& player, anax::World& world)

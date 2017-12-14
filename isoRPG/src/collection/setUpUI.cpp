@@ -158,14 +158,19 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     drawebleText.setUpDrawableText(defendText, defendKey, playerCam, "Game", zoom, font, steel);
     drawebleText.setUpDrawableText(HealText, healKey, playerCam, "Game", zoom, font, steel);
 
+
+
     attackText.getComponent<UIComp>().xOffset = 35;
     attackText.getComponent<UIComp>().yOffset = -40;
+    attackText.getComponent<TextureComponent>().sortKey = 5020;
 
     defendText.getComponent<UIComp>().xOffset = 75;
     defendText.getComponent<UIComp>().yOffset = -40;
+    defendText.getComponent<TextureComponent>().sortKey = 5020;
 
     HealText.getComponent<UIComp>().xOffset = 113;
     HealText.getComponent<UIComp>().yOffset = -40;
+    HealText.getComponent<TextureComponent>().sortKey = 5020;
 
 
     //sets up healtbar

@@ -40,25 +40,13 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player, bool createPlayer)
     DrawEntetys drawEntetys;
 
     anax::World& world = *context.world;
-
-    //anax::Entity goblin = world.createEntity();
-    //anax::Entity goblin2 = world.createEntity();
-    //anax::Entity goblin3 = world.createEntity();
-    //anax::Entity goblin4 = world.createEntity();
     anax::Entity trader = world.createEntity();
     anax::Entity armorer = world.createEntity();
-    //anax::Entity boss = world.createEntity();
 
     SetUpCreature creatureSetup;
 
     if (createPlayer)
         creatureSetup.setUpPlayer(player, window);
-
-    //creatureSetup.setUpEnemies(goblin,  GoblinTexture, window, 200, 200, "Hard");
-    //creatureSetup.setUpEnemies(goblin2, GoblinTexture, window ,100 ,100, "Medium");
-    //creatureSetup.setUpEnemies(goblin3, GoblinTexture, window ,400 ,200, "Easy");
-    //creatureSetup.setUpEnemies(goblin4, GoblinTexture, window ,300 ,100, "Hard");
-    //creatureSetup.setUpBoss(boss,GoblinTexture,window,200,200);
 
     creatureSetup.setUpNPC(trader,TraderTexture  ,window,62,1060,0,0);
     creatureSetup.setUpNPC(armorer,ArmorerTexture,window,350,350,42,42);

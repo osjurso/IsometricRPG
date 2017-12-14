@@ -58,6 +58,8 @@ public:
                         entity.getComponent<HealthComponent>().unpaidKills += 1;
                         if (entity.getComponent<HealthComponent>().totalKills >= 5) {
                             entity.getComponent<Lootable>().weaponModifier++;
+                            sf::Color tempColor = entity.getComponent<TextureComponent>().sprite[0].getColor();
+                            entity.getComponent<TextureComponent>().sprite[2].setColor(sf::Color(static_cast<int>(tempColor.r) -40,static_cast<int>(tempColor.g)-60,static_cast<int>(tempColor.b)-60));
                             entity.getComponent<HealthComponent>().totalKills = 0;
                         }
                     }

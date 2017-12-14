@@ -125,7 +125,7 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
                 }
             }
         }
-        std::cout <<  moveble.path << std::endl;
+        //std::cout <<  moveble.path << std::endl;
         player.getComponent<AnimationComponent>().action = "Walk";
         player.getComponent<AnimationComponent>().idleTimer.restart().asSeconds();
     }

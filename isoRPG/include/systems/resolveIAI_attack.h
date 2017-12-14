@@ -47,7 +47,11 @@ public:
 
                     if(distanceX + distanceY < 50)
                     {
-                        player.getComponent<HealthComponent>().health -=  (i.getComponent<Lootable>().weapon - (player.getComponent<Lootable>().armor + player.getComponent<Lootable>().armorModifier));
+                        if(i.getComponent<Lootable>().weapon - (player.getComponent<Lootable>().armor + player.getComponent<Lootable>().armorModifier > 0))
+                        {
+                            player.getComponent<HealthComponent>().health -=  (i.getComponent<Lootable>().weapon - (player.getComponent<Lootable>().armor + player.getComponent<Lootable>().armorModifier));
+                        }
+
                     }
                     i.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
 

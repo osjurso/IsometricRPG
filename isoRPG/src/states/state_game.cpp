@@ -103,7 +103,7 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
         player.getComponent<Lootable>().weaponModifier = WeaponModNumber;
 
         //TODO: add carecter color
-        player.getComponent<TextureComponent>().sprite[0].setColor(sf::Color(100,255,255)); // makes good bluealternative
+        //player.getComponent<TextureComponent>().sprite[0].setColor(sf::Color(100,255,255)); // makes good bluealternative
 
     }
 
@@ -373,7 +373,7 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
     float Xmove;
     float Ymove;
     char Dmove;
-
+/*
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
@@ -450,9 +450,10 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
             //movable.path.push_back(Dmove);
         }
     }
+    */
 
         //Attack method
-    else if (key == sf::Keyboard::Space && player.getComponent<ActionTimer>().AttackTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().AttackCooldown)
+    if (key == sf::Keyboard::Space && player.getComponent<ActionTimer>().AttackTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().AttackCooldown)
     {
         animationComponent.action = "Attack";
         animationComponent.idleTimer.restart().asSeconds();
