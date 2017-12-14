@@ -9,7 +9,7 @@ class Movable : public anax::Component
 {
 public:
     int speed;
-    std::string path;
+    std::string path = "";
     bool agro = false;
     int agroRage;
     float moveX[320];

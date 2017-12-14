@@ -25,11 +25,11 @@ void MouseClicked::Clicked(anax::Entity &player, sf::View cam, float zoom, std::
                 entityRect.width = sizeComponent.SpriteWidth;
                 entityRect.height = sizeComponent.SpriteHeight;
 
-                std::cout << "top: " << entityRect.top << "  left: " << entityRect.left << "  Height: "
-                          << entityRect.height << "  width: " << entityRect.width << std::endl;
-                std::cout << "  MouseX: " << mouseT.x << "  MouseY: " << mouseT.y << std::endl;
-                std::cout << std::endl;
-                std::cout << std::endl;
+                //std::cout << "top: " << entityRect.top << "  left: " << entityRect.left << "  Height: "
+                //          << entityRect.height << "  width: " << entityRect.width << std::endl;
+                //std::cout << "  MouseX: " << mouseT.x << "  MouseY: " << mouseT.y << std::endl;
+                //std::cout << std::endl;
+                //std::cout << std::endl;
 
                 if (entityRect.contains(mouseT.x, mouseT.y) && !i.hasComponent<UIComp>()) {
                     process(i, mouseT.x, mouseT.y, world, player, window, cam, zoom);
@@ -50,30 +50,30 @@ void MouseClicked::Clicked(anax::Entity &player, sf::View cam, float zoom, std::
             }
         }
         //Move player to mouse.x, mouse.y if not intractable
-        //if(!interactive)createPlayerPath(player, mouseT.x, mouseT.y);
+        if(!interactive)createPlayerPath(player, mouseT.x, mouseT.y);
 
     }
 }
 
 void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float MouseY) {
-    Movable &moveble = player.getComponent<Movable>();
+
+    auto heroSize = player.getComponent<SizeComponent>();
+    auto heroPos = player.getComponent<PositionComponent>();
+    Movable& moveble = player.getComponent<Movable>();
     moveble.path = "";
     moveble.current = 0;
     const int mapsize = 64;
     int pixelsPerBlock = 10;
 
-    auto heroSize = player.getComponent<SizeComponent>();
-    auto heroPos = player.getComponent<PositionComponent>();
-
     // Calculating the tile position of the hero
-    sf::Vector2i heroTilePos = sf::Vector2i(heroPos.XPos + heroSize.width / 2, heroPos.SpriteTop);
+    sf::Vector2i heroTilePos = sf::Vector2i(heroPos.SpriteLeft + heroSize.SpriteWidth / 2, heroPos.SpriteTop);
     heroTilePos = sf::Vector2i((2 * heroTilePos.y + heroTilePos.x) / 64, (2 * heroTilePos.y - heroTilePos.x) / 64);
 
-    sf::Vector2i MousePos = sf::Vector2i(MouseX + 17, MouseY + 25);
-    MousePos = sf::Vector2i((2 * MousePos.y + MousePos.x) / 64, (2 * MousePos.y - MousePos.x) / 64);
+    sf::Vector2i MouseTilePos = sf::Vector2i(MouseX , MouseY);
+    MouseTilePos = sf::Vector2i((2 * MouseTilePos.y + MouseTilePos.x) / 64, (2 * MouseTilePos.y - MouseTilePos.x) / 64);
 
     if (0 < heroTilePos.x < mapsize && 0 < heroTilePos.y < mapsize) {
-        std::string path = pathFind(heroTilePos.x, heroTilePos.y, MousePos.x, MousePos.y);
+        std::string path = pathFind(heroTilePos.x, heroTilePos.y, MouseTilePos.x, MouseTilePos.y);
 
         moveble.path = path;
 
@@ -83,37 +83,37 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
                 moveble.path.push_back(instruction);
                 int index = i * pixelsPerBlock + n;
 
-                if (instruction == '7') {
+                if (instruction == '0') {
                     moveble.moveX[index] = 1;
                     moveble.moveY[index] = 0;
                 }
-                if (instruction == '0') {
-                    moveble.moveX[index] = 0.5;
-                    moveble.moveY[index] = 0.5;
-                }
                 if (instruction == '1') {
+                    moveble.moveX[index] = 0.66;
+                    moveble.moveY[index] = 0.33;
+                }
+                if (instruction == '2') {
                     moveble.moveX[index] = 0;
                     moveble.moveY[index] = 1;
                 }
-                if (instruction == '2') {
-                    moveble.moveX[index] = -0.5;
-                    moveble.moveY[index] = 0.5;
-                }
                 if (instruction == '3') {
+                    moveble.moveX[index] = -0.66;
+                    moveble.moveY[index] = 0.33;
+                }
+                if (instruction == '4') {
                     moveble.moveX[index] = -1;
                     moveble.moveY[index] = 0;
                 }
-                if (instruction == '4') {
-                    moveble.moveX[index] = -0.5;
-                    moveble.moveY[index] = -0.5;
-                }
                 if (instruction == '5') {
+                    moveble.moveX[index] = -0.66;
+                    moveble.moveY[index] = -0.33;
+                }
+                if (instruction == '6') {
                     moveble.moveX[index] = 0;
                     moveble.moveY[index] = -1;
                 }
-                if (instruction == '6') {
-                    moveble.moveX[index] = 0.5;
-                    moveble.moveY[index] = -0.5;
+                if (instruction == '7') {
+                    moveble.moveX[index] = 0.66;
+                    moveble.moveY[index] = -0.33;
                 }
             }
         }

@@ -445,9 +445,9 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         player.getComponent<AnimationComponent>().idleTimer.restart().asSeconds();
         for(int i = 0; i< movable.speed; i++)
         {
-            movable.moveX[i] = Xmove;
-            movable.moveY[i] = Ymove;
-            movable.path.push_back(Dmove);
+            //movable.moveX[i] = Xmove;
+            //movable.moveY[i] = Ymove;
+            //movable.path.push_back(Dmove);
         }
     }
 

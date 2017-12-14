@@ -45,36 +45,36 @@ public:
             if(puzzleNum == 1)
             {
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_1_question.txt", 0);
-                optionDialogue.addOptionDialogue(speaker, "Dragon", 0, 3, healthPunishment);
-                optionDialogue.addOptionDialogue(speaker, "Orc", 0, 4, healthPunishment);
-                optionDialogue.addOptionDialogue(speaker, "Baselisk", 0, 5, healthPotionReward); //revard
+                optionDialogue.addOptionDialogue(speaker, "Dragon", 0, 0, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Orc", 0, 1, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Baselisk", 0, 2, healthPotionReward); //revard
 
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_1_default.txt", 1);
             }
             if(puzzleNum == 2)
             {
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_2_question.txt", 0);
-                optionDialogue.addOptionDialogue(speaker, "Undead", 0, 3, healthPunishment);
-                optionDialogue.addOptionDialogue(speaker, "Devil", 0, 4, healthPotionReward); //revard
-                optionDialogue.addOptionDialogue(speaker, "Demon", 0, 5, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Undead", 0, 0, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Devil", 0, 1, healthPotionReward); //revard
+                optionDialogue.addOptionDialogue(speaker, "Demon", 0, 2, healthPunishment);
 
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_2_default.txt", 1);
             }
             if(puzzleNum == 3)
             {
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_3_question.txt", 0);
-                optionDialogue.addOptionDialogue(speaker, "Golden Cage", 0, 3, healthPunishment);
-                optionDialogue.addOptionDialogue(speaker, "Silver", 0, 4, healthPunishment);
-                optionDialogue.addOptionDialogue(speaker, "Phylactery", 0, 5, healthPotionReward); //revard
+                optionDialogue.addOptionDialogue(speaker, "Golden Cage", 0, 0, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Silver", 0, 1, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Phylactery", 0, 2, healthPotionReward); //revard
 
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_1_question.txt", 1);
             }
             if(puzzleNum == 4)
             {
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_4_question.txt", 0);
-                optionDialogue.addOptionDialogue(speaker, "Fey", 0, 3, healthPotionReward);//revard
-                optionDialogue.addOptionDialogue(speaker, "Infernal", 0, 4, healthPunishment);
-                optionDialogue.addOptionDialogue(speaker, "Elemental", 0, 5, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Fey", 0, 0, healthPotionReward);//revard
+                optionDialogue.addOptionDialogue(speaker, "Infernal", 0, 1, healthPunishment);
+                optionDialogue.addOptionDialogue(speaker, "Elemental", 0, 2, healthPunishment);
 
                 addDialogue.addDialogue(speaker, "assets/dialog/puzzle_0_default.txt", 1);
             }
