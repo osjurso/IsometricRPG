@@ -4,26 +4,24 @@
 #include <anax/System.hpp>
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
-
-#include <states/state_base.h>
-#include <application.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "states/state_base.h"
+#include "application.h"
 
-#include <include/components/Comp_size.h>
+#include <components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
-#include <include/components/Comp_animation.h>
-#include <include/components/Comp_State.h>
-#include <include/components/Comp_Draweble.h>
+#include <components/Comp_animation.h>
+#include <components/Comp_State.h>
+#include <components/Comp_Drawable.h>
 
 
-class Draweble
+class Drawable
 {
 public:
-    void makeDraweble(sf::Texture& texture, int Left, int Top, anax::Entity& entity, std::string state)
+    void makeDrawable(sf::Texture &texture, int Left, int Top, anax::Entity &entity, std::string state)
     {
-
         entity.addComponent<TextureComponent>();
         TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
         textureComponent.texture[0] = texture;
@@ -37,13 +35,13 @@ public:
         entity.addComponent<SizeComponent>();
         SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
         sizeComponent.Height = textureComponent.texture[0].getSize().y;
-        sizeComponent.Whith = textureComponent.texture[0].getSize().x;
+        sizeComponent.width = textureComponent.texture[0].getSize().x;
 
         entity.addComponent<StateComponent>();
         StateComponent& stateComponent = entity.getComponent<StateComponent>();
         stateComponent.state = state;
 
-        entity.addComponent<DrawebleComponent>();
+        entity.addComponent<DrawableComponent>();
         entity.activate();
     }
 };

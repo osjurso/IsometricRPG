@@ -1,11 +1,9 @@
 #include <SFML/Graphics/Transformable.hpp>
-#include <include/components/comp_collision.h>
-#include <include/components/Comp_Texture.h>
-#include <include/components/Comp_position.h>
+#include <components/comp_collision.h>
+#include <components/Comp_Texture.h>
+#include <components/Comp_position.h>
 #include <iostream>
-#include <include/components/Comp_size.h>
-#include <include/components/Comp_moveble.h>
-#include "include/systems/collision_system.h"
+#include "systems/collision_system.h"
 
 enum Direction
 {
@@ -61,14 +59,14 @@ void CollisionSystem::update(float dt, anax::World& world)
 
             if(rect1.intersects(rect2))
             {
-                    onCollisionOccured(e1, e2);
+                onCollisionOccurred(e1, e2);
             }
         }
     }
 }
 
 
-void CollisionSystem::onCollisionOccured(anax::Entity& e1, anax::Entity& e2)
+void CollisionSystem::onCollisionOccurred(anax::Entity &e1, anax::Entity &e2)
 {
     auto& e1CollisionComp = e1.getComponent<CollisionComponent>();
     auto& e2CollisionComp = e2.getComponent<CollisionComponent>();

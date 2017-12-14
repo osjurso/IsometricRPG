@@ -1,9 +1,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
-#include <include/collections/drawable.h>
-#include <include/systems/drawEntety.h>
-#include <include/components/Comp_Changeble.h>
-#include <include/collections/drawebleText.h>
+#include <collections/drawable.h>
+#include <systems/drawEntety.h>
+#include <components/Comp_Changeable.h>
+#include <collections/drawableText.h>
 
 #include "include/states/state_settings.h"
 #include "include/gameEngine/resource_holder.h"
@@ -25,33 +24,42 @@ StateSettings::StateSettings(StateStack &stack, StateBase::Context context)
     anax::Entity musicKnob = world.createEntity();
     anax::Entity sfxKnob = world.createEntity();
 
-    masterKnob.addComponent<ChangebleComponent>();
-    musicKnob.addComponent<ChangebleComponent>();
-    sfxKnob.addComponent<ChangebleComponent>();
+    masterKnob.addComponent<ChangeableComponent>();
+    musicKnob.addComponent<ChangeableComponent>();
+    sfxKnob.addComponent<ChangeableComponent>();
 
-    Draweble draweble;
+    Drawable draweble;
     int volumeX = 800;
     int volumeY = 200;
     int SliderSpace = 100;
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingsBackdorp),0,0,background ,"Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingsBackdorp), 0, 0, background, "Settings");
 
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingsSlider),volumeX, volumeY                , masterSlider,"Settings");
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingsSlider),volumeX, volumeY + SliderSpace  , musicSlider ,"Settings");
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingsSlider),volumeX, volumeY + SliderSpace*2, sfxSlider   ,"Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingsSlider), volumeX, volumeY, masterSlider,
+                          "Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingsSlider), volumeX, volumeY + SliderSpace,
+                          musicSlider, "Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingsSlider), volumeX, volumeY + SliderSpace * 2,
+                          sfxSlider, "Settings");
 
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingKnob),volumeX+ masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width/2, volumeY                 -12, masterKnob,"Settings");
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingKnob),volumeX+ masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width/2, volumeY + SliderSpace   -12, musicKnob ,"Settings");
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingKnob),volumeX + masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width/2, volumeY + SliderSpace*2 -12, sfxKnob   ,"Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingKnob),
+                          volumeX + masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width / 2,
+                          volumeY - 12, masterKnob, "Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingKnob),
+                          volumeX + masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width / 2,
+                          volumeY + SliderSpace - 12, musicKnob, "Settings");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingKnob),
+                          volumeX + masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width / 2,
+                          volumeY + SliderSpace * 2 - 12, sfxKnob, "Settings");
 
-    masterKnob.getComponent<ChangebleComponent>().min = volumeX;
-    masterKnob.getComponent<ChangebleComponent>().max = volumeX + masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width - 20;
-    masterKnob.getComponent<ChangebleComponent>().source = "Master";
-    musicKnob.getComponent<ChangebleComponent>().min = volumeX;
-    musicKnob.getComponent<ChangebleComponent>().max = volumeX + musicSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width - 20;
-    musicKnob.getComponent<ChangebleComponent>().source = "Music";
-    sfxKnob.getComponent<ChangebleComponent>().min = volumeX;
-    sfxKnob.getComponent<ChangebleComponent>().max = volumeX + sfxSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width- 20;
-    sfxKnob.getComponent<ChangebleComponent>().source = "SFX";
+    masterKnob.getComponent<ChangeableComponent>().min = volumeX;
+    masterKnob.getComponent<ChangeableComponent>().max = volumeX + masterSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width - 20;
+    masterKnob.getComponent<ChangeableComponent>().source = "Master";
+    musicKnob.getComponent<ChangeableComponent>().min = volumeX;
+    musicKnob.getComponent<ChangeableComponent>().max = volumeX + musicSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width - 20;
+    musicKnob.getComponent<ChangeableComponent>().source = "Music";
+    sfxKnob.getComponent<ChangeableComponent>().min = volumeX;
+    sfxKnob.getComponent<ChangeableComponent>().max = volumeX + sfxSlider.getComponent<TextureComponent>().sprite[0].getLocalBounds().width- 20;
+    sfxKnob.getComponent<ChangeableComponent>().source = "SFX";
 
 
     anax::Entity masterText = world.createEntity();
@@ -59,10 +67,10 @@ StateSettings::StateSettings(StateStack &stack, StateBase::Context context)
     anax::Entity sfxText = world.createEntity();
 
     sf::View cam = window.getView();
-    DrawebleText drawebleText;
-    drawebleText.setUpDrawebleText(masterText,"Master",cam,"Settings",1,font,sf::Color().Black);
-    drawebleText.setUpDrawebleText(musicText,"Music",cam,"Settings",1,font,sf::Color().Black);
-    drawebleText.setUpDrawebleText(sfxText,"SFX",cam,"Settings",1,font,sf::Color().Black);
+    DrawableText drawebleText;
+    drawebleText.setUpDrawableText(masterText, "Master", cam, "Settings", 1, font, sf::Color().Black);
+    drawebleText.setUpDrawableText(musicText, "Music", cam, "Settings", 1, font, sf::Color().Black);
+    drawebleText.setUpDrawableText(sfxText, "SFX", cam, "Settings", 1, font, sf::Color().Black);
 
     masterText.getComponent<PositionComponent>().XPos = volumeX;
     masterText.getComponent<PositionComponent>().YPos = volumeY -50;
@@ -93,29 +101,29 @@ bool StateSettings::update(sf::Time dt)
     auto entitys = getContext().world->getEntities();
     for(auto i: entitys)
     {
-        if(i.hasComponent<ChangebleComponent>())
+        if(i.hasComponent<ChangeableComponent>())
         {
-            if(i.getComponent<ChangebleComponent>().changeble)
+            if(i.getComponent<ChangeableComponent>().changeble)
             {
 
-                if(i.getComponent<ChangebleComponent>().min < sf::Mouse::getPosition(window).x && sf::Mouse::getPosition(window).x < i.getComponent<ChangebleComponent>().max)
+                if(i.getComponent<ChangeableComponent>().min < sf::Mouse::getPosition(window).x && sf::Mouse::getPosition(window).x < i.getComponent<ChangeableComponent>().max)
                 {
                     i.getComponent<PositionComponent>().XPos = sf::Mouse::getPosition(window).x;
                 }
-                if(i.getComponent<ChangebleComponent>().source == "Master")
+                if(i.getComponent<ChangeableComponent>().source == "Master")
                 {
-                    masterVolume = (i.getComponent<ChangebleComponent>().max - i.getComponent<ChangebleComponent>().min) /( sf::Mouse::getPosition(window).x - i.getComponent<ChangebleComponent>().min);
+                    masterVolume = (i.getComponent<ChangeableComponent>().max - i.getComponent<ChangeableComponent>().min) /( sf::Mouse::getPosition(window).x - i.getComponent<ChangeableComponent>().min);
                     getContext().music->setVolume(100*masterVolume*musicVolume);
                     getContext().sounds->setVolume(100*masterVolume*SFXVolume);
                 }
-                if(i.getComponent<ChangebleComponent>().source == "Music")
+                if(i.getComponent<ChangeableComponent>().source == "Music")
                 {
-                    musicVolume = (i.getComponent<ChangebleComponent>().max - i.getComponent<ChangebleComponent>().min) /( sf::Mouse::getPosition(window).x - i.getComponent<ChangebleComponent>().min);
+                    musicVolume = (i.getComponent<ChangeableComponent>().max - i.getComponent<ChangeableComponent>().min) /( sf::Mouse::getPosition(window).x - i.getComponent<ChangeableComponent>().min);
                     getContext().music->setVolume(100*masterVolume*musicVolume);
                 }
-                if(i.getComponent<ChangebleComponent>().source == "SFX")
+                if(i.getComponent<ChangeableComponent>().source == "SFX")
                 {
-                    SFXVolume = (i.getComponent<ChangebleComponent>().max - i.getComponent<ChangebleComponent>().min) /( sf::Mouse::getPosition(window).x - i.getComponent<ChangebleComponent>().min);
+                    SFXVolume = (i.getComponent<ChangeableComponent>().max - i.getComponent<ChangeableComponent>().min) /( sf::Mouse::getPosition(window).x - i.getComponent<ChangeableComponent>().min);
                     getContext().sounds->setVolume(100*masterVolume*SFXVolume);
                 }
 
@@ -145,22 +153,22 @@ bool StateSettings::handleEvent(const sf::Event &event)
         auto entitys = getContext().world->getEntities();
         for(auto i: entitys)
         {
-            if(i.hasComponent<ChangebleComponent>())
+            if(i.hasComponent<ChangeableComponent>())
             {
                 sf::IntRect entityRect;
                 PositionComponent& positionComponent = i.getComponent<PositionComponent>();
                 SizeComponent& sizeComponent = i.getComponent<SizeComponent>();
                 entityRect.top =  positionComponent.YPos;
                 entityRect.left = positionComponent.XPos;
-                entityRect.width =  sizeComponent.Whith;
+                entityRect.width =  sizeComponent.width;
                 entityRect.height = sizeComponent.Height;
                 if(entityRect.contains(sf::Mouse::getPosition(window).x,sf::Mouse::getPosition(window).y))
                 {
-                    i.getComponent<ChangebleComponent>().changeble = true;
+                    i.getComponent<ChangeableComponent>().changeble = true;
                 }
                 else
                 {
-                    i.getComponent<ChangebleComponent>().changeble = false;
+                    i.getComponent<ChangeableComponent>().changeble = false;
                 }
             }
         }
@@ -172,9 +180,9 @@ bool StateSettings::handleEvent(const sf::Event &event)
         auto entitys = getContext().world->getEntities();
         for (auto i: entitys)
         {
-            if (i.hasComponent<ChangebleComponent>())
+            if (i.hasComponent<ChangeableComponent>())
             {
-                i.getComponent<ChangebleComponent>().changeble = false;
+                i.getComponent<ChangeableComponent>().changeble = false;
             }
         }
     }

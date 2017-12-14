@@ -1,14 +1,14 @@
-#include <include/collections/drawable.h>
-#include <include/systems/drawEntety.h>
+#include <collections/drawable.h>
+#include <systems/drawEntety.h>
 #include <fstream>
-#include <include/collections/drawebleText.h>
-#include <include/components/Comp_AssosiateFunc.h>
-#include <include/collections/mouseClikedFunctions.h>
-#include <include/components/Comp_Menuchoice.h>
-#include <include/systems/mouseClickedMenus.h>
-#include <include/components/Comp_save.h>
-#include "include/states/state_character.h"
-#include "include/gameEngine/resource_holder.h"
+#include <collections/drawableText.h>
+#include <components/Comp_AssosiateFunc.h>
+#include <collections/mouseClickedFunctions.h>
+#include <components/Comp_Menuchoice.h>
+#include <systems/mouseClickedMenus.h>
+#include <components/Comp_save.h>
+#include "states/state_character.h"
+#include "gameEngine/resource_holder.h"
 
 StateCharacter::StateCharacter(StateStack &stack, Context context)
         : StateBase(stack, context)
@@ -160,14 +160,16 @@ void StateCharacter::setUpSaves()
     anax::Entity saveSlot2 = world.createEntity();
     anax::Entity saveSlot3 = world.createEntity();
 
-    Draweble draweble;
+    Drawable draweble;
 
-    draweble.makeDraweble(getContext().textures->get(Textures::SettingsBackdorp),0,0,background,"Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::SettingsBackdorp), 0, 0, background, "Character");
 
     float boxoffset = 300;
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterBox),500,80,saveSlot1,"Character");
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterBox),500,80 + boxoffset,saveSlot2,"Character");
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterBox),500,80 + boxoffset*2,saveSlot3,"Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterBox), 500, 80, saveSlot1, "Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterBox), 500, 80 + boxoffset, saveSlot2,
+                          "Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterBox), 500, 80 + boxoffset * 2, saveSlot3,
+                          "Character");
 
     background.getComponent<TextureComponent>().sortKey = 10;
 
@@ -220,11 +222,11 @@ void StateCharacter::setUpSaves()
     }
     if(nr > 6) thirdFull = true;
 
-    DrawebleText drawebleText;
+    DrawableText drawebleText;
     sf::View cam= window.getView();
 
     anax::Entity createNew1 = world.createEntity();
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterNew),850,250,createNew1,"Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterNew), 850, 250, createNew1, "Character");
     createNew1.getComponent<TextureComponent>().sortKey = 12;
     createNew1.addComponent<MousedOver>();
     createNew1.addComponent<AssosateFunc>();
@@ -241,13 +243,20 @@ void StateCharacter::setUpSaves()
         anax::Entity player1Weapon = world.createEntity();
         anax::Entity player1WeaponMod = world.createEntity();
 
-        drawebleText.setUpDrawebleText(player1Name,               "Name: " + file1Text.at(0),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player1Gold,               "Gold: " + file1Text.at(1),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player1HeathPotion,"Healt potion: " + file1Text.at(2),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player1Armor,             "Armor: " + file1Text.at(3),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player1ArmorMod,              " + " + file1Text.at(4),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player1Weapon,           "Weapon: " + file1Text.at(5),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player1WeaponMod,             " + " + file1Text.at(6),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(player1Name, "Name: " + file1Text.at(0), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player1Gold, "Gold: " + file1Text.at(1), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player1HeathPotion, "Healt potion: " + file1Text.at(2), cam, "Character", 1,
+                                       font, sf::Color().Black);
+        drawebleText.setUpDrawableText(player1Armor, "Armor: " + file1Text.at(3), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player1ArmorMod, " + " + file1Text.at(4), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player1Weapon, "Weapon: " + file1Text.at(5), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player1WeaponMod, " + " + file1Text.at(6), cam, "Character", 1, font,
+                                       sf::Color().Black);
 
         player1Name.getComponent<TextureComponent>().sortKey = 15;
         player1Gold.getComponent<TextureComponent>().sortKey = 15;
@@ -280,19 +289,20 @@ void StateCharacter::setUpSaves()
 
         createNew1.getComponent<AssosateFunc>().voidMenufunc = setPlayOption;
         anax::Entity PlayText1 = world.createEntity();
-        drawebleText.setUpDrawebleText(PlayText1,"Play",cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(PlayText1, "Play", cam, "Character", 1, font, sf::Color().Black);
         PlayText1.getComponent<TextureComponent>().sortKey = 15;
         PlayText1.getComponent<PositionComponent>().XPos = 850+110;
         PlayText1.getComponent<PositionComponent>().YPos = 250+5;
 
         anax::Entity delete1 = world.createEntity();
-        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95,delete1,"Character");
+        draweble.makeDrawable(getContext().textures->get(Textures::UIRedX),
+                              1000 + saveSlot1.getComponent<SizeComponent>().Height - 50, 95, delete1, "Character");
 
         delete1.getComponent<TextureComponent>().sortKey = 15;
         delete1.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
         //delete1.getComponent<PositionComponent>().XPos = 95;
         //delete1.getComponent<PositionComponent>().YPos = 1000 + saveSlot1.getComponent<SizeComponent>().Height-50;
-        delete1.getComponent<SizeComponent>().Whith = delete1.getComponent<TextureComponent>().sprite[0].getLocalBounds().width;
+        delete1.getComponent<SizeComponent>().width = delete1.getComponent<TextureComponent>().sprite[0].getLocalBounds().width;
         delete1.getComponent<SizeComponent>().Height = delete1.getComponent<TextureComponent>().sprite[0].getLocalBounds().height;
 
         delete1.addComponent<MenuChoiceComponent>();
@@ -303,16 +313,17 @@ void StateCharacter::setUpSaves()
 
     }else
     {
-        createNew1.getComponent<AssosateFunc>().voidMenufunc = setNewCaracterOption;
+        createNew1.getComponent<AssosateFunc>().voidMenufunc = setNewCharacterOption;
         anax::Entity newCaraterText1 = world.createEntity();
-        drawebleText.setUpDrawebleText(newCaraterText1,"New Character",cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(newCaraterText1, "New Character", cam, "Character", 1, font, sf::Color().Black);
         newCaraterText1.getComponent<PositionComponent>().XPos = 850+50;
         newCaraterText1.getComponent<PositionComponent>().YPos = 250+5;
         newCaraterText1.getComponent<TextureComponent>().sortKey = 15;
     }
 
     anax::Entity createNew2 = world.createEntity();
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterNew),850,250 +boxoffset,createNew2,"Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterNew), 850, 250 + boxoffset, createNew2,
+                          "Character");
     createNew2.addComponent<MousedOver>();
     createNew2.addComponent<AssosateFunc>();
     createNew2.addComponent<MenuChoiceComponent>();
@@ -329,13 +340,20 @@ void StateCharacter::setUpSaves()
         anax::Entity player2Weapon = world.createEntity();
         anax::Entity player2WeaponMod = world.createEntity();
 
-        drawebleText.setUpDrawebleText(player2Name,               "Name: " + file2Text.at(0),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2Gold,               "Gold: " + file2Text.at(1),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2HeathPotion,"Healt potion: " + file2Text.at(2),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2Armor,             "Armor: " + file2Text.at(3),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2ArmorMod,              " + " + file2Text.at(4),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2Weapon,           "Weapon: " + file2Text.at(5),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player2WeaponMod,             " + " + file2Text.at(6),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(player2Name, "Name: " + file2Text.at(0), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player2Gold, "Gold: " + file2Text.at(1), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player2HeathPotion, "Healt potion: " + file2Text.at(2), cam, "Character", 1,
+                                       font, sf::Color().Black);
+        drawebleText.setUpDrawableText(player2Armor, "Armor: " + file2Text.at(3), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player2ArmorMod, " + " + file2Text.at(4), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player2Weapon, "Weapon: " + file2Text.at(5), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player2WeaponMod, " + " + file2Text.at(6), cam, "Character", 1, font,
+                                       sf::Color().Black);
 
         player2Name.getComponent<TextureComponent>().sortKey = 16;
         player2Gold.getComponent<TextureComponent>().sortKey = 16;
@@ -369,13 +387,15 @@ void StateCharacter::setUpSaves()
         createNew2.getComponent<AssosateFunc>().voidMenufunc = setPlayOption;
 
         anax::Entity PlayText2 = world.createEntity();
-        drawebleText.setUpDrawebleText(PlayText2,"Play",cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(PlayText2, "Play", cam, "Character", 1, font, sf::Color().Black);
         PlayText2.getComponent<PositionComponent>().XPos = 850+110;
         PlayText2.getComponent<PositionComponent>().YPos = 250+boxoffset+5;
         PlayText2.getComponent<TextureComponent>().sortKey = 16;
 
         anax::Entity delete2 = world.createEntity();
-        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset,delete2,"Character");
+        draweble.makeDrawable(getContext().textures->get(Textures::UIRedX),
+                              1000 + saveSlot1.getComponent<SizeComponent>().Height - 50, 95 + boxoffset, delete2,
+                              "Character");
         delete2.getComponent<TextureComponent>().sortKey = 16;
         delete2.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
 
@@ -387,16 +407,17 @@ void StateCharacter::setUpSaves()
         delete2.getComponent<AssosateFunc>().voidMenufunc = setRenewOption;
     }else
     {
-        createNew2.getComponent<AssosateFunc>().voidMenufunc = setNewCaracterOption;
+        createNew2.getComponent<AssosateFunc>().voidMenufunc = setNewCharacterOption;
         anax::Entity newCaraterText2 = world.createEntity();
-        drawebleText.setUpDrawebleText(newCaraterText2,"New Character",cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(newCaraterText2, "New Character", cam, "Character", 1, font, sf::Color().Black);
         newCaraterText2.getComponent<PositionComponent>().XPos = 850+50;
         newCaraterText2.getComponent<PositionComponent>().YPos = 250+boxoffset +5;
         newCaraterText2.getComponent<TextureComponent>().sortKey = 16;
     }
 
     anax::Entity createNew3 = world.createEntity();
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterNew),850,250 +boxoffset*2,createNew3,"Character");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterNew), 850, 250 + boxoffset * 2, createNew3,
+                          "Character");
     createNew3.addComponent<MousedOver>();
     createNew3.addComponent<AssosateFunc>();
     createNew3.addComponent<MenuChoiceComponent>();
@@ -413,13 +434,20 @@ void StateCharacter::setUpSaves()
         anax::Entity player3Weapon = world.createEntity();
         anax::Entity player3WeaponMod = world.createEntity();
 
-        drawebleText.setUpDrawebleText(player3Name,               "Name: " + file3Text.at(0),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3Gold,               "Gold: " + file3Text.at(1),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3HeathPotion,"Healt potion: " + file3Text.at(2),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3Armor,             "Armor: " + file3Text.at(3),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3ArmorMod,              " + " + file3Text.at(4),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3Weapon,           "Weapon: " + file3Text.at(5),cam,"Character",1,font,sf::Color().Black);
-        drawebleText.setUpDrawebleText(player3WeaponMod,             " + " + file3Text.at(6),cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(player3Name, "Name: " + file3Text.at(0), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player3Gold, "Gold: " + file3Text.at(1), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player3HeathPotion, "Healt potion: " + file3Text.at(2), cam, "Character", 1,
+                                       font, sf::Color().Black);
+        drawebleText.setUpDrawableText(player3Armor, "Armor: " + file3Text.at(3), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player3ArmorMod, " + " + file3Text.at(4), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player3Weapon, "Weapon: " + file3Text.at(5), cam, "Character", 1, font,
+                                       sf::Color().Black);
+        drawebleText.setUpDrawableText(player3WeaponMod, " + " + file3Text.at(6), cam, "Character", 1, font,
+                                       sf::Color().Black);
 
         player3Name.getComponent<TextureComponent>().sortKey = 17;
         player3Gold.getComponent<TextureComponent>().sortKey = 17;
@@ -453,13 +481,15 @@ void StateCharacter::setUpSaves()
         createNew3.getComponent<AssosateFunc>().voidMenufunc = setPlayOption;
 
         anax::Entity PlayText3 = world.createEntity();
-        drawebleText.setUpDrawebleText(PlayText3,"Play",cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(PlayText3, "Play", cam, "Character", 1, font, sf::Color().Black);
         PlayText3.getComponent<PositionComponent>().XPos = 850+110;
         PlayText3.getComponent<PositionComponent>().YPos = 250+boxoffset*2+5;
         PlayText3.getComponent<TextureComponent>().sortKey = 17;
 
         anax::Entity delete3 = world.createEntity();
-        draweble.makeDraweble(getContext().textures->get(Textures::UIRedX),1000 + saveSlot1.getComponent<SizeComponent>().Height-50,95+boxoffset*2,delete3,"Character");
+        draweble.makeDrawable(getContext().textures->get(Textures::UIRedX),
+                              1000 + saveSlot1.getComponent<SizeComponent>().Height - 50, 95 + boxoffset * 2, delete3,
+                              "Character");
         delete3.getComponent<TextureComponent>().sortKey = 17;
         delete3.getComponent<TextureComponent>().sprite[0].setScale(0.2f,0.2f);
 
@@ -470,10 +500,10 @@ void StateCharacter::setUpSaves()
         delete3.getComponent<AssosateFunc>().voidMenufunc = setRenewOption;
     }else
     {
-        createNew3.getComponent<AssosateFunc>().voidMenufunc = setNewCaracterOption;
+        createNew3.getComponent<AssosateFunc>().voidMenufunc = setNewCharacterOption;
 
         anax::Entity newCaraterText3 = world.createEntity();
-        drawebleText.setUpDrawebleText(newCaraterText3,"New Character",cam,"Character",1,font,sf::Color().Black);
+        drawebleText.setUpDrawableText(newCaraterText3, "New Character", cam, "Character", 1, font, sf::Color().Black);
         newCaraterText3.getComponent<PositionComponent>().XPos = 850+50;
         newCaraterText3.getComponent<PositionComponent>().YPos = 250+boxoffset*2+5;
         newCaraterText3.getComponent<TextureComponent>().sortKey = 17;

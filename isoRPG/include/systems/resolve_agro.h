@@ -13,10 +13,7 @@
 
 #include <components/Comp_size.h>
 #include <components/Comp_position.h>
-#include <components/Comp_moveble.h>
-
-
-
+#include <components/Comp_movable.h>
 
 struct ResolveAgro
 {

@@ -1,4 +1,3 @@
-
 #ifndef ISORPG_COMP_PARENT_H
 #define ISORPG_COMP_PARENT_H
 

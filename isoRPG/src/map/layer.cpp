@@ -57,14 +57,16 @@ void Layer::createEntities()
     anax::World& world = *context.world;
     anax::Entity mapEntity = world.createEntity();
 
-    Draweble draweble;
+    Drawable draweble;
 
     // Position coordinates offsets the texture back
 
     if (tileset == "spritesheet")
-        draweble.makeDraweble(context.textures->get(Textures::grasslandTileset), -(width*tileSize.x)/2, -(width*tileSize.y)/2, mapEntity, "Game");
+        draweble.makeDrawable(context.textures->get(Textures::grasslandTileset), -(width * tileSize.x) / 2,
+                              -(width * tileSize.y) / 2, mapEntity, "Game");
     else if (tileset == "cave_tiles")
-        draweble.makeDraweble(context.textures->get(Textures::caveTileset), -(width*tileSize.x)/2, -(width*tileSize.y)/2, mapEntity, "Game");
+        draweble.makeDrawable(context.textures->get(Textures::caveTileset), -(width * tileSize.x) / 2,
+                              -(width * tileSize.y) / 2, mapEntity, "Game");
 
 
     TextureComponent& textureComponent = mapEntity.getComponent<TextureComponent>();

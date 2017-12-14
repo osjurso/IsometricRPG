@@ -1,7 +1,3 @@
-//
-// Created by Bjornar on 02.11.2017.
-//
-
 #ifndef ISORPG_COMP_TEXTURE_H
 #define ISORPG_COMP_TEXTURE_H
 
@@ -12,7 +8,6 @@
 struct TextureComponent : public anax::Component
 {
 public:
-
     sf::Texture texture[4];
     sf::Sprite sprite[4];
     sf::IntRect spriteRect;

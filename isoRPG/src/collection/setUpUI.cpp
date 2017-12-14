@@ -1,9 +1,8 @@
 #include <collections/setUpUI.h>
-#include <include/collections/setUpRectShape.h>
-#include <include/components/Comp_SqureShape.h>
-#include <include/components/Comp_Changeble.h>
+#include <collections/setUpRectShape.h>
+#include <components/Comp_Changeable.h>
 
-void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Texture& abilitiesTexture, sf::Texture& healtBarTexture, sf::Texture& transparant, sf::Font font, sf::View playerCam, anax::Entity player)
+void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture, sf::Texture& itemTexture, sf::Texture& abilitiesTexture, sf::Texture& healthBar, sf::Texture& transperant, sf::Font font, sf::View playerCam, anax::Entity player)
 {
 
     //sets up background
@@ -14,7 +13,7 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
 
     anax::Entity attackCooldown = world.createEntity();
     anax::Entity defendCooldown = world.createEntity();
-    anax::Entity healtCooldown = world.createEntity();
+    anax::Entity healthCooldown = world.createEntity();
 
 
 
@@ -23,28 +22,28 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     abilities.addComponent<UIComp>();
     healtbar.addComponent<UIComp>();
 
-    bottom.getComponent<UIComp>().Yofset = -60;
+    bottom.getComponent<UIComp>().yOffset = -60;
 
-    items.getComponent<UIComp>().Yofset = -50;
-    items.getComponent<UIComp>().Xofset = 400;
+    items.getComponent<UIComp>().yOffset = -50;
+    items.getComponent<UIComp>().xOffset = 400;
 
-    abilities.getComponent<UIComp>().Yofset = -25;
-    abilities.getComponent<UIComp>().Xofset = 40;
+    abilities.getComponent<UIComp>().yOffset = -25;
+    abilities.getComponent<UIComp>().xOffset = 40;
 
-    healtbar.getComponent<UIComp>().Yofset = -55;
-    healtbar.getComponent<UIComp>().Xofset = 30;
+    healtbar.getComponent<UIComp>().yOffset = -55;
+    healtbar.getComponent<UIComp>().xOffset = 30;
 
-    Draweble draweble;
-    draweble.makeDraweble(itemTexture,0, 0, items,"Game");
+    Drawable draweble;
+    draweble.makeDrawable(itemTexture, 0, 0, items, "Game");
     items.getComponent<TextureComponent>().sprite->setScale(zoom,zoom);
 
-    draweble.makeDraweble(bottomTexture,0,0, bottom,"Game");
+    draweble.makeDrawable(bottomTexture, 0, 0, bottom, "Game");
     bottom.getComponent<TextureComponent>().sprite->setScale(zoom,zoom);
 
-    draweble.makeDraweble(abilitiesTexture,0,0,abilities,"Game");
+    draweble.makeDrawable(abilitiesTexture, 0, 0, abilities, "Game");
     abilities.getComponent<TextureComponent>().sprite->setScale(zoom/1.5,zoom/1.5);
 
-    draweble.makeDraweble(healtBarTexture,0,0,healtbar,"Game");
+    draweble.makeDrawable(healthBar, 0, 0, healtbar, "Game");
     healtbar.getComponent<TextureComponent>().sprite->setScale(zoom/2,zoom/2);
 
 
@@ -54,36 +53,36 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     healtbar.getComponent<TextureComponent>().sortKey = 5005;
 
     //set up timers
-    draweble.makeDraweble(transparant,0,0,attackCooldown,"Game");
-    draweble.makeDraweble(transparant,0,0,defendCooldown,"Game");
-    draweble.makeDraweble(transparant,0,0,healtCooldown,"Game");
+    draweble.makeDrawable(transperant, 0, 0, attackCooldown, "Game");
+    draweble.makeDrawable(transperant, 0, 0, defendCooldown, "Game");
+    draweble.makeDrawable(transperant, 0, 0, healthCooldown, "Game");
 
     attackCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
     defendCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
-    healtCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
+    healthCooldown.getComponent<TextureComponent>().sprite->setScale(zoom/1.2,zoom/1.2);
 
     attackCooldown.getComponent<TextureComponent>().sortKey = 5007;
     defendCooldown.getComponent<TextureComponent>().sortKey = 5007;
-    healtCooldown.getComponent<TextureComponent>().sortKey = 5007;
+    healthCooldown.getComponent<TextureComponent>().sortKey = 5007;
 
     attackCooldown.addComponent<UIComp>();
-    attackCooldown.getComponent<UIComp>().Xofset = 42;
-    attackCooldown.getComponent<UIComp>().Yofset = -23;
+    attackCooldown.getComponent<UIComp>().xOffset = 42;
+    attackCooldown.getComponent<UIComp>().yOffset = -23;
 
     defendCooldown.addComponent<UIComp>();
-    defendCooldown.getComponent<UIComp>().Xofset = 74;
-    defendCooldown.getComponent<UIComp>().Yofset = -23;
+    defendCooldown.getComponent<UIComp>().xOffset = 74;
+    defendCooldown.getComponent<UIComp>().yOffset = -23;
 
-    healtCooldown.addComponent<UIComp>();
-    healtCooldown.getComponent<UIComp>().Xofset = 106;
-    healtCooldown.getComponent<UIComp>().Yofset = -23;
+    healthCooldown.addComponent<UIComp>();
+    healthCooldown.getComponent<UIComp>().xOffset = 106;
+    healthCooldown.getComponent<UIComp>().yOffset = -23;
 
-    attackCooldown.addComponent<ChangebleComponent>();
-    defendCooldown.addComponent<ChangebleComponent>();
-    healtCooldown.addComponent<ChangebleComponent>();
-    attackCooldown.getComponent<ChangebleComponent>().source = "Attack";
-    defendCooldown.getComponent<ChangebleComponent>().source = "Defend";
-    healtCooldown.getComponent<ChangebleComponent>().source = "Potion";
+    attackCooldown.addComponent<ChangeableComponent>();
+    defendCooldown.addComponent<ChangeableComponent>();
+    healthCooldown.addComponent<ChangeableComponent>();
+    attackCooldown.getComponent<ChangeableComponent>().source = "Attack";
+    defendCooldown.getComponent<ChangeableComponent>().source = "Defend";
+    healthCooldown.getComponent<ChangeableComponent>().source = "Potion";
 
     //sets up text
 
@@ -99,51 +98,51 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     anax::Entity ArmorBase = world.createEntity();
     anax::Entity WeaponBase = world.createEntity();
 
-    DrawebleText drawebleText;
-    std::string nrPotion = " x "+ std::to_string(player.getComponent<Looteble>().HealtPotion);
-    std::string nrGold   = " x "+ std::to_string(player.getComponent<Looteble>().gold);
-    std::string ModArmor = " + "+ std::to_string(player.getComponent<Looteble>().armorModifier);
-    std::string ModSword = " + "+ std::to_string(player.getComponent<Looteble>().weaponModifier);
-    std::string Armor    =  " " + std::to_string(player.getComponent<Looteble>().armor);
-    std::string Weapon   =  " " + std::to_string(player.getComponent<Looteble>().weapon);
+    DrawableText drawebleText;
+    std::string nrPotion = " x "+ std::to_string(player.getComponent<Lootable>().HealthPotion);
+    std::string nrGold   = " x "+ std::to_string(player.getComponent<Lootable>().gold);
+    std::string ModArmor = " + "+ std::to_string(player.getComponent<Lootable>().armorModifier);
+    std::string ModSword = " + "+ std::to_string(player.getComponent<Lootable>().weaponModifier);
+    std::string Armor    =  " " + std::to_string(player.getComponent<Lootable>().armor);
+    std::string Weapon   =  " " + std::to_string(player.getComponent<Lootable>().weapon);
 
-    drawebleText.setUpDrawebleText(HPotionCount ,nrPotion, playerCam, "Game", zoom,font,potionRed);
-    drawebleText.setUpDrawebleText(GoldCount    ,nrGold  , playerCam, "Game", zoom,font,gold);
+    drawebleText.setUpDrawableText(HPotionCount, nrPotion, playerCam, "Game", zoom, font, potionRed);
+    drawebleText.setUpDrawableText(GoldCount, nrGold, playerCam, "Game", zoom, font, gold);
 
-    drawebleText.setUpDrawebleText(ArmorModifierCount  ,ModArmor, playerCam, "Game", zoom,font,magicPurple);
-    drawebleText.setUpDrawebleText(WeaponModifierCount ,ModSword, playerCam, "Game", zoom,font,magicPurple);
-    drawebleText.setUpDrawebleText(WeaponBase          ,Weapon,   playerCam, "Game", zoom,font,steel);
-    drawebleText.setUpDrawebleText(ArmorBase           ,Armor,    playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawableText(ArmorModifierCount, ModArmor, playerCam, "Game", zoom, font, magicPurple);
+    drawebleText.setUpDrawableText(WeaponModifierCount, ModSword, playerCam, "Game", zoom, font, magicPurple);
+    drawebleText.setUpDrawableText(WeaponBase, Weapon, playerCam, "Game", zoom, font, steel);
+    drawebleText.setUpDrawableText(ArmorBase, Armor, playerCam, "Game", zoom, font, steel);
 
-    HPotionCount.getComponent<UIComp>().Xofset = 425;
-    HPotionCount.getComponent<UIComp>().Yofset = -45;
+    HPotionCount.getComponent<UIComp>().xOffset = 425;
+    HPotionCount.getComponent<UIComp>().yOffset = -45;
     HPotionCount.getComponent<TextComponent>().content = "Potion";
     HPotionCount.getComponent<TextureComponent>().sortKey = 5020;
 
-    GoldCount.getComponent<UIComp>().Xofset = 425;
-    GoldCount.getComponent<UIComp>().Yofset = -20;
+    GoldCount.getComponent<UIComp>().xOffset = 425;
+    GoldCount.getComponent<UIComp>().yOffset = -20;
     GoldCount.getComponent<TextComponent>().content = "Gold";
     GoldCount.getComponent<TextureComponent>().sortKey = 5020;
 
 
-    ArmorBase.getComponent<UIComp>().Xofset = 500;
-    ArmorBase.getComponent<UIComp>().Yofset = -20;
+    ArmorBase.getComponent<UIComp>().xOffset = 500;
+    ArmorBase.getComponent<UIComp>().yOffset = -20;
     ArmorBase.getComponent<TextComponent>().content = "ArmorBase";
     ArmorBase.getComponent<TextureComponent>().sortKey = 5020;
 
-    ArmorModifierCount.getComponent<UIComp>().Xofset = 540;
-    ArmorModifierCount.getComponent<UIComp>().Yofset = -20;
+    ArmorModifierCount.getComponent<UIComp>().xOffset = 540;
+    ArmorModifierCount.getComponent<UIComp>().yOffset = -20;
     ArmorModifierCount.getComponent<TextComponent>().content = "ArmorMod";
     ArmorModifierCount.getComponent<TextureComponent>().sortKey = 5020;
 
 
-    WeaponBase.getComponent<UIComp>().Xofset = 500;
-    WeaponBase.getComponent<UIComp>().Yofset = -45;
+    WeaponBase.getComponent<UIComp>().xOffset = 500;
+    WeaponBase.getComponent<UIComp>().yOffset = -45;
     WeaponBase.getComponent<TextComponent>().content = "WeaponBase";
     WeaponBase.getComponent<TextureComponent>().sortKey = 5020;
 
-    WeaponModifierCount.getComponent<UIComp>().Xofset = 540;
-    WeaponModifierCount.getComponent<UIComp>().Yofset = -45;
+    WeaponModifierCount.getComponent<UIComp>().xOffset = 540;
+    WeaponModifierCount.getComponent<UIComp>().yOffset = -45;
     WeaponModifierCount.getComponent<TextComponent>().content = "WeaponMod";
     WeaponModifierCount.getComponent<TextureComponent>().sortKey = 5020;
 
@@ -155,41 +154,41 @@ void SetUpUI::setUpUI(anax::World &world, float zoom, sf::Texture& bottomTexture
     std::string defendKey = "Shift";
     std::string healKey = "Q";
 
-    drawebleText.setUpDrawebleText(attackText ,attackKey, playerCam, "Game", zoom,font,steel);
-    drawebleText.setUpDrawebleText(defendText ,defendKey, playerCam, "Game", zoom,font,steel);
-    drawebleText.setUpDrawebleText(HealText   ,healKey,   playerCam, "Game", zoom,font,steel);
+    drawebleText.setUpDrawableText(attackText, attackKey, playerCam, "Game", zoom, font, steel);
+    drawebleText.setUpDrawableText(defendText, defendKey, playerCam, "Game", zoom, font, steel);
+    drawebleText.setUpDrawableText(HealText, healKey, playerCam, "Game", zoom, font, steel);
 
-    attackText.getComponent<UIComp>().Xofset = 35;
-    attackText.getComponent<UIComp>().Yofset = -40;
+    attackText.getComponent<UIComp>().xOffset = 35;
+    attackText.getComponent<UIComp>().yOffset = -40;
 
-    defendText.getComponent<UIComp>().Xofset = 75;
-    defendText.getComponent<UIComp>().Yofset = -40;
+    defendText.getComponent<UIComp>().xOffset = 75;
+    defendText.getComponent<UIComp>().yOffset = -40;
 
-    HealText.getComponent<UIComp>().Xofset = 113;
-    HealText.getComponent<UIComp>().Yofset = -40;
+    HealText.getComponent<UIComp>().xOffset = 113;
+    HealText.getComponent<UIComp>().yOffset = -40;
 
 
     //sets up healtbar
-    anax::Entity healtTotal = world.createEntity();
-    anax::Entity healtCurrnet = world.createEntity();
+    anax::Entity healthTotal = world.createEntity();
+    anax::Entity healthCurrent = world.createEntity();
 
     SetUpRectShape setUpRectShape;
 
-    setUpRectShape.setUpRectshape(healtTotal,100,100,110,9,zoom,sf::Color(100,10,10), playerCam);
-    setUpRectShape.setUpRectshape(healtCurrnet,100,100,110,9,zoom,sf::Color(165,10,10), playerCam);
+    setUpRectShape.setUpRectShape(healthTotal, 100, 100, 110, 9, zoom, sf::Color(100, 10, 10), playerCam);
+    setUpRectShape.setUpRectShape(healthCurrent, 100, 100, 110, 9, zoom, sf::Color(165, 10, 10), playerCam);
 
-    healtCurrnet.getComponent<TextureComponent>().sortKey = 5004;
-    healtTotal.getComponent<TextureComponent>().sortKey = 5003;
+    healthCurrent.getComponent<TextureComponent>().sortKey = 5004;
+    healthTotal.getComponent<TextureComponent>().sortKey = 5003;
 
-    healtTotal.addComponent<UIComp>();
-    healtCurrnet.addComponent<UIComp>();
-    healtTotal.getComponent<UIComp>().Xofset = 32;
-    healtTotal.getComponent<UIComp>().Yofset = -52;
+    healthTotal.addComponent<UIComp>();
+    healthCurrent.addComponent<UIComp>();
+    healthTotal.getComponent<UIComp>().xOffset = 32;
+    healthTotal.getComponent<UIComp>().yOffset = -52;
 
-    healtCurrnet.getComponent<UIComp>().Xofset = 32;
-    healtCurrnet.getComponent<UIComp>().Yofset = -52;
+    healthCurrent.getComponent<UIComp>().xOffset = 32;
+    healthCurrent.getComponent<UIComp>().yOffset = -52;
 
-    healtCurrnet.addComponent<ChangebleComponent>();
+    healthCurrent.addComponent<ChangeableComponent>();
 }
 
 

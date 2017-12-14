@@ -11,7 +11,7 @@
 #include <components/Comp_position.h>
 #include <iostream>
 #include <include/systems/pathfinding.h>
-#include <components/Comp_moveble.h>
+#include <components/Comp_movable.h>
 #include <components/Comp_AssosiateFunc.h>
 
 class mouseClickedMenus : anax::System<anax::Requires<PositionComponent, SizeComponent, MousedOver>>

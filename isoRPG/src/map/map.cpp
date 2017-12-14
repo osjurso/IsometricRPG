@@ -1,13 +1,15 @@
 #include <fstream>
 #include <cstring>
 #include <random>
+#include <iostream>
+
 
 #include <jsoncpp/json/json.h>
 #include <SFML/Graphics.hpp>
-#include <iostream>
-#include <include/collections/setUpCreature.h>
-#include <include/systems/pathfinding.h>
-#include <include/systems/lighting_system.h>
+
+#include <collections/setUpCreature.h>
+#include <systems/pathfinding.h>
+#include <systems/lighting_system.h>
 
 #include "map/map.h"
 #include "map/sprite.h"
@@ -35,8 +37,7 @@ bool Map::load(std::string filename, StateBase::Context context, LightingSystem 
     for (Json::Value& layer: root["layers"])
     {
         if (layer["name"].asString() == "enemy")
-            continue;
-            //loadEntities(root, layer, context);
+            loadEntities(root, layer, context);
         else if (layer["name"].asString() == "objects")
             loadObjects(root, layer, tileSize, context, tileset);
         else if (layer["name"].asString() == "collision")
@@ -231,7 +232,7 @@ void Map::loadEntities(Json::Value &root, Json::Value &layer, StateBase::Context
             v.x -= 64;
 
             anax::Entity entity = world.createEntity();
-            creatureSetup.setUpEnemie(entity, texture, *context.window, v.x, v.y, difficulty);
+            creatureSetup.setUpEnemies(entity, texture, *context.window, v.x, v.y, difficulty);
             world.refresh();
         }
     }

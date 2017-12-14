@@ -1,25 +1,21 @@
-//
-// Created by Bjornar on 11/16/2017.
-//
-
 #ifndef ISORPG_LOOT_H
 #define ISORPG_LOOT_H
+
+#include <iostream>
 
 #include <anax/System.hpp>
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include <states/state_base.h>
 #include <application.h>
-#include <SFML/Graphics/RenderWindow.hpp>
 
-
-#include <include/components/Comp_size.h>
+#include <components/Comp_size.h>
 #include <components/Comp_position.h>
 #include <components/Comp_Texture.h>
-#include <include/components/Comp_healt.h>
-#include <iostream>
-#include <include/components/Comp_looteble.h>
+#include <components/Comp_healt.h>
+#include <components/Comp_lootable.h>
 
 
 class Loot
@@ -31,11 +27,11 @@ public:
         {
             PositionComponent& positionComponent = target.getComponent<PositionComponent>();
             SizeComponent& sizeComponent = target.getComponent<SizeComponent>();
-            Looteble& looteble = target.getComponent<Looteble>();
+            Lootable& lootable = target.getComponent<Lootable>();
 
             PositionComponent& Pickerposition = picker.getComponent<PositionComponent>();
             SizeComponent& Pickersize = picker.getComponent<SizeComponent>();
-            Looteble& pickerLoot = picker.getComponent<Looteble>();
+            Lootable& pickerLoot = picker.getComponent<Lootable>();
 
             int pickupraduis =50;
 
@@ -48,9 +44,9 @@ public:
 
             if(picker.contains(positionComponent.SpriteLeft, positionComponent.SpriteTop))
             {
-                std::cout<< "Player looted " << looteble.gold << " gold from "<< target.getId() << " that was whithin " << pickupraduis  << " of the player " << std::endl;
-                pickerLoot.gold += looteble.gold;
-                looteble.gold = 0;
+                std::cout<< "Player looted " << lootable.gold << " gold from "<< target.getId() << " that was whithin " << pickupraduis  << " of the player " << std::endl;
+                pickerLoot.gold += lootable.gold;
+                lootable.gold = 0;
             }
         }
     }

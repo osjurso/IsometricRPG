@@ -12,7 +12,7 @@ struct UIComp : public anax::Component
 {
 public:
     bool UI;
-    int Xofset = 0;
-    int Yofset = 0;
+    int xOffset = 0;
+    int yOffset = 0;
 };
 #endif //ISORPG_COMP_UI_H

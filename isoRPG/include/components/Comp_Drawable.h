@@ -1,4 +1,3 @@
-
 #ifndef ISORPG_COMP_DRAWEBLE_H
 #define ISORPG_COMP_DRAWEBLE_H
 
@@ -6,7 +5,7 @@
 
 #include "states/state_base.h"
 
-class DrawebleComponent : public anax::Component
+class DrawableComponent : public anax::Component
 {
 public:
     bool draweble = true;

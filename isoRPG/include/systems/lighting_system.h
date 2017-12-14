@@ -1,7 +1,6 @@
 #ifndef ISORPG_LIGHTING_SYSTEM_H
 #define ISORPG_LIGHTING_SYSTEM_H
 
-
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>

@@ -8,9 +8,9 @@
 struct SizeComponent : public anax::Component
 {
 public:
-    float Whith;
+    float width;
     float Height;
     float SpriteHeight;
-    float SpriteWhith;
+    float SpriteWidth;
 };
 #endif //ISORPG_COMP_SIZE_H

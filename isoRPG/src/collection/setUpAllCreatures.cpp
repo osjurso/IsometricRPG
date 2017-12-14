@@ -1,11 +1,11 @@
-#include <include/components/Comp_Texture.h>
-#include <include/systems/drawEntety.h>
-#include <include/collections/setUpCreature.h>
-#include <include/collections/addDialoge.h>
-#include <include/collections/addDialogOption.h>
-#include <include/collections/mouseClikedFunctions.h>
-#include <include/components/CompCost.h>
-#include "include/collections/setUpAllCreatures.h"
+#include <components/Comp_Texture.h>
+#include <systems/drawEntety.h>
+#include <collections/setUpCreature.h>
+#include <collections/addDialogue.h>
+#include <collections/addDialogueOption.h>
+#include <collections/mouseClickedFunctions.h>
+#include <components/CompCost.h>
+#include "collections/setUpAllCreatures.h"
 
 
 setUpAllCreatures::setUpAllCreatures(StateBase::Context context) :context(context)
@@ -19,14 +19,14 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player, bool createPlayer)
 
     if (createPlayer)
     {
-        sf::Texture& Herobody = context.textures->get(Textures::Hero);
+        sf::Texture& HeroBody = context.textures->get(Textures::Hero);
         sf::Texture& HeroHead = context.textures->get(Textures::HeroHead);
         sf::Texture& HeroWeapon = context.textures->get(Textures::HeroWeapon);
         sf::Texture& HeroShield = context.textures->get(Textures::HeroShield);
 
         player.addComponent<TextureComponent>();
         TextureComponent& textureComponent = player.getComponent<TextureComponent>();
-        textureComponent.texture[0] = Herobody;
+        textureComponent.texture[0] = HeroBody;
         textureComponent.sprite[0].setTexture(textureComponent.texture[0]);
         textureComponent.texture[1] = HeroHead;
         textureComponent.sprite[1].setTexture(textureComponent.texture[1]);
@@ -54,10 +54,10 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player, bool createPlayer)
     if (createPlayer)
         creatureSetup.setUpPlayer(player, window);
 
-    //creatureSetup.setUpEnemie(goblin,  GoblinTexture, window, 200, 200, "Hard");
-    //creatureSetup.setUpEnemie(goblin2, GoblinTexture, window ,100 ,100, "Medium");
-    //creatureSetup.setUpEnemie(goblin3, GoblinTexture, window ,400 ,200, "Easy");
-    //creatureSetup.setUpEnemie(goblin4, GoblinTexture, window ,300 ,100, "Hard");
+    //creatureSetup.setUpEnemies(goblin,  GoblinTexture, window, 200, 200, "Hard");
+    //creatureSetup.setUpEnemies(goblin2, GoblinTexture, window ,100 ,100, "Medium");
+    //creatureSetup.setUpEnemies(goblin3, GoblinTexture, window ,400 ,200, "Easy");
+    //creatureSetup.setUpEnemies(goblin4, GoblinTexture, window ,300 ,100, "Hard");
     //creatureSetup.setUpBoss(boss,GoblinTexture,window,200,200);
 
     creatureSetup.setUpNPC(trader,TraderTexture  ,window,62,1060,0,0);
@@ -76,28 +76,32 @@ void setUpAllCreatures::SetUpCreatures(anax::Entity& player, bool createPlayer)
     trader.getComponent<TextureComponent>().sortKey = trader.getComponent<PositionComponent>().SpriteTop + 60;
     armorer.getComponent<TextureComponent>().sortKey = armorer.getComponent<PositionComponent>().SpriteTop + 60;
 
-    AddDialoge addDialoge;
-    AddOptionDialoge optionDialoge;
+    AddDialogue addDialogue;
+    AddOptionDialogue optionDialogue;
 
-    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_0.txt",0);
+    addDialogue.addDialogue(trader, "assets/dialog/trader_dialog_0.txt", 0);
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
-    addDialoge.addDialoge(trader,"assets/dialog/trader_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(trader,"Buy health potion  50g",1,3,BuyHealtpotion);
-    optionDialoge.addOptionDialoge(trader,"What's my purpose here again?",1,4,setInfo);
-    optionDialoge.addOptionDialoge(trader,"Punch me, I dare you!" ,1,5,healtPunishment);
+    addDialogue.addDialogue(trader, "assets/dialog/trader_dialog_1.txt", 1);
+    optionDialogue.addOptionDialogue(trader, "Buy health potion  50g", 1, 3, BuyHealthPotion);
+    optionDialogue.addOptionDialogue(trader, "What's my purpose here again?", 1, 4, setInfo);
+    optionDialogue.addOptionDialogue(trader, "Punch me, I dare you!", 1, 5, healthPunishment);
     trader.getComponent<Talkative>().TotalOfDialogs += 1;
 
     trader.getComponent<Talkative>().Default = 1;
     trader.getComponent<Talkative>().Current = 0;
 
-    addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_0.txt",0);
+    addDialogue.addDialogue(armorer, "assets/dialog/armorer_dialog_0.txt", 0);
     armorer.getComponent<Talkative>().TotalOfDialogs +=1;
 
-    addDialoge.addDialoge(armorer,"assets/dialog/armorer_dialog_1.txt",1);
-    optionDialoge.addOptionDialoge(armorer,"Upgrade Armor " + std::to_string(player.getComponent<CostComponent>().ArmorUpgrade) + "g",1,3,BuyArmorUpgrade);
-    optionDialoge.addOptionDialoge(armorer,"Upgrade Weapon "+ std::to_string(player.getComponent<CostComponent>().WeaponUpgrade)+ "g",1,4,BuyWeaponUpgrade);
-    optionDialoge.addOptionDialoge(armorer,"Pay me for my kills",1,5,PayUp);
+    addDialogue.addDialogue(armorer, "assets/dialog/armorer_dialog_1.txt", 1);
+    optionDialogue.addOptionDialogue(armorer, "Upgrade Armor " +
+                                             std::to_string(player.getComponent<CostComponent>().ArmorUpgrade) + "g", 1,
+                                    3, BuyArmorUpgrade);
+    optionDialogue.addOptionDialogue(armorer, "Upgrade Weapon " +
+                                             std::to_string(player.getComponent<CostComponent>().WeaponUpgrade) + "g",
+                                    1, 4, BuyWeaponUpgrade);
+    optionDialogue.addOptionDialogue(armorer, "Pay me for my kills", 1, 5, PayUp);
     armorer.getComponent<Talkative>().TotalOfDialogs +=1;
 
     armorer.getComponent<Talkative>().Default = 1;

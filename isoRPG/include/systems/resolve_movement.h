@@ -13,14 +13,10 @@
 #include <components/Comp_animation.h>
 #include <components/Comp_Texture.h>
 
-
-
-
-class ResolveMovment
+class ResolveMovement
 {
 public:
-
-    void resolveMovment(anax::World& world, float deltaTime);
+    void resolveMovement(anax::World &world, float deltaTime);
 
 private:
     void Walk(anax::Entity& entity, float deltaTime);

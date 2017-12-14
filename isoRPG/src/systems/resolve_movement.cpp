@@ -1,8 +1,8 @@
-#include <systems/resolve_movment.h>
-#include <include/components/Comp_moveble.h>
+#include <systems/resolve_movement.h>
+#include <components/Comp_movable.h>
 
 
-void ResolveMovment::resolveMovment(anax::World& world, float deltaTime) {
+void ResolveMovement::resolveMovement(anax::World &world, float deltaTime) {
 
     auto entities = world.getEntities();
     for (auto i : entities) {
@@ -69,7 +69,7 @@ void ResolveMovment::resolveMovment(anax::World& world, float deltaTime) {
     }
 }
 
-void ResolveMovment::Walk(anax::Entity &entity, float deltaTime)
+void ResolveMovement::Walk(anax::Entity &entity, float deltaTime)
 {
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -97,7 +97,7 @@ void ResolveMovment::Walk(anax::Entity &entity, float deltaTime)
     textureComponent.spriteRect.left = (animationComponent.currentImage.x +1)* abs(textureComponent.spriteRect.width);
 
 }
-void ResolveMovment::Idle(anax::Entity &entity, float deltaTime)
+void ResolveMovement::Idle(anax::Entity &entity, float deltaTime)
 {
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -126,7 +126,7 @@ void ResolveMovment::Idle(anax::Entity &entity, float deltaTime)
     textureComponent.spriteRect.left = (animationComponent.currentImage.x +1)* abs(textureComponent.spriteRect.width);
 
 }
-void ResolveMovment::Attack(anax::Entity &entity, float deltaTime)
+void ResolveMovement::Attack(anax::Entity &entity, float deltaTime)
 {
     bool attack = true;
     TextureComponent &textureComponent = entity.getComponent<TextureComponent>();
@@ -155,7 +155,7 @@ void ResolveMovment::Attack(anax::Entity &entity, float deltaTime)
 
     }
 }
-void ResolveMovment::Defend(anax::Entity &entity, float deltaTime)
+void ResolveMovement::Defend(anax::Entity &entity, float deltaTime)
 {
     bool defend = true;
     TextureComponent &textureComponent = entity.getComponent<TextureComponent>();

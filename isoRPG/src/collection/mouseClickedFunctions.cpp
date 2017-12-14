@@ -2,15 +2,15 @@
 #include <components/Comp_Text.h>
 #include <components/Comp_Dying.h>
 #include <components/Comp_healt.h>
-#include <components/Comp_looteble.h>
+#include <components/Comp_lootable.h>
 #include <components/Comp_UI.h>
 #include <components/Comp_Parent.h>
 #include <components/Comp_talk.h>
 #include <systems/talk.h>
-#include <systems/KillDialogs.h>
+#include <systems/KillDialogues.h>
 #include <include/components/CompCost.h>
 #include <include/components/Comp_Menuchoice.h>
-#include "collections/mouseClikedFunctions.h"
+#include "collections/mouseClickedFunctions.h"
 #include "components/Comp_Children.h"
 #include "include/states/state_base.h"
 
@@ -30,14 +30,14 @@ void killChildren(anax::Entity& entity, anax::Entity& player, anax::World& world
     if(entity.hasComponent<ParentComponent>())entity.getComponent<ParentComponent>().parent.getComponent<Talkative>().activeDialog = false;
 }
 
-void healtPunishment(anax::Entity& entity, anax::Entity& player, anax::World& world)
+void healthPunishment(anax::Entity &entity, anax::Entity &player, anax::World &world)
 {
     player.getComponent<HealthComponent>().health -= 5;
 }
 
-void healtPotionRevard(anax::Entity& entity, anax::Entity& player, anax::World& world)
+void healthPotionReward(anax::Entity &entity, anax::Entity &player, anax::World &world)
 {
-    player.getComponent<Looteble>().HealtPotion += 1;
+    player.getComponent<Lootable>().HealthPotion += 1;
 }
 
 void setDefault(anax::Entity& entity, anax::Entity& player, anax::World& world)
@@ -63,22 +63,22 @@ void Update(anax::Entity& entity, anax::Entity& player, anax::World& world)
 }
 
 
-void BuyHealtpotion(anax::Entity& entity, anax::Entity& player, anax::World& world)
+void BuyHealthPotion(anax::Entity &entity, anax::Entity &player, anax::World &world)
 {
 
-    if(player.getComponent<Looteble>().gold >= 50)
+    if(player.getComponent<Lootable>().gold >= 50)
     {
-        player.getComponent<Looteble>().gold -= 50;
-        player.getComponent<Looteble>().HealtPotion += 1;
+        player.getComponent<Lootable>().gold -= 50;
+        player.getComponent<Lootable>().HealthPotion += 1;
     }
 }
 
 void BuyArmorUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
-    if(player.getComponent<Looteble>().gold >= player.getComponent<CostComponent>().ArmorUpgrade)
+    if(player.getComponent<Lootable>().gold >= player.getComponent<CostComponent>().ArmorUpgrade)
     {
-        player.getComponent<Looteble>().gold -= player.getComponent<CostComponent>().ArmorUpgrade;
-        player.getComponent<Looteble>().armor +=1;
+        player.getComponent<Lootable>().gold -= player.getComponent<CostComponent>().ArmorUpgrade;
+        player.getComponent<Lootable>().armor +=1;
         player.getComponent<CostComponent>().ArmorUpgrade += player.getComponent<CostComponent>().ArmorUpgrade;
         entity.getComponent<TextComponent>().content = "Upgrade Armor "+ std::to_string(player.getComponent<CostComponent>().ArmorUpgrade)+ "g";
         entity.getComponent<ParentComponent>().parent.getComponent<ParentComponent>().parent.getComponent<Talkative>().optionMap[3] = entity.getComponent<TextComponent>().content;
@@ -88,10 +88,10 @@ void BuyArmorUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& wo
 
 void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
-    if(player.getComponent<Looteble>().gold >= player.getComponent<CostComponent>().WeaponUpgrade)
+    if(player.getComponent<Lootable>().gold >= player.getComponent<CostComponent>().WeaponUpgrade)
     {
-        player.getComponent<Looteble>().gold -= player.getComponent<CostComponent>().WeaponUpgrade;
-        player.getComponent<Looteble>().weapon +=1;
+        player.getComponent<Lootable>().gold -= player.getComponent<CostComponent>().WeaponUpgrade;
+        player.getComponent<Lootable>().weapon +=1;
         player.getComponent<CostComponent>().WeaponUpgrade += player.getComponent<CostComponent>().WeaponUpgrade;
         entity.getComponent<TextComponent>().content = "Upgrade Weapon "+ std::to_string(player.getComponent<CostComponent>().WeaponUpgrade)+ "g";
         entity.getComponent<ParentComponent>().parent.getComponent<ParentComponent>().parent.getComponent<Talkative>().optionMap[4] = entity.getComponent<TextComponent>().content;
@@ -101,7 +101,7 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
 
 void PayUp(anax::Entity& entity, anax::Entity& player, anax::World& world)
 {
-    player.getComponent<Looteble>().gold += (player.getComponent<HealthComponent>().unpaidKills*20);
+    player.getComponent<Lootable>().gold += (player.getComponent<HealthComponent>().unpaidKills*20);
     player.getComponent<HealthComponent>().unpaidKills = 0;
 }
 
@@ -111,7 +111,7 @@ void setPlayOption(anax::Entity& entity)
     std::cout << " pressed play" << std::endl;
 }
 
-void setNewCaracterOption(anax::Entity& entity)
+void setNewCharacterOption(anax::Entity &entity)
 {
     entity.getComponent<MenuChoiceComponent>().choice = "New";
     std::cout << " pressed new caracter" << std::endl;

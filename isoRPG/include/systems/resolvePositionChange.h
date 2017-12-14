@@ -11,13 +11,13 @@
 #include <iostream>
 
 #include <components/Comp_position.h>
-#include <components/Comp_moveble.h>
+#include <components/Comp_movable.h>
 #include <components/Comp_animation.h>
 
 
 
 
-struct PostitonChange
+struct PositionChange
 {
 public:
 

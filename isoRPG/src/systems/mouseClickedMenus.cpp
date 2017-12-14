@@ -1,8 +1,5 @@
-
-
-#include <include/components/Comp_Text.h>
-#include <include/collections/setUpRectShape.h>
-#include "include/systems/mouseClickedMenus.h"
+#include <components/Comp_Text.h>
+#include "systems/mouseClickedMenus.h"
 
 mouseClickedMenus::mouseClickedMenus(StateBase::Context context) :context(context)
 {}
@@ -13,8 +10,8 @@ void mouseClickedMenus::Clicked()
     anax::World& world = *context.world;
     sf::Mouse::getPosition(window).x;
     sf::Mouse::getPosition(window).y;
-    auto enteties = world.getEntities();
-    for(auto i : enteties)
+    auto entities = world.getEntities();
+    for(auto i : entities)
     {
         if(i.hasComponent<MousedOver>())
         {
@@ -42,7 +39,7 @@ void mouseClickedMenus::process(anax::Entity &e, float MouseX, float MouseY, sf:
     else
     {
         entityRect.left = positionComponent.XPos;
-        entityRect.width =  e.getComponent<SizeComponent>().Whith ;
+        entityRect.width =  e.getComponent<SizeComponent>().width ;
 
         entityRect.top =  positionComponent.YPos;
         entityRect.height = e.getComponent<SizeComponent>().Height;
@@ -50,7 +47,7 @@ void mouseClickedMenus::process(anax::Entity &e, float MouseX, float MouseY, sf:
         anax::Entity temp = e.getWorld().createEntity();
         SetUpRectShape setUpRectShape;
         sf::View cam = window.getView();
-        setUpRectShape.setUpRectshape(temp,entityRect.top,entityRect.left,entityRect.height,entityRect.width,1,sf::Color().White, cam);
+        setUpRectShape.setUpRectShape(temp,entityRect.top,entityRect.left,entityRect.height,entityRect.width,1,sf::Color().White, cam);
         */
     }
 

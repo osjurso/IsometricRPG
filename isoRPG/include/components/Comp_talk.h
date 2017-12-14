@@ -1,4 +1,3 @@
-
 #ifndef ISORPG_COMP_TALK_H
 #define ISORPG_COMP_TALK_H
 
@@ -11,9 +10,9 @@ typedef void (*pfunc)(anax::Entity&, anax::Entity&, anax::World&);
 struct Talkative : public anax::Component
 {
 public:
-    std::map<int, std::string> talkingfiles;
+    std::map<int, std::string> talkingFiles;
     std::map<int, std::string> optionMap;
-    std::map<int, pfunc> functionmap;
+    std::map<int, pfunc> functionMap;
     std::map<int, int> total;
 
     std::map<int, std::map<int,std::string>> options;

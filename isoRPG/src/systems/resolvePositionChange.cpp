@@ -1,9 +1,7 @@
-
-
 #include <systems/resolvePositionChange.h>
 #include <string>
 
-void PostitonChange::change(anax::World &world, anax::Entity player)
+void PositionChange::change(anax::World &world, anax::Entity player)
 {
     auto enteties = world.getEntities();
     for(auto i : enteties)
@@ -21,14 +19,14 @@ void PostitonChange::change(anax::World &world, anax::Entity player)
     }
 }
 
-void PostitonChange::moveCreature(anax::Entity &entity)
+void PositionChange::moveCreature(anax::Entity &entity)
 {
     Movable& moveble = entity.getComponent<Movable>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
     if(moveble.path != "")
     {
-        for(int i = moveble.curent; i< moveble.speed+ moveble.curent; i++)
+        for(int i = moveble.current; i< moveble.speed+ moveble.current; i++)
         {
             positionComponent.XPos += moveble.moveX[i];
             positionComponent.YPos += moveble.moveY[i];

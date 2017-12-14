@@ -1,4 +1,3 @@
-
 #ifndef ISORPG_COMP_CHANGEBLE_H
 #define ISORPG_COMP_CHANGEBLE_H
 
@@ -7,13 +6,13 @@
 
 #include "states/state_base.h"
 
-struct ChangebleComponent : public anax::Component
+struct ChangeableComponent : public anax::Component
 {
 public:
     bool changeble;
     float max;
     float min;
-    float currnet;
+    float current;
     std::string source;
 };
 

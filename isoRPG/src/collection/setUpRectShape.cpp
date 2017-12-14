@@ -1,13 +1,13 @@
+#include <components/Comp_SqureShape.h>
+#include <components/Comp_Texture.h>
+#include <components/Comp_position.h>
+#include <components/Comp_size.h>
+#include <components/Comp_State.h>
+#include <components/Comp_Drawable.h>
+#include "collections/setUpRectShape.h"
 
-#include <include/components/Comp_SqureShape.h>
-#include <include/components/Comp_Texture.h>
-#include <include/components/Comp_position.h>
-#include <include/components/Comp_size.h>
-#include <include/components/Comp_State.h>
-#include <include/components/Comp_Draweble.h>
-#include "include/collections/setUpRectShape.h"
-
-void SetUpRectShape::setUpRectshape(anax::Entity& entity, float xPos,float yPos, float Height, float Width, float zoom, sf::Color color, sf::View cam)
+void SetUpRectShape::setUpRectShape(anax::Entity &entity, float xPos, float yPos, float Height, float Width, float zoom,
+                                    sf::Color color, sf::View cam)
 {
     entity.addComponent<SqureComponent>();
     SqureComponent& squreComponent = entity.getComponent<SqureComponent>();
@@ -26,8 +26,8 @@ void SetUpRectShape::setUpRectshape(anax::Entity& entity, float xPos,float yPos,
     entity.addComponent<PositionComponent>();
     PositionComponent& positionComponent = entity.getComponent<PositionComponent>();
 
-    //positionComponent.YPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().Xofset;
-    //positionComponent.XPos = cam.getCenter().y + (cam.getSize().y/2) + entity.getComponent<UIComp>().Yofset;
+    //positionComponent.YPos = cam.getCenter().x - (cam.getSize().x/2) + entity.getComponent<UIComp>().xOffset;
+    //positionComponent.XPos = cam.getCenter().y + (cam.getSize().y/2) + entity.getComponent<UIComp>().yOffset;
 
     positionComponent.XPos = cam.getCenter().x;
     positionComponent.YPos = cam.getCenter().y;
@@ -37,13 +37,13 @@ void SetUpRectShape::setUpRectshape(anax::Entity& entity, float xPos,float yPos,
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
     sizeComponent.Height = squreComponent.rectShape.getLocalBounds().height;
-    sizeComponent.Whith = squreComponent.rectShape.getLocalBounds().width;
+    sizeComponent.width = squreComponent.rectShape.getLocalBounds().width;
     sizeComponent.SpriteHeight = sizeComponent.Height;
-    sizeComponent.SpriteWhith = sizeComponent.Whith;
+    sizeComponent.SpriteWidth = sizeComponent.width;
 
     entity.addComponent<StateComponent>();
     StateComponent& stateComponent = entity.getComponent<StateComponent>();
     stateComponent.state = "Game";
-    entity.addComponent<DrawebleComponent>();
+    entity.addComponent<DrawableComponent>();
     entity.activate();
 }

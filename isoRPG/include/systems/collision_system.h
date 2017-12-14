@@ -12,7 +12,7 @@ struct CollisionSystem : anax::System<anax::Requires<PositionComponent, Collisio
 public:
     void update(float dt, anax::World& world);
 
-    void onCollisionOccured(anax::Entity& e1, anax::Entity& e2);
+    void onCollisionOccurred(anax::Entity &e1, anax::Entity &e2);
 };
 
 

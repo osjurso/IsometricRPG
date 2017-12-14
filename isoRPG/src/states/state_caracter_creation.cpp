@@ -1,14 +1,13 @@
-
-#include <include/systems/mouseClickedMenus.h>
-#include <include/components/Comp_save.h>
-#include <include/collections/drawable.h>
-#include <include/systems/drawEntety.h>
-#include <include/collections/drawebleText.h>
-#include <include/collections/mouseClikedFunctions.h>
-#include <include/components/Comp_Menuchoice.h>
+#include <systems/mouseClickedMenus.h>
+#include <components/Comp_save.h>
+#include <collections/drawable.h>
+#include <systems/drawEntety.h>
+#include <collections/drawableText.h>
+#include <collections/mouseClickedFunctions.h>
+#include <components/Comp_Menuchoice.h>
 #include <fstream>
-#include <include/collections/setUpRectShape.h>
-#include "include/states/state_caracter_creation.h"
+#include <collections/setUpRectShape.h>
+#include "states/state_caracter_creation.h"
 
 StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context) : StateBase(stack, context)
 {
@@ -35,25 +34,26 @@ StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context)
     }
 
     anax::Entity background = world.createEntity();
-    Draweble draweble;
-    DrawebleText drawebleText;
+    Drawable draweble;
+    DrawableText drawebleText;
 
-    draweble.makeDraweble(context.textures->get(Textures::SettingsBackdorp),0,0,background,"CharacterCreation");
+    draweble.makeDrawable(context.textures->get(Textures::SettingsBackdorp), 0, 0, background, "CharacterCreation");
     background.getComponent<TextureComponent>().sortKey = 10;
 
     anax::Entity nameText = world.createEntity();
-    drawebleText.setUpDrawebleText(nameText,"Name: ", cam,"CharacterCreation",1,font,sf::Color().Black);
+    drawebleText.setUpDrawableText(nameText, "Name: ", cam, "CharacterCreation", 1, font, sf::Color().Black);
     nameText.getComponent<PositionComponent>().XPos = 300;
     nameText.getComponent<PositionComponent>().YPos = 100;
 
     CaracterName = world.createEntity();
-    drawebleText.setUpDrawebleText(CaracterName,"",cam,"CharacterCreation",1,font,sf::Color().Black);
-    CaracterName.getComponent<PositionComponent>().XPos = 300 + nameText.getComponent<SizeComponent>().Whith;
+    drawebleText.setUpDrawableText(CaracterName, "", cam, "CharacterCreation", 1, font, sf::Color().Black);
+    CaracterName.getComponent<PositionComponent>().XPos = 300 + nameText.getComponent<SizeComponent>().width;
     CaracterName.getComponent<PositionComponent>().YPos = 100;
 
 
     anax::Entity playButton = world.createEntity();
-    draweble.makeDraweble(getContext().textures->get(Textures::CharacterNew),cam.getCenter().x,cam.getSize().y -200,playButton,"CharacterCreation");
+    draweble.makeDrawable(getContext().textures->get(Textures::CharacterNew), cam.getCenter().x, cam.getSize().y - 200,
+                          playButton, "CharacterCreation");
     playButton.getComponent<PositionComponent>().XPos = playButton.getComponent<PositionComponent>().XPos - playButton.getComponent<TextureComponent>().sprite->getLocalBounds().width/2;
     playButton.getComponent<TextureComponent>().sortKey = 12;
     playButton.addComponent<MousedOver>();
@@ -62,7 +62,7 @@ StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context)
     playButton.addComponent<MenuChoiceComponent>();
 
     anax::Entity PlayText = world.createEntity();
-    drawebleText.setUpDrawebleText(PlayText,"Play",cam,"CharacterCreation",1,font,sf::Color().Black);
+    drawebleText.setUpDrawableText(PlayText, "Play", cam, "CharacterCreation", 1, font, sf::Color().Black);
     PlayText.getComponent<PositionComponent>().XPos = cam.getCenter().x- PlayText.getComponent<TextComponent>().text.getLocalBounds().width/2;
     PlayText.getComponent<PositionComponent>().YPos = cam.getSize().y -200 +8;
     PlayText.getComponent<TextureComponent>().sortKey = 13;
@@ -70,8 +70,10 @@ StateCaracterCreation::StateCaracterCreation(StateStack &stack, Context context)
 
     anax::Entity temp = getContext().world->createEntity();
     SetUpRectShape setUpRectShape;
-    setUpRectShape.setUpRectshape(temp,PlayText.getComponent<PositionComponent>().XPos,PlayText.getComponent<PositionComponent>().YPos,
-                                  PlayText.getComponent<SizeComponent>().Height,PlayText.getComponent<SizeComponent>().Whith,1,sf::Color().White, cam);
+    setUpRectShape.setUpRectShape(temp, PlayText.getComponent<PositionComponent>().XPos,
+                                  PlayText.getComponent<PositionComponent>().YPos,
+                                  PlayText.getComponent<SizeComponent>().Height,
+                                  PlayText.getComponent<SizeComponent>().width, 1, sf::Color().White, cam);
 
 }
 

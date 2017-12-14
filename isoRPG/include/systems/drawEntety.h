@@ -1,15 +1,15 @@
 #ifndef ISORPG_DRAWENTETY_H
 #define ISORPG_DRAWENTETY_H
 
+#include <iostream>
+
 #include <anax/System.hpp>
 #include <anax/anax.hpp>
 #include <anax/World.hpp>
-#include <iostream>
-
-#include <states/state_base.h>
-#include <application.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "states/state_base.h"
+#include "application.h"
 
 #include <components/Comp_size.h>
 #include <components/Comp_position.h>
@@ -18,8 +18,8 @@
 #include <components/Comp_State.h>
 #include <components/Comp_Text.h>
 #include <components/Comp_mousedOver.h>
-#include <include/components/Comp_SqureShape.h>
-#include <include/components/Comp_Draweble.h>
+#include <components/Comp_SqureShape.h>
+#include <components/Comp_Drawable.h>
 
 
 class DrawEntetys : anax::System<anax::Requires<PositionComponent, SizeComponent>>
@@ -44,7 +44,7 @@ public:
 
         for(auto i : enteties)
         {
-            if(i.hasComponent<DrawebleComponent>())
+            if(i.hasComponent<DrawableComponent>())
             {
                 if(!i.hasComponent<TextComponent>() && i.getComponent<TextureComponent>().draw && !i.hasComponent<SqureComponent>())
                 {

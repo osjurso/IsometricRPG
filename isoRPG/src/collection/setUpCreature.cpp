@@ -1,10 +1,9 @@
-#include <include/components/Comp_Children.h>
-#include <include/components/Comp_ActionTimers.h>
-#include <include/components/CompCost.h>
-#include <include/components/Comp_Draweble.h>
-#include <include/components/comp_collision.h>
-#include <include/systems/collision_system.h>
-#include "include/collections/setUpCreature.h"
+#include <components/Comp_Children.h>
+#include <components/Comp_ActionTimers.h>
+#include <components/CompCost.h>
+#include <components/Comp_Drawable.h>
+#include <systems/collision_system.h>
+#include "collections/setUpCreature.h"
 
 void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 {
@@ -24,7 +23,7 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
     sizeComponent.Height = textureComponent.spriteRect.height;
-    sizeComponent.Whith = textureComponent.spriteRect.width;
+    sizeComponent.width = textureComponent.spriteRect.width;
 
     entity.addComponent<AnimationComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -63,10 +62,10 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     moveble.speed = 10;
     moveble.path = "0";
 
-    entity.addComponent< Looteble>();
-    Looteble& looteble = entity.getComponent<Looteble>();
+    entity.addComponent< Lootable>();
+    Lootable& looteble = entity.getComponent<Lootable>();
     looteble.gold =0;
-    looteble.HealtPotion = 3;
+    looteble.HealthPotion = 3;
     looteble.weapon = 10;
     looteble.armor = 10;
 
@@ -86,7 +85,7 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
     costComponent.ArmorUpgrade = 100;
     costComponent.WeaponUpgrade= 100;
 
-    entity.addComponent<DrawebleComponent>();
+    entity.addComponent<DrawableComponent>();
 
     //auto& playerCollision = entity.addComponent<CollisionComponent>();
     //playerCollision.boundingBox = sf::FloatRect(53, 76, 25, 25); // feet
@@ -94,7 +93,8 @@ void SetUpCreature::setUpPlayer(anax::Entity& entity, sf::RenderWindow& window)
 
     entity.activate();
 }
-void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::RenderWindow& window, int Xpos, int Ypos, std::string diffeculty)
+void SetUpCreature::setUpEnemies(anax::Entity &entity, sf::Texture &texture, sf::RenderWindow &window, int Xpos,
+                                 int Ypos, std::string diffeculty)
 {
     entity.addComponent<TextureComponent>();
     TextureComponent& textureComponent = entity.getComponent<TextureComponent>();
@@ -115,9 +115,9 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
     sizeComponent.Height = textureComponent.spriteRect.height;
-    sizeComponent.Whith = textureComponent.spriteRect.width;
+    sizeComponent.width = textureComponent.spriteRect.width;
     sizeComponent.SpriteHeight = 34;
-    sizeComponent.SpriteWhith = 32;
+    sizeComponent.SpriteWidth = 32;
 
     entity.addComponent<AnimationComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -154,17 +154,17 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     stateComponent.state = "Game";
 
     entity.addComponent<Movable>();
-    Movable& moveble = entity.getComponent<Movable>();
+    Movable& movable = entity.getComponent<Movable>();
 
 
     entity.addComponent<HealthComponent>();
     HealthComponent& healthComponent = entity.getComponent<HealthComponent>();
 
-    entity.addComponent< Looteble>();
-    Looteble& looteble = entity.getComponent<Looteble>();
+    entity.addComponent< Lootable>();
+    Lootable& lootable = entity.getComponent<Lootable>();
 
 
-    entity.addComponent<DrawebleComponent>();
+    entity.addComponent<DrawableComponent>();
     entity.addComponent<MousedOver>();
 
 
@@ -178,31 +178,31 @@ void SetUpCreature::setUpEnemie(anax::Entity& entity, sf::Texture& texture, sf::
     {
         textureComponent.sprite[0].setColor(red);
         healthComponent.maxHealth = 100;
-        moveble.speed = 7;
-        looteble.gold =50 + (10*rand()%10+1);
-        looteble.weapon = 50;
+        movable.speed = 7;
+        lootable.gold =50 + (10*rand()%10+1);
+        lootable.weapon = 50;
     }else if(diffeculty == "Medium")
     {
         textureComponent.sprite[0].setColor((blue));
         healthComponent.maxHealth = 50;
-        moveble.speed = 5;
-        looteble.gold =50+(5*rand()%10+1);
-        looteble.weapon = 50;
+        movable.speed = 5;
+        lootable.gold =50+(5*rand()%10+1);
+        lootable.weapon = 50;
     }else if (diffeculty == "Easy")
     {
         healthComponent.maxHealth = 20;
-        looteble.gold = rand()%10+1;
-        moveble.speed = 3;
-        looteble.weapon = 20;
+        lootable.gold = rand()%10+1;
+        movable.speed = 3;
+        lootable.weapon = 20;
     } else
     {
         sf::Color black(100, 100, 100);
         textureComponent.sprite[0].setColor(black);
         textureComponent.sprite[0].setScale(1.5, 1.5);
         healthComponent.maxHealth = 100;
-        moveble.speed = 10;
-        looteble.gold = 50 + (10*rand()%10+1);
-        looteble.weapon = 30;
+        movable.speed = 10;
+        lootable.gold = 50 + (10*rand()%10+1);
+        lootable.weapon = 30;
         healthComponent.health = healthComponent.maxHealth;
     }
     healthComponent.health = healthComponent.maxHealth;
@@ -227,9 +227,9 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
     sizeComponent.Height = textureComponent.spriteRect.height;
-    sizeComponent.Whith = textureComponent.spriteRect.width;
+    sizeComponent.width = textureComponent.spriteRect.width;
     sizeComponent.SpriteHeight = 64 ;
-    sizeComponent.SpriteWhith =  32 ;
+    sizeComponent.SpriteWidth =  32 ;
 
     entity.addComponent<AnimationComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -248,13 +248,13 @@ void SetUpCreature::setUpNPC(anax::Entity& entity, sf::Texture& texture, sf::Ren
 
     entity.addComponent<MousedOver>();
 
-    entity.addComponent<Looteble>();
-    Looteble& looteble = entity.getComponent<Looteble>();
+    entity.addComponent<Lootable>();
+    Lootable& looteble = entity.getComponent<Lootable>();
     looteble.gold = 0;
 
     entity.addComponent<Talkative>();
     entity.addComponent<ChildComponent>();
-    entity.addComponent<DrawebleComponent>();
+    entity.addComponent<DrawableComponent>();
 
 
 
@@ -283,9 +283,9 @@ void SetUpCreature::setUpBoss(anax::Entity& entity, sf::Texture& texture, sf::Re
     entity.addComponent<SizeComponent>();
     SizeComponent& sizeComponent = entity.getComponent<SizeComponent>();
     sizeComponent.Height = textureComponent.spriteRect.height;
-    sizeComponent.Whith = textureComponent.spriteRect.width;
+    sizeComponent.width = textureComponent.spriteRect.width;
     sizeComponent.SpriteHeight = 34;
-    sizeComponent.SpriteWhith = 32;
+    sizeComponent.SpriteWidth = 32;
 
     entity.addComponent<AnimationComponent>();
     AnimationComponent& animationComponent = entity.getComponent<AnimationComponent>();
@@ -328,12 +328,12 @@ void SetUpCreature::setUpBoss(anax::Entity& entity, sf::Texture& texture, sf::Re
     entity.addComponent<HealthComponent>();
     HealthComponent& healthComponent = entity.getComponent<HealthComponent>();
 
-    entity.addComponent< Looteble>();
-    Looteble& looteble = entity.getComponent<Looteble>();
+    entity.addComponent< Lootable>();
+    Lootable& looteble = entity.getComponent<Lootable>();
     looteble.weapon = 50;
 
 
-    entity.addComponent<DrawebleComponent>();
+    entity.addComponent<DrawableComponent>();
     entity.addComponent<MousedOver>();
 
 

@@ -1,7 +1,4 @@
-
-
-#include <include/systems/resolve_agro.h>
-
+#include <systems/resolve_agro.h>
 
 void ResolveAgro::agro(anax::Entity player, anax::World &world)
 {
@@ -13,7 +10,7 @@ void ResolveAgro::agro(anax::Entity player, anax::World &world)
     agroArea.left = playerPos.SpriteLeft - range;
     agroArea.top = playerPos.SpriteTop - range;
     agroArea.height = 2*range + playerSize.Height;
-    agroArea.width = 2*range + playerSize.Whith;
+    agroArea.width = 2*range + playerSize.width;
 
     for(auto i : enteties)
     {

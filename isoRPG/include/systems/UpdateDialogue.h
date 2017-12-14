@@ -17,22 +17,22 @@
 #include <components/Comp_Texture.h>
 #include <components/Comp_healt.h>
 #include <iostream>
-#include <components/Comp_looteble.h>
+#include <components/Comp_lootable.h>
 #include <include/components/Comp_UI.h>
-#include <include/components/Comp_Changeble.h>
+#include <include/components/Comp_Changeable.h>
 #include <include/components/Comp_ActionTimers.h>
 #include <include/components/Comp_talk.h>
 #include "talk.h"
 
 
-class UpdateDialog
+class UpdateDialogue
 {
 public:
     void update(anax::World& world, sf::RenderWindow& window, sf::View cam, float zoom, sf::Font font, sf::Texture& paper, sf::Texture& redX,sf::Texture& arrow)
     {
-        auto enteties = world.getEntities();
+        auto entities = world.getEntities();
 
-        for(auto i : enteties)
+        for(auto i : entities)
         {
             if(i.hasComponent<Talkative>())
             {

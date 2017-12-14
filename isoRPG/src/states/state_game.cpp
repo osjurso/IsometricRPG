@@ -2,39 +2,23 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include <systems/depth_sort_system.h>
-#include "systems/resolve_movment.h"
+#include "systems/depth_sort_system.h"
+#include "systems/resolve_movement.h"
 #include "systems/drawEntety.h"
 #include "systems/attack.h"
-#include <systems/resolvePositionChange.h>
-#include <systems/resolve_agro.h>
-#include <systems/generatePath.h>
-#include <systems/update_UI.h>
+#include "systems/resolvePositionChange.h"
+#include "systems/resolve_agro.h"
+#include "systems/generatePath.h"
+#include "systems/update_UI.h"
 #include "systems/mouse_clicked.h"
-
-#include <components/Comp_UI.h>
-
-#include <collections/drawebleText.h>
-#include <collections/drawable.h>
-#include <include/collections/addDialogOption.h>
-#include <include/systems/killdying.h>
-#include <include/components/Comp_ActionTimers.h>
-#include <systems/UpdateDialog.h>
-#include <include/systems/UpdateDialog.h>
-#include <include/components/CompCost.h>
-#include <include/collections/setUpAllCreatures.h>
-#include <include/components/Comp_save.h>
-#include <include/systems/resolveIAI_attack.h>
-#include "collections/setUpUI.h"
-#include "collections/setUpCreature.h"
-#include "collections/addDialoge.h"
-#include "collections/mouseClikedFunctions.h"
-
-
+#include "systems/killdying.h"
+#include "systems/UpdateDialogue.h"
+#include "systems/resolveIAI_attack.h"
+#include <collections/setUpAllCreatures.h>
+#include <components/Comp_save.h>
 #include "states/state_game.h"
 #include "map/map.h"
 #include "util/utility.h"
-
 
 StateGame::StateGame(StateStack &stack, StateBase::Context context)
         : StateBase(stack, context)
@@ -86,37 +70,37 @@ StateGame::StateGame(StateStack &stack, StateBase::Context context)
             nr++;
         }
         std::string name = SaveText[0];
-        player.getComponent<Looteble>().name = name;
+        player.getComponent<Lootable>().name = name;
 
         std::string gold = SaveText[1];
         int goldNumber;
         std::istringstream ( gold ) >> goldNumber;
-        player.getComponent<Looteble>().gold = goldNumber;
+        player.getComponent<Lootable>().gold = goldNumber;
 
         std::string HealtPotion = SaveText[2];
         int HealtPotionNumber;
         std::istringstream ( HealtPotion ) >> HealtPotionNumber;
-        player.getComponent<Looteble>().HealtPotion = HealtPotionNumber;
+        player.getComponent<Lootable>().HealthPotion = HealtPotionNumber;
 
         std::string Armor = SaveText[3];
         int ArmorNumber;
         std::istringstream ( Armor ) >> ArmorNumber;
-        player.getComponent<Looteble>().armor = ArmorNumber;
+        player.getComponent<Lootable>().armor = ArmorNumber;
 
         std::string ArmorMod = SaveText[4];
         int ArmorModNumber;
         std::istringstream ( ArmorMod ) >> ArmorModNumber;
-        player.getComponent<Looteble>().armorModifier = ArmorModNumber;
+        player.getComponent<Lootable>().armorModifier = ArmorModNumber;
 
         std::string Weapon = SaveText[5];
         int WeaponNumber;
         std::istringstream ( Weapon ) >> WeaponNumber;
-        player.getComponent<Looteble>().weapon = WeaponNumber;
+        player.getComponent<Lootable>().weapon = WeaponNumber;
 
         std::string WeaponMod = SaveText[6];
         int WeaponModNumber;
         std::istringstream ( WeaponMod ) >> WeaponModNumber;
-        player.getComponent<Looteble>().weaponModifier = WeaponModNumber;
+        player.getComponent<Lootable>().weaponModifier = WeaponModNumber;
 
         //TODO: add carecter color
         player.getComponent<TextureComponent>().sprite[0].setColor(sf::Color(100,255,255)); // makes good bluealternative
@@ -247,7 +231,7 @@ void StateGame::draw()
 bool StateGame::update(sf::Time dt)
 {
     AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
-    ResolveMovment resolve;
+    ResolveMovement resolve;
     float deltaTime = animationComponent.animationClock.restart().asSeconds();
 
     if(animationComponent.idleTimer.getElapsedTime().asSeconds() >= 0.2f && animationComponent.idle == false) {
@@ -268,16 +252,16 @@ bool StateGame::update(sf::Time dt)
     {
         float deltaTime = movementTimer.getElapsedTime().asSeconds();
 
-        PostitonChange postitonChange;
+        PositionChange postitonChange;
         postitonChange.change(*getContext().world, player);
 
         ResolveAgro resolveAgro;
         resolveAgro.agro(player, *getContext().world);
 
 
-        resolve.resolveMovment(*getContext().world, deltaTime);
+        resolve.resolveMovement(*getContext().world, deltaTime);
 
-        playerCam.setCenter(positionComponent.SpriteLeft + player.getComponent<SizeComponent>().SpriteWhith/2, positionComponent.SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
+        playerCam.setCenter(positionComponent.SpriteLeft + player.getComponent<SizeComponent>().SpriteWidth/2, positionComponent.SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
         movementTimer.restart().asSeconds();
 
         UpdateUI updateUI;
@@ -305,7 +289,7 @@ bool StateGame::update(sf::Time dt)
                 changePlayerPos(-95, 1650);
 
             // 50% gold penalty
-            player.getComponent<Looteble>().gold *= 0.5;
+            player.getComponent<Lootable>().gold *= 0.5;
 
             // TODO: Play death animation before pushing game over screen
             requestStackPush(States::GameOver);
@@ -317,7 +301,7 @@ bool StateGame::update(sf::Time dt)
         else if (loadLevelOnIntersect.contains(positionComponent.SpriteLeft, positionComponent.SpriteTop))
             setUpCaveLevel();
 
-        UpdateDialog updateDialog;
+        UpdateDialogue updateDialog;
         updateDialog.update(*getContext().world, *getContext().window, playerCam, zoom, getContext().fonts->get(Fonts::RPG), getContext().textures->get(Textures::UIConversation), getContext().textures->get(Textures::UIRedX),getContext().textures->get(Textures::UIArrow));
 
         pathfindingTimer.restart();
@@ -326,13 +310,13 @@ bool StateGame::update(sf::Time dt)
     {
         std::ofstream ofs;
         ofs.open(saveFile, std::ofstream::out | std::ofstream::trunc);
-        ofs << player.getComponent<Looteble>().name << std::endl;
-        ofs << player.getComponent<Looteble>().gold << std::endl;
-        ofs << player.getComponent<Looteble>().HealtPotion << std::endl;
-        ofs << player.getComponent<Looteble>().armor << std::endl;
-        ofs << player.getComponent<Looteble>().armorModifier << std::endl;
-        ofs << player.getComponent<Looteble>().weapon << std::endl;
-        ofs << player.getComponent<Looteble>().weaponModifier << std::endl;
+        ofs << player.getComponent<Lootable>().name << std::endl;
+        ofs << player.getComponent<Lootable>().gold << std::endl;
+        ofs << player.getComponent<Lootable>().HealthPotion << std::endl;
+        ofs << player.getComponent<Lootable>().armor << std::endl;
+        ofs << player.getComponent<Lootable>().armorModifier << std::endl;
+        ofs << player.getComponent<Lootable>().weapon << std::endl;
+        ofs << player.getComponent<Lootable>().weaponModifier << std::endl;
         ofs.close();
     }
     //read form file
@@ -380,7 +364,7 @@ bool StateGame::handleEvent(const sf::Event &event)
 
 void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
 {
-    ResolveMovment resolve;
+    ResolveMovement resolve;
     AnimationComponent& animationComponent = player.getComponent<AnimationComponent>();
     Movable& movable = player.getComponent<Movable>();
 
@@ -495,9 +479,9 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         animationComponent.direction = "Defend";
 
         PositionComponent& positionComponent = player.getComponent<PositionComponent>();
-    }else if (key == sf::Keyboard::Q && player.getComponent<Looteble>().HealtPotion > 0 && player.getComponent<ActionTimer>().PotionTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().PotionCooldown )
+    }else if (key == sf::Keyboard::Q && player.getComponent<Lootable>().HealthPotion > 0 && player.getComponent<ActionTimer>().PotionTimer.getElapsedTime().asSeconds() > player.getComponent<ActionTimer>().PotionCooldown )
     {
-        player.getComponent<Looteble>().HealtPotion -=1;
+        player.getComponent<Lootable>().HealthPotion -=1;
         player.getComponent<HealthComponent>().health += 200;
         if(player.getComponent<HealthComponent>().health > player.getComponent<HealthComponent>().maxHealth) player.getComponent<HealthComponent>().health = player.getComponent<HealthComponent>().maxHealth;
         player.getComponent<ActionTimer>().PotionTimer.restart().asSeconds();
@@ -510,23 +494,6 @@ void StateGame::handleUserInput(sf::Keyboard::Key key, bool isPressed)
         std::cout << "XPos" <<  player.getComponent<PositionComponent>().XPos << std::endl;
         std::cout << "YPos" <<  player.getComponent<PositionComponent>().YPos << std::endl;
     }
-
-    else if (key == sf::Keyboard::F2 && isPressed)
-    {
-        requestStackPush(States::GameOver);
-    }
-    else if (key == sf::Keyboard::F4 && isPressed)
-    {
-        setUpWorldLevel();
-    }
-    else if (key == sf::Keyboard::F5 && isPressed)
-    {
-        setUpCaveLevel();
-    }
-    else if (key == sf::Keyboard::F6 && isPressed)
-    {
-
-    }
 }
 
 void StateGame::changePlayerPos(int x, int y)
@@ -538,7 +505,7 @@ void StateGame::changePlayerPos(int x, int y)
     positionComponent.YPos = y;
     positionComponent.SpriteLeft = positionComponent.XPos +95;
     positionComponent.SpriteTop = positionComponent.YPos +95;
-    playerCam.setCenter(player.getComponent<PositionComponent>().SpriteLeft + player.getComponent<SizeComponent>().SpriteWhith/2, player.getComponent<PositionComponent>().SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
+    playerCam.setCenter(player.getComponent<PositionComponent>().SpriteLeft + player.getComponent<SizeComponent>().SpriteWidth/2, player.getComponent<PositionComponent>().SpriteTop + player.getComponent<SizeComponent>().SpriteHeight/2);
 
     textureComponent.sprite[0].setPosition(positionComponent.XPos, positionComponent.YPos);
     textureComponent.sprite[1].setPosition(positionComponent.XPos, positionComponent.YPos);

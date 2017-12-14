@@ -1,4 +1,3 @@
-
 #ifndef ISORPG_COMP_MOVEBLE_H
 #define ISORPG_COMP_MOVEBLE_H
 
@@ -15,7 +14,7 @@ public:
     int agroRage;
     float moveX[320];
     float moveY[320];
-    int curent = 0;
+    int current = 0;
 };
 
 #endif //ISORPG_COMP_MOVEBLE_H

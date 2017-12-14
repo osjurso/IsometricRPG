@@ -17,7 +17,7 @@
 #include <components/Comp_Texture.h>
 #include <include/components/Comp_healt.h>
 #include <iostream>
-#include <include/components/Comp_looteble.h>
+#include <include/components/Comp_lootable.h>
 #include <include/components/Comp_ActionTimers.h>
 
 
@@ -26,8 +26,8 @@ class ResolveAIAttack
 public:
     void resolve( anax::World& world, anax::Entity& player)
     {
-        auto entitys = world.getEntities();
-        for(auto i : entitys)
+        auto entities = world.getEntities();
+        for(auto i : entities)
         {
             if(i.hasComponent<ActionTimer>() && i.getId() != player.getId())
             {
@@ -47,7 +47,7 @@ public:
 
                     if(distanceX + distanceY < 50)
                     {
-                        player.getComponent<HealthComponent>().health -=  (i.getComponent<Looteble>().weapon - (player.getComponent<Looteble>().armor + player.getComponent<Looteble>().armorModifier));
+                        player.getComponent<HealthComponent>().health -=  (i.getComponent<Lootable>().weapon - (player.getComponent<Lootable>().armor + player.getComponent<Lootable>().armorModifier));
                     }
                     i.getComponent<ActionTimer>().AttackTimer.restart().asSeconds();
 

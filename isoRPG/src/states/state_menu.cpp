@@ -1,13 +1,10 @@
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <include/systems/drawEntety.h>
-#include <include/systems/mouse_clicked.h>
-#include <include/systems/mouseClickedMenus.h>
-#include <include/components/Comp_Menuchoice.h>
-#include <include/collections/setUpRectShape.h>
-#include "include/states/state_menu.h"
-#include "include/util/utility.h"
-#include "collections/drawable.h"
-#include "collections/mouseClikedFunctions.h"
+#include <systems/drawEntety.h>
+#include <systems/mouse_clicked.h>
+#include <systems/mouseClickedMenus.h>
+#include <components/Comp_Menuchoice.h>
+#include "states/state_menu.h"
+#include "util/utility.h"
 
 StateMenu::StateMenu(StateStack& stack, Context context)
         : StateBase(stack, context)
@@ -47,12 +44,12 @@ StateMenu::StateMenu(StateStack& stack, Context context)
     anax::Entity ExitOption = getContext().world->createEntity();
 
 
-    DrawebleText drawebleText;
+    DrawableText drawebleText;
     sf::View cam = getContext().window->getView();
-    drawebleText.setUpDrawebleText(PlayOption    ,"Play"    ,cam,"Menu",1.0f,font,sf::Color().White);
-    drawebleText.setUpDrawebleText(SettingsOption,"Settings",cam,"Menu",1.0f,font,sf::Color().White);
-    drawebleText.setUpDrawebleText(AboutOption   ,"About"   ,cam,"Menu",1.0f,font,sf::Color().White);
-    drawebleText.setUpDrawebleText(ExitOption    ,"Exit"    ,cam,"Menu",1.0f,font,sf::Color().White);
+    drawebleText.setUpDrawableText(PlayOption, "Play", cam, "Menu", 1.0f, font, sf::Color().White);
+    drawebleText.setUpDrawableText(SettingsOption, "Settings", cam, "Menu", 1.0f, font, sf::Color().White);
+    drawebleText.setUpDrawableText(AboutOption, "About", cam, "Menu", 1.0f, font, sf::Color().White);
+    drawebleText.setUpDrawableText(ExitOption, "Exit", cam, "Menu", 1.0f, font, sf::Color().White);
 
     PlayOption.addComponent<MousedOver>();
     PlayOption.addComponent<AssosateFunc>();
@@ -135,12 +132,12 @@ StateMenu::StateMenu(StateStack& stack, Context context)
 
     anax::World& world = *getContext().world;;
 
-    Draweble draweble;
+    Drawable draweble;
     sf::Texture& texture = context.textures->get(Textures::TitleLogo);
     sf::Texture& menuBackdrop = context.textures->get(Textures::MenuBackdrop);
 
     anax::Entity menuBackdropEntity = world.createEntity();
-    draweble.makeDraweble(menuBackdrop,0,0,menuBackdropEntity,"Menu");
+    draweble.makeDrawable(menuBackdrop, 0, 0, menuBackdropEntity, "Menu");
     updateOptionText();
 
     context.music->play(Music::Menu);
