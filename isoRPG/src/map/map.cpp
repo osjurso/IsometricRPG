@@ -37,8 +37,7 @@ bool Map::load(std::string filename, StateBase::Context context, LightingSystem 
     for (Json::Value& layer: root["layers"])
     {
         if (layer["name"].asString() == "enemy")
-            //loadEntities(root, layer, context);
-            continue;
+            loadEntities(root, layer, context);
         else if (layer["name"].asString() == "objects")
             loadObjects(root, layer, tileSize, context, tileset);
         else if (layer["name"].asString() == "collision")

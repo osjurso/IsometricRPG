@@ -67,6 +67,9 @@ void PositionChange::moveCreature(anax::Entity &entity)
         positionComponent.SpriteLeft += moveble.moveX[i];
         positionComponent.SpriteTop += moveble.moveY[i];
 
+        moveble.moveX[i] = 0;
+        moveble.moveY[i] = 0;
+
         int tempInt = moveble.path.at(i);
         tempInt = tempInt-48;
         tempInt = tempInt +1;
@@ -74,7 +77,10 @@ void PositionChange::moveCreature(anax::Entity &entity)
         animationComponent.animationDirection = tempInt;
     }
     moveble.current +=moveLength;
-    if(done) moveble.path = "";
+    if(done)
+    {
+        moveble.path = "";
+    }
 
 
 

@@ -1,3 +1,4 @@
+#include <memory.h>
 #include "systems/mouse_clicked.h"
 
 MouseClicked::MouseClicked(StateBase::Context context) : context(context) {}
@@ -78,14 +79,14 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
         std::string path = pathFind(heroTilePos.x, heroTilePos.y, MouseTilePos.x, MouseTilePos.y);
 
         moveble.path = path;
-        moveble.moveX[320] = {0};
-        moveble.moveY[320] = {0};
+        memset(moveble.moveX,0, sizeof(moveble.moveX));
+        memset(moveble.moveY,0, sizeof(moveble.moveY));
         float fullspeed = 1.0f;
         float halfspeedX = 0.66f;
         float halfspeedY = 0.33f;
 
         for (int i = 0; i < path.length(); i++) {
-            for (int n = 0; n < pixelsPerBlock*2; n++) {
+            for (int n = 0; n < pixelsPerBlock; n++) {
                 char instruction = moveble.path.at(i);
                 moveble.path.push_back(instruction);
                 int index = i * pixelsPerBlock + n;
