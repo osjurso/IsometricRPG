@@ -35,4 +35,6 @@ void setNewCharacterOption(anax::Entity &entity);
 void setRenewOption(anax::Entity& entity);
 
 void PayUp(anax::Entity& entity, anax::Entity& player, anax::World& world);
+
+void ArmorReward(anax::Entity& entity, anax::Entity& player, anax::World& world);
 #endif //ISORPG_MOUSECLIKEDFUNCTIONS_H

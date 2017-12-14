@@ -32,7 +32,8 @@ void killChildren(anax::Entity& entity, anax::Entity& player, anax::World& world
 
 void healthPunishment(anax::Entity &entity, anax::Entity &player, anax::World &world)
 {
-    player.getComponent<HealthComponent>().health -= 5;
+    player.getComponent<HealthComponent>().health -= player.getComponent<HealthComponent>().maxHealth/10;
+    setDefault(entity,player,world);
 }
 
 void healthPotionReward(anax::Entity &entity, anax::Entity &player, anax::World &world)
@@ -97,6 +98,12 @@ void BuyWeaponUpgrade(anax::Entity& entity, anax::Entity& player, anax::World& w
         entity.getComponent<ParentComponent>().parent.getComponent<ParentComponent>().parent.getComponent<Talkative>().optionMap[4] = entity.getComponent<TextComponent>().content;
         Update(entity,player,world);
     }
+}
+
+void ArmorReward(anax::Entity& entity, anax::Entity& player, anax::World& world)
+{
+    player.getComponent<Lootable>().armorModifier +=1;
+    setDefault(entity,player,world);
 }
 
 void PayUp(anax::Entity& entity, anax::Entity& player, anax::World& world)
