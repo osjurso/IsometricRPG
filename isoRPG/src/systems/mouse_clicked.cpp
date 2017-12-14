@@ -59,17 +59,19 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
 
     auto heroSize = player.getComponent<SizeComponent>();
     auto heroPos = player.getComponent<PositionComponent>();
-    Movable& moveble = player.getComponent<Movable>();
+    Movable &moveble = player.getComponent<Movable>();
     moveble.path = "";
     moveble.current = 0;
     const int mapsize = 64;
     int pixelsPerBlock = 10;
 
+
+
     // Calculating the tile position of the hero
     sf::Vector2i heroTilePos = sf::Vector2i(heroPos.SpriteLeft + heroSize.SpriteWidth / 2, heroPos.SpriteTop);
     heroTilePos = sf::Vector2i((2 * heroTilePos.y + heroTilePos.x) / 64, (2 * heroTilePos.y - heroTilePos.x) / 64);
 
-    sf::Vector2i MouseTilePos = sf::Vector2i(MouseX , MouseY);
+    sf::Vector2i MouseTilePos = sf::Vector2i(MouseX + 17, MouseY + 25);
     MouseTilePos = sf::Vector2i((2 * MouseTilePos.y + MouseTilePos.x) / 64, (2 * MouseTilePos.y - MouseTilePos.x) / 64);
 
     if (0 < heroTilePos.x < mapsize && 0 < heroTilePos.y < mapsize) {
