@@ -86,39 +86,40 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
                 int index = i * pixelsPerBlock + n;
 
                 if (instruction == '0') {
-                    moveble.moveX[index] = 1;
-                    moveble.moveY[index] = 0;
-                }
-                if (instruction == '1') {
                     moveble.moveX[index] = 0.66;
                     moveble.moveY[index] = 0.33;
                 }
-                if (instruction == '2') {
+                if (instruction == '1') {
                     moveble.moveX[index] = 0;
                     moveble.moveY[index] = 1;
                 }
-                if (instruction == '3') {
+                if (instruction == '2') {
                     moveble.moveX[index] = -0.66;
                     moveble.moveY[index] = 0.33;
                 }
-                if (instruction == '4') {
+                if (instruction == '3') {
                     moveble.moveX[index] = -1;
                     moveble.moveY[index] = 0;
                 }
-                if (instruction == '5') {
+                if (instruction == '4') {
                     moveble.moveX[index] = -0.66;
                     moveble.moveY[index] = -0.33;
                 }
-                if (instruction == '6') {
+                if (instruction == '5') {
                     moveble.moveX[index] = 0;
                     moveble.moveY[index] = -1;
                 }
-                if (instruction == '7') {
+                if (instruction == '6') {
                     moveble.moveX[index] = 0.66;
                     moveble.moveY[index] = -0.33;
                 }
+                if (instruction == '7') {
+                    moveble.moveX[index] = 1;
+                    moveble.moveY[index] = 0;
+                }
             }
         }
+        std::cout <<  moveble.path << std::endl;
         player.getComponent<AnimationComponent>().action = "Walk";
     }
 }

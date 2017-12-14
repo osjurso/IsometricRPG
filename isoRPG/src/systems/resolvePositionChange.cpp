@@ -69,6 +69,8 @@ void PositionChange::moveCreature(anax::Entity &entity)
 
         int tempInt = moveble.path.at(i);
         tempInt = tempInt-48;
+        tempInt = tempInt +1;
+        if(tempInt == 8)tempInt = 0;
         animationComponent.animationDirection = tempInt;
     }
     moveble.current +=moveLength;
