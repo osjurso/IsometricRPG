@@ -64,9 +64,10 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     moveble.path = "";
     moveble.current = 0;
     const int mapsize = 64;
-    int pixelsPerBlock = 10;
+    int pixelsPerBlock = 32;
 
-
+    memset(moveble.moveX,0, sizeof(moveble.moveX));
+    memset(moveble.moveY,0, sizeof(moveble.moveY));
 
     // Calculating the tile position of the hero
     sf::Vector2i heroTilePos = sf::Vector2i(heroPos.SpriteLeft + heroSize.SpriteWidth / 2, heroPos.SpriteTop);
@@ -78,9 +79,8 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
     if (0 < heroTilePos.x < mapsize && 0 < heroTilePos.y < mapsize) {
         std::string path = pathFind(heroTilePos.x, heroTilePos.y, MouseTilePos.x, MouseTilePos.y);
 
-        moveble.path = path;
-        memset(moveble.moveX,0, sizeof(moveble.moveX));
-        memset(moveble.moveY,0, sizeof(moveble.moveY));
+        moveble.path = path.substr(0, 4);
+
         float fullspeed = 1.0f;
         float halfspeedX = 0.66f;
         float halfspeedY = 0.33f;
@@ -125,7 +125,6 @@ void MouseClicked::createPlayerPath(anax::Entity player, float MouseX, float Mou
                 }
             }
         }
-        //std::cout <<  moveble.path << std::endl;
         player.getComponent<AnimationComponent>().action = "Walk";
         player.getComponent<AnimationComponent>().idleTimer.restart().asSeconds();
     }

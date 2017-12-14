@@ -293,7 +293,6 @@ bool StateGame::update(sf::Time dt)
 
             // TODO: Play death animation before pushing game over screen
             requestStackPush(States::GameOver);
-
         }
 
         if (loadLevelOnIntersect.contains(positionComponent.SpriteLeft, positionComponent.SpriteTop) && isCaveLevel)
@@ -345,7 +344,6 @@ bool StateGame::handleEvent(const sf::Event &event)
 
     if (event.type == sf::Event::Resized)
     {
-        std::cout << "New resolution: " << event.size.width << "x" << event.size.height << std::endl;
         playerCam = getLetterboxView(playerCam, event.size.width, event.size.height );
     }
 

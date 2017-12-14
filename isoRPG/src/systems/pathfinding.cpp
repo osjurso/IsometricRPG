@@ -122,7 +122,6 @@ std::string pathFind(const int &xStart, const int &yStart, const int &xFinish, c
         }
         delete n0; // garbage collection
     }
-    //std::cout << "No Path Found" << std::endl;
     return ""; // no route found
 }
 

@@ -86,7 +86,7 @@ bool StateGameOver::update(sf::Time dt)
         }
     }
 
-    return false;
+    return true;
 }
 
 bool StateGameOver::handleEvent(const sf::Event &event)

@@ -23,20 +23,6 @@ StatePause::StatePause(StateStack &stack, StateBase::Context context)
     resumeOption.setPosition(mPauseText.getPosition() + sf::Vector2f(0.f, 80.f));
     mOptions.push_back(resumeOption);
 
-    //sf::Text settingsOption;
-    //settingsOption.setFont(context.fonts->get(Fonts::RPG));
-    //settingsOption.setString("Settings");
-    //centerOrigin(settingsOption);
-    //settingsOption.setPosition(resumeOption.getPosition() + sf::Vector2f(0.f, 35.f));
-    //mOptions.push_back(settingsOption);
-
-    //sf::Text saveOption;
-    //saveOption.setFont(context.fonts->get(Fonts::RPG));
-    //saveOption.setString("Save Game");
-    //centerOrigin(saveOption);
-    //saveOption.setPosition(settingsOption.getPosition() + sf::Vector2f(0.f, 35.f));
-    //mOptions.push_back(saveOption);
-
     sf::Text exitOption;
     exitOption.setFont(context.fonts->get(Fonts::RPG));
     exitOption.setString("Exit to Menu");
@@ -89,14 +75,6 @@ bool StatePause::handleEvent(const sf::Event &event)
         if (mOptionIndex == resume)
         {
             requestStackPop();
-        }
-        else if (mOptionIndex == options)
-        {
-            requestStackPush(States::Settings);
-        }
-        else if (mOptionIndex == Save)
-        {
-
         }
         else if (mOptionIndex == exit)
         {

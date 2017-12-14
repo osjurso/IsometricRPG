@@ -19,8 +19,6 @@ private:
     enum OptionNames
     {
         resume,
-        options,
-        Save,
         exit,
     };
 
